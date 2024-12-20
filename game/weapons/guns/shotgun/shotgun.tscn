@@ -2,26 +2,24 @@
 
 [ext_resource type="PackedScene" uid="uid://ckvaaln275hfv" path="res://game/weapons/guns/common/gun.tscn" id="1_hu422"]
 [ext_resource type="Texture2D" uid="uid://cln1si1eynqrx" path="res://game/weapons/guns/shotgun/base.png" id="2_2dero"]
-[ext_resource type="Script" path="res://game/weapons/guns/shotgun/shotgun.gd" id="2_bxqwq"]
+[ext_resource type="Script" uid="uid://dsk1jrhebi2n" path="res://game/weapons/guns/shotgun/shotgun.gd" id="2_bxqwq"]
 [ext_resource type="PackedScene" uid="uid://co7528ytx5rvc" path="res://game/weapons/guns/shotgun/buckshot.tscn" id="3_1xtgg"]
 [ext_resource type="Texture2D" uid="uid://rvu643208pjh" path="res://game/weapons/guns/common/shoot_effect.png" id="3_17owv"]
 [ext_resource type="Texture2D" uid="uid://bdfqe6qhot1gb" path="res://game/weapons/guns/shotgun/ammo.png" id="5_stexv"]
 [ext_resource type="Texture2D" uid="uid://b4lr212g17v0p" path="res://game/weapons/guns/shotgun/shutter.png" id="6_cukv2"]
 
 [sub_resource type="Curve" id="Curve_mir4r"]
-max_value = 10.0
+_limits = [0.0, 10.0, 0.0, 1.0]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 10), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_xfrd5"]
-min_value = -8.0
-max_value = 0.0
+_limits = [-8.0, 0.0, 0.0, 1.0]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, -8), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_v8kll"]
-min_value = -8.0
-max_value = 0.0
+_limits = [-8.0, 0.0, 0.0, 1.0]
 _data = [Vector2(0, -8), 0.0, 0.0, 0, 0]
 point_count = 1
 

@@ -9,8 +9,7 @@ particles_anim_v_frames = 1
 particles_anim_loop = false
 
 [sub_resource type="Curve" id="Curve_0uwwu"]
-min_value = -400.0
-max_value = 0.0
+_limits = [-400.0, 0.0, 0.0, 1.0]
 _data = [Vector2(0, -400), 0.0, 0.0, 0, 0, Vector2(1, -180.807), 0.0, 0.0, 0, 0]
 point_count = 2
 

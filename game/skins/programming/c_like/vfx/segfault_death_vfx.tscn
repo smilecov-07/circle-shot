@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://b5h3w2m2lel7x"]
 
-[ext_resource type="Shader" path="res://game/skins/programming/c_like/vfx/glitch.gdshader" id="1_0166k"]
+[ext_resource type="Shader" uid="uid://bkumhb22olqgy" path="res://game/skins/programming/c_like/vfx/glitch.gdshader" id="1_0166k"]
 [ext_resource type="Texture2D" uid="uid://bfjmili5836j6" path="res://game/skins/programming/c_like/vfx/shift_noise.tres" id="2_mec1c"]
 [ext_resource type="Texture2D" uid="uid://cnjlsovowurap" path="res://game/skins/programming/c_like/vfx/segfault.png" id="3_fmk61"]
 [ext_resource type="Texture2D" uid="uid://bb51b5csgc4du" path="res://game/skins/programming/c_like/vfx/errors.png" id="4_uo8tu"]

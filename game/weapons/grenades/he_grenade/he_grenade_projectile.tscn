@@ -1,11 +1,11 @@
 [gd_scene load_steps=13 format=3 uid="uid://dixl482dlx0y5"]
 
 [ext_resource type="PackedScene" uid="uid://8yrjqan0dqfx" path="res://game/weapons/grenades/common/grenade_projectile.tscn" id="1_kb8wh"]
-[ext_resource type="Script" path="res://game/weapons/grenades/he_grenade/he_grenade_projectile.gd" id="2_7qike"]
+[ext_resource type="Script" uid="uid://cdeom7m2elbev" path="res://game/weapons/grenades/he_grenade/he_grenade_projectile.gd" id="2_7qike"]
 [ext_resource type="Texture2D" uid="uid://bfvwwv1vve166" path="res://game/weapons/grenades/he_grenade/explosion.png" id="2_u3kfh"]
 [ext_resource type="Texture2D" uid="uid://bnh5m4plset21" path="res://game/weapons/grenades/he_grenade/base.png" id="2_v6y27"]
-[ext_resource type="Script" path="res://game/entity/attack/attack.gd" id="3_8pq1p"]
-[ext_resource type="Script" path="res://game/entity/attack/area_detector.gd" id="3_k0nfm"]
+[ext_resource type="Script" uid="uid://bgvirlnion8wa" path="res://game/entity/attack/attack.gd" id="3_8pq1p"]
+[ext_resource type="Script" uid="uid://ccr5t8s5ui45t" path="res://game/entity/attack/area_detector.gd" id="3_k0nfm"]
 
 [sub_resource type="Animation" id="Animation_l1xfq"]
 resource_name = "Explode"

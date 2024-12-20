@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://bdtqr6mv231py"]
 
-[ext_resource type="Script" path="res://game/events/royale/ammo_box.gd" id="1_4kl7u"]
+[ext_resource type="Script" uid="uid://51x4i2i5lwge" path="res://game/events/royale/ammo_box.gd" id="1_4kl7u"]
 [ext_resource type="Texture2D" uid="uid://ddgp6giu670fh" path="res://game/events/royale/ammo_box.png" id="2_equak"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_or1bh"]
@@ -169,10 +169,10 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ojm35"]
 _data = {
-"Despawn": SubResource("Animation_0qrnd"),
-"Idle": SubResource("Animation_57b4q"),
-"RESET": SubResource("Animation_5hp3f"),
-"Start": SubResource("Animation_jbd37")
+&"Despawn": SubResource("Animation_0qrnd"),
+&"Idle": SubResource("Animation_57b4q"),
+&"RESET": SubResource("Animation_5hp3f"),
+&"Start": SubResource("Animation_jbd37")
 }
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_mxk3j"]

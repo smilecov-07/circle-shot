@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bydh8wq8j224r"]
 
-[ext_resource type="Script" path="res://game/weapons/melee/common/melee.gd" id="1_cpujk"]
-[ext_resource type="Script" path="res://game/entity/attack/attack.gd" id="2_wwru6"]
+[ext_resource type="Script" uid="uid://cqxsiki473iro" path="res://game/weapons/melee/common/melee.gd" id="1_cpujk"]
+[ext_resource type="Script" uid="uid://bgvirlnion8wa" path="res://game/entity/attack/attack.gd" id="2_wwru6"]
 
 [node name="Melee" type="Node2D"]
 script = ExtResource("1_cpujk")

@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://c6hbriu7of77e" path="res://game/weapons/melee/knife/knife.png" id="1_8am4s"]
 [ext_resource type="PackedScene" uid="uid://bydh8wq8j224r" path="res://game/weapons/melee/common/melee.tscn" id="1_n4krj"]
-[ext_resource type="Script" path="res://game/entity/attack/ray_detector.gd" id="4_2ry8l"]
+[ext_resource type="Script" uid="uid://bc7ffmlfu6nm7" path="res://game/entity/attack/ray_detector.gd" id="4_2ry8l"]
 
 [sub_resource type="Animation" id="Animation_4ld36"]
 resource_name = "Attack"

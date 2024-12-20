@@ -1,11 +1,10 @@
 [gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3 uid="uid://connpgqem0b21"]
 
-[ext_resource type="Script" path="res://game/player/equip/weapon_data.gd" id="1_s825u"]
+[ext_resource type="Script" uid="uid://55g8njvkg07g" path="res://game/player/equip/weapon_data.gd" id="1_s825u"]
 
 [resource]
 script = ExtResource("1_s825u")
 name = "I NEED MORE BULLETS"
-type = 1
 rarity = 4
 id = "nicecocksir"
 damage_text = "Урон/с: 40/30"

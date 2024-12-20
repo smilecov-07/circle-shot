@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bhlky5iu0nax1"]
 
-[ext_resource type="Script" path="res://game/skills/energy_drink/energy_drink.gd" id="1_mig33"]
-[ext_resource type="Script" path="res://game/player/equip/skill.gd" id="2_s2xr4"]
+[ext_resource type="Script" uid="uid://dkit3tw1kg7a5" path="res://game/skills/energy_drink/energy_drink.gd" id="1_mig33"]
+[ext_resource type="Script" uid="uid://c7xh6wcxwv4d4" path="res://game/player/equip/skill.gd" id="2_s2xr4"]
 
 [node name="EnergyDrink" type="Node2D"]
 script = ExtResource("1_mig33")

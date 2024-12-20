@@ -3,8 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bcv5d3lvchbv8" path="res://game/skins/programming/c_like/vfx/patch.png" id="1_y60um"]
 
 [sub_resource type="Curve" id="Curve_r8f3g"]
-min_value = -400.0
-max_value = 200.0
+_limits = [-400.0, 200.0, 0.0, 1.0]
 _data = [Vector2(0, -400), 0.0, 0.0, 0, 0, Vector2(0.285223, 15.5772), 0.0, 0.0, 0, 0]
 point_count = 2
 

@@ -1,9 +1,9 @@
 [gd_scene load_steps=10 format=3 uid="uid://d2iraf4bc27ee"]
 
 [ext_resource type="PackedScene" uid="uid://d3nsak46hbo2c" path="res://game/events/common/event.tscn" id="1_6uxmc"]
-[ext_resource type="Script" path="res://game/events/teamfight/teamfight.gd" id="2_btc68"]
+[ext_resource type="Script" uid="uid://d1wsojr0xd0ip" path="res://game/events/teamfight/teamfight.gd" id="2_btc68"]
 [ext_resource type="PackedScene" uid="uid://0t25gyfsaiqe" path="res://game/events/teamfight/teamfight_player.tscn" id="2_in4jb"]
-[ext_resource type="Script" path="res://game/events/teamfight/teamfight_ui.gd" id="4_m4tqf"]
+[ext_resource type="Script" uid="uid://q5aoyyqn0cby" path="res://game/events/teamfight/teamfight_ui.gd" id="4_m4tqf"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_somca"]
 viewport_path = NodePath("UI/MinimapViewport")
@@ -240,8 +240,8 @@ tracks/5/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fraxw"]
 _data = {
-&"RESET": SubResource("Animation_0668s"),
 &"Draw": SubResource("Animation_7w56i"),
+&"RESET": SubResource("Animation_0668s"),
 &"Victory": SubResource("Animation_gvqew")
 }
 

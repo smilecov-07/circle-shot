@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://c4axjhbd674h8"]
 
 [ext_resource type="Texture2D" uid="uid://ndobp7p586tx" path="res://menu/theme/icons/edit.png" id="1_glpac"]
-[ext_resource type="Script" path="res://menu/settings/actions_configuration.gd" id="1_h33al"]
+[ext_resource type="Script" uid="uid://bgequl5pvuuq5" path="res://menu/settings/actions_configuration.gd" id="1_h33al"]
 
 [node name="ActionsConfiguration" type="Window"]
 auto_translate_mode = 1

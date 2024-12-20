@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cubicepjijo6d"]
 
-[ext_resource type="Script" path="res://game/skills/dodge/dodge.gd" id="1_366lt"]
-[ext_resource type="Script" path="res://game/player/equip/skill.gd" id="2_e1gj7"]
+[ext_resource type="Script" uid="uid://dkn8nmo1hxxea" path="res://game/skills/dodge/dodge.gd" id="1_366lt"]
+[ext_resource type="Script" uid="uid://c7xh6wcxwv4d4" path="res://game/player/equip/skill.gd" id="2_e1gj7"]
 
 [node name="Dodge" type="Node2D"]
 script = ExtResource("1_366lt")

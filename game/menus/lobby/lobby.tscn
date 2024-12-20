@@ -1,17 +1,17 @@
 [gd_scene load_steps=16 format=3 uid="uid://cmwb81du1kbtm"]
 
-[ext_resource type="Script" path="res://game/menus/lobby/lobby.gd" id="1_jtfrr"]
+[ext_resource type="Script" uid="uid://ce7fr2qft005n" path="res://game/menus/lobby/lobby.gd" id="1_jtfrr"]
 [ext_resource type="Texture2D" uid="uid://cp68q5xemqd01" path="res://game/menus/lobby/icons/play.png" id="2_6xr3g"]
 [ext_resource type="Texture2D" uid="uid://nyuii0fx273c" path="res://game/menus/lobby/background.png" id="2_8bvc3"]
 [ext_resource type="Texture2D" uid="uid://d14nbphg5o3a" path="res://game/events/common/chat/chat.png" id="2_wjeu5"]
-[ext_resource type="Script" path="res://game/events/common/chat/chat.gd" id="3_amd3n"]
+[ext_resource type="Script" uid="uid://c5wn8p7yq48wc" path="res://game/events/common/chat/chat.gd" id="3_amd3n"]
 [ext_resource type="Texture2D" uid="uid://durmmh0vjl0eg" path="res://menu/theme/icons/exit.png" id="3_cwg7d"]
 [ext_resource type="Texture2D" uid="uid://ccyn16fdlha6p" path="res://game/menus/lobby/icons/change_event.png" id="3_pddfd"]
 [ext_resource type="Texture2D" uid="uid://eyfsi3j0o04s" path="res://game/menus/lobby/icons/change_map.png" id="4_4kry5"]
 [ext_resource type="Texture2D" uid="uid://dwtddg0cmagg1" path="res://game/events/common/chat/chat_send.png" id="4_6keib"]
-[ext_resource type="Script" path="res://game/menus/lobby/view_ip_dialog.gd" id="5_jyb4t"]
+[ext_resource type="Script" uid="uid://lf4v4xbu425r" path="res://game/menus/lobby/view_ip_dialog.gd" id="5_jyb4t"]
 [ext_resource type="Texture2D" uid="uid://c3r13t5eig25e" path="res://game/menus/lobby/icons/view_ips.png" id="7_f0cv5"]
-[ext_resource type="Script" path="res://menu/item_grid/items_grid.gd" id="11_ncktp"]
+[ext_resource type="Script" uid="uid://cq43botg0qg0m" path="res://menu/item_grid/items_grid.gd" id="11_ncktp"]
 
 [sub_resource type="Animation" id="Animation_dja87"]
 resource_name = "Countdown"

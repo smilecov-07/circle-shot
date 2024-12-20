@@ -1,7 +1,7 @@
 [gd_scene load_steps=25 format=3 uid="uid://tpvpkv3eid7i"]
 
 [ext_resource type="PackedScene" uid="uid://ckvaaln275hfv" path="res://game/weapons/guns/common/gun.tscn" id="1_av5tx"]
-[ext_resource type="Script" path="res://game/weapons/guns/i_need_more_bullets/i_need_more_bullets.gd" id="2_a8qdj"]
+[ext_resource type="Script" uid="uid://7xncka5pgh3i" path="res://game/weapons/guns/i_need_more_bullets/i_need_more_bullets.gd" id="2_a8qdj"]
 [ext_resource type="AudioStream" uid="uid://btyf0why553e7" path="res://game/weapons/guns/i_need_more_bullets/equip.wav" id="2_s2bv5"]
 [ext_resource type="Texture2D" uid="uid://cgesfo7e4s3ua" path="res://game/weapons/guns/i_need_more_bullets/gun.png" id="3_4v22u"]
 [ext_resource type="AudioStream" uid="uid://cs10xsax2mt6s" path="res://game/weapons/guns/i_need_more_bullets/single_shot.wav" id="3_gssxa"]
@@ -15,19 +15,17 @@
 [ext_resource type="Texture2D" uid="uid://5ss0ntgl5ida" path="res://game/weapons/guns/i_need_more_bullets/aim.png" id="12_si2f5"]
 
 [sub_resource type="Curve" id="Curve_wj8nx"]
-max_value = 7.0
+_limits = [0.0, 7.0, 0.0, 1.0]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.343643, 0.418637), 0.0, 0.0, 0, 0, Vector2(1, 7), 0.0, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="Curve" id="Curve_qervo"]
-min_value = -6.0
-max_value = 0.0
+_limits = [-6.0, 0.0, 0.0, 1.0]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.257732, 0), 0.0, 0.0, 0, 0, Vector2(0.498282, -3.68846), 0.0, 0.0, 0, 0, Vector2(1, -6), 0.0, 0.0, 0, 0]
 point_count = 4
 
 [sub_resource type="Curve" id="Curve_hhsl4"]
-min_value = -8.0
-max_value = 0.0
+_limits = [-8.0, 0.0, 0.0, 1.0]
 _data = [Vector2(0, -8), 0.0, 0.0, 0, 0, Vector2(0.501718, 0), 0.0, 0.0, 0, 0, Vector2(1, -8), 0.0, 0.0, 0, 0]
 point_count = 3
 
@@ -350,13 +348,13 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ohb8l"]
 _data = {
+&"Equip": SubResource("Animation_x0rqv"),
+&"PostEquip": SubResource("Animation_ejvsm"),
+&"PostReload": SubResource("Animation_rndj6"),
 &"RESET": SubResource("Animation_7gqo2"),
 &"Reload": SubResource("Animation_x4ipw"),
-&"Equip": SubResource("Animation_x0rqv"),
-&"SingleShot": SubResource("Animation_np4wt"),
 &"Shoot": SubResource("Animation_gcooj"),
-&"PostReload": SubResource("Animation_rndj6"),
-&"PostEquip": SubResource("Animation_ejvsm")
+&"SingleShot": SubResource("Animation_np4wt")
 }
 
 [node name="INeedMoreBullets" instance=ExtResource("1_av5tx")]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://of54uwtr1ice"]
 
 [ext_resource type="PackedScene" uid="uid://baoklmloqoop3" path="res://game/entity/effect.tscn" id="1_33b72"]
-[ext_resource type="Script" path="res://game/effects/stun/stun.gd" id="2_ca7vy"]
+[ext_resource type="Script" uid="uid://cauli2a3cgdq8" path="res://game/effects/stun/stun.gd" id="2_ca7vy"]
 [ext_resource type="Texture2D" uid="uid://bebl5r6pq8sog" path="res://game/effects/stun/stun_star.png" id="4_tw637"]
 
 [sub_resource type="Gradient" id="Gradient_chrr4"]

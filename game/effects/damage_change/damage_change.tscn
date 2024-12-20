@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://bxgpbuysxjefr"]
 
 [ext_resource type="PackedScene" uid="uid://baoklmloqoop3" path="res://game/entity/effect.tscn" id="1_jwunq"]
-[ext_resource type="Script" path="res://game/effects/damage_change/damage_change.gd" id="1_xgvqg"]
+[ext_resource type="Script" uid="uid://c4jv6xtpqmuvw" path="res://game/effects/damage_change/damage_change.gd" id="1_xgvqg"]
 [ext_resource type="Texture2D" uid="uid://504f5qbwvhhs" path="res://game/effects/damage_change/damage_up.png" id="4_2y6gu"]
 [ext_resource type="Texture2D" uid="uid://cblkss5pg17ev" path="res://game/effects/damage_change/damage_down.png" id="4_yqd15"]
 

@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://chpvrgitya08l"]
 
 [ext_resource type="Texture2D" uid="uid://cjtckq4vtw5v3" path="res://game/skins/other/rkn/rkn.png" id="1_5lv05"]
-[ext_resource type="Script" path="res://game/skins/other/rkn/rkn.gd" id="2_q3vus"]
+[ext_resource type="Script" uid="uid://ca2ntffvxaufe" path="res://game/skins/other/rkn/rkn.gd" id="2_q3vus"]
 [ext_resource type="PackedScene" uid="uid://bj1ubr1twmg8w" path="res://game/skins/other/rkn/rkn_death_vfx.tscn" id="3_a4guw"]
-[ext_resource type="Script" path="res://game/player/equip/player_skin.gd" id="3_v1luj"]
+[ext_resource type="Script" uid="uid://nr21pnmv3b1n" path="res://game/player/equip/player_skin.gd" id="3_v1luj"]
 [ext_resource type="Texture2D" uid="uid://da7lkffe1t7w4" path="res://game/skins/other/rkn/true_rkn.png" id="5_508rb"]
 
 [sub_resource type="Animation" id="Animation_gfrao"]

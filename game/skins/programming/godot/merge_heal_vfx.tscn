@@ -3,8 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cny4dd5qryoja" path="res://game/skins/programming/godot/merge.png" id="1_tul4p"]
 
 [sub_resource type="Curve" id="Curve_yj56d"]
-min_value = -400.0
-max_value = 200.0
+_limits = [-400.0, 200.0, 0.0, 1.0]
 _data = [Vector2(0, -400), 0.0, 0.0, 0, 0, Vector2(0.628866, -212.239), 0.0, 0.0, 0, 0]
 point_count = 2
 

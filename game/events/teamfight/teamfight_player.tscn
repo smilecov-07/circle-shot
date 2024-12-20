@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://0t25gyfsaiqe"]
 
 [ext_resource type="PackedScene" uid="uid://3l0k1cn63ahd" path="res://game/player/player.tscn" id="1_hu82l"]
-[ext_resource type="Script" path="res://game/events/teamfight/teamfight_player.gd" id="2_k6wy1"]
+[ext_resource type="Script" uid="uid://bv0d0tr2ab4m6" path="res://game/events/teamfight/teamfight_player.gd" id="2_k6wy1"]
 
 [node name="Player" instance=ExtResource("1_hu82l")]
 script = ExtResource("2_k6wy1")

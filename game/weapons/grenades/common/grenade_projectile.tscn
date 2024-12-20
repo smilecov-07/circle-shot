@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://8yrjqan0dqfx"]
 
-[ext_resource type="Script" path="res://game/weapons/grenades/common/grenade_projectile.gd" id="1_am5bm"]
+[ext_resource type="Script" uid="uid://c6kbejk8ckmtp" path="res://game/weapons/grenades/common/grenade_projectile.gd" id="1_am5bm"]
 
 [sub_resource type="Animation" id="Animation_ce6xc"]
 length = 0.001

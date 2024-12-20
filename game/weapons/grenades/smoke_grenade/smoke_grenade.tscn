@@ -252,10 +252,10 @@ tracks/5/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_v4ym2"]
 _data = {
-&"RESET": SubResource("Animation_tlngu"),
+&"Equip": SubResource("Animation_hh5j0"),
 &"PostThrow": SubResource("Animation_2vql0"),
-&"Throw": SubResource("Animation_8jvrf"),
-&"Equip": SubResource("Animation_hh5j0")
+&"RESET": SubResource("Animation_tlngu"),
+&"Throw": SubResource("Animation_8jvrf")
 }
 
 [node name="SmokeGrenade" instance=ExtResource("1_g2cmw")]

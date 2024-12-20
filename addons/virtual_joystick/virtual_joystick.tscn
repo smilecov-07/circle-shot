@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dmr0fcamx7t56"]
 
-[ext_resource type="Script" path="res://addons/virtual_joystick/virtual_joystick.gd" id="1_8x4dy"]
+[ext_resource type="Script" uid="uid://ct17mdmy2ddae" path="res://addons/virtual_joystick/virtual_joystick.gd" id="1_8x4dy"]
 
 [node name="VirtualJoystick" type="Control"]
 layout_mode = 3

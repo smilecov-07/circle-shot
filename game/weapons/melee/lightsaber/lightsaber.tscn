@@ -1,11 +1,11 @@
 [gd_scene load_steps=13 format=3 uid="uid://bm8ppjrpqe84c"]
 
 [ext_resource type="PackedScene" uid="uid://bydh8wq8j224r" path="res://game/weapons/melee/common/melee.tscn" id="1_lf8ps"]
-[ext_resource type="Script" path="res://game/weapons/melee/lightsaber/lightsaber.gd" id="2_1b7xu"]
+[ext_resource type="Script" uid="uid://tt81xgnn1gh4" path="res://game/weapons/melee/lightsaber/lightsaber.gd" id="2_1b7xu"]
 [ext_resource type="Texture2D" uid="uid://dvcfkurmahh83" path="res://game/weapons/melee/lightsaber/base.png" id="2_xa745"]
 [ext_resource type="Texture2D" uid="uid://cfwfho4bv0paq" path="res://game/weapons/melee/lightsaber/light.png" id="3_1b7xu"]
 [ext_resource type="Texture2D" uid="uid://cpd3d53o0hohg" path="res://game/weapons/melee/lightsaber/blade.png" id="4_4txxk"]
-[ext_resource type="Script" path="res://game/entity/attack/shape_detector.gd" id="5_0d2ml"]
+[ext_resource type="Script" uid="uid://dfhhd4es3t3i" path="res://game/entity/attack/shape_detector.gd" id="5_0d2ml"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5vqjv"]
 radius = 116.0

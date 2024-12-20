@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b5t5tgu043bm" path="res://game/weapons/grenades/common/grenade.tscn" id="1_d6xol"]
 [ext_resource type="Texture2D" uid="uid://wejvx6ukp36q" path="res://game/weapons/grenades/molotov/molotov.png" id="2_cx3tc"]
-[ext_resource type="Script" path="res://game/weapons/grenades/molotov/molotov.gd" id="2_fjuvf"]
+[ext_resource type="Script" uid="uid://gvdeavfd855y" path="res://game/weapons/grenades/molotov/molotov.gd" id="2_fjuvf"]
 [ext_resource type="PackedScene" uid="uid://dq6lpemfo4iff" path="res://game/weapons/grenades/molotov/molotov_projectile.tscn" id="3_yqbdh"]
 [ext_resource type="Texture2D" uid="uid://bp2f107skrkno" path="res://game/weapons/grenades/molotov/flame.png" id="5_dabwi"]
 [ext_resource type="Texture2D" uid="uid://bucic1dxuje2e" path="res://game/weapons/grenades/molotov/igniter.png" id="6_hlejw"]
@@ -291,10 +291,10 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_v4ym2"]
 _data = {
-&"RESET": SubResource("Animation_tlngu"),
 &"Equip": SubResource("Animation_hh5j0"),
-&"Throw": SubResource("Animation_8jvrf"),
-&"PostThrow": SubResource("Animation_2vql0")
+&"PostThrow": SubResource("Animation_2vql0"),
+&"RESET": SubResource("Animation_tlngu"),
+&"Throw": SubResource("Animation_8jvrf")
 }
 
 [node name="Molotov" instance=ExtResource("1_d6xol")]

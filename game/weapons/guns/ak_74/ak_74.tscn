@@ -11,19 +11,17 @@
 [ext_resource type="Texture2D" uid="uid://djpleqaaaxipo" path="res://game/weapons/guns/common/rifle_sleeve.png" id="9_wphq2"]
 
 [sub_resource type="Curve" id="Curve_ncqml"]
-max_value = 8.0
+_limits = [0.0, 8.0, 0.0, 1.0]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.249135, 0.0879116), 0.0, 10.5373, 0, 1, Vector2(1, 8), 18.6315, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="Curve" id="Curve_mancs"]
-min_value = -5.0
-max_value = 5.0
+_limits = [-5.0, 5.0, 0.0, 1.0]
 _data = [Vector2(0, -0.0168304), 0.0, 0.0, 0, 0, Vector2(0.16609, -0.0140257), 0.0, 0.0, 0, 0, Vector2(1, 5), 0.0, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="Curve" id="Curve_fskgo"]
-min_value = -5.0
-max_value = 5.0
+_limits = [-5.0, 5.0, 0.0, 1.0]
 _data = [Vector2(0, 5), 0.0, 0.0, 0, 0, Vector2(0.508651, -5), 0.0, 0.0, 0, 0, Vector2(1, 5), 0.0, 0.0, 0, 0]
 point_count = 3
 

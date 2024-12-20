@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://cr1yo5ya4kwex"]
 
-[ext_resource type="Script" path="res://game/weapons/throwable/snowball/snowball.gd" id="1_1p8re"]
+[ext_resource type="Script" uid="uid://bdmjaqqn6rflp" path="res://game/weapons/throwable/snowball/snowball.gd" id="1_1p8re"]
 [ext_resource type="Texture2D" uid="uid://dldqsm5tvmy3m" path="res://game/weapons/throwable/snowball/snowball.png" id="3_lldaj"]
 
 [sub_resource type="Animation" id="Animation_ba2m7"]

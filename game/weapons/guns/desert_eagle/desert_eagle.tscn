@@ -9,24 +9,95 @@
 [ext_resource type="Texture2D" uid="uid://p7lc2resallt" path="res://game/weapons/guns/common/gun_sleeve.png" id="7_2nu1t"]
 
 [sub_resource type="Curve" id="Curve_yn8d0"]
-max_value = 12.0
+_limits = [0.0, 12.0, 0.0, 1.0]
 _data = [Vector2(0, 0), 0.0, 15.4463, 0, 0, Vector2(1, 12), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_a2ndn"]
-min_value = -14.0
-max_value = 0.0
+_limits = [-14.0, 0.0, 0.0, 1.0]
 _data = [Vector2(0, 0), 0.0, -13.7812, 0, 0, Vector2(1, -14), 0.492184, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_jn5kp"]
-min_value = -14.0
-max_value = 0.0
+_limits = [-14.0, 0.0, 0.0, 1.0]
 _data = [Vector2(0, -14), 0.0, 0.0, 0, 0]
 point_count = 1
 
 [sub_resource type="Gradient" id="Gradient_ha5y4"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Animation" id="Animation_7gni2"]
+resource_name = "Equip"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Base:rotation")
+tracks/0/interp = 4
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.6993),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.434879, -0.153362, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Base:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.6993),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 12), Vector2(0, -8), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_x17tu"]
+resource_name = "PostEquip"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Base:rotation")
+tracks/0/interp = 4
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2993),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-0.153362, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Base:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2993),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, -8), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_hitka"]
+resource_name = "PostReload"
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Base:rotation")
+tracks/0/interp = 3
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.349066, 0.0]
+}
 
 [sub_resource type="Animation" id="Animation_mrem2"]
 length = 0.001
@@ -238,79 +309,6 @@ tracks/7/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(0, 0), Vector2(0, 0), Vector2(-30, 0), Vector2(0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_x17tu"]
-resource_name = "PostEquip"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Base:rotation")
-tracks/0/interp = 4
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2993),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [-0.153362, 0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Base:position")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2993),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0, -8), Vector2(0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_hitka"]
-resource_name = "PostReload"
-length = 0.3
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Base:rotation")
-tracks/0/interp = 3
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.349066, 0.0]
-}
-
-[sub_resource type="Animation" id="Animation_7gni2"]
-resource_name = "Equip"
-length = 0.4
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Base:rotation")
-tracks/0/interp = 4
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.6993),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [0.434879, -0.153362, 0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Base:position")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.6993),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 12), Vector2(0, -8), Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_llg42"]

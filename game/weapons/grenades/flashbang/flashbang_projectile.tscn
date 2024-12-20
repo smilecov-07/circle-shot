@@ -2,13 +2,13 @@
 
 [ext_resource type="PackedScene" uid="uid://8yrjqan0dqfx" path="res://game/weapons/grenades/common/grenade_projectile.tscn" id="1_ua7bf"]
 [ext_resource type="Texture2D" uid="uid://bah0mhat58x6x" path="res://game/weapons/grenades/flashbang/base.png" id="2_nfc8c"]
-[ext_resource type="Script" path="res://game/weapons/grenades/flashbang/flashbang_projectile.gd" id="2_otq4k"]
+[ext_resource type="Script" uid="uid://0lyh1hpcf62i" path="res://game/weapons/grenades/flashbang/flashbang_projectile.gd" id="2_otq4k"]
 [ext_resource type="Texture2D" uid="uid://ds2mr47spps1a" path="res://game/weapons/grenades/flashbang/explosion.png" id="3_c5i60"]
-[ext_resource type="Script" path="res://game/weapons/grenades/flashbang/flashbang_attack.gd" id="3_nxt1r"]
+[ext_resource type="Script" uid="uid://bu1j3trbaut4b" path="res://game/weapons/grenades/flashbang/flashbang_attack.gd" id="3_nxt1r"]
 [ext_resource type="AudioStream" uid="uid://bin43crd5xi3g" path="res://game/weapons/grenades/flashbang/explosion_friendly.wav" id="3_x712o"]
-[ext_resource type="Script" path="res://game/entity/attack/area_detector.gd" id="4_7cy3p"]
+[ext_resource type="Script" uid="uid://ccr5t8s5ui45t" path="res://game/entity/attack/area_detector.gd" id="4_7cy3p"]
 [ext_resource type="AudioStream" uid="uid://dnce4ljo741pg" path="res://game/weapons/grenades/flashbang/explosion.wav" id="4_hj380"]
-[ext_resource type="Script" path="res://game/entity/attack/attack.gd" id="6_qtvta"]
+[ext_resource type="Script" uid="uid://bgvirlnion8wa" path="res://game/entity/attack/attack.gd" id="6_qtvta"]
 
 [sub_resource type="Animation" id="Animation_xrikg"]
 resource_name = "Explode"

@@ -1,18 +1,18 @@
 [gd_scene load_steps=23 format=3 uid="uid://4q0rrm6arbyx"]
 
 [ext_resource type="PackedScene" uid="uid://ckvaaln275hfv" path="res://game/weapons/guns/common/gun.tscn" id="1_57777"]
-[ext_resource type="Script" path="res://game/weapons/guns/sniper_rifle/sniper_rifle.gd" id="2_ir31q"]
+[ext_resource type="Script" uid="uid://demdf41slbc0a" path="res://game/weapons/guns/sniper_rifle/sniper_rifle.gd" id="2_ir31q"]
 [ext_resource type="PackedScene" uid="uid://cm0sqwulviy72" path="res://game/weapons/guns/sniper_rifle/sniper_bullet.tscn" id="2_stbvt"]
 [ext_resource type="Texture2D" uid="uid://rvu643208pjh" path="res://game/weapons/guns/common/shoot_effect.png" id="3_nfw2e"]
 [ext_resource type="Texture2D" uid="uid://dg0aqjkd64hom" path="res://game/weapons/guns/sniper_rifle/base.png" id="4_5tdas"]
 [ext_resource type="Texture2D" uid="uid://hvi0c3ih0v8d" path="res://game/weapons/guns/sniper_rifle/magazine.png" id="5_i4xf8"]
 [ext_resource type="Texture2D" uid="uid://0rsk8vwsw5pp" path="res://game/weapons/guns/sniper_rifle/shutter.png" id="6_jds1y"]
 [ext_resource type="Texture2D" uid="uid://djpleqaaaxipo" path="res://game/weapons/guns/common/rifle_sleeve.png" id="8_y68u3"]
-[ext_resource type="Shader" path="res://game/weapons/guns/sniper_rifle/blur.gdshader" id="9_8tnl3"]
+[ext_resource type="Shader" uid="uid://c5rcnc4qtas64" path="res://game/weapons/guns/sniper_rifle/blur.gdshader" id="9_8tnl3"]
 [ext_resource type="Texture2D" uid="uid://baoopah0qlhcl" path="res://game/weapons/guns/sniper_rifle/aim.png" id="9_cpvii"]
 
 [sub_resource type="Curve" id="Curve_uvvkn"]
-max_value = 20.0
+_limits = [0.0, 20.0, 0.0, 1.0]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 20), 0.0, 0.0, 0, 0]
 point_count = 2
 
