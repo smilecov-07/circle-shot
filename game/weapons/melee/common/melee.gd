@@ -39,10 +39,7 @@ func _shoot() -> void:
 		_attack.damage_multiplier = _player.damage_multiplier
 		_attack.team = _player.team
 		_attack.who = _player.id
-		if has_node(^"Attack/RayDetector"):
-			($Attack/RayDetector as RayCast2D).clear_exceptions()
-		if has_node(^"Attack/ShapeDetector"):
-			($Attack/ShapeDetector as ShapeCast2D).clear_exceptions()
+		_attack.clear_exceptions()
 	
 	await _anim.animation_finished
 	unlock_shooting()

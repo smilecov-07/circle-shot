@@ -29,7 +29,7 @@ const MAX_ASPECT_RATIO := 2.34
 ## Минимальное соотношение ширины к высоте, пренизив которое содержимое окна начнёт обрезаться.
 const MIN_ASPECT_RATIO := 1.5
 ## Разрешённые расширения файлов для загрузки в качестве пользовательских треков.
-const ALLOWED_MUSIC_FILE_EXTENSIONS: Array[String] = [".mp3", ".ogg"]
+const ALLOWED_MUSIC_FILE_EXTENSIONS: Array[String] = ["mp3", "ogg"]
 ## Максимальная длина названия файла пользовательского трека. Лишнее обрезается.
 const MAX_MUSIC_FILE_NAME_LENGTH: int = 45
 
@@ -178,7 +178,7 @@ func setup_settings() -> void:
 ## Устанавливает настройки управления по умолчанию, если их ещё нет.
 func setup_controls_settings() -> void:
 	var default_input_method: InputMethod = InputMethod.KEYBOARD_AND_MOUSE
-	if OS.has_feature("mobile"):
+	if DisplayServer.is_touchscreen_available():
 		default_input_method = InputMethod.TOUCH
 	Globals.set_controls_int("input_method",
 			Globals.get_controls_int("input_method", default_input_method))
@@ -457,11 +457,9 @@ func _loading_custom_tracks() -> void:
 		if to_load.size() >= 20:
 			break
 		if not dir.current_is_dir():
-			for extension: String in ALLOWED_MUSIC_FILE_EXTENSIONS:
-				if file_name.ends_with(extension):
-					to_load[dir.get_current_dir().path_join(file_name)] = extension
-					print_verbose("Found track: %s." % dir.get_current_dir().path_join(file_name))
-					break
+			if file_name.get_extension() in ALLOWED_MUSIC_FILE_EXTENSIONS:
+				to_load[dir.get_current_dir().path_join(file_name)] = file_name.get_extension()
+				print_verbose("Found track: %s." % dir.get_current_dir().path_join(file_name))
 		file_name = dir.get_next()
 	
 	var to_load_count: int = to_load.size()
@@ -477,11 +475,11 @@ func _loading_custom_tracks() -> void:
 				path,
 				error_string(FileAccess.get_open_error()),
 			])
-		if valid and file.get_length() > 15 * 1024 * 1024:
+		if valid and file.get_length() > 15728640: # 15 MB
 			valid = false
 		if valid:
 			match to_load[path]:
-				".mp3":
+				"mp3":
 					var mp3 := AudioStreamMP3.new()
 					mp3.data = file.get_buffer(file.get_length())
 					if mp3.data.is_empty():
@@ -489,7 +487,7 @@ func _loading_custom_tracks() -> void:
 					else:
 						mp3.loop = true
 						stream = mp3
-				".ogg":
+				"ogg":
 					var ogg := AudioStreamOggVorbis.load_from_buffer(
 							file.get_buffer(file.get_length()))
 					if ogg:

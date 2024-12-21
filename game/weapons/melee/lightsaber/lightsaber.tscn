@@ -342,6 +342,16 @@ collision_mask = 11
 script = ExtResource("5_0d2ml")
 metadata/_custom_type_script = ExtResource("5_0d2ml")
 
+[node name="ShapeDetector2" type="ShapeCast2D" parent="Attack" index="1"]
+position = Vector2(192, 112)
+enabled = false
+shape = SubResource("CircleShape2D_5vqjv")
+target_position = Vector2(0, -224)
+max_results = 1
+collision_mask = 11
+script = ExtResource("5_0d2ml")
+metadata/_custom_type_script = ExtResource("5_0d2ml")
+
 [node name="AnimationPlayer" parent="." index="4"]
 libraries = {
 &"": SubResource("AnimationLibrary_j08rb")

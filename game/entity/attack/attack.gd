@@ -6,8 +6,14 @@ extends Node2D
 ## Узел, отвечающий за нанесения урона сущностям. Для работы добавьте дочерний
 ## узел типа [AreaDetector], [ShapeDetector] или [RayDetector].
 
+## Издаётся после вызова [method clear_exceptions]. По этому сигналу все дочерние детекторы
+## очищают исключения.
+signal exceptions_cleared
+
 ## Урон, который будет нанесён сущности.
 @export var damage: int
+## Интервал между нанесениями урона сущностям, попавших под эту атаку.
+@export var damage_interval := 0.3
 ## Множитель наносимого урона для удобства. При перемножение используется стандартное округление.
 var damage_multiplier := 1.0
 ## [Entity.id] сущности, которой принадлежит эта атака. Если меньше либо равен 0, в сообщении о
@@ -16,6 +22,14 @@ var who: int = -1
 ## Команда, которой принадлежит эта атака. Урон сущности не будет нанесён, если её команда
 ## совпадает с командой атаки.
 var team: int = -1
+var _exceptions: Dictionary[StringName, float]
+
+
+func _physics_process(delta: float) -> void:
+	for exception: StringName in _exceptions.keys():
+		_exceptions[exception] -= delta
+		if _exceptions[exception] <= 0.0:
+			_exceptions.erase(exception)
 
 
 ## Наносит урон сущности [param entity]. Опционально можно изменить количество наносимого урона
@@ -26,13 +40,21 @@ func deal_damage(entity: Entity, amount: int = damage) -> bool:
 		return false
 	entity.damage(roundi(amount * damage_multiplier), who)
 	_deal_damage(entity)
+	_exceptions[entity.name] = damage_interval
 	return true
 
 
 ## Определяет, можно ли нанести урон сущности [param entity]. Возвращает [code]true[/code]
 ## если можно, иначе возвращает [code]false[/code].
 func can_deal_damage(entity: Entity) -> bool:
-	return entity.team != team and _can_deal_damage(entity)
+	return not entity.name in _exceptions and entity.team != team and _can_deal_damage(entity)
+
+
+## Очищает список сущностей, которым не может нанести урон эта атака
+## (из-за [member damage_interval]).
+func clear_exceptions() -> void:
+	_exceptions.clear()
+	exceptions_cleared.emit()
 
 
 ## Переопредели этот метод в дочернем классе, чтобы добавить логику при успешном нанесении урона.

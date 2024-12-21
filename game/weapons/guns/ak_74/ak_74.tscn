@@ -419,6 +419,7 @@ recoil_increasing_time = 0.18
 recoil_reset_time = 0.5
 ammo_per_load = 30
 ammo_total = 120
+speed_multiplier_when_current = 0.94
 
 [node name="Magazine" type="Sprite2D" parent="." index="0"]
 visible = false
