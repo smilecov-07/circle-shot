@@ -29,6 +29,108 @@ _limits = [-8.0, 0.0, 0.0, 1.0]
 _data = [Vector2(0, -8), 0.0, 0.0, 0, 0, Vector2(0.501718, 0), 0.0, 0.0, 0, 0, Vector2(1, -8), 0.0, 0.0, 0, 0]
 point_count = 3
 
+[sub_resource type="Animation" id="Animation_x0rqv"]
+resource_name = "Equip"
+length = 1.1
+step = 0.05
+tracks/0/type = "audio"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SFX")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("2_s2bv5")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/0/use_blend = true
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Base:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.7, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-14, 21), Vector2(7, -9), Vector2(6, -6)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Base:rotation")
+tracks/2/interp = 4
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.7, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.541248, -0.204099, 6.10264]
+}
+
+[sub_resource type="Animation" id="Animation_ejvsm"]
+resource_name = "PostEquip"
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Base:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(6, -6), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Base:rotation")
+tracks/1/interp = 4
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [6.10264, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_rndj6"]
+resource_name = "PostReload"
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Base:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-5, 5), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Base:rotation")
+tracks/1/interp = 4
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [6.12435, 0.0]
+}
+
 [sub_resource type="Animation" id="Animation_7gqo2"]
 length = 0.001
 tracks/0/type = "value"
@@ -172,48 +274,33 @@ tracks/5/keys = {
 "values": [0.0, 0.0, 0.238108, 0.0]
 }
 
-[sub_resource type="Animation" id="Animation_x0rqv"]
-resource_name = "Equip"
-length = 1.1
-step = 0.05
-tracks/0/type = "audio"
+[sub_resource type="Animation" id="Animation_gcooj"]
+resource_name = "Shoot"
+length = 0.18
+step = 0.01
+tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("SFX")
-tracks/0/interp = 1
+tracks/0/path = NodePath("Base:rotation")
+tracks/0/interp = 4
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"clips": [{
-"end_offset": 0.0,
-"start_offset": 0.0,
-"stream": ExtResource("2_s2bv5")
-}],
-"times": PackedFloat32Array(0)
+"times": PackedFloat32Array(0, 0.06, 0.18),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -0.101071, 0.0]
 }
-tracks/0/use_blend = true
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/path = NodePath("Base:position")
-tracks/1/interp = 2
+tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.7, 1.1),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-14, 21), Vector2(7, -9), Vector2(6, -6)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Base:rotation")
-tracks/2/interp = 4
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.7, 1.1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [0.541248, -0.204099, 6.10264]
+"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_np4wt"]
@@ -259,93 +346,6 @@ tracks/2/keys = {
 }
 tracks/2/use_blend = true
 
-[sub_resource type="Animation" id="Animation_gcooj"]
-resource_name = "Shoot"
-length = 0.18
-step = 0.01
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Base:rotation")
-tracks/0/interp = 4
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.06, 0.18),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [0.0, -0.101071, 0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Base:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_rndj6"]
-resource_name = "PostReload"
-length = 0.2
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Base:position")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(-5, 5), Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Base:rotation")
-tracks/1/interp = 4
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [6.12435, 0.0]
-}
-
-[sub_resource type="Animation" id="Animation_ejvsm"]
-resource_name = "PostEquip"
-length = 0.2
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Base:position")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(6, -6), Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Base:rotation")
-tracks/1/interp = 4
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [6.10264, 0.0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ohb8l"]
 _data = {
 &"Equip": SubResource("Animation_x0rqv"),
@@ -375,7 +375,6 @@ recoil_cycle_curve = SubResource("Curve_hhsl4")
 recoil_increasing_time = 0.3
 recoil_reset_time = 1.2
 ammo_per_load = 25
-ammo_total = 100
 speed_multiplier_when_current = 0.96
 
 [node name="ShootPoint" parent="." index="0"]
@@ -407,13 +406,16 @@ offset = Vector2(96, -20)
 [node name="Magazine" type="Sprite2D" parent="Base" index="0"]
 show_behind_parent = true
 texture = ExtResource("4_7epqc")
-offset = Vector2(96, -20)
+offset = Vector2(54, 5)
+region_enabled = true
+region_rect = Rect2(88, 88, 40, 24)
 
 [node name="Aim" type="Sprite2D" parent="Base" index="1"]
-visible = false
 show_behind_parent = true
 texture = ExtResource("12_si2f5")
-offset = Vector2(96, -20)
+offset = Vector2(30, -59)
+region_enabled = true
+region_rect = Rect2(40, 16, 88, 40)
 
 [node name="ShootingSFX" type="AudioStreamPlayer2D" parent="." index="6"]
 stream = ExtResource("8_iqst8")

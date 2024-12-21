@@ -382,7 +382,9 @@ offset = Vector2(20, 0)
 
 [node name="Shutter" type="Sprite2D" parent="Base" index="1"]
 texture = ExtResource("6_cukv2")
-offset = Vector2(56, 0)
+offset = Vector2(124, -12)
+region_enabled = true
+region_rect = Rect2(176, 8, 72, 32)
 
 [node name="Sleeve" type="CPUParticles2D" parent="Base" index="2"]
 position = Vector2(43, -21)

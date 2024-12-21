@@ -377,7 +377,9 @@ speed_multiplier_when_current = 0.95
 visible = false
 show_behind_parent = true
 texture = ExtResource("3_da3ya")
-offset = Vector2(84, -24)
+offset = Vector2(52, 8)
+region_enabled = true
+region_rect = Rect2(144, 104, 32, 48)
 
 [node name="Weapon" type="Sprite2D" parent="." index="1"]
 texture = ExtResource("2_bmei3")
@@ -386,12 +388,16 @@ offset = Vector2(84, -24)
 [node name="Shutter" type="Sprite2D" parent="Weapon" index="0"]
 show_behind_parent = true
 texture = ExtResource("5_5ltv4")
-offset = Vector2(84, -24)
+offset = Vector2(8, -40)
+region_enabled = true
+region_rect = Rect2(88, 72, 56, 16)
 
 [node name="Magazine" type="Sprite2D" parent="Weapon" index="1"]
 show_behind_parent = true
 texture = ExtResource("3_da3ya")
-offset = Vector2(84, -24)
+offset = Vector2(52, 8)
+region_enabled = true
+region_rect = Rect2(144, 104, 32, 48)
 
 [node name="Sleeve" type="CPUParticles2D" parent="Weapon" index="2"]
 position = Vector2(46, -34)

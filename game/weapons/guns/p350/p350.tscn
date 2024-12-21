@@ -1,7 +1,7 @@
 [gd_scene load_steps=19 format=3 uid="uid://bsgtxdfb2n4u3"]
 
 [ext_resource type="PackedScene" uid="uid://ckvaaln275hfv" path="res://game/weapons/guns/common/gun.tscn" id="1_n80e8"]
-[ext_resource type="Texture2D" uid="uid://b20ow4fkfx07c" path="res://game/weapons/guns/p350/clip.png" id="2_lyupo"]
+[ext_resource type="Texture2D" uid="uid://b20ow4fkfx07c" path="res://game/weapons/guns/p350/magazine.png" id="2_lyupo"]
 [ext_resource type="PackedScene" uid="uid://c4cr4b5wn24yt" path="res://game/weapons/guns/p350/p350_bullet.tscn" id="2_tgivs"]
 [ext_resource type="Texture2D" uid="uid://btrkyxv6ft11g" path="res://game/weapons/guns/p350/base.png" id="3_aslq1"]
 [ext_resource type="Texture2D" uid="uid://rvu643208pjh" path="res://game/weapons/guns/common/shoot_effect.png" id="4_qbrad"]
@@ -148,7 +148,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(36, 0)]
+"values": [Vector2(0, 0)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -261,7 +261,7 @@ tracks/5/keys = {
 "times": PackedFloat32Array(0, 1.7, 1.95, 2.1),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(36, 0), Vector2(36, 0), Vector2(24, 0), Vector2(36, 0)]
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(-12, 0), Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_llg42"]
@@ -302,7 +302,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.15, 0.25),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(36, 0), Vector2(24, 0), Vector2(24, 0), Vector2(36, 0)]
+"values": [Vector2(0, 0), Vector2(-12, 0), Vector2(-12, 0), Vector2(0, 0)]
 }
 tracks/3/type = "method"
 tracks/3/imported = false
@@ -350,7 +350,9 @@ speed_multiplier_when_current = 0.98
 self_modulate = Color(1, 1, 1, 0)
 position = Vector2(1, -3)
 texture = ExtResource("2_lyupo")
-offset = Vector2(36, 0)
+offset = Vector2(0, 12)
+region_enabled = true
+region_rect = Rect2(8, 32, 40, 56)
 
 [node name="Base" type="Sprite2D" parent="." index="1"]
 texture = ExtResource("3_aslq1")
@@ -364,8 +366,10 @@ scale = Vector2(0.8, 0.8)
 texture = ExtResource("4_qbrad")
 
 [node name="Shutter" type="Sprite2D" parent="Base" index="1"]
-position = Vector2(36, 0)
 texture = ExtResource("6_g8rcj")
+offset = Vector2(40, -32)
+region_enabled = true
+region_rect = Rect2(8, 0, 120, 32)
 
 [node name="Sleeve" type="CPUParticles2D" parent="Base" index="2"]
 position = Vector2(40, -32)

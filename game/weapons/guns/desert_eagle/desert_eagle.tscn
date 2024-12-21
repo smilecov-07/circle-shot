@@ -399,7 +399,9 @@ shoot_on_joystick_release = true
 visible = false
 self_modulate = Color(1, 1, 1, 0)
 texture = ExtResource("3_6kj51")
-offset = Vector2(48, -12)
+offset = Vector2(6, 8.5)
+region_enabled = true
+region_rect = Rect2(24, 48, 48, 80)
 
 [node name="Base" type="Sprite2D" parent="." index="1"]
 texture = ExtResource("4_4jpqo")
@@ -408,7 +410,9 @@ offset = Vector2(48, -12)
 [node name="Magazine" type="Sprite2D" parent="Base" index="0"]
 show_behind_parent = true
 texture = ExtResource("3_6kj51")
-offset = Vector2(48, -12)
+offset = Vector2(6, 8.5)
+region_enabled = true
+region_rect = Rect2(24, 48, 48, 80)
 
 [node name="Shoot" type="Sprite2D" parent="Base" index="1"]
 visible = false
@@ -418,7 +422,9 @@ texture = ExtResource("5_12sp2")
 
 [node name="Shutter" type="Sprite2D" parent="Base" index="2"]
 texture = ExtResource("6_jyqc7")
-offset = Vector2(48, -12)
+offset = Vector2(46, -43.5)
+region_enabled = true
+region_rect = Rect2(16, 16, 144, 40)
 
 [node name="Sleeve" type="CPUParticles2D" parent="Base" index="3"]
 position = Vector2(22, -51)
