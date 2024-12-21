@@ -148,7 +148,10 @@ poison_smoke_time = 300.0
 spawn_point_randomness = 0.0
 metadata/_edit_horizontal_guides_ = []
 
-[node name="PoisonSmoke" type="Node2D" parent="." index="6"]
+[node name="OtherSpawner" parent="." index="6"]
+_spawnable_scenes = PackedStringArray("uid://bysyaaj2r7stt", "uid://bdtqr6mv231py")
+
+[node name="PoisonSmoke" type="Node2D" parent="." index="7"]
 
 [node name="PoisonSmoke" parent="PoisonSmoke" index="0" instance=ExtResource("5_mf48w")]
 position = Vector2(0, 6400)
@@ -165,16 +168,13 @@ rotation = -1.5708
 position = Vector2(0, -6400)
 rotation = -3.14159
 
-[node name="HealBoxSpawnTimer" type="Timer" parent="." index="7"]
+[node name="HealBoxSpawnTimer" type="Timer" parent="." index="8"]
 wait_time = 15.0
 one_shot = true
 
-[node name="AmmoBoxSpawnTimer" type="Timer" parent="." index="8"]
+[node name="AmmoBoxSpawnTimer" type="Timer" parent="." index="9"]
 wait_time = 15.0
 one_shot = true
-
-[node name="OtherSpawner" parent="." index="9"]
-_spawnable_scenes = PackedStringArray("res://game/events/royale/heal_box.tscn", "res://game/events/royale/ammo_box.tscn")
 
 [node name="UI" parent="." index="11"]
 script = ExtResource("6_q5vxn")

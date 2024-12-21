@@ -17,8 +17,8 @@ var _item_equip_scene: PackedScene = preload("uid://c07pym82q5utt")
 ## Если [param type] это [constant ItemsDB.MAP], то необходимо предоставить
 ## [param selected_event], из которого будут браться карты.
 func list_items(type: ItemsDB.Item, selected: int = -1, selected_event: int = 0) -> void:
-	for i: Node in get_children():
-		i.queue_free()
+	for child: Node in get_children():
+		child.queue_free()
 	
 	var counter: int = 0
 	match type:

@@ -61,7 +61,7 @@ class ResourcePathEditorProperty extends EditorProperty:
 			if id != ResourceUID.INVALID_ID:
 				emit_changed(get_edited_property(), ResourceUID.id_to_text(id))
 			else:
-				push_warning("UID missing for %s, defaulting to res://" % resource.resource_name)
+				push_warning("UID missing for %s, defaulting to res://." % resource.resource_name)
 				emit_changed(get_edited_property(), resource.resource_path)
 		else:
 			_pick(_current_path)

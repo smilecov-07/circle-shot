@@ -135,8 +135,8 @@ func _set_admin(admin: bool) -> void:
 	
 	(%AdminPanel as CanvasItem).visible = admin
 	(%ClientHint as CanvasItem).visible = not admin
-	for i: Node in _players_container.get_children():
-		(i.get_node(^"Kick") as CanvasItem).visible = admin
+	for entry: Node in _players_container.get_children():
+		(entry.get_node(^"Kick") as CanvasItem).visible = admin
 	if admin:
 		# Просим сервер установить выбранные ранее НАМИ карты
 		_request_set_environment.rpc_id(MultiplayerPeer.TARGET_PEER_SERVER,
@@ -268,9 +268,9 @@ func _show_countdown() -> void:
 @rpc("call_local", "reliable", "authority", 1)
 func _hide_countdown() -> void:
 	if _admin:
-		(%AdminPanel as Control).show()
+		(%AdminPanel as CanvasItem).show()
 	else:
-		(%ClientHint as Control).show()
+		(%ClientHint as CanvasItem).show()
 	(%Countdown as CanvasItem).hide()
 	(%Countdown/AnimationPlayer as AnimationPlayer).stop()
 
@@ -477,8 +477,8 @@ func _do_broadcast() -> void:
 	data.append(_players.size())
 	data.append(_game.max_players)
 	data.append_array(Globals.get_string("player_name", "Local Server").to_utf8_buffer()) # Имя
-	for i: PacketPeerUDP in _udp_peers:
-		i.put_packet(data)
+	for peer: PacketPeerUDP in _udp_peers:
+		peer.put_packet(data)
 	print_verbose("Broadcast of lobby %d done. Data sent: %s (%d/%d)" % [
 		_local_lobby_id,
 		Globals.get_string("player_name", "Local Server"),
@@ -536,8 +536,8 @@ func _on_game_closed() -> void:
 		_countdown_timer.stop()
 	_hide_countdown()
 	
-	for i: Node in _players_container.get_children():
-		i.queue_free()
+	for entry: Node in _players_container.get_children():
+		entry.queue_free()
 	
 	_chat.clear_chat()
 	(%ControlButtons/Chat as BaseButton).button_pressed = false

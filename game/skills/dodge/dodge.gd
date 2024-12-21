@@ -25,7 +25,7 @@ func _use() -> void:
 		_response_timer.start()
 	if not _player.is_local():
 		return
-	_request_dodge.rpc_id(1, _roll_direction)
+	_request_dodge.rpc_id(MultiplayerPeer.TARGET_PEER_SERVER, _roll_direction)
 
 
 @rpc("reliable", "call_local", "authority", 5)

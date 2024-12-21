@@ -4,7 +4,7 @@ extends Node
 ## Основной узел события.
 ##
 ## Базовый класс для всех событий в игре. Досутп к нему можно получить через
-## [code]Globals.main.event[/code] (только для неигровой части) или через
+## [member Game.event] (только для неигровой части) или через
 ## [code](get_tree().get_first_node_in_group(&"Event") as Event)[/code].
 
 ## Издаётся, когда событие закончилось.
@@ -62,17 +62,15 @@ func _ready() -> void:
 		_death_marker_scene = load("uid://blhm6uka1p287")
 	_vibration_enabled = Globals.get_setting_bool("vibration")
 	
-	# TODO: когда исправят UID???
 	var entities_spawner: MultiplayerSpawner = $EntitiesSpawner
 	for scene: PackedScene in player_scenes:
 		entities_spawner.add_spawnable_scene(scene.resource_path)
 	var projectiles_spawner: MultiplayerSpawner = $ProjectilesSpawner
 	for path: String in Globals.items_db.spawnable_projectiles_paths:
-		projectiles_spawner.add_spawnable_scene(
-				ResourceUID.get_id_path(ResourceUID.text_to_id(path)))
+		projectiles_spawner.add_spawnable_scene(path)
 	var other_spawner: MultiplayerSpawner = $OtherSpawner
 	for path: String in Globals.items_db.spawnable_other_paths:
-		other_spawner.add_spawnable_scene(ResourceUID.get_id_path(ResourceUID.text_to_id(path)))
+		other_spawner.add_spawnable_scene(path)
 	
 	_initialize()
 	if multiplayer.is_server():

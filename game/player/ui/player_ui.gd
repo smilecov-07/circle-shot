@@ -73,8 +73,8 @@ func _ready() -> void:
 	
 	match input_method:
 		Main.InputMethod.KEYBOARD_AND_MOUSE:
-			($Controller/TouchControls as Control).hide()
-			($Controller/Skill/TouchScreenButton as Node2D).hide()
+			($Controller/TouchControls as CanvasItem).hide()
+			($Controller/Skill/TouchScreenButton as CanvasItem).hide()
 			_follow_mouse = Globals.get_controls_bool("follow_mouse")
 			_sneak_multiplier = Globals.get_controls_float("sneak_multiplier")
 			var smallest_side: float = minf(get_viewport_rect().size.x, get_viewport_rect().size.y)
@@ -319,12 +319,10 @@ func _update_skill() -> void:
 
 
 func _is_point_inside_of_control(point: Vector2, control: Control) -> bool:
-	var x: bool = point.x >= control.global_position.x \
-			and point.x <= control.global_position.x \
-			+ (control.size.x * control.get_global_transform_with_canvas().get_scale().x)
-	var y: bool = point.y >= control.global_position.y \
-			and point.y <= control.global_position.y \
-			+ (control.size.y * control.get_global_transform_with_canvas().get_scale().y)
+	var x: bool = point.x >= control.global_position.x and point.x <= control.global_position.x \
+			+ control.size.x * control.get_global_transform_with_canvas().get_scale().x
+	var y: bool = point.y >= control.global_position.y and point.y <= control.global_position.y \
+			+ control.size.y * control.get_global_transform_with_canvas().get_scale().y
 	return x and y
 
 

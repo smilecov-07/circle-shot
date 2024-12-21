@@ -77,28 +77,28 @@ func initialize() -> void:
 	spawnable_projectiles_paths.clear()
 	spawnable_other_paths.clear()
 	
-	for i: WeaponData in weapons_light:
-		spawnable_projectiles_paths.append_array(i.spawnable_scenes_paths)
-	for i: WeaponData in weapons_heavy:
-		spawnable_projectiles_paths.append_array(i.spawnable_scenes_paths)
-	for i: WeaponData in weapons_support:
-		spawnable_projectiles_paths.append_array(i.spawnable_scenes_paths)
-	for i: WeaponData in weapons_melee:
-		spawnable_projectiles_paths.append_array(i.spawnable_scenes_paths)
+	for weapon: WeaponData in weapons_light:
+		spawnable_projectiles_paths.append_array(weapon.spawnable_scenes_paths)
+	for weapon: WeaponData in weapons_heavy:
+		spawnable_projectiles_paths.append_array(weapon.spawnable_scenes_paths)
+	for weapon: WeaponData in weapons_support:
+		spawnable_projectiles_paths.append_array(weapon.spawnable_scenes_paths)
+	for weapon: WeaponData in weapons_melee:
+		spawnable_projectiles_paths.append_array(weapon.spawnable_scenes_paths)
 	
-	for i: SkillData in skills:
-		spawnable_other_paths.append_array(i.spawnable_scenes_paths)
+	for skill: SkillData in skills:
+		spawnable_other_paths.append_array(skill.spawnable_scenes_paths)
 	
 	# Задавание idx_in_db у предметов.
-	for i: int in range(skins.size()):
+	for i: int in skins.size():
 		skins[i].idx_in_db = i
-	for i: int in range(skills.size()):
-		skills[i].idx_in_db = i
-	for i: int in range(weapons_light.size()):
+	for i: int in weapons_light.size():
 		weapons_light[i].idx_in_db = i
-	for i: int in range(weapons_heavy.size()):
+	for i: int in weapons_heavy.size():
 		weapons_heavy[i].idx_in_db = i
-	for i: int in range(weapons_support.size()):
+	for i: int in weapons_support.size():
 		weapons_support[i].idx_in_db = i
-	for i: int in range(weapons_melee.size()):
+	for i: int in weapons_melee.size():
 		weapons_melee[i].idx_in_db = i
+	for i: int in skills.size():
+		skills[i].idx_in_db = i
