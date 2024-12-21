@@ -81,7 +81,7 @@ func _add_player_entry(id: int, player_name: String) -> void:
 	(player_entry.get_node(^"Kick") as CanvasItem).visible = _admin
 	(player_entry.get_node(^"Kick") as BaseButton).pressed.connect(_on_kick_pressed.bind(id))
 	_players_container.add_child(player_entry)
-	print_verbose("Added player %d entry with name: %s." % [id, player_name])
+	print_verbose("Added player %d entry with name %s." % [id, player_name])
 
 
 @rpc("reliable", "call_local", "authority", 1)

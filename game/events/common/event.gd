@@ -108,6 +108,7 @@ func spawn_player(id: int) -> void:
 	$Entities.add_child(player)
 	player.damaged.connect(_on_player_damaged)
 	player.killed.connect(_on_player_killed)
+	player.tree_exiting.connect(_on_player_tree_exiting.bind(player))
 	if not started:
 		player.make_disarmed()
 		player.make_immobile()
@@ -303,9 +304,14 @@ func _on_player_killed(who: int, by: int) -> void:
 		var target: Player = _players[who]
 		_register_kill.rpc_id(by, target.global_position)
 	
-	_players_skill_vars[who] = _players[who].skill_vars
 	_player_killed(who, by)
 	_players.erase(who)
+
+
+func _on_player_tree_exiting(player: Player) -> void:
+	if not player.id in _players_names:
+		return
+	_players_skill_vars[player.id] = player.skill_vars
 
 
 func _on_peer_disconnected(id: int) -> void:

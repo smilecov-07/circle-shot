@@ -319,7 +319,7 @@ func _authenticate_callback(peer: int, data: PackedByteArray) -> void:
 		return
 	
 	if not multiplayer.is_server():
-		if peer != 1:
+		if peer != MultiplayerPeer.TARGET_PEER_SERVER:
 			push_warning("Unexpected authenticating message. Peer: %d." % peer)
 			return
 		if data.is_empty():
@@ -366,7 +366,7 @@ func _authenticate_callback(peer: int, data: PackedByteArray) -> void:
 		_scene_multiplayer.send_auth(peer, PackedByteArray([FailReason.FULL_ROOM]))
 		print_verbose("Rejecting %d: full room." % peer)
 		return
-	if state in [State.LOADING, State.EVENT]:
+	if state != State.LOBBY:
 		_scene_multiplayer.send_auth(peer, PackedByteArray([FailReason.IN_GAME]))
 		print_verbose("Rejecting %d: already in game." % peer)
 		return

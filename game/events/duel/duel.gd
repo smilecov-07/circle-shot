@@ -93,10 +93,15 @@ func _end_round(win_team: int, winner: int, end_event := false) -> void:
 		return
 	
 	_duel_ui.end_round(_current_round, win_team, winner, end_event)
-	_current_round += 1
+	if end_event:
+		_current_round = 3
+	else:
+		_current_round += 1
+	
 	var tween: Tween = $PoisonSmokes.create_tween()
-	tween.tween_property($PoisonSmokes as CanvasItem, ^":modulate", Color.TRANSPARENT, 0.3)
+	tween.tween_interval(6.5 if end_event else 3.5)
 	tween.tween_callback($PoisonSmokes.queue_free)
+	
 	get_tree().call_group(&"Player", &"make_disarmed")
 	get_tree().call_group(&"Player", &"make_immobile")
 	get_tree().call_group(&"Player", &"make_immune")

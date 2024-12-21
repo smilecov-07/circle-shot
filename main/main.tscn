@@ -186,14 +186,17 @@ stretch_mode = 6
 
 [node name="Logo" type="TextureRect" parent="LoadingScreen"]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 7
 anchor_left = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
+anchor_bottom = 1.0
 offset_left = -400.0
-offset_top = 64.0
+offset_top = -720.0
 offset_right = 400.0
-offset_bottom = 224.0
+offset_bottom = -560.0
 grow_horizontal = 2
+grow_vertical = 0
 texture = ExtResource("2_j1upr")
 expand_mode = 1
 

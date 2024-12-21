@@ -371,6 +371,7 @@ func _start_load() -> void:
 	_loading_preload_resources()
 	await loading_stage_finished
 	
+	print_verbose("Loading completed. Game version: %s." % Globals.version)
 	_loading_open_menu()
 	await loading_stage_finished
 	$LoadingScreen.queue_free()
