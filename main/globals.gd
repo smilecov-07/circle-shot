@@ -25,6 +25,9 @@ var headless := false
 var items_db: ItemsDB = load("uid://pwq1e7l2ckos")
 ## Файл сохранения. Предпочитайте методы [code]get_*/set_*[/code] для его модификации.
 var save_file: ConfigFile
+## Файл с данными, которые загружаются с сервера. Проверяйте на [code]null[/code]
+## перед использованием!
+var data_file: ConfigFile
 
 
 func _notification(what: int) -> void:

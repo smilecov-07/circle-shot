@@ -202,8 +202,7 @@ uri = "https://t.me/dsgames31"
 [node name="EngineTitle" type="Label" parent="About/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 theme_type_variation = &"HeaderSmall"
-text = "Движок
-"
+text = "Движок"
 horizontal_alignment = 1
 
 [node name="Engine" type="Label" parent="About/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
@@ -221,20 +220,26 @@ uri = "https://godotengine.org/license"
 [node name="OtherTitle" type="Label" parent="About/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 theme_type_variation = &"HeaderSmall"
-text = "Другое
-"
+text = "Другое"
 horizontal_alignment = 1
 
 [node name="Other" type="Label" parent="About/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
-text = "В пятницу 13 в Dead Circle... никто не выжил."
+text = "Разрабы сбежали из армии."
 autowrap_mode = 2
 
 [node name="Close" type="Button" parent="About/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "ОК"
+
+[node name="UpdateDialog" type="ConfirmationDialog" parent="."]
+title = "Доступно обновление!"
+size = Vector2i(246, 112)
+unresizable = true
+ok_button_text = "Скачать"
+cancel_button_text = "Позже"
 
 [connection signal="pressed" from="ButtonsContainer/PlayButtonsContainer/PlayNetwork" to="." method="_on_play_network_pressed"]
 [connection signal="pressed" from="ButtonsContainer/MiscButtonsContainer/Settings" to="." method="_on_settings_pressed"]
@@ -243,3 +248,4 @@ text = "ОК"
 [connection signal="visibility_changed" from="NameDialog" to="." method="_on_name_dialog_visibility_changed"]
 [connection signal="close_requested" from="About" to="About" method="hide"]
 [connection signal="pressed" from="About/MarginContainer/VBoxContainer/Close" to="About" method="hide"]
+[connection signal="confirmed" from="UpdateDialog" to="." method="_on_update_dialog_confirmed"]

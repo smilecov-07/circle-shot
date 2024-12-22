@@ -5,7 +5,7 @@ extends Attack
 var direction: Vector2
 
 func _ready() -> void:
-	direction = Vector2.RIGHT.rotated(rotation)
+	direction = Vector2.from_angle(rotation)
 	var tween: Tween = create_tween()
 	tween.tween_property($Sprite2D as Node2D, ^":scale:x", 1.0, 0.25).from(0.1)
 

@@ -38,6 +38,9 @@ func _ready() -> void:
 	(%AimDZoneSlider as Range).value = Globals.get_controls_float("aim_deadzone")
 	(%AimZoneSlider as Range).set_value_no_signal(Globals.get_controls_float("aim_zone"))
 	(%ShowDamageCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("show_damage"))
+	(%UpdatesCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("check_updates"))
+	_on_updates_check_toggled((%UpdatesCheck as BaseButton).button_pressed)
+	(%BetasCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("check_betas"))
 	
 	_update_aim_visual_size()
 	get_window().size_changed.connect(_update_aim_visual_size)
@@ -60,6 +63,9 @@ func _ready() -> void:
 		(%FullscreenCheck.get_parent().get_parent() as CanvasItem).hide()
 	if not OS.has_feature("mobile"):
 		(%VibrationCheck.get_parent().get_parent() as CanvasItem).hide()
+	if "--disable-update-check" in OS.get_cmdline_args():
+		(%UpdatesCheck.get_parent().get_parent() as CanvasItem).hide()
+		(%BetasCheck.get_parent().get_parent() as CanvasItem).hide()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -124,12 +130,10 @@ func _update_aim_visual_size() -> void:
 	var viewport_size: Vector2 = get_viewport_rect().size
 	if viewport_size.x >= viewport_size.y:
 		_aim_visual.custom_minimum_size.x = AIM_VISUAL_MAX_SIZE
-		_aim_visual.custom_minimum_size.y = \
-				viewport_size.y / viewport_size.x * AIM_VISUAL_MAX_SIZE
+		_aim_visual.custom_minimum_size.y = 1 / viewport_size.aspect() * AIM_VISUAL_MAX_SIZE
 	else:
 		_aim_visual.custom_minimum_size.y = AIM_VISUAL_MAX_SIZE
-		_aim_visual.custom_minimum_size.x = \
-				viewport_size.x / viewport_size.y * AIM_VISUAL_MAX_SIZE
+		_aim_visual.custom_minimum_size.x = viewport_size.aspect() * AIM_VISUAL_MAX_SIZE
 
 
 func _on_request_permissions_result(permission: String, granted: bool) -> void:
@@ -140,6 +144,8 @@ func _on_request_permissions_result(permission: String, granted: bool) -> void:
 
 
 func _on_exit_pressed() -> void:
+	if is_instance_valid(Globals.main.menu):
+		Globals.main.menu.check_updates()
 	queue_free()
 
 
@@ -320,3 +326,12 @@ func _on_configure_controls_pressed() -> void:
 
 func _on_show_damage_check_toggled(toggled_on: bool) -> void:
 	Globals.set_setting_bool("show_damage", toggled_on)
+
+
+func _on_updates_check_toggled(toggled_on: bool) -> void:
+	Globals.set_setting_bool("check_updates", toggled_on)
+	(%BetasCheck.get_parent().get_parent() as CanvasItem).visible = toggled_on
+
+
+func _on_betas_check_toggled(toggled_on: bool) -> void:
+	Globals.set_setting_bool("check_betas", toggled_on)

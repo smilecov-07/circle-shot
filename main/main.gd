@@ -23,7 +23,7 @@ enum ActionEventType {
 	MOUSE_BUTTON = 1,
 }
 ## URL сервера с данными для игры (патчами, предложениями в магазине, ...).
-const SERVER_URL := "https://diamondstudiogames.github.io"
+const SERVER_URL := "https://diamondstudiogames.github.io/circle-shot"
 ## Максимальное соотношение ширины к высоте, превысив которое содержимое окна начнёт обрезаться.
 const MAX_ASPECT_RATIO := 2.34
 ## Минимальное соотношение ширины к высоте, пренизив которое содержимое окна начнёт обрезаться.
@@ -45,6 +45,7 @@ var screens: Array[Control]
 ## Словарь загруженных пользовательских треков в формате "<имя файла> : <ресурс трека>".
 var loaded_custom_tracks: Dictionary[String, AudioStream]
 var _preloaded_resources: Array[Resource]
+var _download_http: HTTPRequest
 
 ## Путь до папки с пользовательскими треками.
 @onready var music_path: String = OS.get_system_dir(OS.SYSTEM_DIR_MUSIC).path_join(
@@ -56,6 +57,16 @@ var _preloaded_resources: Array[Resource]
 		ProjectSettings.get_setting("display/window/size/viewport_height")
 @onready var _load_status_label: Label = $LoadingScreen/StatusLabel
 @onready var _load_progress_bar: ProgressBar = $LoadingScreen/ProgressBar
+
+
+func _ready() -> void:
+	set_process(false)
+
+
+func _process(_delta: float) -> void:
+	if _download_http.get_body_size() > 0:
+		_load_progress_bar.value = _download_http.get_downloaded_bytes() * 100.0 \
+				/ _download_http.get_body_size()
 
 
 func _input(event: InputEvent) -> void:
@@ -107,8 +118,12 @@ func open_screen(screen_scene: PackedScene) -> Control:
 	if has_node(NodePath(screen.name)):
 		push_error("Screen %s is already opened!" % screen.name)
 		return null
-	screen.tree_exited.connect(screens.erase.bind(screen))
+	screen.tree_exited.connect(_on_screen_tree_exited.bind(screen))
 	add_child(screen)
+	if not screens.is_empty():
+		screens[-1].hide()
+	elif is_instance_valid(menu):
+		menu.hide()
 	screens.append(screen)
 	print_verbose("Opened screen: %s." % screen.name)
 	return screen
@@ -173,6 +188,10 @@ func setup_settings() -> void:
 			Globals.get_setting_bool("smooth_camera", true))
 	Globals.set_setting_bool("show_damage",
 			Globals.get_setting_bool("show_damage", true))
+	Globals.set_setting_bool("check_updates",
+			Globals.get_setting_bool("check_updates", true))
+	Globals.set_setting_bool("check_betas",
+			Globals.get_setting_bool("check_betas", Globals.version.count('.') == 3))
 
 
 ## Устанавливает настройки управления по умолчанию, если их ещё нет.
@@ -332,14 +351,13 @@ func apply_controls_settings() -> void:
 
 
 func _update_window_stretch_aspect() -> void:
-	var ratio: float = get_window().size.x / float(get_window().size.y)
-	if ratio > MAX_ASPECT_RATIO:
+	if get_window().size.aspect() > MAX_ASPECT_RATIO:
 		get_window().content_scale_size = Vector2i(
 				roundi(_default_window_content_height * MAX_ASPECT_RATIO),
 				_default_window_content_height
 		)
 		get_window().content_scale_aspect = Window.CONTENT_SCALE_ASPECT_KEEP_WIDTH
-	elif ratio < MIN_ASPECT_RATIO:
+	elif get_window().size.aspect() < MIN_ASPECT_RATIO:
 		get_window().content_scale_size = Vector2i(
 				_default_window_content_width,
 				roundi(_default_window_content_width / MIN_ASPECT_RATIO)
@@ -357,19 +375,21 @@ func _start_load() -> void:
 	_loading_init()
 	await loading_stage_finished
 	
-	# TODO: а стоит ли это запускать в headless режиме?
 	_loading_check_server()
 	var success: bool = await loading_stage_finished
 	if success:
-		# Загрузка данных
-		# Синхронизация версии
-		pass
+		_loading_download_data()
+		success = await loading_stage_finished
+		if success:
+			# Проверка патчей
+			pass
 	
-	_loading_custom_tracks()
-	await loading_stage_finished
-	
-	_loading_preload_resources()
-	await loading_stage_finished
+	if not Globals.headless:
+		_loading_custom_tracks()
+		await loading_stage_finished
+		
+		_loading_preload_resources()
+		await loading_stage_finished
 	
 	print_verbose("Loading completed. Game version: %s." % Globals.version)
 	_loading_open_menu()
@@ -422,12 +442,34 @@ func _loading_check_server() -> void:
 	http.request_completed.connect(_on_check_http_request_completed.bind(http))
 	add_child(http)
 	
-	var err: Error = http.request(SERVER_URL.path_join("README.md"))
+	var err: Error = http.request(SERVER_URL.path_join("check.txt"))
 	if err != OK:
 		http.request_completed.disconnect(_on_check_http_request_completed)
 		push_warning("Can't connect to server. Error: %s." % error_string(err))
 		loading_stage_finished.emit(false)
 		http.queue_free()
+
+
+func _loading_download_data() -> void:
+	print_verbose("Downloading data...")
+	_load_status_label.text = "Загрузка данных..."
+	_load_progress_bar.value = 0.0
+	await get_tree().process_frame
+	
+	var http := HTTPRequest.new()
+	http.timeout = 20.0
+	http.request_completed.connect(_on_data_http_request_completed.bind(http))
+	add_child(http)
+	_download_http = http
+	set_process(true)
+	
+	var err: Error = http.request(SERVER_URL.path_join("data.cfg"))
+	if err != OK:
+		http.request_completed.disconnect(_on_data_http_request_completed)
+		push_warning("Can't download data. Error: %s." % error_string(err))
+		loading_stage_finished.emit(false)
+		http.queue_free()
+		set_process(false)
 
 
 func _loading_custom_tracks() -> void:
@@ -559,9 +601,17 @@ func _loading_open_menu() -> void:
 	loading_stage_finished.emit(true)
 
 
+func _on_screen_tree_exited(screen: Control) -> void:
+	screens.erase(screen)
+	if not screens.is_empty():
+		screens[-1].show()
+	elif is_instance_valid(menu):
+		menu.show()
+
+
 func _on_check_http_request_completed(result: HTTPRequest.Result,
 		response_code: HTTPClient.ResponseCode, _headers: PackedStringArray, 
-		_body: PackedByteArray, http: HTTPRequest) -> void:
+		body: PackedByteArray, http: HTTPRequest) -> void:
 	http.queue_free()
 	if result != HTTPRequest.RESULT_SUCCESS:
 		push_warning("Connect to server: result is not Success. Result: %d." % result)
@@ -572,5 +622,39 @@ func _on_check_http_request_completed(result: HTTPRequest.Result,
 				"Connect to server: response code is not 200. Response code: %d." % response_code)
 		loading_stage_finished.emit(false)
 		return
-	print_verbose("Connection success.")
-	loading_stage_finished.emit(true)
+	var text: String = body.get_string_from_utf8()
+	if "circleshot" in text:
+		print_verbose("Connection success.")
+		loading_stage_finished.emit(true)
+	else:
+		push_warning("Connection success, but check failed.")
+		loading_stage_finished.emit(false)
+
+
+func _on_data_http_request_completed(result: HTTPRequest.Result,
+		response_code: HTTPClient.ResponseCode, _headers: PackedStringArray, 
+		body: PackedByteArray, http: HTTPRequest) -> void:
+	http.queue_free()
+	set_process(false)
+	if result != HTTPRequest.RESULT_SUCCESS:
+		push_warning("Download data: result is not Success. Result: %d." % result)
+		loading_stage_finished.emit(false)
+		return
+	if response_code != HTTPClient.RESPONSE_OK:
+		push_warning(
+				"Download data: response code is not 200. Response code: %d." % response_code)
+		loading_stage_finished.emit(false)
+		return
+	
+	_load_status_label.text = "Чтение данных..."
+	_load_progress_bar.value = 100.0
+	await get_tree().process_frame
+	var data_file := ConfigFile.new()
+	var err: Error = data_file.parse(body.get_string_from_utf8())
+	if err != OK:
+		push_warning("Can't parse downloaded data. Error: %s." % error_string(err))
+		loading_stage_finished.emit(false)
+	else:
+		print_verbose("Data downloaded successfully.")
+		Globals.data_file = data_file
+		loading_stage_finished.emit(true)
