@@ -6,10 +6,6 @@ extends Node2D
 ## Узел, отвечающий за нанесения урона сущностям. Для работы добавьте дочерний
 ## узел типа [AreaDetector], [ShapeDetector] или [RayDetector].
 
-## Издаётся после вызова [method clear_exceptions]. По этому сигналу все дочерние детекторы
-## очищают исключения.
-signal exceptions_cleared
-
 ## Урон, который будет нанесён сущности.
 @export var damage: int
 ## Интервал между нанесениями урона сущностям, попавших под эту атаку.
@@ -22,6 +18,12 @@ var who: int = -1
 ## Команда, которой принадлежит эта атака. Урон сущности не будет нанесён, если её команда
 ## совпадает с командой атаки.
 var team: int = -1
+## [RayDetector]-ы этой атаки.
+var ray_detectors: Array[RayDetector]
+## [ShapeDetector]-ы этой атаки.
+var shape_detectors: Array[ShapeDetector]
+## [AreaDetector]-ы этой атаки.
+var area_detectors: Array[AreaDetector]
 var _exceptions: Dictionary[StringName, float]
 
 
@@ -54,7 +56,10 @@ func can_deal_damage(entity: Entity) -> bool:
 ## (из-за [member damage_interval]).
 func clear_exceptions() -> void:
 	_exceptions.clear()
-	exceptions_cleared.emit()
+	for rd: RayDetector in ray_detectors:
+		rd.clear_exceptions()
+	for sd: ShapeDetector in shape_detectors:
+		sd.clear_exceptions()
 
 
 ## Переопредели этот метод в дочернем классе, чтобы добавить логику при успешном нанесении урона.

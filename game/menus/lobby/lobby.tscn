@@ -661,7 +661,6 @@ visible = false
 transient = true
 exclusive = true
 unresizable = true
-min_size = Vector2i(360, 360)
 
 [node name="Background" type="ColorRect" parent="ItemSelector"]
 anchors_preset = 15

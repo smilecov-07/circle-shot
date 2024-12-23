@@ -7,7 +7,7 @@ signal hit(where: Vector2)
 @onready var _attack: Attack = get_parent()
 
 func _ready() -> void:
-	_attack.exceptions_cleared.connect(_on_exceptions_cleared)
+	_attack.ray_detectors.append(self)
 
 
 func _physics_process(delta: float) -> void:
@@ -28,8 +28,4 @@ func _physics_process(delta: float) -> void:
 
 
 func _exit_tree() -> void:
-	_attack.exceptions_cleared.disconnect(_on_exceptions_cleared)
-
-
-func _on_exceptions_cleared() -> void:
-	clear_exceptions()
+	_attack.ray_detectors.erase(self)

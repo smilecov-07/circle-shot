@@ -45,13 +45,13 @@ radius = 24.0
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ltveq"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
-properties/0/replication_mode = 0
+properties/0/replication_mode = 1
 properties/1/path = NodePath(".:speed")
 properties/1/spawn = true
 properties/1/replication_mode = 0
 properties/2/path = NodePath(".:direction")
 properties/2/spawn = true
-properties/2/replication_mode = 0
+properties/2/replication_mode = 1
 
 [node name="GrenadeProjectile" type="AnimatableBody2D"]
 collision_layer = 4
@@ -77,6 +77,7 @@ one_shot = true
 autostart = true
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_interval = 0.1
 replication_config = SubResource("SceneReplicationConfig_ltveq")
 
 [connection signal="timeout" from="ExplosionTimer" to="." method="_on_explosion_timer_timeout"]

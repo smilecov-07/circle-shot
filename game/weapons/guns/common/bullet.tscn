@@ -1,29 +1,17 @@
-[gd_scene load_steps=7 format=3 uid="uid://1durulsrwk7o"]
+[gd_scene load_steps=6 format=3 uid="uid://1durulsrwk7o"]
 
+[ext_resource type="PackedScene" uid="uid://bjgdkucrrx5a0" path="res://game/entity/attack/projectile.tscn" id="1_44t64"]
 [ext_resource type="Script" uid="uid://bnxsaaaegknaa" path="res://game/weapons/guns/common/bullet.gd" id="1_fc6k8"]
-[ext_resource type="Script" uid="uid://bgvirlnion8wa" path="res://game/entity/attack/attack.gd" id="1_fm5bq"]
 [ext_resource type="PackedScene" uid="uid://d5ag68upkkaq" path="res://game/weapons/guns/common/bullet_hit.tscn" id="2_jsg66"]
 [ext_resource type="Texture2D" uid="uid://cyro3oroia5l6" path="res://game/weapons/guns/common/bullet.png" id="2_u82m3"]
 [ext_resource type="Script" uid="uid://bc7ffmlfu6nm7" path="res://game/entity/attack/ray_detector.gd" id="3_gkcmb"]
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_viq1e"]
-properties/0/path = NodePath(".:rotation")
-properties/0/spawn = true
-properties/0/replication_mode = 0
-properties/1/path = NodePath(".:position")
-properties/1/spawn = true
-properties/1/replication_mode = 0
-properties/2/path = NodePath(".:team")
-properties/2/spawn = true
-properties/2/replication_mode = 0
-
-[node name="Bullet" type="Node2D"]
+[node name="Bullet" instance=ExtResource("1_44t64")]
 script = ExtResource("1_fc6k8")
 speed = 2000.0
 hit_vfx_scene = ExtResource("2_jsg66")
-metadata/_custom_type_script = ExtResource("1_fm5bq")
 
-[node name="RayDetector" type="RayCast2D" parent="."]
+[node name="RayDetector" type="RayCast2D" parent="." index="0"]
 position = Vector2(-128, 0)
 target_position = Vector2(128, 0)
 collision_mask = 11
@@ -31,18 +19,9 @@ hit_from_inside = true
 script = ExtResource("3_gkcmb")
 metadata/_custom_type_script = ExtResource("3_gkcmb")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." index="1"]
 z_index = -1
 texture = ExtResource("2_u82m3")
 offset = Vector2(-96, 0)
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 2.5
-one_shot = true
-autostart = true
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_viq1e")
-
-[connection signal="hit" from="RayDetector" to="." method="_on_ray_detector_hit"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="hit" from="RayDetector" to="." method="_on_detector_hit"]
