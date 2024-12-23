@@ -46,7 +46,7 @@ func _load_keys_from_map() -> void:
 			_mouse_button_events[action] = mb.button_index
 		var key := event as InputEventKey
 		if key:
-			_key_events[action] = key.physical_keycode
+			_key_events[action] = key.keycode
 
 
 func _set_coded_event_candidate(type: Main.ActionEventType, value: int) -> void:
@@ -61,8 +61,7 @@ func _set_coded_event_candidate(type: Main.ActionEventType, value: int) -> void:
 func _coded_event_as_text(type: Main.ActionEventType, value: int) -> String:
 	match type:
 		Main.ActionEventType.KEY:
-			return OS.get_keycode_string(
-					DisplayServer.keyboard_get_keycode_from_physical(value))
+			return OS.get_keycode_string(value)
 		Main.ActionEventType.MOUSE_BUTTON:
 			match value:
 				MOUSE_BUTTON_LEFT:
@@ -85,7 +84,7 @@ func _event_as_text(event: InputEvent) -> String:
 	
 	var key := event as InputEventKey
 	if key:
-		return _coded_event_as_text(Main.ActionEventType.KEY, key.physical_keycode)
+		return _coded_event_as_text(Main.ActionEventType.KEY, key.keycode)
 	
 	return "НЕИЗВЕСТНО"
 
@@ -115,13 +114,13 @@ func _on_event_selector_window_input(event: InputEvent) -> void:
 	var key := event as InputEventKey
 	if key:
 		($EventSelector as Window).set_input_as_handled()
-		if _key_events.get(_editing_action, -1) == key.physical_keycode:
-			($EventSelector as AcceptDialog).dialog_text = "Введено текущее событие."
+		if _key_events.get(_editing_action, -1) == key.keycode:
+			($EventSelector as AcceptDialog).dialog_text = "Эта кнопка занята этим же действием."
 			return
-		if key.physical_keycode in _key_events.values():
-			($EventSelector as AcceptDialog).dialog_text = "Эта кнопка уже занята другим действием."
+		if key.keycode in _key_events.values():
+			($EventSelector as AcceptDialog).dialog_text = "Эта кнопка занята другим действием."
 			return
-		_set_coded_event_candidate(Main.ActionEventType.KEY, key.physical_keycode)
+		_set_coded_event_candidate(Main.ActionEventType.KEY, key.keycode)
 
 
 func _on_save_pressed() -> void:

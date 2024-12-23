@@ -230,7 +230,7 @@ func setup_controls_settings() -> void:
 		var key := event as InputEventKey
 		if key:
 			coded_event_type = ActionEventType.KEY
-			coded_event_value = key.physical_keycode
+			coded_event_value = key.keycode
 		
 		Globals.set_controls_int("action_%s_event_type" % action,
 				Globals.get_controls_int("action_%s_event_type" % action, coded_event_type))
@@ -340,7 +340,7 @@ func apply_controls_settings() -> void:
 		match coded_event_type:
 			ActionEventType.KEY:
 				var key := InputEventKey.new()
-				key.physical_keycode = coded_event_value as Key
+				key.keycode = coded_event_value as Key
 				event = key
 			ActionEventType.MOUSE_BUTTON:
 				var mb := InputEventMouseButton.new()

@@ -17,12 +17,17 @@ func _ready() -> void:
 
 ## Проверяет наличие обновлений.
 func check_updates() -> void:
+	if not Globals.data_file:
+		print_verbose("Updates check failed: data is not available.")
+		return
 	if Globals.data_file.has_section_key("versions", "checked"):
 		var betas_checked: bool = Globals.data_file.get_value("versions", "checked")
 		if int(betas_checked) >= int(Globals.get_setting_bool("check_betas")):
+			print_verbose("Updates check interrupted: already checked.")
 			return
 	if "--disable-update-check" in OS.get_cmdline_args() \
 			or not Globals.get_setting_bool("check_updates"):
+		print_verbose("Updates check disabled.")
 		return
 	
 	Globals.data_file.set_value("versions", "checked", Globals.get_setting_bool("check_betas"))
