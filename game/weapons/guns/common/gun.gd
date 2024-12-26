@@ -5,7 +5,8 @@ extends Weapon
 
 ## Интервал между выстрелами.
 @export var shoot_interval := 0.5
-## Сколько боеприпасов снимается за выстрел.
+## Сколько боеприпасов снимается за выстрел. Если боеприпасов в магазине меньше, чем это число,
+## то будет выполнена автоматическая перезарядка.
 @export var ammo_per_shot: int = 1
 ## Время, за которое оружие поворачивается в направление прицела.
 @export var to_aim_time := 0.15
@@ -79,7 +80,7 @@ func _physics_process(delta: float) -> void:
 			and ammo >= ammo_per_shot and _shoot_timer <= 0.0:
 		shoot.rpc()
 	_shoot_timer -= delta
-	if _player.is_local() and can_reload() and ammo <= 0:
+	if _player.is_local() and can_reload() and ammo < ammo_per_shot:
 		_player.try_reload_weapon()
 
 

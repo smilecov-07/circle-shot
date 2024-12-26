@@ -352,7 +352,7 @@ _data = {
 &"Shoot": SubResource("Animation_evi84")
 }
 
-[node name="AK-74" instance=ExtResource("1_q67hu")]
+[node name="AK74" instance=ExtResource("1_q67hu")]
 shoot_interval = 0.15
 to_aim_time = 0.3
 projectile_scene = ExtResource("2_jquc2")

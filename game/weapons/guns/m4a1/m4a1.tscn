@@ -69,8 +69,8 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_lluxh"]
 resource_name = "PostEquip"
-length = 0.2
-step = 0.05
+length = 0.23
+step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -78,7 +78,7 @@ tracks/0/path = NodePath("Weapon:rotation")
 tracks/0/interp = 4
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
+"times": PackedFloat32Array(0, 0.23),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [6.00252, 0.0]
@@ -86,8 +86,8 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_ga7im"]
 resource_name = "PostReload"
-length = 0.2
-step = 0.025
+length = 0.23
+step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -95,7 +95,7 @@ tracks/0/path = NodePath("Weapon:rotation")
 tracks/0/interp = 3
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
+"times": PackedFloat32Array(0, 0.23),
 "transitions": PackedFloat32Array(-2, 1),
 "update": 0,
 "values": [6.07375, 0.0]
@@ -356,7 +356,7 @@ _data = {
 
 [node name="M4A1" instance=ExtResource("1_4qhkt")]
 shoot_interval = 0.14
-to_aim_time = 0.2
+to_aim_time = 0.23
 projectile_scene = ExtResource("2_0lskg")
 spread_base = 1.5
 spread_walk = 5.5

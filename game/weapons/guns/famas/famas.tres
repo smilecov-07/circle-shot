@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3 uid="uid://c4opfy48ubdko"]
+
+[ext_resource type="Script" uid="uid://55g8njvkg07g" path="res://game/player/equip/weapon_data.gd" id="1_23qcc"]
+
+[resource]
+script = ExtResource("1_23qcc")
+name = "FAMAS"
+rarity = 1
+id = "famasik"
+damage_text = "Урон/с: 43"
+ammo_text = "30/90"
+description = ""
+scene_path = "uid://b5ktvv2dnbcgp"
+image_path = "uid://j5skuasygwff"
+spawnable_scenes_paths = Array[String](["uid://byoxdenhuuhfc"])
+metadata/_custom_type_script = ExtResource("1_23qcc")

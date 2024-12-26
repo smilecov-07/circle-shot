@@ -17,12 +17,6 @@ var _in_single_mode := false
 @onready var _aim_device: Sprite2D = $Base/Aim
 
 
-func _process(delta: float) -> void:
-	super(delta)
-	if _in_single_mode:
-		ammo_per_shot = maxi(mini(single_ammo_per_shot, ammo), 1)
-
-
 func _shoot() -> void:
 	super()
 	if _in_single_mode:
@@ -44,7 +38,7 @@ func additional_button() -> void:
 	if _in_single_mode:
 		shoot_interval = single_shoot_interval
 		projectile_scene = single_projectile_scene
-		ammo_per_shot = mini(maxi(single_ammo_per_shot, ammo), 1)
+		ammo_per_shot = single_ammo_per_shot
 		if not _shooting_timer.is_stopped():
 			_shooting_timer.stop()
 			_shooting_sfx.stop()
