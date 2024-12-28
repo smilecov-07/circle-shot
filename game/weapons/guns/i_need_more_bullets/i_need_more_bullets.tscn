@@ -36,7 +36,7 @@ step = 0.05
 tracks/0/type = "audio"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("SFX")
+tracks/0/path = NodePath("Sfx")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -201,7 +201,7 @@ step = 0.05
 tracks/0/type = "audio"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("SFX")
+tracks/0/path = NodePath("Sfx")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -333,7 +333,7 @@ tracks/1/keys = {
 tracks/2/type = "audio"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("SingleShotSFX")
+tracks/2/path = NodePath("SingleShotSfx")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -385,16 +385,16 @@ libraries = {
 &"": SubResource("AnimationLibrary_ohb8l")
 }
 
-[node name="SFX" type="AudioStreamPlayer2D" parent="." index="2"]
+[node name="Sfx" type="AudioStreamPlayer2D" parent="." index="2"]
 max_distance = 1600.0
 bus = &"SFX"
 
-[node name="SwitchSFX" type="AudioStreamPlayer2D" parent="." index="3"]
+[node name="SwitchSfx" type="AudioStreamPlayer2D" parent="." index="3"]
 stream = ExtResource("8_g15ve")
 max_distance = 1600.0
 bus = &"SFX"
 
-[node name="SwitchSingleSFX" type="AudioStreamPlayer2D" parent="." index="4"]
+[node name="SwitchSingleSfx" type="AudioStreamPlayer2D" parent="." index="4"]
 stream = ExtResource("8_2rkf8")
 max_distance = 1600.0
 bus = &"SFX"
@@ -411,22 +411,23 @@ region_enabled = true
 region_rect = Rect2(88, 88, 40, 24)
 
 [node name="Aim" type="Sprite2D" parent="Base" index="1"]
+visible = false
 show_behind_parent = true
 texture = ExtResource("12_si2f5")
 offset = Vector2(30, -59)
 region_enabled = true
 region_rect = Rect2(40, 16, 88, 40)
 
-[node name="ShootingSFX" type="AudioStreamPlayer2D" parent="." index="6"]
+[node name="ShootingSfx" type="AudioStreamPlayer2D" parent="." index="6"]
 stream = ExtResource("8_iqst8")
 max_distance = 2560.0
 bus = &"SFX"
 
-[node name="SingleShotSFX" type="AudioStreamPlayer2D" parent="." index="7"]
+[node name="SingleShotSfx" type="AudioStreamPlayer2D" parent="." index="7"]
 max_distance = 3040.0
 bus = &"SFX"
 
 [node name="ShootingTimer" type="Timer" parent="." index="8"]
 one_shot = true
 
-[connection signal="timeout" from="ShootingTimer" to="ShootingSFX" method="stop"]
+[connection signal="timeout" from="ShootingTimer" to="ShootingSfx" method="stop"]

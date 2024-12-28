@@ -11,9 +11,9 @@ var _in_single_mode := false
 @onready var _default_projectile_scene: PackedScene = projectile_scene
 
 @onready var _shooting_timer: Timer = $ShootingTimer
-@onready var _shooting_sfx: AudioStreamPlayer2D = $ShootingSFX
-@onready var _switch_sfx: AudioStreamPlayer2D = $SwitchSFX
-@onready var _switch_single_sfx: AudioStreamPlayer2D = $SwitchSingleSFX
+@onready var _shooting_sfx: AudioStreamPlayer2D = $ShootingSfx
+@onready var _switch_sfx: AudioStreamPlayer2D = $SwitchSfx
+@onready var _switch_single_sfx: AudioStreamPlayer2D = $SwitchSingleSfx
 @onready var _aim_device: Sprite2D = $Base/Aim
 
 

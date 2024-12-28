@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/shooting.wav-91cbcf87c8273ee8554bffc3067e62be
 
 [params]
 
-force/8_bit=false
+force/8_bit=true
 force/mono=true
 force/max_rate=false
 force/max_rate_hz=44100

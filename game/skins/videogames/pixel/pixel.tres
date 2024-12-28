@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SkinData" load_steps=2 format=3 uid="uid://hu6l0jeaxqhw"]
+
+[ext_resource type="Script" uid="uid://d6lhqjoo2iuf" path="res://game/player/equip/skin_data.gd" id="1_82x72"]
+
+[resource]
+script = ExtResource("1_82x72")
+name = "Пиксельный"
+brief_description = "Сохраняй решимость!"
+rarity = 2
+id = "undertale"
+scene_path = "uid://bwh60wyedvw8h"
+image_path = "uid://bkr22i0bltnrm"
+metadata/_custom_type_script = ExtResource("1_82x72")
