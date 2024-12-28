@@ -20,6 +20,7 @@ config/project_settings_override="user://engine_settings.cfg"
 config/quit_on_go_back=false
 config/features=PackedStringArray("4.4", "GL Compatibility")
 run/max_fps=60
+run/low_processor_mode_sleep_usec=5000
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/image="res://misc/boot_splash.png"
 config/icon="res://misc/icon.png"
