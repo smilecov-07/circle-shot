@@ -42,7 +42,7 @@ var game: Game
 var menu: Menu
 ## Список открытых на данный момент экранов.
 var screens: Array[Control]
-## Словарь загруженных пользовательских треков в формате "<имя файла> : <ресурс трека>".
+## Словарь загруженных пользовательских треков в формате "<имя файла> - <ресурс трека>".
 var loaded_custom_tracks: Dictionary[String, AudioStream]
 var _preloaded_resources: Array[Resource]
 var _download_http: HTTPRequest

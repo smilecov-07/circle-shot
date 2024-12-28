@@ -38,7 +38,7 @@ func _process(_delta: float) -> void:
 
 ## Загружает события и карту по [param event_id] и [param map_id] соответственно. Возвращает [Event],
 ## если загрузка прошла удачно, иначе возвращает [code]null[/code].[br]
-## [b]Внимание[/b]: этот метод - [b]корутина[/b], так что вам необходимо подождать его с помощью
+## [b]Внимание[/b]: этот метод - [b]корутина[/b], так что Вам необходимо подождать его с помощью
 ## [code]await[/code].
 func load_event(event_id: int, map_id: int) -> Event:
 	_anim.play(&"StartLoad")

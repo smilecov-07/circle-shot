@@ -13,7 +13,7 @@ extends Resource
 ## Рекомендуемый формат: "X исп./YY с", где X - кол-во использований, YY - время отката.
 ## Если использование только одно, откат можно не писать.
 @export var usage_text: String
-## Редкость навыка. Смотри [enum ItemsDB.Rarity].
+## Редкость навыка. Смотрите [enum ItemsDB.Rarity].
 @export var rarity := ItemsDB.Rarity.COMMON
 ## ID навыка. Должно быть уникальным.
 @export var id: String
@@ -25,6 +25,6 @@ extends Resource
 ## Массив путей к сценам, относящихся конкретно к этому навыка, которые должны синхронизироваться
 ## при появлении. Например, сцена удара об землю.
 @export_file("PackedScene") var spawnable_scenes_paths: Array[String]
-## Индекс навыка в массиве [ItemsDB]. Равен -1 если его там нет.
+## Индекс навыка в массиве [ItemsDB]. Равен -2 если его там нет.
 ## Задаётся при инициализации [ItemsDB].
-var idx_in_db: int = -1
+var idx_in_db: int = -2

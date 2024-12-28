@@ -9,7 +9,7 @@ extends Resource
 @export var name: String
 ## Краткое описание скина.
 @export var brief_description: String
-## Редкость скина. Смотри [enum ItemsDB.Rarity].
+## Редкость скина. Смотрите [enum ItemsDB.Rarity].
 @export var rarity := ItemsDB.Rarity.COMMON
 ## ID скина. Должно быть уникальным.
 @export var id: String
@@ -18,6 +18,6 @@ extends Resource
 @export_file("PackedScene") var scene_path: String
 ## Путь до картинки скина, желательно с разрешением 256 на 256.
 @export_file("Texture2D") var image_path: String
-## Индекс скина в массиве [ItemsDB]. Равен -1 если его там нет.
+## Индекс скина в массиве [ItemsDB]. Равен -2 если его там нет.
 ## Задаётся при инициализации [ItemsDB].
-var idx_in_db: int = -1
+var idx_in_db: int = -2

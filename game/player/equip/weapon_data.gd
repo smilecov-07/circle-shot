@@ -7,7 +7,7 @@ extends Resource
 
 ## Имя оружия.
 @export var name: String
-## Редкость оружия. Смотри [enum ItemsDB.Rarity].
+## Редкость оружия. Смотрите [enum ItemsDB.Rarity].
 @export var rarity := ItemsDB.Rarity.COMMON
 ## ID оружия. Должно быть уникальным.
 @export var id: String

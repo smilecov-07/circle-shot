@@ -8,7 +8,7 @@
 script = ExtResource("2_066hq")
 name = "Командный бой"
 brief_description = "Убивай противников на счёт!"
-min_players = 2
+min_players = 4
 max_players = 10
 players_divider = 2
 scene_path = "uid://d2iraf4bc27ee"

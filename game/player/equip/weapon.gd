@@ -63,7 +63,7 @@ func initialize(player: Player, weapon_data: WeaponData) -> void:
 	_initialize()
 
 
-## Делает оружие текущим.
+## Делает оружие текущим (достаёт).
 func make_current() -> void:
 	show()
 	process_mode = PROCESS_MODE_INHERIT
