@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="MapData" load_steps=2 format=3 uid="uid://dbx37xj8qw5sy"]
+
+[ext_resource type="Script" uid="uid://c2mew3f2rwarc" path="res://game/events/common/map_data.gd" id="1_y7385"]
+
+[resource]
+script = ExtResource("1_y7385")
+name = "Лес"
+brief_description = "Поединок в зимнем лесу."
+scene_path = "uid://bpli4nq3osyio"
+image_path = "uid://blj1aaljy7mb5"
+metadata/_custom_type_script = ExtResource("1_y7385")
