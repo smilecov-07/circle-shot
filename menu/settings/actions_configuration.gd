@@ -13,7 +13,6 @@ var _pending_coded_events_values: Dictionary[StringName, int]
 
 
 func _ready() -> void:
-	size = Vector2i(640, 640) # КОСТЫЛЬ
 	if not OS.has_feature("pc"):
 		(%Actions/Fullscreen as CanvasItem).hide()
 	($EventSelector as AcceptDialog).get_label().horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
