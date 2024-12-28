@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SkinData" load_steps=2 format=3 uid="uid://bepw4q2yxai3m"]
+
+[ext_resource type="Script" uid="uid://d6lhqjoo2iuf" path="res://game/player/equip/skin_data.gd" id="1_8m0d0"]
+
+[resource]
+script = ExtResource("1_8m0d0")
+name = "Ёлочный шарик"
+brief_description = "С той, что Вам нравится"
+rarity = 1
+id = "ball1uchastok"
+scene_path = "uid://b311x3c5tbcij"
+image_path = "uid://3qaglarm1bwb"
+metadata/_custom_type_script = ExtResource("1_8m0d0")

@@ -23,8 +23,8 @@ run/max_fps=60
 run/low_processor_mode_sleep_usec=5000
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/image="res://misc/boot_splash.png"
-config/icon="res://misc/icon.png"
-config/windows_native_icon="res://misc/icon_windows.ico"
+config/icon="uid://dhlsismuwceu6"
+config/windows_native_icon="res://misc/icon_season_windows.ico"
 boot_splash/minimum_display_time=666
 
 [audio]
