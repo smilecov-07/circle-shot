@@ -1,9 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://c5n3and4gnxxb"]
-
-[ext_resource type="Texture2D" uid="uid://yqsfgicqu6e1" path="res://game/skins/new_year/new_year/new_year.png" id="1_bd084"]
-[ext_resource type="Script" uid="uid://nr21pnmv3b1n" path="res://game/player/equip/player_skin.gd" id="1_vdrck"]
-
-[node name="NewYear" type="Sprite2D"]
-texture = ExtResource("1_bd084")
-script = ExtResource("1_vdrck")
-metadata/_custom_type_script = ExtResource("1_vdrck")
