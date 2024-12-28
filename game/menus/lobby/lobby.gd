@@ -33,6 +33,7 @@ var _player_entry_scene: PackedScene = preload("uid://dj0mx5ui2wu4n")
 
 
 func _ready() -> void:
+	($ItemSelector as Window).size = Vector2i(408, 440) # КОСТЫЛЬ
 	_game.created.connect(_on_game_created)
 	_game.joined.connect(_on_game_joined)
 	_game.closed.connect(_on_game_closed)
