@@ -100,6 +100,7 @@ func reload_weapon() -> void:
 		return
 	
 	current_weapon.reload()
+	print_verbose("Player %s started reloading." % name)
 
 
 ## Активирует дополнительную кнопку оружия.[br]
@@ -111,6 +112,7 @@ func additional_button_weapon() -> void:
 		return
 	
 	current_weapon.additional_button()
+	print_verbose("Player %s used additional button." % name)
 
 
 ## Восстанавливает [param percent] процентов боеприпасов на оружии типа [param type].
@@ -128,6 +130,7 @@ func add_ammo_to_weapon(type: Weapon.Type, percent: float) -> void:
 			target_weapon.ammo_total - target_weapon.ammo_per_load
 	)
 	ammo_text_updated.emit(current_weapon.get_ammo_text())
+	print_verbose("Added %f percent of ammo to player %s." % [percent, name])
 
 
 ## Использует навык.[br]
@@ -139,6 +142,7 @@ func use_skill() -> void:
 		return
 	
 	skill.use()
+	print_verbose("Player %s used skill." % name)
 
 
 ## Отсылает запрос на смену оружия на тип [param to].
@@ -191,7 +195,7 @@ func set_weapon(type: Weapon.Type, data: WeaponData) -> void:
 		placeholder.name = "NoWeapon%d" % type
 		_weapons.add_child(placeholder)
 		_weapons.move_child(placeholder, type)
-		equip_data[1 + type] = -2 # TODO: задокументить
+		equip_data[1 + type] = -2
 		weapon_equipped.emit(type, null)
 		print_verbose("Removed weapon with type %d on player %s." % [type, name])
 		
@@ -251,7 +255,7 @@ func _request_change_weapon(to: Weapon.Type) -> void:
 	
 	var sender_id: int = multiplayer.get_remote_sender_id()
 	if id != sender_id:
-		push_warning("RPC Sender ID (%d) doesn't match with player ID (%d)!" % [sender_id, id])
+		push_warning("RPC Sender ID (%d) doesn't match with player ID (%d)." % [sender_id, id])
 		return
 	if to == current_weapon_type or is_disarmed():
 		return
@@ -267,7 +271,7 @@ func _request_reload() -> void:
 	
 	var sender_id: int = multiplayer.get_remote_sender_id()
 	if id != sender_id:
-		push_warning("RPC Sender ID (%d) doesn't match with player ID (%d)!" % [sender_id, id])
+		push_warning("RPC Sender ID (%d) doesn't match with player ID (%d)." % [sender_id, id])
 		return
 	if is_disarmed() or not is_instance_valid(current_weapon) or not current_weapon.can_reload():
 		return
@@ -283,7 +287,7 @@ func _request_additional_button() -> void:
 	
 	var sender_id: int = multiplayer.get_remote_sender_id()
 	if id != sender_id:
-		push_warning("RPC Sender ID (%d) doesn't match with player ID (%d)!" % [sender_id, id])
+		push_warning("RPC Sender ID (%d) doesn't match with player ID (%d)." % [sender_id, id])
 		return
 	if (
 			is_disarmed() or not is_instance_valid(current_weapon)
@@ -303,7 +307,7 @@ func _request_use_skill() -> void:
 	
 	var sender_id: int = multiplayer.get_remote_sender_id()
 	if id != sender_id:
-		push_warning("RPC Sender ID (%d) doesn't match with player ID (%d)!" % [sender_id, id])
+		push_warning("RPC Sender ID (%d) doesn't match with player ID (%d)." % [sender_id, id])
 		return
 	
 	if is_disarmed() or not is_instance_valid(skill) or not skill.can_use():

@@ -116,7 +116,7 @@ func open_local_game() -> void:
 func open_screen(screen_scene: PackedScene) -> Control:
 	var screen: Control = screen_scene.instantiate()
 	if has_node(NodePath(screen.name)):
-		push_error("Screen %s is already opened!" % screen.name)
+		push_error("Screen %s is already opened." % screen.name)
 		return null
 	screen.tree_exited.connect(_on_screen_tree_exited.bind(screen))
 	add_child(screen)

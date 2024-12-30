@@ -12,6 +12,7 @@ func set_alive_players(count: int) -> void:
 		return
 	
 	($Main/PlayerCounter as Label).text = str(count)
+	print_verbose("Alive players: %d." % count)
 
 
 @rpc("reliable", "call_local")
@@ -27,6 +28,7 @@ func show_winner(winner: int, winner_name: String) -> void:
 		($Main/GameEnd as Label).text = "ПОБЕДИТЕЛЬ: %s" % winner_name
 	($Main/GameEnd/AnimationPlayer as AnimationPlayer).play(&"Victory")
 	($Main/SpectatorMenu as CanvasItem).hide()
+	print_verbose("Winner: %s." % winner_name)
 
 
 @rpc("reliable", "call_local")

@@ -231,14 +231,14 @@ func _request_start_event() -> void:
 	
 	var sender_id: int = multiplayer.get_remote_sender_id()
 	if sender_id != _admin_id:
-		push_warning("Start request rejected: player %d is not admin!" % sender_id)
+		push_warning("Start request rejected: player %d is not admin." % sender_id)
 		return
 	
 	if _game.state != Game.State.LOBBY:
-		push_warning("Start request rejected: current state game is not lobby!")
+		push_warning("Start request rejected: current state game is not lobby.")
 		return
 	if not _countdown_timer.is_stopped():
-		push_warning("Start request rejected: counting down already!")
+		push_warning("Start request rejected: counting down already.")
 		return
 	
 	var start_reject_reason: StartRejectReason = _get_start_reject_reason()
@@ -283,7 +283,7 @@ func _reject_start_event(reason: StartRejectReason, players_count: int) -> void:
 	
 	match reason:
 		StartRejectReason.OK:
-			push_warning("This method can't be called with OK reject reason!")
+			push_warning("This method can't be called with OK reject reason.")
 		StartRejectReason.TOO_FEW_PLAYERS:
 			_game.show_error("Невозможно начать игру: слишком мало игроков (%d) \
 при минимуме в %d!" % [players_count, Globals.items_db.events[_selected_event].min_players])

@@ -74,6 +74,7 @@ func _ready() -> void:
 		Main.InputMethod.KEYBOARD_AND_MOUSE:
 			($Controller/TouchControls as CanvasItem).hide()
 			($Controller/Skill/TouchScreenButton as CanvasItem).hide()
+			get_window().focus_exited.connect(_on_window_focus_exited)
 			_follow_mouse = Globals.get_controls_bool("follow_mouse")
 			_sneak_multiplier = Globals.get_controls_float("sneak_multiplier")
 			var smallest_side: float = minf(get_viewport_rect().size.x, get_viewport_rect().size.y)
@@ -460,6 +461,14 @@ func _on_skill_equipped(data: SkillData) -> void:
 
 func _on_ammo_text_updated(text: String) -> void:
 	_ammo_text.text = text
+
+
+func _on_window_focus_exited() -> void:
+	# Сбрасываю состояние ввода во избежании неприятных ситуаций из-за потери управления
+	_moving_left = false
+	_moving_right = false
+	_moving_up = false
+	_moving_down = false
 
 
 func _on_aim_joystick_released(output: Vector2) -> void:

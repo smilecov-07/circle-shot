@@ -10,6 +10,7 @@ func set_kills(red: int, blue: int) -> void:
 	
 	($Main/RedCount as Label).text = str(red)
 	($Main/BlueCount as Label).text = str(blue)
+	print_verbose("Score: %d - %d." % [red, blue])
 
 
 @rpc("reliable", "call_local", "authority", 3)
@@ -25,6 +26,7 @@ func show_winner(team_won: int) -> void:
 	($Main/GameEnd/Team as Label).text = "Красная" if team_won == 0 else "Синяя"
 	($Main/GameEnd/Team as Control).add_theme_color_override(&"font_color",
 			Entity.TEAM_COLORS[team_won])
+	print_verbose("Team won: %d." % team_won)
 
 
 func set_time(time: int) -> void:

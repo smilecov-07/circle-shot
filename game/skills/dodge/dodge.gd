@@ -65,14 +65,14 @@ func _request_dodge(direction: Vector2) -> void:
 	
 	var sender_id: int = multiplayer.get_remote_sender_id()
 	if _player.id != sender_id:
-		push_warning("RPC Sender ID (%d) doesn't match with player ID (%d)!" % [
+		push_warning("RPC Sender ID (%d) doesn't match with player ID (%d)." % [
 			sender_id,
 			_player.id,
 		])
 		return
 	
 	if _response_timer.is_stopped():
-		push_warning("Dodge request from %d rejected: response timer is not running!" % [sender_id])
+		push_warning("Dodge request from %d rejected: response timer is not running." % [sender_id])
 		return
 	
 	_response_timer.stop()

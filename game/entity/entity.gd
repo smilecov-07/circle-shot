@@ -90,6 +90,8 @@ func _ready() -> void:
 	
 	if Globals.get_setting_bool("show_damage"):
 		_numbers_vfx_scene = load("uid://dxiacndmn0qr7")
+	
+	print_verbose("Entity %s with team %d created." % [name, team])
 
 
 func _physics_process(delta: float) -> void:

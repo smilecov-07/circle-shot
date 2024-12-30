@@ -138,7 +138,7 @@ func join(ip: String, port: int = DEFAULT_PORT) -> void:
 ## Закрывает игру.
 func close() -> void:
 	if state == State.CLOSED:
-		push_error("Can't close because game is already closed!")
+		push_error("Can't close because game is already closed.")
 		return
 	
 	if state != State.CONNECTING: # 
