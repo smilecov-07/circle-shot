@@ -207,8 +207,6 @@ func setup_controls_settings() -> void:
 			Globals.get_controls_bool("joystick_fire", false))
 	Globals.set_controls_float("sneak_multiplier",
 			Globals.get_controls_float("sneak_multiplier", 0.5))
-	Globals.set_controls_bool("square_joystick",
-			Globals.get_controls_bool("square_joystick", false))
 	Globals.set_controls_float("aim_deadzone",
 			Globals.get_controls_float("aim_deadzone", 0.2))
 	Globals.set_controls_float("aim_zone",

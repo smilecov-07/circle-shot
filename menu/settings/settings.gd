@@ -30,7 +30,6 @@ func _ready() -> void:
 	(%FollowMouseCheck as BaseButton).set_pressed_no_signal(
 			Globals.get_controls_bool("follow_mouse"))
 	(%FireModeOptions as OptionButton).selected = int(Globals.get_controls_bool("joystick_fire"))
-	(%SquareCheck as BaseButton).set_pressed_no_signal(Globals.get_controls_bool("square_joystick"))
 	(%SneakSlider as Range).value = Globals.get_controls_float("sneak_multiplier")
 	(%VibrationCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("vibration"))
 	(%SmoothCameraCheck as BaseButton).set_pressed_no_signal(
@@ -257,9 +256,11 @@ func _on_custom_tracks_check_toggled(toggled_on: bool) -> void:
 				or perms.has("android.permission.READ_EXTERNAL_STORAGE")
 				or perms.has("android.permission.WRITE_EXTERNAL_STORAGE")
 		):
+			(%CustomTracksCheck as BaseButton).set_pressed_no_signal(false)
 			get_tree().on_request_permissions_result.connect(_on_request_permissions_result,
 					CONNECT_ONE_SHOT)
 			OS.request_permissions()
+			toggled_on = false
 	(%CustomTracksSettings as CanvasItem).visible = toggled_on
 	Globals.set_setting_bool("custom_tracks", toggled_on)
 	Globals.main.apply_settings()
@@ -271,10 +272,6 @@ func _on_preload_check_toggled(toggled_on: bool) -> void:
 
 func _on_fire_mode_options_item_selected(index: int) -> void:
 	Globals.set_controls_bool("joystick_fire", bool(index))
-
-
-func _on_square_check_toggled(toggled_on: bool) -> void:
-	Globals.set_controls_bool("square_joystick", toggled_on)
 
 
 func _on_sneak_slider_value_changed(value: float) -> void:

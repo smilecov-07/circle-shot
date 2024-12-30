@@ -36,8 +36,10 @@ enum State {
 	LOADING = 3,
 	## Подключено, находится в событии.
 	EVENT = 4,
+	## Одиночная игра, загрузка.
+	SOLO_LOADING = 5,
 	## Одиночная игра.
-	SOLO = 5,
+	SOLO = 6,
 }
 ## Порт для подключения по умолчанию.
 const DEFAULT_PORT: int = 7415
@@ -139,12 +141,7 @@ func close() -> void:
 		push_error("Can't close because game is already closed!")
 		return
 	
-	if (
-			multiplayer.multiplayer_peer.get_connection_status()
-			== MultiplayerPeer.CONNECTION_CONNECTED
-			and not MultiplayerPeer.TARGET_PEER_SERVER
-			in _scene_multiplayer.get_authenticating_peers()
-	):
+	if state != State.CONNECTING: # 
 		closed.emit()
 	
 	if multiplayer.peer_connected.is_connected(_on_peer_connected):
@@ -342,7 +339,7 @@ func _authenticate_callback(peer: int, data: PackedByteArray) -> void:
 				])
 			FailReason.FULL_ROOM:
 				($ConnectingDialog as Window).hide()
-				show_error("Невозможно подключиться к игре! Игра уже заполнена.")
+				show_error("Невозможно подключиться к игре! Комната уже заполнена.")
 				push_warning("Can't connect: full room.")
 			FailReason.IN_GAME:
 				($ConnectingDialog as Window).hide()
@@ -438,8 +435,6 @@ func _on_peer_disconnected(id: int) -> void:
 func _on_server_disconnected() -> void:
 	show_error("Разорвано соединение с сервером!")
 	push_warning("Disconnected from server.")
-	# Излучаем сигнал сами, потому что мы уже отключены
-	closed.emit()
 	close()
 
 

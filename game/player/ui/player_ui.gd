@@ -20,7 +20,6 @@ var _aim_max_zone: float
 var _sneak_multiplier: float
 var _follow_mouse: bool
 var _joystick_fire: bool
-var _square_joystick: bool
 
 var _player: Player
 
@@ -85,7 +84,6 @@ func _ready() -> void:
 			_joystick_fire = Globals.get_controls_bool("joystick_fire")
 			if _joystick_fire:
 				_aim_joystick.released.connect(_on_aim_joystick_released)
-			_square_joystick = Globals.get_controls_bool("square_joystick")
 			
 			_move_joystick.scale = Vector2.ONE * Globals.get_controls_float("move_joystick_scale")
 			_move_joystick.deadzone_size = Globals.get_controls_float("move_joystick_deadzone")
@@ -253,10 +251,7 @@ func _unhandled_keyboard_and_mouse_input(event: InputEvent) -> void:
 
 func _process_touch_input_method(delta: float) -> void:
 	var direction: Vector2 = _move_joystick.output
-	if _square_joystick:
-		_player.entity_input.direction = direction.normalized() * direction.length_squared()
-	else:
-		_player.entity_input.direction = _move_joystick.output
+	_player.entity_input.direction = _move_joystick.output
 	
 	if not _aim_joystick.output.is_zero_approx():
 		var aim: Vector2 = _aim_joystick.output
