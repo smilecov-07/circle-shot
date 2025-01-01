@@ -1,7 +1,7 @@
 # meta-name: Атака
 # meta-description: Простейший скрипт для расширения логики атаки.
 # meta-default: true
-extends Attack
+extends _BASE_
 
 
 func _deal_damage(entity: Entity) -> void:

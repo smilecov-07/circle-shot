@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3 uid="uid://fv1k01xt7i8r"]
+
+[ext_resource type="Script" uid="uid://55g8njvkg07g" path="res://game/player/equip/weapon_data.gd" id="1_8886s"]
+
+[resource]
+script = ExtResource("1_8886s")
+name = "Огнемёт"
+rarity = 2
+id = "burn_furries"
+damage_text = "Урон/с: 70"
+ammo_text = "75/75"
+description = ""
+scene_path = "uid://b2nr1cx8txay5"
+image_path = "uid://66rq3cqkdian"
+spawnable_scenes_paths = Array[String](["uid://pjhomajigpbi"])
+metadata/_custom_type_script = ExtResource("1_8886s")

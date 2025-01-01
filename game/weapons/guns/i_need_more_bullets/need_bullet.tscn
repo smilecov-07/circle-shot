@@ -11,6 +11,7 @@ hit_vfx_scene = ExtResource("2_tm68e")
 damage = 8
 
 [node name="Bullet" type="Sprite2D" parent="." index="2"]
+z_index = -1
 position = Vector2(-22, 0)
 texture = ExtResource("3_c0it7")
 
