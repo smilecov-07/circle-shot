@@ -10,3 +10,4 @@ rarity = 0
 id = "classic"
 scene_path = "uid://cuqnkho78cmd6"
 image_path = "uid://dvuupvyvm2i7j"
+metadata/_custom_type_script = ExtResource("1_308x6")

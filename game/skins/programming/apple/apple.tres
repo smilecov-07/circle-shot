@@ -10,3 +10,4 @@ rarity = 1
 id = "ios"
 scene_path = "uid://hu5r8bfwm35u"
 image_path = "uid://b5ibpshl6nqmu"
+metadata/_custom_type_script = ExtResource("1_el00n")

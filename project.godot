@@ -164,15 +164,16 @@ buffering/agile_event_flushing=true
 
 [layer_names]
 
-2d_render/layer_1="default"
-2d_render/layer_2="minimap"
-2d_physics/layer_1="world"
-2d_physics/layer_2="entity"
-2d_physics/layer_3="attack"
-2d_physics/layer_4="boundary"
-2d_physics/layer_5="fence"
-2d_physics/layer_6="items"
-2d_physics/layer_7="mobs"
+2d_render/layer_1="Default"
+2d_render/layer_2="Minimap"
+2d_render/layer_3="High Graphics"
+2d_physics/layer_1="World"
+2d_physics/layer_2="Entity"
+2d_physics/layer_3="Attack"
+2d_physics/layer_4="Boundary"
+2d_physics/layer_5="Fence"
+2d_physics/layer_6="Items"
+2d_physics/layer_7="Mobs"
 
 [physics]
 

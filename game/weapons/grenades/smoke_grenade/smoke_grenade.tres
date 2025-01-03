@@ -13,3 +13,4 @@ description = ""
 scene_path = "uid://c5swv4a3luh8f"
 image_path = "uid://blxo5eej36ufg"
 spawnable_scenes_paths = Array[String](["uid://3cta5u3qtmvj"])
+metadata/_custom_type_script = ExtResource("1_2etgi")

@@ -10,3 +10,4 @@ rarity = 2
 id = "pvzr34"
 scene_path = "uid://bpjnm762i7c78"
 image_path = "uid://cxdjfl5oaqnli"
+metadata/_custom_type_script = ExtResource("1_bngjp")

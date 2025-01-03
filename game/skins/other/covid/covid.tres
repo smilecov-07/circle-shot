@@ -10,3 +10,4 @@ rarity = 1
 id = "covid"
 scene_path = "uid://bxeqejyos1t0e"
 image_path = "uid://b4o8r1kb6pdvi"
+metadata/_custom_type_script = ExtResource("1_uymnl")

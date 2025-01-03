@@ -12,3 +12,4 @@ id = "rolling"
 scene_path = "uid://cubicepjijo6d"
 image_path = "uid://ctg2ax1bhhg3c"
 spawnable_scenes_paths = Array[String]([])
+metadata/_custom_type_script = ExtResource("1_8moi4")

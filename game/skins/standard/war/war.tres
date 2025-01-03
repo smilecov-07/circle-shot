@@ -10,3 +10,4 @@ rarity = 1
 id = "war"
 scene_path = "uid://yb112418c25u"
 image_path = "uid://dhkvdjwfv3f3c"
+metadata/_custom_type_script = ExtResource("1_c4pxv")

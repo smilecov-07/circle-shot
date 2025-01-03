@@ -10,3 +10,4 @@ rarity = 2
 id = "bestengine"
 scene_path = "uid://ds0ff0j1qcmoc"
 image_path = "uid://7jesixdocsh5"
+metadata/_custom_type_script = ExtResource("1_levmi")

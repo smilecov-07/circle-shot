@@ -10,3 +10,4 @@ rarity = 2
 id = "droid"
 scene_path = "uid://crm68n863viai"
 image_path = "uid://hcmagssb0w45"
+metadata/_custom_type_script = ExtResource("1_k6hg6")
