@@ -14,9 +14,14 @@ var _screen_angle: float
 
 func _ready() -> void:
 	_screen_angle = (get_viewport_rect().size - get_viewport_rect().size / 2).angle()
+	_update_position()
 
 
 func _process(_delta: float) -> void:
+	_update_position()
+
+
+func _update_position() -> void:
 	_visual.visible = visible
 	if not visible:
 		return
