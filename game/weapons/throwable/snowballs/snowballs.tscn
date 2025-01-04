@@ -72,7 +72,6 @@ ammo_scene = ExtResource("2_yga7a")
 angle_between_ammo = 20.0
 throw_interval = 0.4
 spread_base = 3.0
-spread_walk = 7.0
 ammo_per_load = 2
 ammo_total = 32
 speed_multiplier_when_current = 1.03
@@ -85,7 +84,7 @@ rotation = 0.392699
 position = Vector2(-32, -48)
 
 [node name="ThrowPoint" parent="ThrowPivot" index="0"]
-position = Vector2(64, 0)
+position = Vector2(96, 0)
 
 [node name="AnimationPlayer" parent="." index="2"]
 libraries = {
