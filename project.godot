@@ -63,6 +63,7 @@ import/fbx2gltf/enabled=false
 
 [gui]
 
+common/default_scroll_deadzone=24
 theme/custom="res://menu/theme/theme.tres"
 
 [input]
