@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://dj0mx5ui2wu4n"]
+[gd_scene load_steps=6 format=3 uid="uid://dj0mx5ui2wu4n"]
 
 [ext_resource type="Texture2D" uid="uid://1hk5pve5cp0m" path="res://game/menus/lobby/icons/kick.png" id="1_k7dg0"]
-[ext_resource type="Texture2D" uid="uid://ctcg17yhajnc4" path="res://game/menus/lobby/icons/empty_kick.png" id="2_lrcoo"]
+[ext_resource type="Texture2D" uid="uid://cqpc5v4rhk8nh" path="res://game/menus/lobby/icons/ban.png" id="2_lrcoo"]
+[ext_resource type="Texture2D" uid="uid://cvjhauyh4ubgw" path="res://game/menus/lobby/icons/admin_actions.png" id="3_1hnn2"]
+[ext_resource type="Texture2D" uid="uid://bimnbnp1db0y" path="res://game/menus/lobby/icons/transfer_admin_rights.png" id="4_665gi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_665gi"]
 
 [node name="PlayerEntry" type="HBoxContainer"]
 custom_minimum_size = Vector2(0, 24)
@@ -13,13 +17,23 @@ size_flags_horizontal = 3
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Kick" type="TextureButton" parent="."]
+[node name="AdminActions" type="MenuButton" parent="."]
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
-size_flags_horizontal = 8
-texture_normal = ExtResource("1_k7dg0")
-texture_pressed = ExtResource("1_k7dg0")
-texture_hover = ExtResource("1_k7dg0")
-texture_disabled = ExtResource("2_lrcoo")
-ignore_texture_size = true
-stretch_mode = 5
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_665gi")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_665gi")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_665gi")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_665gi")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_665gi")
+icon = ExtResource("3_1hnn2")
+expand_icon = true
+item_count = 3
+popup/item_0/text = "Выгнать"
+popup/item_0/icon = ExtResource("1_k7dg0")
+popup/item_0/id = 0
+popup/item_1/text = "Забанить"
+popup/item_1/icon = ExtResource("2_lrcoo")
+popup/item_1/id = 1
+popup/item_2/text = "Передать права админа"
+popup/item_2/icon = ExtResource("4_665gi")
+popup/item_2/id = 2

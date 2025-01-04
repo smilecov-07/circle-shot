@@ -23,6 +23,8 @@ enum FailReason {
 	FULL_ROOM = 2,
 	## Уже в игре.
 	IN_GAME = 3,
+	## Игрок забанен.
+	BANNED = 4,
 }
 ## Перечисление состояний игры.
 enum State {
@@ -60,6 +62,9 @@ var max_players: int = 10
 var state := State.CLOSED
 ## Ссылка на событие.
 var event: Event
+## IP-адреса заблокированных игроков. Не имеет эффекта на клиентах.
+## Сбрасывается после пересоздания комнаты.
+var banned_ips: Array[String]
 
 var _scene_multiplayer: SceneMultiplayer
 var _players_names: Dictionary[int, String]
@@ -101,6 +106,7 @@ func create(port: int = DEFAULT_PORT) -> void:
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
 	_scene_multiplayer.peer_authenticating.connect(_on_peer_authenticating)
 	_scene_multiplayer.peer_authentication_failed.connect(_on_peer_authentication_failed)
+	banned_ips.clear()
 	state = State.LOBBY
 	created.emit()
 	print_verbose("Created server at port %d." % port)
@@ -141,7 +147,7 @@ func close() -> void:
 		push_error("Can't close because game is already closed.")
 		return
 	
-	if state != State.CONNECTING: # 
+	if state != State.CONNECTING: # Комната ещё не создана, нечего закрывать
 		closed.emit()
 	
 	if multiplayer.peer_connected.is_connected(_on_peer_connected):
@@ -328,7 +334,7 @@ func _authenticate_callback(peer: int, data: PackedByteArray) -> void:
 				return
 			FailReason.DIFFERENT_VERSION:
 				($ConnectingDialog as Window).hide()
-				show_error("Невозможно подключиться к игре! \
+				show_error("Невозможно подключиться! \
 Версия сервера (%s) не совпадает с твоей (%s)." % [
 					Globals.version,
 					data.slice(1).get_string_from_utf8(),
@@ -339,12 +345,16 @@ func _authenticate_callback(peer: int, data: PackedByteArray) -> void:
 				])
 			FailReason.FULL_ROOM:
 				($ConnectingDialog as Window).hide()
-				show_error("Невозможно подключиться к игре! Комната уже заполнена.")
+				show_error("Невозможно подключиться! Комната уже заполнена.")
 				push_warning("Can't connect: full room.")
 			FailReason.IN_GAME:
 				($ConnectingDialog as Window).hide()
-				show_error("Невозможно подключиться к игре! Игра уже началась.")
+				show_error("Невозможно подключиться! Игра уже началась.")
 				push_warning("Can't connect: game already started.")
+			FailReason.BANNED:
+				($ConnectingDialog as Window).hide()
+				show_error("Невозможно подключиться! Ты забанен в этой комнате.")
+				push_warning("Can't connect: banned.")
 			_:
 				push_error("Invalid data received: data is not AuthState.")
 		close()
@@ -358,6 +368,11 @@ func _authenticate_callback(peer: int, data: PackedByteArray) -> void:
 			Globals.version,
 			data.get_string_from_utf8(),
 		])
+		return
+	if (multiplayer.multiplayer_peer as ENetMultiplayerPeer).get_peer(peer).get_remote_address() \
+			in banned_ips:
+		_scene_multiplayer.send_auth(peer, PackedByteArray([FailReason.BANNED]))
+		print_verbose("Rejecting %d: banned." % peer)
 		return
 	if multiplayer.get_peers().size() + int(not Globals.headless) + 1 > max_players:
 		_scene_multiplayer.send_auth(peer, PackedByteArray([FailReason.FULL_ROOM]))
@@ -377,7 +392,7 @@ func _on_peer_authenticating(peer: int) -> void:
 	if multiplayer.is_server():
 		print_verbose("Authenticating peer: %d." % peer)
 		return
-	if peer != 1:
+	if peer != MultiplayerPeer.TARGET_PEER_SERVER:
 		push_warning("Unexpected authenticating message! Peer: %d" % peer)
 		return
 	

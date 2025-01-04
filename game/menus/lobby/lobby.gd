@@ -7,6 +7,11 @@ enum StartRejectReason {
 	TOO_MANY_PLAYERS = 2,
 	INDIVISIBLE_NUMBER_OF_PLAYERS = 3,
 }
+enum AdminAction {
+	KICK = 0,
+	BAN = 1,
+	TRANSFER_ADMIN_RIGHTS = 2,
+}
 
 var _selected_event: int = 0
 var _selected_map: int = 0
@@ -73,13 +78,21 @@ func _add_player_entry(id: int, player_name: String) -> void:
 	
 	var player_entry: Node = _player_entry_scene.instantiate()
 	player_entry.name = str(id)
+	(player_entry.get_node(^"Name") as Label).text = player_name
+	var admin_actions: MenuButton = player_entry.get_node(^"AdminActions")
+	
 	if id == multiplayer.get_unique_id():
 		(player_entry.get_node(^"Name") as Label).add_theme_color_override(
 				&"font_color", Color.CORNFLOWER_BLUE)
-		(player_entry.get_node(^"Kick") as BaseButton).disabled = true
-	(player_entry.get_node(^"Name") as Label).text = player_name
-	(player_entry.get_node(^"Kick") as CanvasItem).visible = _admin
-	(player_entry.get_node(^"Kick") as BaseButton).pressed.connect(_on_kick_pressed.bind(id))
+		admin_actions.disabled = true
+		admin_actions.self_modulate = Color.TRANSPARENT
+	if id == MultiplayerPeer.TARGET_PEER_SERVER:
+		# Сервер нельза выгнать/забанить
+		admin_actions.get_popup().set_item_disabled(0, true)
+		admin_actions.get_popup().set_item_disabled(1, true)
+	
+	admin_actions.visible = _admin
+	admin_actions.get_popup().id_pressed.connect(_on_admin_actions_menu_id_pressed.bind(id))
 	_players_container.add_child(player_entry)
 	print_verbose("Added player %d entry with name %s." % [id, player_name])
 
@@ -136,7 +149,7 @@ func _set_admin(admin: bool) -> void:
 	(%AdminPanel as CanvasItem).visible = admin
 	(%ClientHint as CanvasItem).visible = not admin
 	for entry: Node in _players_container.get_children():
-		(entry.get_node(^"Kick") as CanvasItem).visible = admin
+		(entry.get_node(^"AdminActions") as CanvasItem).visible = admin
 	if admin:
 		# Просим сервер установить выбранные ранее НАМИ карты
 		_request_set_environment.rpc_id(MultiplayerPeer.TARGET_PEER_SERVER,
@@ -196,31 +209,54 @@ func _set_environment(event_id: int, map_id: int) -> void:
 
 
 @rpc("any_peer", "reliable", "call_local", 1)
-func _request_kick_player(id: int) -> void:
+func _request_admin_action(id: int, action: AdminAction) -> void:
 	if not multiplayer.is_server():
 		push_error("Unexpected call on client.")
 		return
 	
 	var sender_id: int = multiplayer.get_remote_sender_id()
 	if sender_id != _admin_id:
-		push_warning("Kick request rejected: player %d is not admin." % sender_id)
+		push_warning("Admin action request rejected: player %d is not admin." % sender_id)
 		return
 	if id == _admin_id:
-		push_warning("Cannot kick admin.")
+		push_warning("Can't do admin actions on admin.")
 		return
 	if _game.state != Game.State.LOBBY:
-		push_warning("Cannot kick if not in lobby.")
+		push_warning("Can't do admin actions if not in lobby.")
+		return
+	if not id in _players:
+		push_warning("Can't do admin actions on non-existent player %d." % id)
 		return
 	
-	print_verbose("Accepted kick request. Kicking: %d." % id)
-	(multiplayer as SceneMultiplayer).disconnect_peer(id)
-	_chat.post_message.rpc("> [color=green]%s[/color] выгоняет игрока [color=red]%s[/color]!" % [
-		_players[_admin_id],
-		_players[id],
-	])
-	_chat.players_names.erase(id)
-	_players.erase(id)
-	_delete_player_entry.rpc(id)
+	match action:
+		AdminAction.KICK, AdminAction.BAN:
+			if id == MultiplayerPeer.TARGET_PEER_SERVER:
+				push_warning("Can't kick or ban server.")
+				return
+			var message: String
+			if action == AdminAction.BAN:
+				print_verbose("Accepted ban request. Banning: %d." % id)
+				var ip: String = (multiplayer.multiplayer_peer as ENetMultiplayerPeer).get_peer(
+						id).get_remote_address()
+				_game.banned_ips.append(ip)
+				message = "> [color=green]%s[/color] банит игрока [color=red]%s[/color]!"
+			else:
+				print_verbose("Accepted kick request. Kicking: %d." % id)
+				message = "> [color=green]%s[/color] выгоняет игрока [color=red]%s[/color]!"
+			
+			(multiplayer as SceneMultiplayer).disconnect_peer(id)
+			_chat.post_message.rpc(message % [_players[_admin_id], _players[id]])
+			_chat.players_names.erase(id)
+			_players.erase(id)
+			_delete_player_entry.rpc(id)
+		AdminAction.TRANSFER_ADMIN_RIGHTS:
+			print_verbose("Accepted transfer admin rights request. New admin: %d." % id)
+			var prev_admin: int = _admin_id
+			_admin_id = id
+			_set_admin.rpc_id(id, true)
+			_set_admin.rpc_id(prev_admin, false)
+		_:
+			push_warning("Invalid admin action requested.")
 
 
 @rpc("any_peer", "reliable", "call_local", 1)
@@ -583,8 +619,8 @@ func _on_peer_disconnected(id: int) -> void:
 	_delete_player_entry.rpc(id)
 
 
-func _on_kick_pressed(id: int) -> void:
-	_request_kick_player.rpc_id(MultiplayerPeer.TARGET_PEER_SERVER, id)
+func _on_admin_actions_menu_id_pressed(action: AdminAction, peer: int) -> void:
+	_request_admin_action.rpc_id(MultiplayerPeer.TARGET_PEER_SERVER, peer, action)
 
 
 func _on_countdown_timer_timeout() -> void:
