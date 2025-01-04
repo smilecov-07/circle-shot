@@ -561,7 +561,7 @@ func _loading_preload_resources() -> void:
 		return
 	
 	print_verbose("Preloading resources...")
-	_load_status_label.text = "Загрузка ресурсов в память..."
+	_load_status_label.text = "Загрузка ресурсов..."
 	_load_progress_bar.value = 0.0
 	await get_tree().process_frame
 	

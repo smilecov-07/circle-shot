@@ -50,7 +50,8 @@ func shoot() -> void:
 	if multiplayer.get_remote_sender_id() != MultiplayerPeer.TARGET_PEER_SERVER:
 		push_error("This method must be called only by server.")
 		return
-	_shoot()
+	@warning_ignore("redundant_await") # кто знает, что написано в дочерних классах
+	await _shoot()
 	_player.ammo_text_updated.emit(get_ammo_text())
 
 

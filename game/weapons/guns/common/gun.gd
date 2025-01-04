@@ -213,7 +213,7 @@ func _calculate_spread() -> float:
 
 
 func _create_projectile() -> void:
-	var projectile: Attack = projectile_scene.instantiate()
+	var projectile: Projectile = projectile_scene.instantiate()
 	projectile.position = _shoot_point.global_position
 	projectile.damage_multiplier = _player.damage_multiplier
 	var spread: float = _calculate_spread()

@@ -6,7 +6,7 @@
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.99999, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[node name="BulletHit" type="Node2D"]
+[node name="BulletHitVfx" type="Node2D"]
 
 [node name="Particles" type="CPUParticles2D" parent="."]
 z_index = 1

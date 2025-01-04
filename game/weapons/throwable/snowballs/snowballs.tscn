@@ -1,0 +1,93 @@
+[gd_scene load_steps=7 format=3 uid="uid://0sfmbuci74d7"]
+
+[ext_resource type="PackedScene" uid="uid://cdo5tqeki3gle" path="res://game/weapons/throwable/common/throwable.tscn" id="1_lvpje"]
+[ext_resource type="PackedScene" uid="uid://4jod4xwjklj3" path="res://game/weapons/throwable/snowballs/snowball_projectile.tscn" id="2_pk5fa"]
+[ext_resource type="PackedScene" uid="uid://ist1rsy4ygay" path="res://game/weapons/throwable/snowballs/snowball_ammo.tscn" id="2_yga7a"]
+
+[sub_resource type="Animation" id="Animation_lvpje"]
+resource_name = "Equip"
+length = 0.4
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Ammo:rotation")
+tracks/0/interp = 4
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [1.26546, 0.318262, 0.392699]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Ammo:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-24, -21), Vector2(-24, -12)]
+}
+
+[sub_resource type="Animation" id="Animation_pk5fa"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Ammo:rotation")
+tracks/0/interp = 3
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.392699]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Ammo:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-24, -12)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_008ih"]
+_data = {
+&"Equip": SubResource("Animation_lvpje"),
+&"RESET": SubResource("Animation_pk5fa")
+}
+
+[node name="Snowballs" instance=ExtResource("1_lvpje")]
+projectile_scene = ExtResource("2_pk5fa")
+ammo_scene = ExtResource("2_yga7a")
+angle_between_ammo = 20.0
+throw_interval = 0.4
+spread_base = 3.0
+spread_walk = 7.0
+ammo_per_load = 2
+ammo_total = 32
+speed_multiplier_when_current = 1.03
+
+[node name="Ammo" parent="." index="0"]
+position = Vector2(-24, -12)
+rotation = 0.392699
+
+[node name="ThrowPivot" parent="." index="1"]
+position = Vector2(-32, -48)
+
+[node name="ThrowPoint" parent="ThrowPivot" index="0"]
+position = Vector2(64, 0)
+
+[node name="AnimationPlayer" parent="." index="2"]
+libraries = {
+&"": SubResource("AnimationLibrary_008ih")
+}

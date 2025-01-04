@@ -67,7 +67,7 @@ func _find_ips() -> void:
 			dialog_text += ip
 			first = false
 	
-	var error: Error = _http_request.request("https://icanhazip.com/")
+	var error: Error = _http_request.request("https://ipv4.icanhazip.com/")
 	if error != OK:
 		push_warning("Quiry global IP: can't create request. Error: %s." % error_string(error))
 		dialog_text += '\n'

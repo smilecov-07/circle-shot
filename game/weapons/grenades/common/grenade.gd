@@ -48,10 +48,12 @@ func _process(_delta: float) -> void:
 				projectile_explosion_time)
 		_aim.points[1].x = projectile_speed * time * speed_multiplier \
 				- projectile_damping / 2 * time * time
-		
-		if _player.player_input.shooting and ammo_in_stock > 0 \
-				and multiplayer.is_server() and not _reloading:
-			shoot.rpc()
+
+
+func _physics_process(_delta: float) -> void:
+	if can_shoot() and multiplayer.is_server() and _player.player_input.shooting \
+			and ammo_in_stock > 0 and not _reloading:
+		shoot.rpc()
 
 
 func _make_current() -> void:
@@ -89,7 +91,6 @@ func _shoot() -> void:
 		return
 	
 	ammo_in_stock -= 1
-	_player.ammo_text_updated.emit(get_ammo_text())
 	_reloading = true
 	($ThrowTimer as Timer).start()
 	

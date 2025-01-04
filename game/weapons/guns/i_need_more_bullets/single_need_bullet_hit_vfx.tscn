@@ -5,7 +5,7 @@
 [sub_resource type="Gradient" id="Gradient_p26lk"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
-[node name="SingleNeedBulletHit" type="Node2D"]
+[node name="SingleNeedBulletHitVfx" type="Node2D"]
 
 [node name="Particles" type="CPUParticles2D" parent="."]
 position = Vector2(-48, 0)
