@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://jqw3qarywcu8"
-path="res://.godot/imported/nikosmile.png-4ff19efc772533e90834de402efb6d73.ctex"
+uid="uid://cw1lu4ukd4stg"
+path="res://.godot/imported/sun_broken.png-9f567022cb6d2b8da92ffad6539943f8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/skins/videogames/niko/nikosmile.png"
-dest_files=["res://.godot/imported/nikosmile.png-4ff19efc772533e90834de402efb6d73.ctex"]
+source_file="res://game/skins/videogames/niko/sun_broken.png"
+dest_files=["res://.godot/imported/sun_broken.png-9f567022cb6d2b8da92ffad6539943f8.ctex"]
 
 [params]
 

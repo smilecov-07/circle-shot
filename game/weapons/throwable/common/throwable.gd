@@ -137,6 +137,7 @@ func reload() -> void:
 		if anim_name != &"Reload":
 			_reloading = false
 			_interrupt_reload = false
+			current_ammo.hide()
 			unlock_shooting()
 			return
 		

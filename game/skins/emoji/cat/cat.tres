@@ -4,10 +4,10 @@
 
 [resource]
 script = ExtResource("1_51011")
-name = "cat"
+name = "Кот"
 brief_description = "Что за кошатина?!"
 rarity = 1
-id = "BaCatina"
+id = "bacatina"
 scene_path = "uid://c4n2pkxv1n3or"
 image_path = "uid://cmugf7intv1pv"
 metadata/_custom_type_script = ExtResource("1_51011")
