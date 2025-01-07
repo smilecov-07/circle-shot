@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bimnbnp1db0y"
-path="res://.godot/imported/transfer_admin_rights.png-1bb2b66e37d36d1c0ece202f62f8049f.ctex"
+path="res://.godot/imported/admin.png-c0d715221688aa234e7483e7eeb81f1f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/menus/lobby/icons/transfer_admin_rights.png"
-dest_files=["res://.godot/imported/transfer_admin_rights.png-1bb2b66e37d36d1c0ece202f62f8049f.ctex"]
+source_file="res://game/menus/lobby/icons/admin.png"
+dest_files=["res://.godot/imported/admin.png-c0d715221688aa234e7483e7eeb81f1f.ctex"]
 
 [params]
 

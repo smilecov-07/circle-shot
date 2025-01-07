@@ -139,7 +139,8 @@ icon = ExtResource("7_aw44p")
 
 [node name="About" type="Window" parent="."]
 title = "Об игре"
-size = Vector2i(720, 440)
+position = Vector2i(0, 28)
+size = Vector2i(720, 428)
 visible = false
 transient = true
 exclusive = true
@@ -226,7 +227,8 @@ horizontal_alignment = 1
 [node name="Other" type="Label" parent="About/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
-text = "Мита с кепочкой переоценена."
+text = "Скины эмоджи взяты с https://openmoji.org/.
+Мита с кепочкой переоценена."
 autowrap_mode = 2
 
 [node name="Close" type="Button" parent="About/MarginContainer/VBoxContainer"]

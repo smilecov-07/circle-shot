@@ -87,7 +87,7 @@ func _add_player_entry(id: int, player_name: String) -> void:
 		admin_actions.disabled = true
 		admin_actions.self_modulate = Color.TRANSPARENT
 	if id == MultiplayerPeer.TARGET_PEER_SERVER:
-		# Сервер нельза выгнать/забанить
+		# Сервер нельзя выгнать/забанить
 		admin_actions.get_popup().set_item_disabled(0, true)
 		admin_actions.get_popup().set_item_disabled(1, true)
 	
@@ -126,38 +126,38 @@ func _register_new_player(player_name: String) -> void:
 	_set_environment.rpc_id(sender_id, _selected_event, _selected_map)
 	player_name = Game.validate_player_name(player_name, sender_id)
 	_players[sender_id] = player_name
+	_add_player_entry.rpc(sender_id, player_name)
 	
 	_chat.post_message.rpc("> [color=green]%s[/color] подключается!" % player_name)
 	_chat.players_names[sender_id] = player_name
 	
 	if _players.size() == 1:
 		_admin_id = sender_id
-		_set_admin.rpc_id(sender_id, true)
-	else:
-		_set_admin.rpc_id(sender_id, false)
+	_set_admin.rpc_id(sender_id, _admin_id)
 	
-	_add_player_entry.rpc(sender_id, player_name)
 	print_verbose("Registered player %d with name %s." % [sender_id, player_name])
 
 
 @rpc("reliable", "call_local", "authority", 1)
-func _set_admin(admin: bool) -> void:
+func _set_admin(admin_id: int) -> void:
 	if multiplayer.get_remote_sender_id() != MultiplayerPeer.TARGET_PEER_SERVER:
 		push_error("This method must be called only by server.")
 		return
 	
+	var admin: bool = admin_id == multiplayer.get_unique_id()
 	(%AdminPanel as CanvasItem).visible = admin
 	(%ClientHint as CanvasItem).visible = not admin
 	for entry: Node in _players_container.get_children():
 		(entry.get_node(^"AdminActions") as CanvasItem).visible = admin
+		(entry.get_node(^"Admin") as CanvasItem).visible = int(entry.name) == admin_id
 	if admin:
 		# Просим сервер установить выбранные ранее НАМИ карты
 		_request_set_environment.rpc_id(MultiplayerPeer.TARGET_PEER_SERVER,
 				Globals.get_int("selected_event"), Globals.get_int("selected_map"))
 	else:
-		(%ClientHint as Label).text = "Начать игру может только хост."
+		(%ClientHint as Label).text = "Начать игру может только админ."
 	_admin = admin
-	print_verbose("Admin set: %s." % str(admin))
+	print_verbose("Admin set: %d (this client: %s)." % [admin_id, str(admin)])
 
 
 @rpc("any_peer", "reliable", "call_local", 1)
@@ -251,10 +251,8 @@ func _request_admin_action(id: int, action: AdminAction) -> void:
 			_delete_player_entry.rpc(id)
 		AdminAction.TRANSFER_ADMIN_RIGHTS:
 			print_verbose("Accepted transfer admin rights request. New admin: %d." % id)
-			var prev_admin: int = _admin_id
 			_admin_id = id
-			_set_admin.rpc_id(id, true)
-			_set_admin.rpc_id(prev_admin, false)
+			_set_admin.rpc(_admin_id)
 		_:
 			push_warning("Invalid admin action requested.")
 

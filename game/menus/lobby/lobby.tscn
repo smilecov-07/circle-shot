@@ -540,7 +540,7 @@ flat = true
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-text = "Начать игру может только хост."
+text = "Начать игру может только админ."
 horizontal_alignment = 1
 
 [node name="AdminPanel" type="HBoxContainer" parent="Panels/Lobby/VBoxContainer"]
