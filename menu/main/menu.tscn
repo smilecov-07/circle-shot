@@ -142,6 +142,20 @@ size_flags_horizontal = 3
 text = "Об игре"
 icon = ExtResource("7_aw44p")
 
+[node name="Quit" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -64.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 64.0
+grow_horizontal = 0
+shortcut = SubResource("Shortcut_wm4e1")
+shortcut_in_tooltip = false
+icon = ExtResource("12_k1ro1")
+
 [node name="NameDialog" parent="." instance=ExtResource("10_yw6bl")]
 
 [node name="About" type="Window" parent="."]
@@ -250,26 +264,12 @@ unresizable = true
 ok_button_text = "Скачать"
 cancel_button_text = "Позже"
 
-[node name="Quit" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -64.0
-offset_top = 8.0
-offset_right = -8.0
-offset_bottom = 64.0
-grow_horizontal = 0
-shortcut = SubResource("Shortcut_wm4e1")
-shortcut_in_tooltip = false
-icon = ExtResource("12_k1ro1")
-
 [connection signal="pressed" from="ButtonsContainer/PlayButtonsContainer/PlayNetwork" to="." method="_on_play_network_pressed"]
 [connection signal="pressed" from="ButtonsContainer/MiscButtonsContainer/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="ButtonsContainer/MiscButtonsContainer/About" to="About" method="popup_centered"]
+[connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]
 [connection signal="name_accepted" from="NameDialog" to="." method="_on_name_dialog_name_accepted"]
 [connection signal="visibility_changed" from="NameDialog" to="." method="_on_name_dialog_visibility_changed"]
 [connection signal="close_requested" from="About" to="About" method="hide"]
 [connection signal="pressed" from="About/MarginContainer/VBoxContainer/Close" to="About" method="hide"]
 [connection signal="confirmed" from="UpdateDialog" to="." method="_on_update_dialog_confirmed"]
-[connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]
