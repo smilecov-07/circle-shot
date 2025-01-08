@@ -22,7 +22,7 @@ var version: String = ProjectSettings.get_setting("application/config/version")
 ## Если этот режим будет включён на запуске, то игра автоматически создаст сервер.
 var headless := false
 ## База данных всех предметов. Смотри [ItemsDB].
-var items_db: ItemsDB = load("uid://pwq1e7l2ckos")
+var items_db: ItemsDB
 ## Файл сохранения. Предпочитайте методы [code]get_*/set_*[/code] для его модификации.
 var save_file: ConfigFile
 ## Файл с данными, которые загружаются с сервера. Проверяйте на [code]null[/code]
@@ -45,6 +45,7 @@ func initialize(main_node: Main) -> void:
 	save_file = ConfigFile.new()
 	save_file.load_encrypted_pass(SAVE_FILE_PATH, SAVE_FILE_PASSWORD)
 	
+	items_db = load("uid://pwq1e7l2ckos")
 	items_db.initialize()
 	
 	main = main_node

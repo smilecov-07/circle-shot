@@ -24,17 +24,20 @@ enum ActionEventType {
 }
 ## URL сервера с данными для игры (патчами, предложениями в магазине, ...).
 const SERVER_URL := "https://diamondstudiogames.github.io/circle-shot"
-## Максимальное соотношение ширины к высоте, превысив которое содержимое окна начнёт обрезаться.
+## Максимальное отношение ширины к высоте, превысив которое содержимое окна начнёт обрезаться.
 const MAX_ASPECT_RATIO := 2.34
-## Минимальное соотношение ширины к высоте, пренизив которое содержимое окна начнёт обрезаться.
+## Минимальное отношение ширины к высоте, пренизив которое содержимое окна начнёт обрезаться.
 const MIN_ASPECT_RATIO := 1.5
 ## Разрешённые расширения файлов для загрузки в качестве пользовательских треков.
 const ALLOWED_MUSIC_FILE_EXTENSIONS: Array[String] = ["mp3", "ogg"]
 ## Максимальная длина названия файла пользовательского трека. Лишнее обрезается.
 const MAX_MUSIC_FILE_NAME_LENGTH: int = 45
+## Максимальный размер файла пользовательского трека. Если размер больше максимального,
+## он не будет загружен.
+const MAX_MUSIC_FILE_SIZE_MB := 15.0
 
-## Список путей к сценам для загрузки в память при запуске игры. Ускоряет последующую загрузку
-## этих сцен.
+## Список путей к ресурсам для загрузки в память при запуске игры.
+## Ускоряет последующую загрузку этих ресурсов.
 @export_file("Resource") var resources_to_preload_paths: Array[String]
 ## Ссылка на [Game]. Может отсутствовать.
 var game: Game
@@ -398,7 +401,7 @@ func _start_load() -> void:
 		open_local_game()
 		game.create()
 		var http: HTTPRequest = game.get_node(^"Lobby/ViewIPDialog/HTTPRequest")
-		http.request("https://icanhazip.com/")
+		http.request("https://ipv4.icanhazip.com/")
 
 
 func _loading_init() -> void:
@@ -515,7 +518,7 @@ func _loading_custom_tracks() -> void:
 				path,
 				error_string(FileAccess.get_open_error()),
 			])
-		if valid and file.get_length() > 15728640: # 15 MB
+		if valid and file.get_length() > MAX_MUSIC_FILE_SIZE_MB * 1024 * 1024:
 			valid = false
 		if valid:
 			match to_load[path]:
