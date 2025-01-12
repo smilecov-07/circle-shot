@@ -393,7 +393,7 @@ text = "Настрой управление под себя, перетаски�
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Exit" type="Button" parent="."]
+[node name="Quit" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -446,7 +446,7 @@ text = "Сбросить"
 [connection signal="value_changed" from="PlayerUI/Controller/AimJoystickEditor/SettingsPanel/VBox/Deadzone/DeadzoneSlider" to="PlayerUI/Controller/AimJoystickEditor" method="_on_deadzone_slider_value_changed"]
 [connection signal="value_changed" from="PlayerUI/Controller/AimJoystickEditor/SettingsPanel/VBox/Scale/ScaleSlider" to="PlayerUI/Controller/AimJoystickEditor" method="_on_scale_slider_value_changed"]
 [connection signal="item_selected" from="PlayerUI/Controller/AimJoystickEditor/SettingsPanel/VBox/Mode/ModeOptions" to="PlayerUI/Controller/AimJoystickEditor" method="_on_mode_options_item_selected"]
-[connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="Save" to="." method="_on_save_pressed"]
 [connection signal="pressed" from="Discard" to="." method="_on_discard_pressed"]
 

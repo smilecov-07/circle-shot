@@ -9,7 +9,13 @@ func _ready() -> void:
 			roundi(Globals.get_controls_vector2("shoot_area").y)
 
 
-func _on_exit_pressed() -> void:
+func _notification(what: int) -> void:
+	match what:
+		NOTIFICATION_WM_GO_BACK_REQUEST when visible:
+			_on_quit_pressed()
+
+
+func _on_quit_pressed() -> void:
 	queue_free()
 
 

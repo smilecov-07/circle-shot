@@ -64,8 +64,8 @@ func _process(_delta: float) -> void:
 
 func _notification(what: int) -> void:
 	match what:
-		NOTIFICATION_WM_GO_BACK_REQUEST when not multiplayer.has_multiplayer_peer():
-			_on_exit_pressed()
+		NOTIFICATION_WM_GO_BACK_REQUEST when _game.state == Game.State.CLOSED:
+			_on_quit_pressed.call_deferred()
 
 
 func _on_create_pressed() -> void:
@@ -76,7 +76,7 @@ func _on_join_pressed() -> void:
 	_game.join(_ip_edit.text)
 
 
-func _on_exit_pressed() -> void:
+func _on_quit_pressed() -> void:
 	Globals.main.open_menu()
 
 

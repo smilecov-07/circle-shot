@@ -15,6 +15,12 @@ func _ready() -> void:
 	check_updates()
 
 
+func _notification(what: int) -> void:
+	match what:
+		NOTIFICATION_WM_GO_BACK_REQUEST when visible:
+			_on_quit_pressed()
+
+
 ## Проверяет наличие обновлений.
 func check_updates() -> void:
 	if not Globals.data_file:

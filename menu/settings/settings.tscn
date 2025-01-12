@@ -91,7 +91,7 @@ text = "Настройки"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Exit" type="Button" parent="PanelContainer/VBoxContainer/Title"]
+[node name="Quit" type="Button" parent="PanelContainer/VBoxContainer/Title"]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
@@ -999,7 +999,7 @@ placeholder_text = "Новое имя..."
 [node name="ActionsConfiguration" parent="." instance_placeholder="res://menu/settings/actions_configuration.tscn"]
 visible = false
 
-[connection signal="pressed" from="PanelContainer/VBoxContainer/Title/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/Title/Quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/Sections/General" to="." method="show_section" binds= ["General"]]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/Sections/Game" to="." method="show_section" binds= ["Game"]]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/Sections/Video" to="." method="show_section" binds= ["Video"]]

@@ -75,8 +75,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _notification(what: int) -> void:
 	match what:
-		NOTIFICATION_WM_GO_BACK_REQUEST:
-			_on_exit_pressed()
+		NOTIFICATION_WM_GO_BACK_REQUEST when visible:
+			_on_quit_pressed()
 
 
 func show_section(section_name: String) -> void:
@@ -142,7 +142,7 @@ func _on_request_permissions_result(permission: String, granted: bool) -> void:
 	lambda.call_deferred(granted)
 
 
-func _on_exit_pressed() -> void:
+func _on_quit_pressed() -> void:
 	if is_instance_valid(Globals.main.menu):
 		Globals.main.menu.check_updates()
 	queue_free()
