@@ -171,7 +171,7 @@ custom_minimum_size = Vector2(192, 0)
 layout_mode = 2
 placeholder_text = "Введи IP сервера..."
 alignment = 1
-max_length = 39
+max_length = 49
 expand_to_text_length = true
 clear_button_enabled = true
 

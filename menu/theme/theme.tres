@@ -93,9 +93,9 @@ expand_margin_bottom = 4.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qmo60"]
 texture = ExtResource("9_wtx1e")
-texture_margin_left = 12.0
+texture_margin_left = 10.0
 texture_margin_top = 12.0
-texture_margin_right = 12.0
+texture_margin_right = 10.0
 texture_margin_bottom = 12.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nn2ej"]

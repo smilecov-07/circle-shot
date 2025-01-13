@@ -15,9 +15,9 @@ func _ready() -> void:
 	_game.closed.connect(_on_game_closed)
 	
 	if DisplayServer.has_feature(DisplayServer.FEATURE_CLIPBOARD):
-		var clipboard_content: String = DisplayServer.clipboard_get().get_slice('\n', 0)
-		if clipboard_content.is_valid_ip_address():
-			_ip_edit.text = clipboard_content
+		var clipboard_text: String = _cleanup_ip(DisplayServer.clipboard_get().get_slice('\n', 0))
+		if clipboard_text.is_valid_ip_address():
+			_ip_edit.text = clipboard_text
 	
 	_udp.listen(Game.LISTEN_PORT)
 	print_verbose("Started listening.")
@@ -68,16 +68,20 @@ func _notification(what: int) -> void:
 			_on_quit_pressed.call_deferred()
 
 
-func _on_create_pressed() -> void:
-	_game.create()
-
-
-func _on_join_pressed() -> void:
-	_game.join(_ip_edit.text)
-
-
-func _on_quit_pressed() -> void:
-	Globals.main.open_menu()
+func _cleanup_ip(ip: String) -> String:
+	ip = ip.strip_edges().strip_escapes()
+	if ip.contains(' '):
+		ip = ip.get_slice(' ', 0)
+	ip = ip.strip_edges().strip_escapes()
+	
+	if ip.begins_with("https://"):
+		ip = ip.right(-8) # длина https://
+	if ip.begins_with("http://"):
+		ip = ip.right(-7) # аналогично
+	# на случай если IPv6
+	ip = ip.lstrip('[')
+	ip = ip.rstrip(']')
+	return ip
 
 
 func _on_game_created() -> void:
@@ -96,3 +100,16 @@ func _on_game_closed() -> void:
 	show()
 	_udp.listen(Game.LISTEN_PORT)
 	print_verbose("Listening restarted.")
+
+
+func _on_create_pressed() -> void:
+	_game.create()
+
+
+func _on_join_pressed() -> void:
+	_ip_edit.text = _cleanup_ip(_ip_edit.text)
+	_game.join(_ip_edit.text)
+
+
+func _on_quit_pressed() -> void:
+	Globals.main.open_menu()
