@@ -7,6 +7,8 @@ extends Node
 ## [member Game.event] (только для неигровой части) или через
 ## [code](get_tree().get_first_node_in_group(&"Event") as Event)[/code].
 
+## Издаётся, когда событие началось (т. е. после вызова [method _finish_start).
+signal started
 ## Издаётся, когда событие закончилось.
 signal ended
 ## Издаётся, когда был установлен локальный игрок через [method set_local_player].
@@ -33,7 +35,7 @@ var local_player: Player
 ## Команда локального игрока.
 var local_team: int = -1
 ## Началось ли событие.
-var started := false
+var was_started := false
 ## Словарь формата <ID игрока> - <массив данных об экипировке> (см. [member Player.equip_data]).
 ## Доступно только на сервере.
 var _players_equip_data: Dictionary[int, Array]
@@ -107,7 +109,7 @@ func spawn_player(id: int) -> void:
 	player.damaged.connect(_on_player_damaged)
 	player.killed.connect(_on_player_killed)
 	player.tree_exiting.connect(_on_player_tree_exiting.bind(player))
-	if not started:
+	if not was_started:
 		player.make_disarmed()
 		player.make_immobile()
 
@@ -119,7 +121,7 @@ func set_local_player(player: Player) -> void:
 	set_local_team(player.team)
 	
 	var camera: SmartCamera = $Camera
-	if started:
+	if was_started:
 		camera.pan_to_target(player, 0.3)
 	else:
 		if not multiplayer.is_server():
@@ -167,13 +169,14 @@ func _start() -> void:
 		return
 	
 	_finish_start()
-	started = true
 	if multiplayer.is_server():
 		get_tree().call_group(&"Player", &"unmake_disarmed")
 		get_tree().call_group(&"Player", &"unmake_immobile")
 	else:
 		local_player.unmake_disarmed()
 		local_player.unmake_immobile()
+	started.emit()
+	was_started = true
 	
 	if Globals.get_setting_bool("custom_tracks") \
 			and not Globals.main.loaded_custom_tracks.is_empty():

@@ -67,6 +67,8 @@ func _player_killed(who: int, _by: int) -> void:
 func _player_disconnected(_id: int) -> void:
 	if _current_round > 2: # Игра завершена
 		return
+	if not was_started:
+		await started
 	_end_round.rpc(_players_teams.values()[0], _players_teams.keys()[0], true)
 
 
