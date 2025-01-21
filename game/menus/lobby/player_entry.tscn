@@ -17,6 +17,7 @@ custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
 texture = ExtResource("4_665gi")
 expand_mode = 1
+stretch_mode = 5
 
 [node name="Name" type="Label" parent="."]
 layout_mode = 2

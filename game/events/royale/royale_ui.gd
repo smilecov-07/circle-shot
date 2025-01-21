@@ -32,7 +32,7 @@ func show_winner(winner: int, winner_name: String) -> void:
 
 
 @rpc("reliable", "call_local")
-func kill_player(which: int, killer: int) -> void:
+func kill_player(which: int, killer: int = -1) -> void:
 	if multiplayer.get_remote_sender_id() != MultiplayerPeer.TARGET_PEER_SERVER:
 		push_error("This method must be called only by server.")
 		return

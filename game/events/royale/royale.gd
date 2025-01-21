@@ -73,6 +73,7 @@ func _player_killed(who: int, by: int) -> void:
 func _player_disconnected(id: int) -> void:
 	_alive_players.erase(id)
 	_royale_ui.set_alive_players.rpc(_alive_players.size())
+	_royale_ui.kill_player.rpc(id)
 	_check_winner()
 
 

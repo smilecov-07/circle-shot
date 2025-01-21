@@ -24,7 +24,7 @@ var _selected_skill: int = 0
 var _players: Dictionary[int, String]
 var _admin := false
 var _admin_id: int = -1
-var _local_lobby_id: int = 0
+var _broadcast_lobby_id: int = 0
 var _udp_peers: Array[PacketPeerUDP]
 var _client_timers: Dictionary[int, Timer]
 var _player_entry_scene: PackedScene = preload("uid://dj0mx5ui2wu4n")
@@ -506,14 +506,14 @@ func _find_ips_for_broadcast() -> void:
 
 func _do_broadcast() -> void:
 	var data := PackedByteArray()
-	data.append(_local_lobby_id)
+	data.append(_broadcast_lobby_id)
 	data.append(_players.size())
 	data.append(_game.max_players)
 	data.append_array(Globals.get_string("player_name", "Local Server").to_utf8_buffer()) # Имя
 	for peer: PacketPeerUDP in _udp_peers:
 		peer.put_packet(data)
 	print_verbose("Broadcast of lobby %d done. Data sent: %s (%d/%d)" % [
-		_local_lobby_id,
+		_broadcast_lobby_id,
 		Globals.get_string("player_name", "Local Server"),
 		_players.size(),
 		_game.max_players,
@@ -534,9 +534,9 @@ func _on_game_created() -> void:
 	_players.clear()
 	($UDPTimer as Timer).start()
 	($UpdateIPSTimer as Timer).start()
-	_local_lobby_id = Globals.get_string("player_name", "Local Server").hash() \
+	_broadcast_lobby_id = Globals.get_string("player_name", "Local Server").hash() \
 			* OS.get_unique_id().hash() + OS.get_process_id()
-	_local_lobby_id %= 256
+	_broadcast_lobby_id %= 256
 	if not Globals.headless:
 		_register_new_player.rpc_id(MultiplayerPeer.TARGET_PEER_SERVER,
 				Globals.get_string("player_name"))

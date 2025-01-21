@@ -209,12 +209,21 @@ func show_error(error_text: String) -> void:
 
 
 ## Проверяет имя игрока и исправляет при необходимости. Если [param id] равен 0, не печатает
-## никаких предупреждений.
-static func validate_player_name(player_name: String, id: int = 0) -> String:
+## никаких предупреждений. В [param valid] можно передать массив, который после выполнения
+## функции будет содержать [code]true[/code], если имя игрока допустимо.[br]
+## Недопустимое имя заменяется на "Игрок[[param id], если указан]".
+static func validate_player_name(player_name: String, id: int = 0, valid: Array = []) -> String:
 	# Там, где якобы пусто, стоит пустой символ
 	player_name = player_name.strip_edges().strip_escapes().lstrip('⁣')
+	valid.append(not player_name.is_empty())
 	if player_name.is_empty():
-		return "Игрок%d" % id if id != 0 else "Игрок"
+		var new_name: String = "Игрок%d" % id if id != 0 else "Игрок"
+		if id != 0:
+			push_warning("Client's %d player name length is invalid. Falling back to %s." % [
+				id,
+				new_name,
+			])
+		return new_name
 	elif player_name.length() > MAX_PLAYER_NAME_LENGTH:
 		if id != 0:
 			push_warning("Client's %d player name length (%d) is more than allowed (%d)." % [
