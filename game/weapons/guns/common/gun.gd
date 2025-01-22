@@ -22,10 +22,9 @@ extends Weapon
 ## при движении не будет добавляться.
 @export_range(0.0, 1.0) var spread_walk_ratio := 0.5
 ## Кривая разброса. Значения графика есть разброс в определённый момент времени. НЕ может
-## принимать отрицательные значения.
+## принимать отрицательные значения. [member Curve.max_domain] определяет длительность
+## этой кривой.
 @export var spread_curve: Curve
-## Длительность кривой разброса.
-@export var spread_curve_time := 2.0
 ## Время, через которое будет циклиться таймер разброса вне длительности кривой начнёт циклиться.
 @export var spread_post_curve_time := 1.0
 ## Время, за которое таймер разброса будет увеличен на [member shoot_interval].
@@ -35,14 +34,11 @@ extends Weapon
 
 @export_group("Recoil", "recoil_")
 ## Кривая отдачи. Значения графика есть поворот оружия в определённый момент времени.
-## Может принимать отрицательные значения.
+## Может принимать отрицательные значения. [member Curve.max_domain] определяет длительность
+## этой кривой.
 @export var recoil_curve: Curve
-## Длительность кривой отдачи.
-@export var recoil_curve_time := 5.0
-## Кривая цикличной отдачи.
+## Кривая цикличной отдачи. [member Curve.max_domain] определяет длительность этой кривой.
 @export var recoil_cycle_curve: Curve
-## Длительность кривой цикличной отдачи.
-@export var recoil_cycle_curve_time := 2.0
 ## Время, за которое таймер отдачи будет увеличен на [member shoot_interval].
 @export var recoil_increasing_time := 0.2
 ## Время, за которое отдача сбрасывается после прекращения стрельбы.
@@ -140,24 +136,24 @@ func _shoot() -> void:
 		_recoil_timer_tween.kill()
 	
 	_spread_timer_tween = create_tween()
-	_spread_timer_tween.tween_property(self, ^":_spread_timer",
-			_spread_timer + shoot_interval, spread_increasing_time)
+	var next_spread: float = _spread_timer + shoot_interval
+	_spread_timer_tween.tween_property(self, ^":_spread_timer", next_spread, spread_increasing_time)
+	
+	if _spread_timer + shoot_interval > spread_curve.max_domain + spread_post_curve_time:
+		next_spread = fposmod(next_spread - spread_curve.max_domain,
+				spread_post_curve_time) + spread_curve.max_domain
 	_spread_timer_tween.tween_property(self, ^":_spread_timer", 0.0, spread_reset_time).from(
-			(fposmod(_spread_timer + shoot_interval - spread_curve_time, spread_post_curve_time)
-			+ spread_curve_time)
-			if _spread_timer + shoot_interval > spread_curve_time + spread_post_curve_time else
-			(_spread_timer + shoot_interval)
-	)
+			next_spread)
 	
 	_recoil_timer_tween = create_tween()
-	_recoil_timer_tween.tween_property(self, ^":_recoil_timer",
-			_recoil_timer + shoot_interval, recoil_increasing_time)
+	var next_recoil: float = _recoil_timer + shoot_interval
+	_recoil_timer_tween.tween_property(self, ^":_recoil_timer", next_recoil, recoil_increasing_time)
+	
+	if _recoil_timer + shoot_interval > recoil_curve.max_domain + recoil_cycle_curve.max_domain:
+		next_recoil = fposmod(next_recoil - recoil_curve.max_domain,
+				recoil_cycle_curve.max_domain) + recoil_curve.max_domain
 	_recoil_timer_tween.tween_property(self, ^":_recoil_timer", 0.0, recoil_reset_time).from(
-			(fposmod(_recoil_timer + shoot_interval - recoil_curve_time, recoil_cycle_curve_time)
-			+ recoil_curve_time)
-			if _recoil_timer + shoot_interval > recoil_curve_time + recoil_cycle_curve_time else
-			(_recoil_timer + shoot_interval)
-	)
+			next_recoil)
 
 
 func _can_reload() -> bool:
@@ -189,17 +185,17 @@ func reload() -> void:
 
 
 func _calculate_recoil() -> float:
-	if _recoil_timer > recoil_curve_time:
-		return recoil_cycle_curve.sample_baked(fposmod(_recoil_timer - recoil_curve_time,
-				recoil_cycle_curve_time) / recoil_cycle_curve_time)
+	if _recoil_timer > recoil_curve.max_domain:
+		return recoil_cycle_curve.sample_baked(fposmod(_recoil_timer - recoil_curve.max_domain,
+				recoil_cycle_curve.max_domain))
 	if _recoil_timer > 0.01:
-		return recoil_curve.sample_baked(minf(_recoil_timer / recoil_curve_time, 1.0))
+		return recoil_curve.sample_baked(_recoil_timer)
 	return 0.0
 
 
 func _calculate_shoot_spread() -> float:
 	if _spread_timer > 0.01:
-		return spread_curve.sample_baked(minf(_spread_timer / spread_curve_time, 1.0))
+		return spread_curve.sample_baked(_spread_timer)
 	return 0.0
 
 

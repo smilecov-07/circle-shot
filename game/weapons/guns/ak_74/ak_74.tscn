@@ -9,13 +9,13 @@
 [ext_resource type="Texture2D" uid="uid://djpleqaaaxipo" path="res://game/weapons/guns/common/rifle_sleeve.png" id="9_wphq2"]
 
 [sub_resource type="Curve" id="Curve_ncqml"]
-_limits = [0.0, 8.0, 0.0, 1.0]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.249135, 0.0879116), 0.0, 10.5373, 0, 1, Vector2(1, 8), 18.6315, 0.0, 0, 0]
+_limits = [0.0, 8.0, 0.0, 2.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.522648, 0.269663), 0.33074, 0.33074, 0, 0, Vector2(2, 8), 9.27106, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="Curve" id="Curve_mancs"]
-_limits = [-5.0, 5.0, 0.0, 1.0]
-_data = [Vector2(0, -0.0168304), 0.0, 0.0, 0, 0, Vector2(0.16609, -0.0140257), 0.0, 0.0, 0, 0, Vector2(1, 5), 0.0, 0.0, 0, 0]
+_limits = [0.0, 5.0, 0.0, 2.4]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.45993, 0), 0.0, 0.0, 0, 0, Vector2(2.4, 5), 0.0, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="Curve" id="Curve_fskgo"]
@@ -362,9 +362,7 @@ spread_curve = SubResource("Curve_ncqml")
 spread_increasing_time = 0.18
 spread_reset_time = 0.5
 recoil_curve = SubResource("Curve_mancs")
-recoil_curve_time = 2.4
 recoil_cycle_curve = SubResource("Curve_fskgo")
-recoil_cycle_curve_time = 1.0
 recoil_increasing_time = 0.18
 recoil_reset_time = 0.5
 ammo_per_load = 30
@@ -407,9 +405,9 @@ region_rect = Rect2(128, 32, 48, 80)
 position = Vector2(55, -45)
 emitting = false
 amount = 1
+texture = ExtResource("9_wphq2")
 lifetime = 0.15
 one_shot = true
-texture = ExtResource("9_wphq2")
 direction = Vector2(0, -1)
 gravity = Vector2(0, 98)
 initial_velocity_min = 256.0

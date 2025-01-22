@@ -7,8 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://c4y5rhfa2igbd" path="res://game/weapons/guns/flamethrower/gas_bottle.png" id="4_sp6sa"]
 
 [sub_resource type="Curve" id="Curve_y3qts"]
-_limits = [0.0, 10.0, 0.0, 1.0]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 10), 0.0, 0.0, 0, 0]
+_limits = [0.0, 10.0, 0.0, 5.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(5, 10), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_tngnv"]
@@ -383,7 +383,6 @@ projectile_scene = ExtResource("2_tngnv")
 spread_base = 25.0
 spread_walk = 5.0
 spread_curve = SubResource("Curve_y3qts")
-spread_curve_time = 5.0
 spread_increasing_time = 0.15
 spread_reset_time = 1.0
 recoil_curve = SubResource("Curve_tngnv")

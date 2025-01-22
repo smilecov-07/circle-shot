@@ -9,13 +9,13 @@
 [ext_resource type="Texture2D" uid="uid://t7d0mqq0rq2r" path="res://game/weapons/guns/p350/shutter.png" id="6_g8rcj"]
 
 [sub_resource type="Curve" id="Curve_mhxuf"]
-_limits = [0.0, 5.0, 0.0, 1.0]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 5), 0.0, 0.0, 0, 0]
+_limits = [0.0, 5.0, 0.0, 2.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(2, 5), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_u2hho"]
-_limits = [-4.0, 0.0, 0.0, 1.0]
-_data = [Vector2(0.224913, 0), 0.0, 0.0, 0, 0, Vector2(1, -4), 0.0, 0.0, 0, 0]
+_limits = [-4.0, 0.0, 0.0, 5.0]
+_data = [Vector2(1, 0), 0.0, 0.0, 0, 0, Vector2(5, -4), 0.0, 0.0, 0, 0]
 point_count = 2
 metadata/_snap_enabled = true
 
@@ -375,9 +375,9 @@ region_rect = Rect2(8, 0, 120, 32)
 position = Vector2(40, -32)
 emitting = false
 amount = 1
+texture = ExtResource("5_brdiv")
 lifetime = 0.4
 one_shot = true
-texture = ExtResource("5_brdiv")
 direction = Vector2(0, -1)
 gravity = Vector2(0, 98)
 initial_velocity_min = 128.0

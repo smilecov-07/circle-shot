@@ -12,8 +12,8 @@
 [ext_resource type="Texture2D" uid="uid://baoopah0qlhcl" path="res://game/weapons/guns/sniper_rifle/aim.png" id="9_cpvii"]
 
 [sub_resource type="Curve" id="Curve_uvvkn"]
-_limits = [0.0, 20.0, 0.0, 1.0]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 20), 0.0, 0.0, 0, 0]
+_limits = [0.0, 20.0, 0.0, 2.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(2, 20), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_dynjt"]
@@ -456,8 +456,8 @@ region_rect = Rect2(120, 96, 32, 32)
 position = Vector2(77, -22)
 emitting = false
 amount = 1
-one_shot = true
 texture = ExtResource("8_y68u3")
+one_shot = true
 direction = Vector2(0, -1)
 gravity = Vector2(0, 196)
 initial_velocity_min = 128.0

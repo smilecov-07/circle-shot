@@ -9,17 +9,17 @@
 [ext_resource type="Texture2D" uid="uid://p7lc2resallt" path="res://game/weapons/guns/common/gun_sleeve.png" id="7_2nu1t"]
 
 [sub_resource type="Curve" id="Curve_yn8d0"]
-_limits = [0.0, 12.0, 0.0, 1.0]
-_data = [Vector2(0, 0), 0.0, 15.4463, 0, 0, Vector2(1, 12), 0.0, 0.0, 0, 0]
+_limits = [0.0, 12.0, 0.0, 1.6]
+_data = [Vector2(0, 0), 0.0, 15.4463, 0, 0, Vector2(1.6, 12), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_a2ndn"]
-_limits = [-14.0, 0.0, 0.0, 1.0]
-_data = [Vector2(0, 0), 0.0, -13.7812, 0, 0, Vector2(1, -14), 0.492184, 0.0, 0, 0]
+_limits = [-14.0, 0.0, 0.0, 3.0]
+_data = [Vector2(0, 0), 0.0, -13.7812, 0, 0, Vector2(3, -14), -0.513332, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_jn5kp"]
-_limits = [-14.0, 0.0, 0.0, 1.0]
+_limits = [-14.0, 0.0, 0.0, 2.0]
 _data = [Vector2(0, -14), 0.0, 0.0, 0, 0]
 point_count = 1
 
@@ -382,11 +382,9 @@ to_aim_time = 0.3
 projectile_scene = ExtResource("2_7232m")
 spread_walk = 3.5
 spread_curve = SubResource("Curve_yn8d0")
-spread_curve_time = 1.6
 spread_increasing_time = 0.5
 spread_reset_time = 0.7
 recoil_curve = SubResource("Curve_a2ndn")
-recoil_curve_time = 3.0
 recoil_cycle_curve = SubResource("Curve_jn5kp")
 recoil_increasing_time = 0.5
 recoil_reset_time = 0.7
@@ -430,9 +428,9 @@ region_rect = Rect2(16, 16, 144, 40)
 position = Vector2(22, -51)
 emitting = false
 amount = 1
+texture = ExtResource("7_2nu1t")
 lifetime = 0.6
 one_shot = true
-texture = ExtResource("7_2nu1t")
 direction = Vector2(0, -1)
 gravity = Vector2(0, 98)
 initial_velocity_min = 128.0
