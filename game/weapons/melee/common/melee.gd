@@ -33,6 +33,7 @@ func _physics_process(delta: float) -> void:
 func _shoot() -> void:
 	_shoot_timer = shoot_interval
 	_anim.play(&"Attack")
+	_anim.seek(0.0, true)
 	block_shooting()
 	
 	if multiplayer.is_server():

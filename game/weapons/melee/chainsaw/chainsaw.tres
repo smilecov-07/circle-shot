@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3 uid="uid://bf04l6ql12cgu"]
+
+[ext_resource type="Script" uid="uid://55g8njvkg07g" path="res://game/player/equip/weapon_data.gd" id="1_dsrcm"]
+
+[resource]
+script = ExtResource("1_dsrcm")
+name = "Бензопила"
+rarity = 2
+id = "pila"
+damage_text = "Урон/с: 75"
+ammo_text = "Не ограничено"
+description = ""
+scene_path = "uid://dqptp3tatgmn"
+image_path = "uid://t8yuooskcmnw"
+spawnable_scenes_paths = Array[String]([])
+metadata/_custom_type_script = ExtResource("1_dsrcm")
