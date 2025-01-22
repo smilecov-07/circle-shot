@@ -29,7 +29,7 @@ const MAX_ASPECT_RATIO := 2.34
 ## Минимальное отношение ширины к высоте, пренизив которое содержимое окна начнёт обрезаться.
 const MIN_ASPECT_RATIO := 1.5
 ## Разрешённые расширения файлов для загрузки в качестве пользовательских треков.
-const ALLOWED_MUSIC_FILE_EXTENSIONS: Array[String] = ["mp3", "ogg"]
+const ALLOWED_MUSIC_FILE_EXTENSIONS: Array[String] = ["mp3", "ogg", "wav"]
 ## Максимальная длина названия файла пользовательского трека. Лишнее обрезается.
 const MAX_MUSIC_FILE_NAME_LENGTH: int = 45
 ## Максимальный размер файла пользовательского трека. Если размер больше максимального,
@@ -46,7 +46,7 @@ var menu: Menu
 ## Список открытых на данный момент экранов.
 var screens: Array[Control]
 ## Словарь загруженных пользовательских треков в формате "<имя файла> - <ресурс трека>".
-var loaded_custom_tracks: Dictionary[String, AudioStream]
+var custom_tracks: Dictionary[String, AudioStream]
 var _preloaded_resources: Array[Resource]
 var _download_http: HTTPRequest
 
@@ -523,13 +523,12 @@ func _loading_custom_tracks() -> void:
 		if valid:
 			match to_load[path]:
 				"mp3":
-					var mp3 := AudioStreamMP3.new()
-					mp3.data = file.get_buffer(file.get_length())
-					if mp3.data.is_empty():
-						valid = false
-					else:
+					var mp3 := AudioStreamMP3.load_from_buffer(file.get_buffer(file.get_length()))
+					if mp3:
 						mp3.loop = true
 						stream = mp3
+					else:
+						valid = false
 				"ogg":
 					var ogg := AudioStreamOggVorbis.load_from_buffer(
 							file.get_buffer(file.get_length()))
@@ -538,10 +537,19 @@ func _loading_custom_tracks() -> void:
 						stream = ogg
 					else:
 						valid = false
+				"wav":
+					var wav := AudioStreamWAV.load_from_buffer(
+							file.get_buffer(file.get_length()))
+					if wav:
+						wav.loop_mode = AudioStreamWAV.LOOP_FORWARD
+						wav.loop_end = floori(wav.get_length() * wav.mix_rate)
+						stream = wav
+					else:
+						valid = false
 		
 		if valid:
 			print_verbose("Loaded track: %s." % path)
-			loaded_custom_tracks[
+			custom_tracks[
 				path.get_file().get_basename().left(MAX_MUSIC_FILE_NAME_LENGTH)
 			] = stream
 		else:

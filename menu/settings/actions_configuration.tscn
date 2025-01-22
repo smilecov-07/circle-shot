@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://bgequl5pvuuq5" path="res://menu/settings/actions_configuration.gd" id="1_h33al"]
 
 [node name="ActionsConfiguration" type="Window"]
-auto_translate_mode = 1
 title = "Настройка действий"
 position = Vector2i(0, 28)
 size = Vector2i(640, 640)

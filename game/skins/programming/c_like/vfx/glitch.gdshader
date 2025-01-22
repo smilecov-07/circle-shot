@@ -1,7 +1,7 @@
 shader_type canvas_item;
 
-uniform float glitch = 0.0;
-uniform float shift_glitch = 0.0;
+instance uniform float glitch = 0.0;
+instance uniform float shift_glitch = 0.0;
 uniform sampler2D shift_glitch_texture;
 
 void fragment() {

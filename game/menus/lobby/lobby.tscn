@@ -88,24 +88,20 @@ grow_vertical = 2
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panels/Lobby"]
-auto_translate_mode = 1
 layout_mode = 2
 
 [node name="Title" type="Label" parent="Panels/Lobby/VBoxContainer"]
-auto_translate_mode = 1
 layout_mode = 2
 size_flags_horizontal = 4
 theme_type_variation = &"HeaderMedium"
 text = "Игроки в комнате:"
 
 [node name="Panel" type="PanelContainer" parent="Panels/Lobby/VBoxContainer"]
-auto_translate_mode = 1
 custom_minimum_size = Vector2(320, 0)
 layout_mode = 2
 
 [node name="PlayersContainer" type="GridContainer" parent="Panels/Lobby/VBoxContainer/Panel"]
 unique_name_in_owner = true
-auto_translate_mode = 1
 layout_mode = 2
 columns = 2
 
@@ -115,7 +111,6 @@ alignment = 1
 
 [node name="Event" type="TextureRect" parent="Panels/Lobby/VBoxContainer/Environment"]
 unique_name_in_owner = true
-auto_translate_mode = 1
 self_modulate = Color(0.752941, 0.752941, 0.752941, 1)
 custom_minimum_size = Vector2(392, 80)
 layout_mode = 2
@@ -140,7 +135,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Description" type="Label" parent="Panels/Lobby/VBoxContainer/Environment/Event/Container"]
-auto_translate_mode = 1
 layout_mode = 2
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -157,7 +151,6 @@ size_flags_horizontal = 3
 expand_mode = 1
 
 [node name="Container" type="VBoxContainer" parent="Panels/Lobby/VBoxContainer/Environment/Map"]
-auto_translate_mode = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -166,7 +159,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Name" type="Label" parent="Panels/Lobby/VBoxContainer/Environment/Map/Container"]
-auto_translate_mode = 1
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -176,7 +168,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Description" type="Label" parent="Panels/Lobby/VBoxContainer/Environment/Map/Container"]
-auto_translate_mode = 1
 layout_mode = 2
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -190,7 +181,6 @@ alignment = 1
 
 [node name="Skin" type="TextureRect" parent="Panels/Lobby/VBoxContainer/Player"]
 unique_name_in_owner = true
-auto_translate_mode = 1
 custom_minimum_size = Vector2(0, 128)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -198,7 +188,6 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Type" type="Label" parent="Panels/Lobby/VBoxContainer/Player/Skin"]
-auto_translate_mode = 1
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -227,7 +216,6 @@ horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="RarityFill" type="ColorRect" parent="Panels/Lobby/VBoxContainer/Player/Skin"]
-auto_translate_mode = 1
 show_behind_parent = true
 layout_mode = 1
 anchors_preset = 15
@@ -254,7 +242,6 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Type" type="Label" parent="Panels/Lobby/VBoxContainer/Player/LightWeapon"]
-auto_translate_mode = 1
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -268,7 +255,6 @@ horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="Name" type="Label" parent="Panels/Lobby/VBoxContainer/Player/LightWeapon"]
-auto_translate_mode = 1
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -284,7 +270,6 @@ horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="RarityFill" type="ColorRect" parent="Panels/Lobby/VBoxContainer/Player/LightWeapon"]
-auto_translate_mode = 1
 show_behind_parent = true
 layout_mode = 1
 anchors_preset = 15
@@ -294,7 +279,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ChangeLightWeapon" type="Button" parent="Panels/Lobby/VBoxContainer/Player/LightWeapon"]
-auto_translate_mode = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -305,7 +289,6 @@ flat = true
 
 [node name="HeavyWeapon" type="TextureRect" parent="Panels/Lobby/VBoxContainer/Player"]
 unique_name_in_owner = true
-auto_translate_mode = 1
 custom_minimum_size = Vector2(0, 128)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -313,7 +296,6 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Type" type="Label" parent="Panels/Lobby/VBoxContainer/Player/HeavyWeapon"]
-auto_translate_mode = 1
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -327,7 +309,6 @@ horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="Name" type="Label" parent="Panels/Lobby/VBoxContainer/Player/HeavyWeapon"]
-auto_translate_mode = 1
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -343,7 +324,6 @@ horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="RarityFill" type="ColorRect" parent="Panels/Lobby/VBoxContainer/Player/HeavyWeapon"]
-auto_translate_mode = 1
 show_behind_parent = true
 layout_mode = 1
 anchors_preset = 15
@@ -353,7 +333,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ChangeHeavyWeapon" type="Button" parent="Panels/Lobby/VBoxContainer/Player/HeavyWeapon"]
-auto_translate_mode = 1
 layout_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -363,7 +342,6 @@ flat = true
 
 [node name="SupportWeapon" type="TextureRect" parent="Panels/Lobby/VBoxContainer/Player"]
 unique_name_in_owner = true
-auto_translate_mode = 1
 custom_minimum_size = Vector2(0, 128)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -371,7 +349,6 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Type" type="Label" parent="Panels/Lobby/VBoxContainer/Player/SupportWeapon"]
-auto_translate_mode = 1
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -385,7 +362,6 @@ horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="Name" type="Label" parent="Panels/Lobby/VBoxContainer/Player/SupportWeapon"]
-auto_translate_mode = 1
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -401,7 +377,6 @@ horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="RarityFill" type="ColorRect" parent="Panels/Lobby/VBoxContainer/Player/SupportWeapon"]
-auto_translate_mode = 1
 show_behind_parent = true
 layout_mode = 1
 anchors_preset = 15
@@ -411,7 +386,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ChangeSupportWeapon" type="Button" parent="Panels/Lobby/VBoxContainer/Player/SupportWeapon"]
-auto_translate_mode = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -422,7 +396,6 @@ flat = true
 
 [node name="MeleeWeapon" type="TextureRect" parent="Panels/Lobby/VBoxContainer/Player"]
 unique_name_in_owner = true
-auto_translate_mode = 1
 custom_minimum_size = Vector2(0, 128)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -430,7 +403,6 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Type" type="Label" parent="Panels/Lobby/VBoxContainer/Player/MeleeWeapon"]
-auto_translate_mode = 1
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -444,7 +416,6 @@ horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="Name" type="Label" parent="Panels/Lobby/VBoxContainer/Player/MeleeWeapon"]
-auto_translate_mode = 1
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -460,7 +431,6 @@ horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="RarityFill" type="ColorRect" parent="Panels/Lobby/VBoxContainer/Player/MeleeWeapon"]
-auto_translate_mode = 1
 show_behind_parent = true
 layout_mode = 1
 anchors_preset = 15
@@ -470,7 +440,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ChangeMeleeWeapon" type="Button" parent="Panels/Lobby/VBoxContainer/Player/MeleeWeapon"]
-auto_translate_mode = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -481,7 +450,6 @@ flat = true
 
 [node name="Skill" type="TextureRect" parent="Panels/Lobby/VBoxContainer/Player"]
 unique_name_in_owner = true
-auto_translate_mode = 1
 custom_minimum_size = Vector2(0, 128)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -489,7 +457,6 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Type" type="Label" parent="Panels/Lobby/VBoxContainer/Player/Skill"]
-auto_translate_mode = 1
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -518,7 +485,6 @@ horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="RarityFill" type="ColorRect" parent="Panels/Lobby/VBoxContainer/Player/Skill"]
-auto_translate_mode = 1
 show_behind_parent = true
 layout_mode = 1
 anchors_preset = 15
@@ -549,7 +515,6 @@ layout_mode = 2
 alignment = 1
 
 [node name="StartEvent" type="Button" parent="Panels/Lobby/VBoxContainer/AdminPanel"]
-auto_translate_mode = 1
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Начать!"
@@ -561,7 +526,6 @@ text = "Сменить событие..."
 icon = ExtResource("3_pddfd")
 
 [node name="ChangeMap" type="Button" parent="Panels/Lobby/VBoxContainer/AdminPanel"]
-auto_translate_mode = 1
 layout_mode = 2
 text = "Сменить карту..."
 icon = ExtResource("4_4kry5")
@@ -621,11 +585,9 @@ metadata/_custom_type_script = ExtResource("3_amd3n")
 metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panels/Chat"]
-auto_translate_mode = 1
 layout_mode = 2
 
 [node name="Messages" type="RichTextLabel" parent="Panels/Chat/VBoxContainer"]
-auto_translate_mode = 1
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/default_color = Color(0, 0, 0, 1)
@@ -639,7 +601,6 @@ hint_underlined = false
 layout_mode = 2
 
 [node name="LineEdit" type="LineEdit" parent="Panels/Chat/VBoxContainer/HBoxContainer"]
-auto_translate_mode = 1
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Сообщение..."
@@ -654,7 +615,6 @@ ignore_texture_size = true
 stretch_mode = 4
 
 [node name="ItemSelector" type="Window" parent="."]
-auto_translate_mode = 1
 initial_position = 2
 size = Vector2i(408, 440)
 visible = false
@@ -670,7 +630,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="ItemSelector"]
-auto_translate_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

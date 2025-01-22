@@ -272,7 +272,6 @@ focus_mode = 0
 icon = ExtResource("13_j0bsh")
 
 [node name="Chat" type="Button" parent="UI/Main"]
-auto_translate_mode = 1
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -318,11 +317,9 @@ chat_button_path = NodePath("../Chat")
 metadata/_custom_type_script = ExtResource("3_8d55t")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/Main/ChatPanel"]
-auto_translate_mode = 1
 layout_mode = 2
 
 [node name="Messages" type="RichTextLabel" parent="UI/Main/ChatPanel/VBoxContainer"]
-auto_translate_mode = 1
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/default_color = Color(0, 0, 0, 1)
@@ -336,7 +333,6 @@ hint_underlined = false
 layout_mode = 2
 
 [node name="LineEdit" type="LineEdit" parent="UI/Main/ChatPanel/VBoxContainer/HBoxContainer"]
-auto_translate_mode = 1
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Сообщение..."
@@ -439,7 +435,6 @@ vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="GO" type="Label" parent="UI/Intro"]
-auto_translate_mode = 1
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -479,7 +474,6 @@ size = Vector2i(256, 256)
 zoom = Vector2(0.05, 0.05)
 
 [node name="QuitDialog" type="ConfirmationDialog" parent="UI"]
-auto_translate_mode = 1
 title = "Покинуть игру?"
 size = Vector2i(280, 112)
 unresizable = true

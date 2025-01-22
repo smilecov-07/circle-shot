@@ -49,11 +49,11 @@ func _ready() -> void:
 			Globals.get_setting_bool("custom_tracks"))
 	_on_custom_tracks_check_toggled((%CustomTracksCheck as BaseButton).button_pressed)
 	(%CustomTracksPath as Label).text = "Путь к папке с треками: %s" % Globals.main.music_path
-	if not Globals.main.loaded_custom_tracks.is_empty():
+	if not Globals.main.custom_tracks.is_empty():
 		for node: Node in %LoadedTracks.get_children():
 			node.queue_free()
 		
-		for track: String in Globals.main.loaded_custom_tracks:
+		for track: String in Globals.main.custom_tracks:
 			var label := Label.new()
 			label.text = track
 			%LoadedTracks.add_child(label)

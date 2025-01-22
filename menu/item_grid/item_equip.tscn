@@ -1,13 +1,11 @@
 [gd_scene format=3 uid="uid://c07pym82q5utt"]
 
 [node name="ItemEquip" type="TextureRect"]
-auto_translate_mode = 1
 custom_minimum_size = Vector2(128, 128)
 expand_mode = 1
 stretch_mode = 5
 
 [node name="Name" type="Label" parent="."]
-auto_translate_mode = 1
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -48,7 +46,6 @@ grow_vertical = 2
 mouse_filter = 1
 
 [node name="Click" type="Button" parent="."]
-auto_translate_mode = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

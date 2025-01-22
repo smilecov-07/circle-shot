@@ -210,6 +210,7 @@ layout_mode = 2
 text = "Summersay415 - идея, программирование, оружия и скины
 wiziritka - скины и карты
 DanKras - скины и оружие, загрузочный экран
+ZerkaloWorld - оружия
 BaCat86, Kaurt, MilDeV, ZeroHero135 - скины
 Тестировщики (и благодарность):
 LohDebil228, ATINY, smilecov_07, YanniKss"
@@ -249,7 +250,7 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
 text = "Скины эмоджи взяты с https://openmoji.org/.
-Мита с кепочкой переоценена."
+Я НЕ ОТКЛЮЧАЮ МИНИКАРТУ ЧЕРЕЗ КОНСОЛЬ!"
 autowrap_mode = 2
 
 [node name="Close" type="Button" parent="About/MarginContainer/VBoxContainer"]

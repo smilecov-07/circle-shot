@@ -6,10 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://da7lkffe1t7w4" path="res://game/skins/other/rkn/true_rkn.png" id="4_ebtal"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bnnr3"]
-resource_local_to_scene = true
 shader = ExtResource("1_n87c3")
 shader_parameter/noise = ExtResource("2_n87c3")
-shader_parameter/power = 0.0
 shader_parameter/down_multiplier = 0.872
 
 [sub_resource type="Animation" id="Animation_7og40"]
@@ -31,7 +29,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Rkn:material:shader_parameter/power")
+tracks/1/path = NodePath("Rkn:instance_shader_parameters/power")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -143,6 +141,7 @@ texture = ExtResource("1_bnnr3")
 
 [node name="Rkn" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_bnnr3")
+instance_shader_parameters/power = 1.0
 texture = ExtResource("4_ebtal")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

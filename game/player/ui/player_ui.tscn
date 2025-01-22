@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://0wc72b0o2o11"]
+[gd_scene load_steps=25 format=3 uid="uid://0wc72b0o2o11"]
 
 [ext_resource type="Script" uid="uid://dnfj2pxuibak6" path="res://game/player/ui/player_ui.gd" id="1_2pprn"]
 [ext_resource type="Shader" uid="uid://coxueocca4drx" path="res://game/player/ui/blood_vignette/blood_vignette.gdshader" id="2_bioi4"]
@@ -12,8 +12,8 @@
 [ext_resource type="Texture2D" uid="uid://low3v5d2q65l" path="res://game/player/ui/health_bar.png" id="5_3xbtg"]
 [ext_resource type="Texture2D" uid="uid://chfx32osm5nwo" path="res://game/player/ui/joystick_tip_aim.png" id="5_5uxix"]
 [ext_resource type="Texture2D" uid="uid://djbso2agyek2p" path="res://game/player/ui/additional_button.png" id="6_10yoo"]
+[ext_resource type="Material" uid="uid://b8111w5tokcit" path="res://game/player/ui/solid_color.tres" id="7_2wypa"]
 [ext_resource type="Texture2D" uid="uid://p85ppsyx0g2n" path="res://game/player/ui/weapon_bg.png" id="7_6c3s8"]
-[ext_resource type="Shader" uid="uid://clha84ex5kwrq" path="res://game/player/ui/solid_color.gdshader" id="8_iqift"]
 [ext_resource type="Script" uid="uid://m3oouj1lspki" path="res://game/player/ui/position_loader.gd" id="8_witf6"]
 [ext_resource type="Texture2D" uid="uid://dhhiaodkovkws" path="res://game/player/ui/weapon_selection_bg.png" id="11_kgyyy"]
 [ext_resource type="Texture2D" uid="uid://cqlo1boor0w4t" path="res://game/player/ui/skill_button.png" id="14_nojcu"]
@@ -26,41 +26,11 @@ shader_parameter/alpha_multiplier = 0.375
 shader_parameter/noise_scale = 0.5
 shader_parameter/alpha_total_multiplier = 0.5
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xie73"]
-shader = ExtResource("8_iqift")
-shader_parameter/color = Color(1, 1, 1, 1)
-shader_parameter/power = 0.0
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6sal7"]
 size = Vector2(640, 256)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fqc3t"]
-shader = ExtResource("8_iqift")
-shader_parameter/color = Color(1, 1, 1, 1)
-shader_parameter/power = 1.0
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x4djl"]
 size = Vector2(120, 120)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jse5g"]
-shader = ExtResource("8_iqift")
-shader_parameter/color = Color(1, 1, 1, 1)
-shader_parameter/power = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_hii6l"]
-shader = ExtResource("8_iqift")
-shader_parameter/color = Color(1, 1, 1, 1)
-shader_parameter/power = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_c703a"]
-shader = ExtResource("8_iqift")
-shader_parameter/color = Color(1, 1, 1, 1)
-shader_parameter/power = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vprac"]
-shader = ExtResource("8_iqift")
-shader_parameter/color = Color(1, 1, 1, 1)
-shader_parameter/power = 1.0
 
 [sub_resource type="Animation" id="Animation_j6hmo"]
 resource_name = "Death"
@@ -183,7 +153,8 @@ nine_patch_stretch = true
 texture_progress = ExtResource("5_2wb1l")
 
 [node name="Health" type="TextureProgressBar" parent="Controller/HealthBar"]
-material = SubResource("ShaderMaterial_xie73")
+material = ExtResource("7_2wypa")
+instance_shader_parameters/power = 0.0
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -310,7 +281,7 @@ mouse_filter = 2
 texture = ExtResource("7_6c3s8")
 
 [node name="Icon" type="TextureRect" parent="Controller/CurrentWeapon"]
-material = SubResource("ShaderMaterial_fqc3t")
+material = ExtResource("7_2wypa")
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -505,8 +476,7 @@ texture = ExtResource("11_kgyyy")
 expand_mode = 1
 
 [node name="LightWeaponIcon" type="TextureRect" parent="Controller/WeaponSelection"]
-auto_translate_mode = 1
-material = SubResource("ShaderMaterial_jse5g")
+material = ExtResource("7_2wypa")
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -521,7 +491,6 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="LightWeaponName" type="Label" parent="Controller/WeaponSelection"]
-auto_translate_mode = 1
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -537,8 +506,7 @@ horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="HeavyWeaponIcon" type="TextureRect" parent="Controller/WeaponSelection"]
-auto_translate_mode = 1
-material = SubResource("ShaderMaterial_hii6l")
+material = ExtResource("7_2wypa")
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -553,7 +521,6 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="HeavyWeaponName" type="Label" parent="Controller/WeaponSelection"]
-auto_translate_mode = 1
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -568,8 +535,7 @@ theme_override_constants/outline_size = 4
 horizontal_alignment = 1
 
 [node name="SupportWeaponIcon" type="TextureRect" parent="Controller/WeaponSelection"]
-auto_translate_mode = 1
-material = SubResource("ShaderMaterial_c703a")
+material = ExtResource("7_2wypa")
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -587,7 +553,6 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="SupportWeaponName" type="Label" parent="Controller/WeaponSelection"]
-auto_translate_mode = 1
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -602,8 +567,7 @@ theme_override_constants/outline_size = 4
 horizontal_alignment = 1
 
 [node name="MeleeWeaponIcon" type="TextureRect" parent="Controller/WeaponSelection"]
-auto_translate_mode = 1
-material = SubResource("ShaderMaterial_vprac")
+material = ExtResource("7_2wypa")
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -621,7 +585,6 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="MeleeWeaponName" type="Label" parent="Controller/WeaponSelection"]
-auto_translate_mode = 1
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5

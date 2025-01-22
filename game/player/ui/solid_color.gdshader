@@ -1,7 +1,7 @@
 shader_type canvas_item;
 
-uniform vec4 color : source_color = vec4(1.0);
-uniform float power = 1.0;
+instance uniform vec4 color : source_color = vec4(1.0);
+instance uniform float power = 1.0;
 
 void fragment() {
 	float alpha = COLOR.a;

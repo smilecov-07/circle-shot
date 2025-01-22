@@ -179,9 +179,9 @@ func _start() -> void:
 	was_started = true
 	
 	if Globals.get_setting_bool("custom_tracks") \
-			and not Globals.main.loaded_custom_tracks.is_empty():
+			and not Globals.main.custom_tracks.is_empty():
 		($Music as AudioStreamPlayer).stream = \
-				Globals.main.loaded_custom_tracks.values().pick_random()
+				Globals.main.custom_tracks.values().pick_random()
 		($Music as AudioStreamPlayer).play()
 	print_verbose("Event started.")
 

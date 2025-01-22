@@ -342,7 +342,7 @@ func _get_weapon_type_from_vector(vector: Vector2) -> Weapon.Type:
 
 
 func _change_health_bar_glow(glow: float) -> void:
-	(_health_bar.material as ShaderMaterial).set_shader_parameter(&"power", glow)
+	_health_bar.set_instance_shader_parameter(&"power", glow)
 
 
 func _on_local_player_created(player: Player) -> void:
@@ -414,7 +414,7 @@ func _on_weapon_changed(_to: Weapon.Type) -> void:
 		return
 	
 	_current_weapon_icon.texture = load(_player.current_weapon.data.image_path)
-	(_current_weapon_icon.material as ShaderMaterial).set_shader_parameter(&"color",
+	_current_weapon_icon.set_instance_shader_parameter(&"color",
 			ItemsDB.RARITY_COLORS[_player.current_weapon.data.rarity])
 	
 	($Controller/TouchControls/Anchor/AdditionalButton as CanvasItem).visible = \
@@ -444,8 +444,7 @@ func _on_weapon_equipped(type: Weapon.Type, data: WeaponData) -> void:
 		return
 	
 	weapon_icon.texture = load(data.image_path)
-	(weapon_icon.material as ShaderMaterial).set_shader_parameter(&"color",
-			ItemsDB.RARITY_COLORS[data.rarity])
+	weapon_icon.set_instance_shader_parameter(&"color", ItemsDB.RARITY_COLORS[data.rarity])
 	weapon_text.text = data.name
 
 
