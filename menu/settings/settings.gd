@@ -40,9 +40,24 @@ func _ready() -> void:
 	(%UpdatesCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("check_updates"))
 	_on_updates_check_toggled((%UpdatesCheck as BaseButton).button_pressed)
 	(%BetasCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("check_betas"))
+	(%UPNPCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("upnp")
+			or "--upnp" in OS.get_cmdline_args())
+	_on_upnp_check_toggled((%UPNPCheck as BaseButton).button_pressed)
 	
 	_update_aim_visual_size()
 	get_window().size_changed.connect(_update_aim_visual_size)
+	
+	# UPnP
+	if "--upnp" in OS.get_cmdline_args():
+		(%UPNPCheck.get_parent().get_parent() as CanvasItem).hide()
+	var upnp_status := "Отключено"
+	if Globals.main.upnp:
+		match Globals.main.upnp.status:
+			UPNPManager.Status.INACTIVE:
+				upnp_status = "Неактивно"
+			_:
+				upnp_status = "Активно"
+	(%UPNPStatus as Label).text = upnp_status
 	
 	# Кастомные треки
 	(%CustomTracksCheck as BaseButton).set_pressed_no_signal(
@@ -332,3 +347,8 @@ func _on_updates_check_toggled(toggled_on: bool) -> void:
 
 func _on_betas_check_toggled(toggled_on: bool) -> void:
 	Globals.set_setting_bool("check_betas", toggled_on)
+
+
+func _on_upnp_check_toggled(toggled_on: bool) -> void:
+	Globals.set_setting_bool("upnp", toggled_on)
+	(%UPNPStatus.get_parent() as CanvasItem).visible = toggled_on

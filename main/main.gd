@@ -43,6 +43,8 @@ const MAX_MUSIC_FILE_SIZE_MB := 15.0
 var game: Game
 ## Ссылка на [Menu]. Может отсутствовать.
 var menu: Menu
+## Ссылка на [UPNPManager]. Отсутствует, если UPnP отключён.
+var upnp: UPNPManager
 ## Список открытых на данный момент экранов.
 var screens: Array[Control]
 ## Словарь загруженных пользовательских треков в формате "<имя файла> - <ресурс трека>".
@@ -195,6 +197,8 @@ func setup_settings() -> void:
 			Globals.get_setting_bool("check_updates", true))
 	Globals.set_setting_bool("check_betas",
 			Globals.get_setting_bool("check_betas", Globals.version.count('.') == 3))
+	Globals.set_setting_bool("upnp",
+			Globals.get_setting_bool("upnp", false))
 
 
 ## Устанавливает настройки управления по умолчанию, если их ещё нет.
@@ -391,6 +395,9 @@ func _start_load() -> void:
 		
 		_loading_preload_resources()
 		await loading_stage_finished
+	
+	_loading_upnp()
+	await loading_stage_finished
 	
 	print_verbose("Loading completed. Game version: %s." % Globals.version)
 	_loading_open_menu()
@@ -596,6 +603,43 @@ func _loading_preload_resources() -> void:
 	loading_stage_finished.emit(true)
 
 
+func _loading_upnp() -> void:
+	if not Globals.get_setting_bool("upnp") and not "--upnp" in OS.get_cmdline_args():
+		print_verbose('UPnP disabled. You can enable it with "--upnp" command line argument.')
+		loading_stage_finished.emit.call_deferred(false)
+		return
+	
+	_load_status_label.text = "Поиск устройств UPnP..."
+	_load_progress_bar.value = 0.0
+	await get_tree().process_frame
+	
+	upnp = UPNPManager.new()
+	upnp.name = &"UPNPManager"
+	add_child(upnp)
+	
+	upnp.discover()
+	await upnp.status_changed
+	
+	if upnp.status == UPNPManager.Status.INACTIVE:
+		loading_stage_finished.emit(false)
+		return
+	
+	_load_status_label.text = "Открытие порта через UPnP..."
+	_load_progress_bar.value = 50.0
+	await get_tree().process_frame
+	
+	upnp.forward_port(Game.DEFAULT_PORT)
+	await upnp.status_changed
+	
+	if upnp.status == UPNPManager.Status.INACTIVE:
+		loading_stage_finished.emit(false)
+		return
+	
+	if OS.is_stdout_verbose() or DisplayServer.get_name() == "headless":
+		print("UPnP forwarded port. External IP: %s" % upnp.get_external_ip())
+	loading_stage_finished.emit(true)
+
+
 func _loading_open_menu() -> void:
 	print_verbose("Opening menu...")
 	_load_status_label.text = "Загрузка меню..."
@@ -604,7 +648,7 @@ func _loading_open_menu() -> void:
 	
 	open_menu()
 	# Чтобы меню было под загр. экраном
-	move_child($LoadingScreen, 1)
+	move_child($LoadingScreen, -1)
 	($LoadingScreen/AnimationPlayer as AnimationPlayer).play(&"End")
 	await ($LoadingScreen/AnimationPlayer as AnimationPlayer).animation_finished
 	loading_stage_finished.emit(true)
