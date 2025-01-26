@@ -54,8 +54,7 @@ var _download_http: HTTPRequest
 
 ## Путь до папки с пользовательскими треками.
 @onready var music_path: String = OS.get_system_dir(OS.SYSTEM_DIR_MUSIC).path_join(
-		str(ProjectSettings.get_setting("application/config/name"))
-)
+		str(ProjectSettings.get_setting("application/config/name")))
 @onready var _default_window_content_width: int = \
 		ProjectSettings.get_setting("display/window/size/viewport_width")
 @onready var _default_window_content_height: int = \

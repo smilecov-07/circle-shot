@@ -493,12 +493,12 @@ func _find_ips_for_broadcast() -> void:
 	_udp_peers.clear()
 	print_verbose("Finding IPs for broadcast...")
 	# Отсылаем пакеты по всем локальным адресам
-	for i: String in IP.get_local_addresses():
-		if i.begins_with("192.168.") or i.begins_with("10.42.") or i.begins_with("10.22."):
+	for ip: String in IP.get_local_addresses():
+		if ip.begins_with("192.168.") or ip.begins_with("10.42.") or ip.begins_with("10.22."):
 			var udp := PacketPeerUDP.new()
 			udp.set_broadcast_enabled(true)
 			# Меняем конец IP на 255
-			var broadcast_ip: String = i.rsplit('.', true, 1)[0] + ".255"
+			var broadcast_ip: String = ip.rsplit('.', true, 1)[0] + ".255"
 			udp.set_dest_address(broadcast_ip, Game.LISTEN_PORT)
 			print_verbose("Found IP to broadcast: %s." % broadcast_ip)
 			_udp_peers.append(udp)
@@ -512,7 +512,7 @@ func _do_broadcast() -> void:
 	data.append_array(Globals.get_string("player_name", "Local Server").to_utf8_buffer()) # Имя
 	for peer: PacketPeerUDP in _udp_peers:
 		peer.put_packet(data)
-	print_verbose("Broadcast of lobby %d done. Data sent: %s (%d/%d)" % [
+	print_verbose("Broadcast of lobby %d done. Data sent: %s (%d/%d)." % [
 		_broadcast_lobby_id,
 		Globals.get_string("player_name", "Local Server"),
 		_players.size(),
@@ -642,7 +642,7 @@ func _on_leave_pressed() -> void:
 
 func _on_connected_to_ip_pressed() -> void:
 	DisplayServer.clipboard_set((multiplayer.multiplayer_peer as ENetMultiplayerPeer).get_peer(
-		MultiplayerPeer.TARGET_PEER_SERVER).get_remote_address())
+			MultiplayerPeer.TARGET_PEER_SERVER).get_remote_address())
 
 
 func _on_change_event_pressed() -> void:
