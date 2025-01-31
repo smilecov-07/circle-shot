@@ -1,0 +1,30 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://cyn0b0c0ogmp6"]
+
+[ext_resource type="Texture2D" uid="uid://7h34tegxl5e6" path="res://game/maps/duel/smile/tiles.png" id="1_7d3sb"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s6c3c"]
+texture = ExtResource("1_7d3sb")
+texture_region_size = Vector2i(160, 160)
+0:0/next_alternative_id = 6
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-80, -80, 80, -80, 80, 80, -80, 80)
+1:0/next_alternative_id = 4
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-80, -80, 80, -80, 80, 80, -80, 80)
+0:1/next_alternative_id = 2
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-80, -80, 80, -80, 80, 80, -80, 80)
+0:1/1 = 1
+0:1/1/physics_layer_1/polygon_0/points = PackedVector2Array(-80, -80, 80, -80, 80, 80, -80, 80)
+1:1/0 = 0
+2:0/animation_columns = 1
+2:0/0 = 0
+2:0/0/modulate = Color(0.628906, 0.628906, 0.628906, 1)
+
+[resource]
+tile_size = Vector2i(160, 160)
+physics_layer_0/collision_layer = 1
+physics_layer_0/collision_mask = 0
+physics_layer_1/collision_layer = 9
+physics_layer_1/collision_mask = 0
+sources/2 = SubResource("TileSetAtlasSource_s6c3c")
