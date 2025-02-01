@@ -3,8 +3,7 @@ extends AcceptDialog
 
 const PREFFERED_IP_PREFIXES: Array[String] = [
 	"192.168.",
-	"10.42.",
-	"10.22.",
+	"10.",
 ]
 const HIDE_IPS: Array[String] = [
 	"127.0.0.1",
@@ -38,15 +37,11 @@ func _find_ips() -> void:
 	for ip: String in ip_addresses:
 		if ip in HIDE_IPS:
 			continue
-		var preffered := false
 		for prefix: String in PREFFERED_IP_PREFIXES:
 			if ip.begins_with(prefix):
-				preffered = true
+				_preffered_ips.append(ip)
 				break
-		if preffered:
-			_preffered_ips.append(ip)
-		else:
-			_other_ips.append(ip)
+		_other_ips.append(ip)
 	
 	dialog_text = ""
 	if not _preffered_ips.is_empty():

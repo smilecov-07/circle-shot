@@ -147,9 +147,6 @@ func close() -> void:
 		push_error("Can't close because game is already closed.")
 		return
 	
-	if state != State.CONNECTING: # Комната ещё не создана, нечего закрывать
-		closed.emit()
-	
 	if multiplayer.peer_connected.is_connected(_on_peer_connected):
 		multiplayer.peer_connected.disconnect(_on_peer_connected)
 	if multiplayer.peer_disconnected.is_connected(_on_peer_disconnected):
@@ -167,13 +164,17 @@ func close() -> void:
 	
 	multiplayer.multiplayer_peer.close()
 	multiplayer.set_deferred(&"multiplayer_peer", null)
-	print_verbose("Closed.")
 	if is_instance_valid(event):
 		# Чтобы _process не вызывались
 		event.process_mode = Node.PROCESS_MODE_DISABLED
 		event.queue_free()
 		print_verbose("Event deleted.")
+	
+	if state != State.CONNECTING: # Комната ещё не создана, нечего закрывать
+		state = State.CLOSED
+		closed.emit()
 	state = State.CLOSED
+	print_verbose("Closed.")
 
 
 ## Загружает событие по данным [param event_id] и [param map_id]. Если вызвано сервером без игрока,
@@ -191,7 +192,8 @@ func load_event(event_id: int, map_id: int, player_name := "", equip_data: Array
 	if not is_instance_valid(event):
 		show_error("Ошибка при загрузке события! Отключаюсь.")
 		push_error("Loading failed. Disconnecting.")
-		close()
+		if state != State.CLOSED:
+			close()
 		return
 	closed.connect(_loader.finish_load.bind(false), CONNECT_ONE_SHOT)
 	if multiplayer.is_server() and Globals.headless:

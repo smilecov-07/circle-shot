@@ -13,7 +13,7 @@ config_version=5
 config/name="Circle Shot"
 config/description="2D Shooter Multiplayer Game"
 config/version="2.1.0.03"
-run/main_scene="res://main/main.tscn"
+run/main_scene="uid://b6r2eoge3orht"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="circle-shot"
 config/project_settings_override="user://engine_settings.cfg"
@@ -22,13 +22,13 @@ config/features=PackedStringArray("4.4", "GL Compatibility")
 run/max_fps=60
 run/low_processor_mode_sleep_usec=5000
 boot_splash/bg_color=Color(0, 0, 0, 1)
-boot_splash/image="res://misc/boot_splash.png"
-config/icon="res://misc/icon.png"
+boot_splash/image="uid://cnhr3mam8tof1"
+config/icon="uid://do6xmprf0cjv1"
 boot_splash/minimum_display_time=666
 
 [audio]
 
-buses/default_bus_layout="res://misc/bus_layout.tres"
+buses/default_bus_layout="uid://dqtgj1jxo3cxn"
 
 [autoload]
 
@@ -36,7 +36,7 @@ Globals="*res://main/globals.gd"
 
 [debug]
 
-settings/crash_handler/message="Game crashed! You should restart it, but if crash persist, report it on https://github.com/Diamond-Studio-GAMES/circle-shot/issues"
+settings/crash_handler/message="Game crashed! You should restart it, but if crash persist, report it on https://github.com/DiamondStudioGAMES/circle-shot/issues"
 settings/crash_handler/message.editor="Game crashed! This can be an engine bug or developer mistake."
 gdscript/warnings/untyped_declaration=2
 gdscript/warnings/unsafe_property_access=1

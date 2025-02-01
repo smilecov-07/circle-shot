@@ -63,11 +63,6 @@ func load_event(event_id: int, map_id: int) -> Event:
 		finish_load(false)
 		return null
 	var event_scene: PackedScene = ResourceLoader.load_threaded_get(_loading_path)
-	if not is_instance_valid(event_scene):
-		# TODO: удалить эту шарманку.
-		push_error("Loading of event %s failed." % _loading_path)
-		finish_load(false)
-		return null
 	print_verbose("Done loading event %s." % _loading_path)
 	var event: Event = event_scene.instantiate()
 	_loaded_part = true
@@ -94,15 +89,10 @@ func load_event(event_id: int, map_id: int) -> Event:
 		finish_load(false)
 		return null
 	var map_scene: PackedScene = ResourceLoader.load_threaded_get(_loading_path)
-	if not is_instance_valid(map_scene):
-		# TODO: удалить эту шарманку.
-		push_error("Loading of map %s failed." % _loading_path)
-		event.free()
-		finish_load(false)
-		return null
 	print_verbose("Done loading map %s." % _loading_path)
 	var map: Node = map_scene.instantiate()
 	event.add_child(map)
+	event.move_child(map, 0)
 	
 	set_process(false)
 	_bar.value = 100

@@ -2,6 +2,7 @@ class_name UPNPManager
 extends Node
 
 
+## Издаётся, когда UPnP меняет свой статус.
 signal status_changed
 ## Статус UPnP.
 enum Status {
@@ -14,11 +15,21 @@ enum Status {
 	## Подключено.
 	ACTIVE = 3,
 }
+## Текущий статус UPnP.
 var status := Status.INACTIVE
 var _forwarded_port: int = -1
 var _task_id: int = -1
 var _upnp := UPNP.new()
 var _upnp_devices: Array[UPNPDevice]
+
+
+func _ready() -> void:
+	var timer := Timer.new()
+	timer.wait_time = 60.0
+	timer.timeout.connect(_on_update_timer_timeout)
+	timer.name = &"UpdateTimer"
+	timer.autostart = true
+	add_child(timer)
 
 
 func _notification(what: int) -> void:
@@ -33,6 +44,7 @@ func _notification(what: int) -> void:
 				print_verbose("UPnP: devices port %d forwarding deleted." % _forwarded_port)
 
 
+## Ищет устройства UPnP в локальной сети.
 func discover() -> void:
 	if not status in [Status.INACTIVE, Status.ACTIVE] \
 			or _task_id > 0 and not WorkerThreadPool.is_task_completed(_task_id):
@@ -46,6 +58,7 @@ func discover() -> void:
 	_task_id = WorkerThreadPool.add_task(_discover_task)
 
 
+## Пытается открыть порт [param port].
 func forward_port(port: int) -> void:
 	if status != Status.ACTIVE:
 		push_error("UPnP: not active to forward ports.")
@@ -57,6 +70,7 @@ func forward_port(port: int) -> void:
 	_task_id = WorkerThreadPool.add_task(_forward_port_task.bind(port))
 
 
+## Возвращает глобальный IP.
 func get_external_ip() -> String:
 	if status != Status.ACTIVE:
 		push_error("UPnP: querying external IP failed: not active.")
@@ -121,3 +135,21 @@ func _forward_port_task(port: int) -> void:
 	set_deferred(&"_forwarded_port", port)
 	set_deferred(&"status", Status.ACTIVE)
 	status_changed.emit.call_deferred(status)
+
+
+func _on_update_timer_timeout() -> void:
+	if status != Status.ACTIVE:
+		return
+	
+	discover()
+	await status_changed
+	
+	if status == Status.INACTIVE:
+		return
+	
+	forward_port(_forwarded_port)
+	await status_changed
+	
+	if status == Status.ACTIVE and \
+			(OS.is_stdout_verbose() or DisplayServer.get_name() == "headless"):
+		print("UPnP updated. External IP: %s" % get_external_ip())

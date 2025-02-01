@@ -65,7 +65,7 @@ func _process(_delta: float) -> void:
 func _notification(what: int) -> void:
 	match what:
 		NOTIFICATION_WM_GO_BACK_REQUEST when _game.state == Game.State.CLOSED:
-			_on_quit_pressed.call_deferred()
+			_on_quit_pressed()
 
 
 func _cleanup_ip(ip: String) -> String:
@@ -78,6 +78,16 @@ func _cleanup_ip(ip: String) -> String:
 		ip = ip.right(-8) # длина https://
 	if ip.begins_with("http://"):
 		ip = ip.right(-7) # аналогично
+	
+	# проверка на указания порта
+	if ':' in ip:
+		var last_colon_idx: int = ip.rfind(':')
+		var last_bracket_idx: int = ip.rfind(']')
+		if '.' in ip:
+			ip = ip.left(last_colon_idx)
+		elif last_bracket_idx > -1 and last_bracket_idx < last_colon_idx:
+			ip = ip.left(last_colon_idx)
+	
 	# на случай если IPv6
 	ip = ip.lstrip('[')
 	ip = ip.rstrip(']')

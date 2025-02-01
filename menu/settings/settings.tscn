@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://c2leb2h0qjtmo"]
+[gd_scene load_steps=18 format=3 uid="uid://c2leb2h0qjtmo"]
 
 [ext_resource type="Script" uid="uid://bhvr3p7vj2nb4" path="res://menu/settings/settings.gd" id="1_jwkxy"]
 [ext_resource type="Texture2D" uid="uid://cj0xdsi2q6ea4" path="res://menu/settings/icons/general.png" id="1_n6g3h"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://durmmh0vjl0eg" path="res://menu/theme/icons/exit.png" id="3_kafpn"]
 [ext_resource type="Texture2D" uid="uid://c4rtsjndqjkbc" path="res://menu/settings/icons/controls.png" id="4_bdj5p"]
 [ext_resource type="Texture2D" uid="uid://b3int4i23wkyl" path="res://menu/settings/icons/reset_name.png" id="9_0iguj"]
+[ext_resource type="Texture2D" uid="uid://b3dr78bao6pop" path="res://menu/settings/icons/restart.png" id="10_260xk"]
 [ext_resource type="Texture2D" uid="uid://djfqfio1aley7" path="res://menu/settings/icons/reset_controls.png" id="10_kedwe"]
 [ext_resource type="Texture2D" uid="uid://brcaom8n83yf2" path="res://menu/settings/icons/reset.png" id="11_d7m0t"]
 [ext_resource type="Texture2D" uid="uid://b1u3v2dc3jemk" path="res://menu/theme/icons/delete.png" id="12_g4yas"]
@@ -301,9 +302,19 @@ layout_mode = 2
 icon = ExtResource("1_xh6xh")
 expand_icon = true
 
+[node name="Restart" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General"]
+layout_mode = 2
+alignment = 1
+
 [node name="Actions" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General"]
 layout_mode = 2
 alignment = 1
+
+[node name="RestartGame" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/Actions"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Перезапустить игру"
+icon = ExtResource("10_260xk")
 
 [node name="ChangeName" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/Actions"]
 layout_mode = 2
@@ -1057,6 +1068,7 @@ visible = false
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/CheckUpdates/Setting/Help" to="." method="show_help" binds= [4]]
 [connection signal="toggled" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/CheckBetas/Setting/BetasCheck" to="." method="_on_betas_check_toggled"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/CheckBetas/Setting/Help" to="." method="show_help" binds= [4]]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/Actions/RestartGame" to="." method="restart_game"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/Actions/ChangeName" to="." method="_on_change_name_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/Actions/ResetControlSettings" to="ResetControlsDialog" method="popup_centered"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/Actions2/ResetSettings" to="ResetSettingsDialog" method="popup_centered"]

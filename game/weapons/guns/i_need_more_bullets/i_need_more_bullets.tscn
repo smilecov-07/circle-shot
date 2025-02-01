@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://tpvpkv3eid7i"]
+[gd_scene load_steps=26 format=3 uid="uid://tpvpkv3eid7i"]
 
 [ext_resource type="PackedScene" uid="uid://ckvaaln275hfv" path="res://game/weapons/guns/common/gun.tscn" id="1_av5tx"]
 [ext_resource type="Script" uid="uid://7xncka5pgh3i" path="res://game/weapons/guns/i_need_more_bullets/i_need_more_bullets.gd" id="2_a8qdj"]
@@ -11,8 +11,8 @@
 [ext_resource type="AudioStream" uid="uid://dbdcdmwfdu77b" path="res://game/weapons/guns/i_need_more_bullets/reload.wav" id="4_mlykw"]
 [ext_resource type="AudioStream" uid="uid://dmga2aoukx48n" path="res://game/weapons/guns/i_need_more_bullets/switch_single.wav" id="8_2rkf8"]
 [ext_resource type="AudioStream" uid="uid://cb7drxrleuutq" path="res://game/weapons/guns/i_need_more_bullets/switch.wav" id="8_g15ve"]
-[ext_resource type="AudioStream" uid="uid://3x7pp3u6qyl7" path="res://game/weapons/guns/i_need_more_bullets/shooting.wav" id="8_iqst8"]
 [ext_resource type="Texture2D" uid="uid://5ss0ntgl5ida" path="res://game/weapons/guns/i_need_more_bullets/aim.png" id="12_si2f5"]
+[ext_resource type="AudioStream" uid="uid://ch7njkaenmssq" path="res://game/weapons/guns/i_need_more_bullets/shooting.ogg" id="13_sudsl"]
 
 [sub_resource type="Curve" id="Curve_wj8nx"]
 _limits = [0.0, 7.0, 0.0, 2.0]
@@ -305,6 +305,11 @@ tracks/1/keys = {
 "values": [Vector2(0, 0)]
 }
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_sudsl"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("3_gssxa")
+
 [sub_resource type="Animation" id="Animation_np4wt"]
 resource_name = "SingleShot"
 step = 0.05
@@ -342,7 +347,7 @@ tracks/2/keys = {
 "clips": [{
 "end_offset": 0.0,
 "start_offset": 0.0,
-"stream": ExtResource("3_gssxa")
+"stream": SubResource("AudioStreamRandomizer_sudsl")
 }],
 "times": PackedFloat32Array(0)
 }
@@ -420,7 +425,7 @@ region_enabled = true
 region_rect = Rect2(40, 16, 88, 40)
 
 [node name="ShootingSfx" type="AudioStreamPlayer2D" parent="." index="6"]
-stream = ExtResource("8_iqst8")
+stream = ExtResource("13_sudsl")
 max_distance = 2560.0
 bus = &"SFX"
 

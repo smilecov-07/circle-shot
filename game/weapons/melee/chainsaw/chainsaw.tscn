@@ -281,10 +281,10 @@ speed_multiplier_when_current = 1.17
 damage_interval = 0.2
 
 [node name="ShapeDetector" type="ShapeCast2D" parent="Attack" index="0"]
-position = Vector2(64, 0)
+position = Vector2(64, 8)
 enabled = false
 shape = SubResource("CircleShape2D_eqtrk")
-target_position = Vector2(104, 0)
+target_position = Vector2(112, 0)
 max_results = 1
 collision_mask = 3
 script = ExtResource("2_738d3")

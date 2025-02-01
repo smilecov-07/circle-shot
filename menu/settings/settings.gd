@@ -130,6 +130,11 @@ func remove_recursive(path: String) -> void:
 		dir_access.remove(dir_access.get_current_dir())
 
 
+func restart_game() -> void:
+	OS.set_restart_on_exit(true, OS.get_cmdline_args())
+	get_tree().quit()
+
+
 func _toggle_input_method_settings_visibility(method: Main.InputMethod) -> void:
 	(%KeyboardSettings as CanvasItem).hide()
 	(%TouchSettings as CanvasItem).hide()
@@ -202,16 +207,12 @@ func _on_shader_cache_check_toggled(toggled_on: bool) -> void:
 func _on_clear_shader_cache_pressed() -> void:
 	remove_recursive("user://shader_cache")
 	remove_recursive("user://vulkan")
-	if OS.has_feature("pc"):
-		OS.set_restart_on_exit(true)
-	get_tree().quit()
+	restart_game()
 
 
 func _on_reset_data_dialog_confirmed() -> void:
 	remove_recursive("user://")
-	if OS.has_feature("pc"):
-		OS.set_restart_on_exit(true)
-	get_tree().quit()
+	restart_game()
 
 
 func _on_reset_settings_dialog_confirmed() -> void:
