@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SkillData" load_steps=2 format=3 uid="uid://e73a6p47fqmi"]
+
+[ext_resource type="Script" uid="uid://iwsanxyoxs5s" path="res://game/player/equip/skill_data.gd" id="1_dv8cp"]
+
+[resource]
+script = ExtResource("1_dv8cp")
+name = "Алмазная пуля"
+brief_description = "Урон: 35, отбрасывает"
+usage_text = "5 исп./15 с"
+rarity = 2
+id = "diamond_penis"
+scene_path = "uid://dwy62fpecrhen"
+image_path = "uid://dj136q4fo21rj"
+spawnable_scenes_paths = Array[String](["uid://cwbyj0wl0k3ab"])
+metadata/_custom_type_script = ExtResource("1_dv8cp")

@@ -92,7 +92,6 @@ func load_event(event_id: int, map_id: int) -> Event:
 	print_verbose("Done loading map %s." % _loading_path)
 	var map: Node = map_scene.instantiate()
 	event.add_child(map)
-	event.move_child(map, 0)
 	
 	set_process(false)
 	_bar.value = 100

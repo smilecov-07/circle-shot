@@ -3,6 +3,11 @@ extends EntityInput
 
 ## Узел с вводом для игрока.
 
+## Игрок начал стрельбу.
+signal shooting_started
+## Игрок закончил стрельбу.
+signal shooting_ended
+
 ## Направление прицеливания.
 var aim_direction := Vector2.RIGHT:
 	get:
@@ -19,7 +24,13 @@ var aim_direction := Vector2.RIGHT:
 		else:
 			aim_direction = value
 ## Ведётся ли стрельба.
-var shooting := false
+var shooting := false:
+	set(value):
+		if value and not shooting:
+			shooting_started.emit()
+		elif not value and shooting:
+			shooting_ended.emit()
+		shooting = value
 
 ## Показывается ли линия прицела.
 var showing_aim := false

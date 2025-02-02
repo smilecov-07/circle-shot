@@ -16,6 +16,8 @@ const STUN := "uid://of54uwtr1ice"
 const DAMAGE_CHANGE := "uid://bxgpbuysxjefr"
 ## Изменение входящего урона. В [code]data[/code] требует один [float] - новый множитель урона.
 const DEFENSE_CHANGE := "uid://cf24vsbhb6f8g"
+## Отбрасывание. В [code]data[/code] требует один [Vector2] - направление и сила отбрасывания.
+const KNOCKBACK := "uid://dmd6vxl6v7ri2"
 
 ## Может ли эффект стакаться на сущности. Если нет, то повторная попытка наложить этот же эффект
 ## просто продлит время его действия (или увеличит [member timeless_counter]).
