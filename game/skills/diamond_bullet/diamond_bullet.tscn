@@ -88,6 +88,6 @@ libraries = {
 [node name="Aim" type="Line2D" parent="."]
 visible = false
 z_index = 5
-points = PackedVector2Array(32, 0, 4000, 0)
+points = PackedVector2Array(64, 0, 4000, 0)
 width = 32.0
 default_color = Color(0, 0.623529, 1, 0.25098)

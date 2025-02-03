@@ -24,7 +24,8 @@ func _on_player_shooting_started() -> void:
 	($ActiveMarker/AnimationPlayer as AnimationPlayer).play(&"RESET")
 	if multiplayer.is_server():
 		var projectile: Projectile = projectile_scene.instantiate()
-		projectile.position = _player.position
+		projectile.position = _player.position + 64 * Vector2.from_angle(
+				_player.player_input.aim_direction.angle())
 		projectile.damage_multiplier = _player.damage_multiplier
 		projectile.rotation = _player.player_input.aim_direction.angle()
 		projectile.team = _player.team

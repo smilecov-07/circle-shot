@@ -2,6 +2,7 @@ extends GrenadeProjectile
 
 
 @export var unmute_duration := 1.0
+@export var stun_radius := 640.0
 var _previous_sfx_db: float
 var _previous_music_db: float
 var _muted := false
@@ -29,7 +30,10 @@ func _explode() -> void:
 			
 			var screen: Image = get_viewport().get_texture().get_image()
 			($Stun/Effect/Texture as TextureRect).texture = ImageTexture.create_from_image(screen)
-			($Stun/AnimationPlayer as AnimationPlayer).play(&"Stun")
+			if position.distance_to(event.local_player.position) <= stun_radius:
+				($Stun/AnimationPlayer as AnimationPlayer).play(&"Stun")
+			else:
+				($Stun/AnimationPlayer as AnimationPlayer).play(&"WeakStun")
 		else:
 			($Stun/AnimationPlayer as AnimationPlayer).play(&"FriendlyStun")
 
