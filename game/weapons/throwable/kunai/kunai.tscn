@@ -1,0 +1,98 @@
+[gd_scene load_steps=7 format=3 uid="uid://bn1jgldw66ros"]
+
+[ext_resource type="PackedScene" uid="uid://cdo5tqeki3gle" path="res://game/weapons/throwable/common/throwable.tscn" id="1_8ym1a"]
+[ext_resource type="PackedScene" uid="uid://cr2lcuf4nyoxw" path="res://game/weapons/throwable/kunai/kunai_ammo.tscn" id="2_oif0l"]
+[ext_resource type="PackedScene" uid="uid://swhkj1uha3un" path="res://game/weapons/throwable/kunai/kunai_projectile.tscn" id="2_t587r"]
+
+[sub_resource type="Animation" id="Animation_t587r"]
+resource_name = "Equip"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Ammo:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 24), Vector2(0, -12), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Ammo:rotation")
+tracks/1/interp = 4
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.493229, -0.193993, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_mgi7g"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Ammo:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Ammo:rotation")
+tracks/1/interp = 3
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_62234"]
+_data = {
+&"Equip": SubResource("Animation_t587r"),
+&"RESET": SubResource("Animation_mgi7g")
+}
+
+[node name="Kunai" instance=ExtResource("1_8ym1a")]
+projectile_scene = ExtResource("2_t587r")
+ammo_scene = ExtResource("2_oif0l")
+to_aim_time = 0.2
+angle_between_ammo = 11.0
+throw_interval = 0.4
+spread_base = 3.0
+spread_walk_ratio = 0.6
+ammo_per_load = 6
+ammo_total = 36
+speed_multiplier_when_current = 0.99
+
+[node name="ThrowPivot" parent="." index="1"]
+position = Vector2(-32, -32)
+
+[node name="ThrowPoint" parent="ThrowPivot" index="0"]
+position = Vector2(96, 0)
+
+[node name="Aim" parent="ThrowPivot/ThrowPoint" index="0"]
+width = 8.0
+
+[node name="SpreadLeft" parent="ThrowPivot/ThrowPoint/Aim" index="0"]
+position = Vector2(0, 0)
+
+[node name="SpreadRight" parent="ThrowPivot/ThrowPoint/Aim" index="1"]
+position = Vector2(0, 0)
+
+[node name="AnimationPlayer" parent="." index="2"]
+libraries = {
+&"": SubResource("AnimationLibrary_62234")
+}

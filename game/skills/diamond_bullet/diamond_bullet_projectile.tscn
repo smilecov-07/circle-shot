@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dfhhd4es3t3i" path="res://game/entity/attack/shape_detector.gd" id="2_6mcm8"]
 [ext_resource type="Script" uid="uid://sktujqfhw4ot" path="res://game/skills/diamond_bullet/diamond_bullet_projectile.gd" id="2_axsq5"]
 [ext_resource type="Texture2D" uid="uid://bclxn23pu2df8" path="res://game/skills/diamond_bullet/bullet.png" id="3_axsq5"]
-[ext_resource type="PackedScene" uid="uid://piu2cytktbgw" path="res://game/skills/diamond_bullet/diamond_bullet_projectile_hit_vfx.tscn" id="3_la80t"]
+[ext_resource type="PackedScene" uid="uid://piu2cytktbgw" path="res://game/skills/diamond_bullet/diamond_bullet_hit_vfx.tscn" id="3_la80t"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_la80t"]
 radius = 16.0
