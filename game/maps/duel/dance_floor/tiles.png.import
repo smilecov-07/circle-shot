@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://7h34tegxl5e6"
-path="res://.godot/imported/tiles.png-b6392dca6df836c5c85963e5c8eadcc2.ctex"
+path="res://.godot/imported/tiles.png-b06bdf03213e0548a466d6ccdb078bbe.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/maps/duel/smile/tiles.png"
-dest_files=["res://.godot/imported/tiles.png-b6392dca6df836c5c85963e5c8eadcc2.ctex"]
+source_file="res://game/maps/duel/dance_floor/tiles.png"
+dest_files=["res://.godot/imported/tiles.png-b06bdf03213e0548a466d6ccdb078bbe.ctex"]
 
 [params]
 

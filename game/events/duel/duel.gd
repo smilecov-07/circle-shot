@@ -3,6 +3,11 @@ extends Event
 
 ## Событие "Дуэль".
 
+## Издаётся когда раунд начался.
+signal round_started
+## Издаётся когда раунд закончился. [param team_won] - ID победившей команды.
+signal round_ended(team_won: int)
+
 ## Время, за которое ядовитый дым покроет всю карту.
 @export var poison_smoke_time := 400.0
 
@@ -86,6 +91,7 @@ func _start_round() -> void:
 		move_tween.tween_property(smoke, ^":position", Vector2.ZERO, poison_smoke_time)
 	var tween: Tween = smokes.create_tween()
 	tween.tween_property(smokes, ^":modulate", Color.WHITE, 0.3).from(Color.TRANSPARENT)
+	round_started.emit()
 	
 	if multiplayer.is_server():
 		if _players.size() == 1:
@@ -111,6 +117,8 @@ func _end_round(win_team: int, winner: int, end_event := false) -> void:
 	get_tree().call_group(&"Player", &"make_disarmed")
 	get_tree().call_group(&"Player", &"make_immobile")
 	get_tree().call_group(&"Player", &"make_immune")
+	
+	round_ended.emit(win_team)
 	if not multiplayer.is_server():
 		return
 	

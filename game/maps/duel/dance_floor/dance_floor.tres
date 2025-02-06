@@ -4,8 +4,8 @@
 
 [resource]
 script = ExtResource("1_vpyyn")
-name = "Улыбка"
-brief_description = "Битва на танцполе!"
+name = "Танцол"
+brief_description = "Танцы на грани жизни и смерти."
 scene_path = "uid://doideugejj20p"
 image_path = "uid://bnfdyupnxpb13"
 metadata/_custom_type_script = ExtResource("1_vpyyn")

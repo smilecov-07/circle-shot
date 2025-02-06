@@ -372,7 +372,7 @@ _data = {
 }
 
 [node name="FAMAS" instance=ExtResource("1_ws6qo")]
-shoot_interval = 0.14
+shoot_interval = 0.13
 to_aim_time = 0.2
 projectile_scene = ExtResource("2_4hyw8")
 spread_base = 2.0

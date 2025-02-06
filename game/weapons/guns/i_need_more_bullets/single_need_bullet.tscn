@@ -8,7 +8,7 @@
 [node name="SingleNeedBullet" instance=ExtResource("1_o4ftr")]
 speed = 4000.0
 hit_vfx_scene = ExtResource("2_scwbr")
-damage = 30
+damage = 34
 
 [node name="Bullet" type="Sprite2D" parent="." index="2"]
 z_index = -1
