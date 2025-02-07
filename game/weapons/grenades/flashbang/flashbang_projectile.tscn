@@ -127,7 +127,7 @@ _data = {
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8b4pb"]
-radius = 640.0
+radius = 480.0
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_3qk41"]
 properties/0/path = NodePath(".:position")
@@ -360,8 +360,8 @@ _data = {
 
 [node name="FlashbangProjectile" instance=ExtResource("1_ua7bf")]
 script = ExtResource("2_otq4k")
-unmute_duration = 1.5
-stun_radius = 640.0
+unmute_duration = 1.0
+stun_radius = 480.0
 speed = 1800.0
 damping = 600.0
 

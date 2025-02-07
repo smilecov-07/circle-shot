@@ -8,6 +8,11 @@ var _previous_music_db: float
 var _muted := false
 
 
+func _ready() -> void:
+	(($Explosion/Attack/AreaDetector/CollisionShape2D as CollisionShape2D).shape
+			as CircleShape2D).radius = stun_radius
+
+
 func _exit_tree() -> void:
 	if _muted:
 		unmute()

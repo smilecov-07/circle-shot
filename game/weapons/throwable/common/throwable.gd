@@ -125,7 +125,7 @@ func reload() -> void:
 	_reloading = true
 	block_shooting()
 	
-	while ammo != ammo_per_load and ammo_in_stock >= 0:
+	while ammo != ammo_per_load and ammo_in_stock > 0:
 		var current_ammo: Node2D = _ammo_parent.get_child(ammo)
 		var current_ammo_anim: AnimationPlayer = current_ammo.get_node(^"AnimationPlayer")
 		
