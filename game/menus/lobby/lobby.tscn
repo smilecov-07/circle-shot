@@ -653,7 +653,7 @@ script = ExtResource("11_ncktp")
 metadata/_custom_type_script = ExtResource("11_ncktp")
 
 [node name="ViewIPDialog" type="AcceptDialog" parent="."]
-title = "Ваши IP-адреса"
+title = "Твои IP-адреса"
 initial_position = 2
 size = Vector2i(640, 160)
 exclusive = false

@@ -376,8 +376,9 @@ func _update_window_stretch_aspect() -> void:
 func _start_load() -> void:
 	$SplashScreen.queue_free()
 	($LoadingScreen/AnimationPlayer as AnimationPlayer).play(&"Begin")
+	
 	_loading_init()
-	await loading_stage_finished
+	await ($LoadingScreen/AnimationPlayer as AnimationPlayer).animation_finished
 	
 	_loading_check_server()
 	var success: bool = await loading_stage_finished

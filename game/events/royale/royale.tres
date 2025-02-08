@@ -9,7 +9,7 @@
 script = ExtResource("1_x4pw4")
 name = "Королевская битва"
 brief_description = "Побеждает последний выживший!"
-min_players = 2
+min_players = 3
 max_players = 10
 players_divider = 1
 scene_path = "uid://yfpyfv6boyao"

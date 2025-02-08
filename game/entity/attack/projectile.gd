@@ -43,8 +43,9 @@ func _hit(where: Vector2) -> void:
 		var vfx_parent: Node = get_tree().get_first_node_in_group(&"VfxParent")
 		if is_instance_valid(vfx_parent):
 			var vfx: Node2D = hit_vfx_scene.instantiate()
-			vfx.global_position = where
+			vfx.position = where
 			vfx.rotation = rotation
+			vfx.scale.y = sign(scale.y)
 			vfx_parent.add_child(vfx)
 	
 	await get_tree().physics_frame
