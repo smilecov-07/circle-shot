@@ -54,7 +54,7 @@ tracks/3/path = NodePath("Attack/ShapeDetector:enabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.35),
+"times": PackedFloat32Array(0, 0.2, 0.35),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, true, false]
@@ -66,7 +66,7 @@ tracks/4/path = NodePath("Attack/ShapeDetector2:enabled")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.35),
+"times": PackedFloat32Array(0, 0.2, 0.35),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, true, false]
@@ -216,7 +216,7 @@ _data = {
 
 [node name="Sword" instance=ExtResource("1_f8krw")]
 damage = 70
-shoot_interval = 1.1
+shoot_interval = 1.05
 speed_multiplier_when_current = 1.08
 shoot_on_joystick_release = true
 
@@ -234,26 +234,26 @@ offset = Vector2(108, 0)
 [node name="Aim" type="Line2D" parent="." index="2"]
 z_index = 5
 position = Vector2(128, 0)
-points = PackedVector2Array(-41, 0, -71, -70, -13, -212, 70, -212, 148, -74, 148, 74, 70, 212, -13, 212, -71, 70)
+points = PackedVector2Array(-41, 0, -72, -72, -16, -216, 72, -216, 152, -64, 152, 64, 72, 216, -16, 216, -72, 72)
 closed = true
 width = 8.0
 default_color = Color(0, 0, 0, 0.25098)
 
 [node name="ShapeDetector" type="ShapeCast2D" parent="Attack" index="0"]
-position = Vector2(176, -112)
+position = Vector2(144, -120)
 enabled = false
 shape = SubResource("CircleShape2D_4wetr")
-target_position = Vector2(0, 224)
+target_position = Vector2(40, 120)
 max_results = 1
 collision_mask = 11
 script = ExtResource("3_22au4")
 metadata/_custom_type_script = ExtResource("3_22au4")
 
 [node name="ShapeDetector2" type="ShapeCast2D" parent="Attack" index="1"]
-position = Vector2(176, 112)
+position = Vector2(144, 120)
 enabled = false
 shape = SubResource("CircleShape2D_4wetr")
-target_position = Vector2(0, -224)
+target_position = Vector2(40, -120)
 max_results = 1
 collision_mask = 11
 script = ExtResource("3_22au4")

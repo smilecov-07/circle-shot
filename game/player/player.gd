@@ -328,9 +328,10 @@ func _set_current_weapon(to: Weapon.Type) -> void:
 
 func _update_minimap_marker(local_team: int) -> void:
 	if team == local_team:
-		($Minimap/MinimapNotifier as CanvasItem).hide()
+		$Minimap/MinimapNotifier.set_block_signals(true)
 		($Minimap/MinimapMarker/Visual as CanvasItem).show()
 	else:
+		$Minimap/MinimapNotifier.set_block_signals(false)
 		($Minimap/MinimapMarker/Visual as CanvasItem).visible = \
 				($Minimap/MinimapNotifier as VisibleOnScreenNotifier2D).is_on_screen()
 

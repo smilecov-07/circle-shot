@@ -57,6 +57,16 @@ window/handheld/orientation=4
 
 enabled=PackedStringArray("res://addons/resource_path/plugin.cfg")
 
+[file_customization]
+
+folder_colors={
+"res://addons/": "blue",
+"res://game/": "orange",
+"res://main/": "red",
+"res://menu/": "green",
+"res://misc/": "purple"
+}
+
 [filesystem]
 
 import/fbx2gltf/enabled=false

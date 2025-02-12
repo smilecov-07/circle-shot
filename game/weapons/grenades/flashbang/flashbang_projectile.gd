@@ -9,6 +9,7 @@ var _muted := false
 
 
 func _ready() -> void:
+	super()
 	(($Explosion/Attack/AreaDetector/CollisionShape2D as CollisionShape2D).shape
 			as CircleShape2D).radius = stun_radius
 

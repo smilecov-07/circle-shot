@@ -421,7 +421,6 @@ func _loading_init() -> void:
 	if DisplayServer.get_name() == "headless":
 		print("Running in headless mode.")
 		Engine.max_fps = 0
-		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
 		Globals.headless = true
 	
 	_update_window_stretch_aspect()
@@ -545,8 +544,7 @@ func _loading_custom_tracks() -> void:
 					else:
 						valid = false
 				"wav":
-					var wav := AudioStreamWAV.load_from_buffer(
-							file.get_buffer(file.get_length()))
+					var wav := AudioStreamWAV.load_from_buffer(file.get_buffer(file.get_length()))
 					if wav:
 						wav.loop_mode = AudioStreamWAV.LOOP_FORWARD
 						wav.loop_end = floori(wav.get_length() * wav.mix_rate)

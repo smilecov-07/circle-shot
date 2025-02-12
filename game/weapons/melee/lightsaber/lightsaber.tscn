@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://dfhhd4es3t3i" path="res://game/entity/attack/shape_detector.gd" id="5_0d2ml"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5vqjv"]
-radius = 116.0
+radius = 104.0
 
 [sub_resource type="Animation" id="Animation_xa745"]
 resource_name = "Attack"
@@ -339,26 +339,26 @@ region_rect = Rect2(400, 0, 0, 128)
 [node name="Aim" type="Line2D" parent="." index="2"]
 z_index = 5
 position = Vector2(128, 0)
-points = PackedVector2Array(-41, 0, -71, -70, 14, -240, 94, -240, 192, -77, 192, 77, 94, 240, 14, 240, -71, 70)
+points = PackedVector2Array(-41, 0, -72, -72, -8, -248, 72, -248, 192, -48, 192, 48, 72, 248, -8, 248, -72, 72)
 closed = true
 width = 8.0
 default_color = Color(0, 0, 0, 0.25098)
 
 [node name="ShapeDetector" type="ShapeCast2D" parent="Attack" index="0"]
-position = Vector2(192, -112)
+position = Vector2(144, -144)
 enabled = false
 shape = SubResource("CircleShape2D_5vqjv")
-target_position = Vector2(0, 224)
+target_position = Vector2(72, 144)
 max_results = 1
 collision_mask = 11
 script = ExtResource("5_0d2ml")
 metadata/_custom_type_script = ExtResource("5_0d2ml")
 
 [node name="ShapeDetector2" type="ShapeCast2D" parent="Attack" index="1"]
-position = Vector2(192, 112)
+position = Vector2(144, 144)
 enabled = false
 shape = SubResource("CircleShape2D_5vqjv")
-target_position = Vector2(0, -224)
+target_position = Vector2(72, -144)
 max_results = 1
 collision_mask = 11
 script = ExtResource("5_0d2ml")

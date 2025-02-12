@@ -25,7 +25,7 @@ var _upnp_devices: Array[UPNPDevice]
 
 func _ready() -> void:
 	var timer := Timer.new()
-	timer.wait_time = 60.0
+	timer.wait_time = 300.0
 	timer.timeout.connect(_on_update_timer_timeout)
 	timer.name = &"UpdateTimer"
 	timer.autostart = true
@@ -108,7 +108,7 @@ func _forward_port_task(port: int) -> void:
 	if _forwarded_port > 0:
 		for device: UPNPDevice in _upnp_devices:
 			device.delete_port_mapping(_forwarded_port)
-		print_verbose("UPnP: port %d forwarding deleted.")
+		print_verbose("UPnP: port %d forwarding deleted." % _forwarded_port)
 	
 	var errors: Array[String]
 	for i: int in _upnp_devices.size():

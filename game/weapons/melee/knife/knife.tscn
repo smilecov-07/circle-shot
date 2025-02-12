@@ -138,7 +138,7 @@ _data = {
 }
 
 [node name="Knife" instance=ExtResource("1_n4krj")]
-damage = 55
+damage = 52
 shoot_interval = 0.7
 to_aim_time = 0.2
 speed_multiplier_when_current = 1.15

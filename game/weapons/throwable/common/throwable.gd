@@ -46,7 +46,7 @@ func _process(_delta: float) -> void:
 		_aim_spread_left.rotation_degrees = -_calculate_spread()
 		_aim_spread_right.rotation_degrees = _calculate_spread()
 	
-	if _reloading and _player.player_input.shooting:
+	if _reloading and (_player.player_input.shooting or _player.is_disarmed()):
 		_interrupt_reload = true
 
 

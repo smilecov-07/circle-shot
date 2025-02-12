@@ -6,7 +6,7 @@ var _interrupt_reload := false
 
 func _process(delta: float) -> void:
 	super(delta)
-	if _reloading and _player.player_input.shooting:
+	if _reloading and (_player.player_input.shooting or _player.is_disarmed()):
 		_interrupt_reload = true
 
 
