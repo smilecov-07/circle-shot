@@ -265,7 +265,6 @@ projectile_scene = ExtResource("3_47sof")
 projectile_speed = 1600.0
 projectile_damping = 600.0
 projectile_explosion_time = 1.75
-ammo_total = 2
 speed_multiplier_when_current = 0.98
 
 [node name="Grenade" type="Sprite2D" parent="." index="0"]
@@ -280,6 +279,9 @@ position = Vector2(-32, -32)
 
 [node name="ThrowPoint" parent="ThrowPivot" index="0"]
 position = Vector2(104, 0)
+
+[node name="ThrowTimer" parent="." index="2"]
+wait_time = 9.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
 libraries = {

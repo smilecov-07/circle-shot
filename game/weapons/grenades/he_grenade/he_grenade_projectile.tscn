@@ -321,7 +321,7 @@ disabled = true
 
 [node name="EdgeAttack" type="Node2D" parent="Explosion/Attacks" index="2"]
 script = ExtResource("3_8pq1p")
-damage = 25
+damage = 20
 damage_interval = 1.0
 metadata/_custom_type_script = ExtResource("3_8pq1p")
 

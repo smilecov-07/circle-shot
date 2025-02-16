@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dwq3twijmmpig"]
+[gd_scene load_steps=19 format=3 uid="uid://dwq3twijmmpig"]
 
 [ext_resource type="PackedScene" uid="uid://8yrjqan0dqfx" path="res://game/weapons/grenades/common/grenade_projectile.tscn" id="1_ua7bf"]
 [ext_resource type="Texture2D" uid="uid://bah0mhat58x6x" path="res://game/weapons/grenades/flashbang/base.png" id="2_nfc8c"]
@@ -9,7 +9,6 @@
 [ext_resource type="Script" uid="uid://ccr5t8s5ui45t" path="res://game/entity/attack/area_detector.gd" id="4_7cy3p"]
 [ext_resource type="AudioStream" uid="uid://dnce4ljo741pg" path="res://game/weapons/grenades/flashbang/explosion.wav" id="4_hj380"]
 [ext_resource type="Script" uid="uid://bgvirlnion8wa" path="res://game/entity/attack/attack.gd" id="6_qtvta"]
-[ext_resource type="AudioStream" uid="uid://clv6n8qx6yt6" path="res://game/weapons/grenades/flashbang/explosion_weak.wav" id="10_2tro7"]
 
 [sub_resource type="Animation" id="Animation_xrikg"]
 resource_name = "Explode"
@@ -212,7 +211,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_oxxvb"]
 resource_name = "Stun"
-length = 5.0
+length = 3.5
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -221,7 +220,7 @@ tracks/0/path = NodePath(".:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 5),
+"times": PackedFloat32Array(0, 3.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -248,7 +247,7 @@ tracks/2/path = NodePath("Effect:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 3.5, 5),
+"times": PackedFloat32Array(0, 2.6, 3.5),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
@@ -260,7 +259,7 @@ tracks/3/path = NodePath("Effect/White:modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 2, 3.5, 5),
+"times": PackedFloat32Array(0, 1.5, 2.6, 3.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.752941), Color(1, 1, 1, 0)]
@@ -272,77 +271,7 @@ tracks/4/path = NodePath("..")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(4),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"unmute"
-}]
-}
-
-[sub_resource type="Animation" id="Animation_s7xng"]
-resource_name = "WeakStun"
-length = 4.0
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-tracks/1/type = "audio"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sound")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"clips": [{
-"end_offset": 0.0,
-"start_offset": 0.0,
-"stream": ExtResource("10_2tro7")
-}],
-"times": PackedFloat32Array(0)
-}
-tracks/1/use_blend = true
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Effect:modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 3, 4),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Effect/White:modulate")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 1.8, 3, 4),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.752941), Color(1, 1, 1, 0)]
-}
-tracks/4/type = "method"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("..")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(3),
+"times": PackedFloat32Array(2.7),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -354,14 +283,12 @@ tracks/4/keys = {
 _data = {
 &"FriendlyStun": SubResource("Animation_eemtv"),
 &"RESET": SubResource("Animation_vh1rv"),
-&"Stun": SubResource("Animation_oxxvb"),
-&"WeakStun": SubResource("Animation_s7xng")
+&"Stun": SubResource("Animation_oxxvb")
 }
 
 [node name="FlashbangProjectile" instance=ExtResource("1_ua7bf")]
 script = ExtResource("2_otq4k")
-unmute_duration = 1.0
-stun_radius = 480.0
+unmute_duration = 0.8
 speed = 1800.0
 damping = 600.0
 
@@ -385,6 +312,7 @@ bus = &"SFX"
 [node name="Attack" type="Node2D" parent="Explosion" index="1"]
 scale = Vector2(0.5, 0.5)
 script = ExtResource("3_nxt1r")
+stun_duration = 2.2
 damage = 1
 damage_interval = 1.0
 metadata/_custom_type_script = ExtResource("6_qtvta")
