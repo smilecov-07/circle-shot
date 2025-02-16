@@ -91,7 +91,7 @@ func _ready() -> void:
 	if Globals.get_setting_bool("show_damage"):
 		_numbers_vfx_scene = load("uid://dxiacndmn0qr7")
 	
-	print_verbose("Entity %s with team %d created." % [name, team])
+	print_verbose("%s with team %d created." % [name, team])
 
 
 func _physics_process(delta: float) -> void:
@@ -131,16 +131,16 @@ func add_effect(effect_id: String, duration := 1.0, data := [], should_stack := 
 			if existing_effect.id == effect_id:
 				existing_effect.add_duration(duration)
 				effect.free()
-				print_verbose("Added duration %f to effect %s on entity %s." % [
+				print_verbose("Added duration %f to effect %s on %s." % [
 					duration,
 					effect.name,
 					name,
 				])
 				return
 	
-	_effects.add_child(effect)
+	_effects.add_child(effect, true)
 	effect.initialize(self, effect_id, data, false, duration)
-	print_verbose("Added effect %s with duration %f to entity %s." % [
+	print_verbose("Added effect %s with duration %f to %s." % [
 		effect.name,
 		duration,
 		name,
@@ -165,12 +165,12 @@ func add_timeless_effect(effect_id: String, data := [], should_stack := true) ->
 			if existing_effect.id == effect_id:
 				existing_effect.timeless_counter += 1
 				effect.free()
-				print_verbose("Increased counter of effect %s on entity %s." % [effect.name, name])
+				print_verbose("Increased counter of effect %s on %s." % [effect.name, name])
 				return
 	
-	_effects.add_child(effect)
+	_effects.add_child(effect, true)
 	effect.initialize(self, effect_id, data, true)
-	print_verbose("Added timeless effect %s to entity %s." % [effect.name, name])
+	print_verbose("Added timeless effect %s to %s." % [effect.name, name])
 
 
 ## Удаляет постоянный эффект с сущности, или уменьшает счётчик на нём. В [param effect_id] должна
@@ -194,7 +194,7 @@ func remove_timeless_effect(effect_id: String) -> void:
 	for effect: Effect in effects:
 		if effect.id == effect_id:
 			effect.timeless_counter -= 1
-			print_verbose("Removed timeless effect %s on entity %s." % [effect.name, name])
+			print_verbose("Removed timeless effect %s on %s." % [effect.name, name])
 			return
 
 ## Очищает все эффекты с сущности, основываясь на [param positive] и [param negative].[br]
@@ -208,7 +208,7 @@ func clear_effects(negative := true, positive := false) -> void:
 	for effect: Effect in _effects.get_children():
 		if effect.negative == negative or effect.negative != positive:
 			effect.clear()
-			print_verbose("Cleared %s effect %s on entity %s." % [
+			print_verbose("Cleared %s effect %s on %s." % [
 				"negative" if effect.negative else "positive",
 				effect.name,
 				name,
@@ -234,7 +234,7 @@ func set_health(health: int) -> void:
 			var death_vfx: Node2D = death_vfx_scene.instantiate()
 			death_vfx.position = position
 			_vfx_parent.add_child(death_vfx)
-		print_verbose("Entity %s died." % name)
+		print_verbose("%s died." % name)
 		if multiplayer.is_server():
 			queue_free()
 		return
@@ -269,7 +269,7 @@ func set_health(health: int) -> void:
 	current_health = health
 	if current_health > max_health:
 		max_health = current_health
-	print_verbose("Entity %s changed health: %d/%d." % [name, current_health, max_health])
+	print_verbose("%s changed health: %d/%d." % [name, current_health, max_health])
 
 
 ## Понижает здоровье на [param amount] с учётом [member defense_multiplier].

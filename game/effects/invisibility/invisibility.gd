@@ -15,6 +15,12 @@ func _start_effect() -> void:
 
 
 func _end_effect() -> void:
+	var was_visible: bool = _entity.is_local()
+	var event: Event = get_tree().get_first_node_in_group(&"Event")
+	if event:
+		was_visible = was_visible or event.local_team == _entity.team
 	var tween: Tween = _entity.create_tween()
-	tween.tween_property(_entity.visual if _entity.is_local() else _entity,
-			^":modulate", Color.WHITE, 0.3)
+	if was_visible:
+		tween.tween_property(_entity.visual, ^":modulate", Color.WHITE, 0.3)
+	else:
+		tween.tween_property(_entity, ^":modulate", Color.WHITE, 0.3)

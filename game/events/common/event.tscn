@@ -337,6 +337,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Сообщение..."
 max_length = 80
+keep_editing_on_text_submit = true
 context_menu_enabled = false
 
 [node name="Send" type="TextureButton" parent="UI/Main/ChatPanel/VBoxContainer/HBoxContainer"]

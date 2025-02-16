@@ -100,7 +100,7 @@ func reload_weapon() -> void:
 		return
 	
 	current_weapon.reload()
-	print_verbose("Player %s started reloading." % name)
+	print_verbose("%s started reloading." % name)
 
 
 ## Активирует дополнительную кнопку оружия.[br]
@@ -112,7 +112,7 @@ func additional_button_weapon() -> void:
 		return
 	
 	current_weapon.additional_button()
-	print_verbose("Player %s used additional button." % name)
+	print_verbose("%s used additional button." % name)
 
 
 ## Восстанавливает [param percent] процентов боеприпасов на оружии типа [param type].
@@ -130,7 +130,7 @@ func add_ammo_to_weapon(type: Weapon.Type, percent: float) -> void:
 			target_weapon.ammo_total - target_weapon.ammo_per_load
 	)
 	ammo_text_updated.emit(current_weapon.get_ammo_text())
-	print_verbose("Added %f percent of ammo to player %s." % [percent, name])
+	print_verbose("Added %f percent of ammo to weapon of type %d of %s." % [percent, type, name])
 
 
 ## Использует навык.[br]
@@ -142,7 +142,7 @@ func use_skill() -> void:
 		return
 	
 	skill.use()
-	print_verbose("Player %s used skill." % name)
+	print_verbose("%s used skill." % name)
 
 
 ## Отсылает запрос на смену оружия на тип [param to].
@@ -178,7 +178,7 @@ func set_skin(data: SkinData) -> void:
 	skin.player = self
 	$Visual/Skin.add_child(skin)
 	equip_data[0] = data.idx_in_db
-	print_verbose("Skin %s with ID %d on player %s set." % [data.id, equip_data[0], name])
+	print_verbose("Skin %s with ID %d on %s set." % [data.id, equip_data[0], name])
 
 
 ## Устанавливает оружие из [param data] типа [param type].
@@ -197,7 +197,7 @@ func set_weapon(type: Weapon.Type, data: WeaponData) -> void:
 		_weapons.move_child(placeholder, type)
 		equip_data[1 + type] = -2
 		weapon_equipped.emit(type, null)
-		print_verbose("Removed weapon with type %d on player %s." % [type, name])
+		print_verbose("Removed weapon with type %d on %s." % [type, name])
 		
 		if current_weapon_type == type:
 			_set_current_weapon(type)
@@ -211,7 +211,7 @@ func set_weapon(type: Weapon.Type, data: WeaponData) -> void:
 	equip_data[1 + type] = data.idx_in_db
 	
 	weapon_equipped.emit(type, data)
-	print_verbose("Set weapon %s with ID %d with type %d on player %s." % [
+	print_verbose("Set weapon %s with ID %d with type %d on %s." % [
 		data.id,
 		data.idx_in_db,
 		type,
@@ -235,7 +235,7 @@ func set_skill(data: SkillData, reset_skill_vars := false) -> void:
 	if not data:
 		skill = null
 		skill_equipped.emit(data)
-		print_verbose("Removed skill on player %s." % name)
+		print_verbose("Removed skill on %s." % name)
 		return
 	
 	var skill_scene: PackedScene = load(data.scene_path)
@@ -244,7 +244,7 @@ func set_skill(data: SkillData, reset_skill_vars := false) -> void:
 	skill.initialize(self, data)
 	equip_data[5] = data.idx_in_db
 	skill_equipped.emit(data)
-	print_verbose("Set skill %s with ID %d on player %s." % [data.id, equip_data[5], name])
+	print_verbose("Set skill %s with ID %d on %s." % [data.id, equip_data[5], name])
 
 
 @rpc("any_peer", "reliable", "call_local", 5)
@@ -323,7 +323,7 @@ func _set_current_weapon(to: Weapon.Type) -> void:
 	ammo_text_updated.emit(current_weapon.get_ammo_text() if current_weapon else "Нет оружия")
 	current_weapon_type = to
 	weapon_changed.emit(to)
-	print_verbose("Player %s changed current weapon to type %d." % [name, to])
+	print_verbose("%s changed current weapon to type %d." % [name, to])
 
 
 func _update_minimap_marker(local_team: int) -> void:

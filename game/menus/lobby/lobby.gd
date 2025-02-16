@@ -606,10 +606,11 @@ func _on_peer_disconnected(id: int) -> void:
 	_chat.post_message.rpc("> [color=green]%s[/color] отключается!" % _players[id])
 	_chat.players_names.erase(id)
 	_players.erase(id)
+	prints(_admin_id, id)
 	if id == _admin_id:
 		if not _players.is_empty():
 			_admin_id = _players.keys()[0]
-			_set_admin.rpc_id(_admin_id, true)
+			_set_admin.rpc(_admin_id)
 		else:
 			_admin_id = -1
 			_chat.clear_chat()
