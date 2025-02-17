@@ -49,8 +49,8 @@ radius = 24.0
 
 [node name="SnowballProjectile" instance=ExtResource("1_ivj1u")]
 script = ExtResource("2_otbqe")
-slowdown_duration = 2.0
-speed_multiplier = 0.7
+slowdown_duration = 4.0
+speed_multiplier = 0.65
 speed = 2200.0
 hit_vfx_scene = ExtResource("3_ebg44")
 damage = 15

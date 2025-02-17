@@ -70,6 +70,7 @@ _data = {
 [node name="DiamondBullet" type="Node2D"]
 script = ExtResource("1_vjdej")
 projectile_scene = ExtResource("2_i4kng")
+spread_walk = 4.0
 use_times = 5
 use_cooldown = 15
 metadata/_custom_type_script = ExtResource("1_0yicg")
@@ -90,4 +91,16 @@ visible = false
 z_index = 5
 points = PackedVector2Array(64, 0, 4000, 0)
 width = 32.0
+default_color = Color(0, 0.623529, 1, 0.25098)
+
+[node name="SpreadLeft" type="Line2D" parent="Aim"]
+position = Vector2(64, -16)
+points = PackedVector2Array(64, 0, 128, 0)
+width = 4.0
+default_color = Color(0, 0.623529, 1, 0.25098)
+
+[node name="SpreadRight" type="Line2D" parent="Aim"]
+position = Vector2(64, 16)
+points = PackedVector2Array(64, 0, 128, 0)
+width = 4.0
 default_color = Color(0, 0.623529, 1, 0.25098)

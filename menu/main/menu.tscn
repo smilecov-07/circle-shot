@@ -250,7 +250,8 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
 text = "Скины эмоджи взяты с https://openmoji.org/.
-Я НЕ ОТКЛЮЧАЮ МИНИКАРТУ ЧЕРЕЗ КОНСОЛЬ!"
+Михаил, привет.
+Удали снайперку."
 autowrap_mode = 2
 
 [node name="Close" type="Button" parent="About/MarginContainer/VBoxContainer"]

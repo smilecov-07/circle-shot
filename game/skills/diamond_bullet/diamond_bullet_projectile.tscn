@@ -23,7 +23,7 @@ knockback_power = 1280.0
 knockback_duration = 0.25
 speed = 4000.0
 hit_vfx_scene = ExtResource("3_la80t")
-damage = 35
+damage = 25
 
 [node name="ShapeDetector" type="ShapeCast2D" parent="." index="2"]
 position = Vector2(-128, 0)

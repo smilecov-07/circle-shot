@@ -72,6 +72,7 @@ ammo_scene = ExtResource("2_yga7a")
 angle_between_ammo = 20.0
 throw_interval = 0.4
 spread_base = 3.0
+spread_walk = 3.0
 ammo_per_load = 2
 ammo_total = 32
 speed_multiplier_when_current = 1.03

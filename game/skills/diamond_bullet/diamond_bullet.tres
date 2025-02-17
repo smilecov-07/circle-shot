@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_dv8cp")
 name = "Алмазная пуля"
-brief_description = "Урон: 35, отбрасывает"
+brief_description = "Урон: 25, отбрасывает"
 usage_text = "5 исп./15 с"
 rarity = 2
 id = "diamond_penis"
