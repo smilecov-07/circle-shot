@@ -166,8 +166,6 @@ func setup_settings() -> void:
 			"shader_compiler/shader_cache/enabled.mobile", shader_cache)
 	override_file.save("user://engine_settings.cfg")
 	
-	Globals.set_setting_bool("hit_markers",
-			Globals.get_setting_bool("hit_markers", true))
 	Globals.set_setting_bool("minimap",
 			Globals.get_setting_bool("minimap", true))
 	Globals.set_setting_bool("debug_info",
@@ -198,6 +196,8 @@ func setup_settings() -> void:
 			Globals.get_setting_bool("check_betas", Globals.version.count('.') == 3))
 	Globals.set_setting_bool("upnp",
 			Globals.get_setting_bool("upnp", false))
+	Globals.set_setting_bool("chat_in_game",
+			Globals.get_setting_bool("chat_in_game", true))
 
 
 ## Устанавливает настройки управления по умолчанию, если их ещё нет.

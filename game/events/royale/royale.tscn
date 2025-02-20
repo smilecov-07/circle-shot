@@ -247,7 +247,7 @@ libraries = {
 &"": SubResource("AnimationLibrary_n8n4b")
 }
 
-[node name="SpectatorMenu" type="HBoxContainer" parent="UI/Main" index="9"]
+[node name="SpectatorMenu" type="HBoxContainer" parent="UI/Main" index="8"]
 visible = false
 layout_mode = 1
 anchors_preset = 7
@@ -256,7 +256,7 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -227.5
-offset_top = -135.0
+offset_top = -136.0
 offset_right = 227.5
 offset_bottom = -80.0
 grow_horizontal = 2

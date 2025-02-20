@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://vybrr6la0lw5"
-path="res://.godot/imported/blade1.png-977445ac8c390606c8bbaef6eb1022ac.ctex"
+uid="uid://cscat0ajsghte"
+path="res://.godot/imported/saw1.png-d2cb18681f7991e053545423da77c9c6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/weapons/melee/chainsaw/blade1.png"
-dest_files=["res://.godot/imported/blade1.png-977445ac8c390606c8bbaef6eb1022ac.ctex"]
+source_file="res://game/weapons/melee/chainsaw/saw1.png"
+dest_files=["res://.godot/imported/saw1.png-d2cb18681f7991e053545423da77c9c6.ctex"]
 
 [params]
 

@@ -1,13 +1,12 @@
-[gd_scene load_steps=18 format=3 uid="uid://dqptp3tatgmn"]
+[gd_scene load_steps=17 format=3 uid="uid://dqptp3tatgmn"]
 
 [ext_resource type="PackedScene" uid="uid://bydh8wq8j224r" path="res://game/weapons/melee/common/melee.tscn" id="1_dte4u"]
 [ext_resource type="Script" uid="uid://dfhhd4es3t3i" path="res://game/entity/attack/shape_detector.gd" id="2_738d3"]
 [ext_resource type="Script" uid="uid://cv0wldn6wh548" path="res://game/weapons/melee/chainsaw/chainsaw.gd" id="2_oth0h"]
-[ext_resource type="Texture2D" uid="uid://cqieo5njs8i8d" path="res://game/weapons/melee/chainsaw/base.png" id="3_1ejg4"]
 [ext_resource type="AudioStream" uid="uid://852l2260wl4s" path="res://game/weapons/melee/chainsaw/equip.wav" id="3_tuafg"]
-[ext_resource type="Texture2D" uid="uid://dttcxjxpb2m2s" path="res://game/weapons/melee/chainsaw/blade0.png" id="5_wy0b7"]
-[ext_resource type="Texture2D" uid="uid://vybrr6la0lw5" path="res://game/weapons/melee/chainsaw/blade1.png" id="6_4nu05"]
+[ext_resource type="Texture2D" uid="uid://etjpy7svargd" path="res://game/weapons/melee/chainsaw/saw0.png" id="6_oth0h"]
 [ext_resource type="AudioStream" uid="uid://db3rw2nf23m2j" path="res://game/weapons/melee/chainsaw/attack.ogg" id="7_4nu05"]
+[ext_resource type="Texture2D" uid="uid://cscat0ajsghte" path="res://game/weapons/melee/chainsaw/saw1.png" id="7_yhynl"]
 [ext_resource type="AudioStream" uid="uid://biktvjio6nme8" path="res://game/weapons/melee/chainsaw/idle.ogg" id="8_oth0h"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_eqtrk"]
@@ -20,7 +19,7 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Base:position")
+tracks/0/path = NodePath("Saw:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -32,7 +31,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Base/Blade:speed_scale")
+tracks/1/path = NodePath("Saw:speed_scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -61,7 +60,7 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Base:position")
+tracks/0/path = NodePath("Saw:position")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -73,7 +72,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Base:rotation")
+tracks/1/path = NodePath("Saw:rotation")
 tracks/1/interp = 4
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -91,7 +90,7 @@ step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Base:position")
+tracks/0/path = NodePath("Saw:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -103,7 +102,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Base/Blade:speed_scale")
+tracks/1/path = NodePath("Saw:speed_scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -147,7 +146,7 @@ step = 0.025
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Base:position")
+tracks/0/path = NodePath("Saw:position")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -159,7 +158,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Base:rotation")
+tracks/1/path = NodePath("Saw:rotation")
 tracks/1/interp = 4
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -189,7 +188,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Base:position")
+tracks/0/path = NodePath("Saw:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -201,7 +200,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Base:rotation")
+tracks/1/path = NodePath("Saw:rotation")
 tracks/1/interp = 3
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -213,7 +212,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Base/Blade:speed_scale")
+tracks/2/path = NodePath("Saw:speed_scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -260,10 +259,10 @@ _data = {
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_wy0b7")
+"texture": ExtResource("6_oth0h")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_4nu05")
+"texture": ExtResource("7_yhynl")
 }],
 "loop": true,
 "name": &"normal",
@@ -296,12 +295,7 @@ libraries = {
 }
 next/PostEquip = &"Idle"
 
-[node name="Base" type="Sprite2D" parent="." index="2"]
-texture = ExtResource("3_1ejg4")
-offset = Vector2(64, -8)
-
-[node name="Blade" type="AnimatedSprite2D" parent="Base" index="0"]
-show_behind_parent = true
+[node name="Saw" type="AnimatedSprite2D" parent="." index="2"]
 sprite_frames = SubResource("SpriteFrames_tuafg")
 animation = &"normal"
 autoplay = "normal"

@@ -16,7 +16,7 @@ func _ready() -> void:
 			_override_file.get_value("rendering", "shader_compiler/shader_cache/enabled")
 	(%ShaderCacheCheck as BaseButton).set_pressed_no_signal(shader_cache)
 	
-	(%HitMarkersCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("hit_markers"))
+	(%ChatInGameCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("chat_in_game"))
 	(%ShowMinimapCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("minimap"))
 	(%ShowDebugCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("debug_info"))
 	(%MasterVolumeSlider as Range).set_value_no_signal(Globals.get_setting_float("master_volume"))
@@ -166,10 +166,6 @@ func _on_quit_pressed() -> void:
 	if is_instance_valid(Globals.main.menu):
 		Globals.main.menu.check_updates()
 	queue_free()
-
-
-func _on_hit_markers_check_toggled(toggled_on: bool) -> void:
-	Globals.set_setting_bool("hit_markers", toggled_on)
 
 
 func _on_show_minimap_check_toggled(toggled_on: bool) -> void:
@@ -353,3 +349,7 @@ func _on_betas_check_toggled(toggled_on: bool) -> void:
 func _on_upnp_check_toggled(toggled_on: bool) -> void:
 	Globals.set_setting_bool("upnp", toggled_on)
 	(%UPNPStatus.get_parent() as CanvasItem).visible = toggled_on
+
+
+func _on_chat_in_game_check_toggled(toggled_on: bool) -> void:
+	Globals.set_setting_bool("chat_in_game", toggled_on)

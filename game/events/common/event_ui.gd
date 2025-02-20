@@ -26,11 +26,15 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if not _chat_button.visible:
+		return
 	if event.is_action_pressed(&"close_chat") and _chat_button.button_pressed:
 		_chat_button.button_pressed = false
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if not _chat_button.visible:
+		return
 	if event.is_action_pressed(&"chat") and not _chat_button.button_pressed:
 		_chat_button.button_pressed = true
 
@@ -47,7 +51,7 @@ func show_intro() -> void:
 
 
 func _on_message_posted(message: String) -> void:
-	if _chat_button.button_pressed:
+	if _chat_button.button_pressed or not _chat_button.visible:
 		return
 	if $Main/ChatPreview.get_child_count() >= messages_visible_limit:
 		$Main/ChatPreview.get_child(0).queue_free()

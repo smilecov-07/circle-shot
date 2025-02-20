@@ -48,8 +48,8 @@ var _players: Dictionary[int, Player]
 var _players_skill_vars: Dictionary[int, Array]
 
 var _vibration_enabled: bool
-var _hit_marker_scene: PackedScene
-var _death_marker_scene: PackedScene
+var _hit_marker_scene: PackedScene = preload("uid://c2f0n1b5sfpdh")
+var _kill_marker_scene: PackedScene = preload("uid://blhm6uka1p287")
 
 ## Ссылка на [EventUI].
 @onready var _event_ui: EventUI = $UI
@@ -59,10 +59,9 @@ func _ready() -> void:
 	if multiplayer.is_server():
 		multiplayer.peer_disconnected.connect(_on_peer_disconnected)
 	
-	if Globals.get_setting_bool("hit_markers"):
-		_hit_marker_scene = load("uid://c2f0n1b5sfpdh")
-		_death_marker_scene = load("uid://blhm6uka1p287")
 	_vibration_enabled = Globals.get_setting_bool("vibration")
+	if not Globals.get_setting_bool("chat_in_game"):
+		($UI/Main/Chat as CanvasItem).hide()
 	
 	var entities_spawner: MultiplayerSpawner = $EntitiesSpawner
 	for scene: PackedScene in player_scenes:
@@ -194,10 +193,9 @@ func _register_hit(where: Vector2) -> void:
 	
 	if _vibration_enabled:
 		Input.vibrate_handheld(HIT_VIBRATION_DURATION_MS, HIT_VIBRATION_INTENSITY)
-	if _death_marker_scene:
-		var marker: Node2D = _hit_marker_scene.instantiate()
-		marker.position = where
-		$Vfx.add_child(marker)
+	var marker: Node2D = _hit_marker_scene.instantiate()
+	marker.position = where
+	$Vfx.add_child(marker)
 
 
 @rpc("reliable", "call_local", "authority", 6)
@@ -208,10 +206,9 @@ func _register_kill(where: Vector2) -> void:
 	
 	if _vibration_enabled:
 		Input.vibrate_handheld(KILL_VIBRATION_DURATION_MS, KILL_VIBRATION_INTENSITY)
-	if _death_marker_scene:
-		var marker: Node2D = _death_marker_scene.instantiate()
-		marker.position = where
-		$Vfx.add_child(marker)
+	var marker: Node2D = _kill_marker_scene.instantiate()
+	marker.position = where
+	$Vfx.add_child(marker)
 
 
 func _setup() -> void:
