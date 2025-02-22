@@ -12,4 +12,4 @@ id = "hypercharge"
 scene_path = "uid://bhlky5iu0nax1"
 image_path = "uid://c1jwuybk58v2w"
 spawnable_scenes_paths = Array[String]([])
-metadata/_custom_type_script = ExtResource("1_213rr")
+metadata/_custom_type_script = "uid://iwsanxyoxs5s"

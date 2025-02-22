@@ -10,4 +10,4 @@ rarity = 1
 id = "yes_im_nerd"
 scene_path = "uid://dggscprffe03c"
 image_path = "uid://c48mukegdbi8m"
-metadata/_custom_type_script = ExtResource("1_63i54")
+metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

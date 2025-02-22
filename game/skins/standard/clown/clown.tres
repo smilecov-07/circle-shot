@@ -10,4 +10,4 @@ rarity = 1
 id = "clown"
 scene_path = "uid://dd74gwm1uh6tt"
 image_path = "uid://b5fmv0njhelm"
-metadata/_custom_type_script = ExtResource("1_g7hoi")
+metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

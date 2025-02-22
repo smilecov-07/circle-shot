@@ -12,4 +12,4 @@ id = "potion"
 scene_path = "uid://w86u3a024aw3"
 image_path = "uid://mgk0jafbvi4h"
 spawnable_scenes_paths = Array[String]([])
-metadata/_custom_type_script = ExtResource("1_dkhs1")
+metadata/_custom_type_script = "uid://iwsanxyoxs5s"

@@ -10,4 +10,4 @@ rarity = 2
 id = "undertale"
 scene_path = "uid://bwh60wyedvw8h"
 image_path = "uid://bkr22i0bltnrm"
-metadata/_custom_type_script = ExtResource("1_82x72")
+metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

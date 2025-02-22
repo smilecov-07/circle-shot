@@ -14,4 +14,4 @@ players_divider = 2
 scene_path = "uid://d2iraf4bc27ee"
 image_path = "uid://crqlredjtnixv"
 maps = Array[ExtResource("1_d4e2q")]([ExtResource("2_nhpwv")])
-metadata/_custom_type_script = ExtResource("2_066hq")
+metadata/_custom_type_script = "uid://df3h1g4gqr0xh"

@@ -10,4 +10,4 @@ rarity = 1
 id = ":)"
 scene_path = "uid://dppbbkplpjj3o"
 image_path = "uid://cyrr2jvua7aa"
-metadata/_custom_type_script = ExtResource("1_av13w")
+metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

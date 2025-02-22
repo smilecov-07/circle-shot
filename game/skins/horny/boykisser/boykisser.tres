@@ -10,4 +10,4 @@ rarity = 1
 id = "owo"
 scene_path = "uid://dagskw28ang0p"
 image_path = "uid://blkvcndqkr10h"
-metadata/_custom_type_script = ExtResource("1_oageq")
+metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

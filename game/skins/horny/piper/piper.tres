@@ -10,4 +10,4 @@ rarity = 1
 id = "piper"
 scene_path = "uid://cad2esn66vr66"
 image_path = "uid://iw68ouhc2p7s"
-metadata/_custom_type_script = ExtResource("1_dltsc")
+metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

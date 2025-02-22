@@ -10,4 +10,4 @@ rarity = 1
 id = "femboy_distro"
 scene_path = "uid://bbmeo164q20gn"
 image_path = "uid://bkj0kfmbuvyag"
-metadata/_custom_type_script = ExtResource("1_3fmcj")
+metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

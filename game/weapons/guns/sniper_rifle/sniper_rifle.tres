@@ -13,4 +13,4 @@ description = ""
 scene_path = "uid://4q0rrm6arbyx"
 image_path = "uid://8k4hqd6lxca1"
 spawnable_scenes_paths = Array[String](["uid://cm0sqwulviy72"])
-metadata/_custom_type_script = ExtResource("1_ko1gy")
+metadata/_custom_type_script = "uid://55g8njvkg07g"

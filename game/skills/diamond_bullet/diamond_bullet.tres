@@ -12,4 +12,4 @@ id = "diamond_penis"
 scene_path = "uid://dwy62fpecrhen"
 image_path = "uid://dj136q4fo21rj"
 spawnable_scenes_paths = Array[String](["uid://cwbyj0wl0k3ab"])
-metadata/_custom_type_script = ExtResource("1_dv8cp")
+metadata/_custom_type_script = "uid://iwsanxyoxs5s"

@@ -10,4 +10,4 @@ rarity = 1
 id = "telega"
 scene_path = "uid://x2oithhak41y"
 image_path = "uid://fdxvuiki554m"
-metadata/_custom_type_script = ExtResource("1_newbi")
+metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

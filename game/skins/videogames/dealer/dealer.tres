@@ -10,4 +10,4 @@ rarity = 2
 id = "dealer"
 scene_path = "uid://lvofe70e7tx7"
 image_path = "uid://cbt1jl708r5td"
-metadata/_custom_type_script = ExtResource("1_6ulw4")
+metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

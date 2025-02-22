@@ -10,4 +10,4 @@ rarity = 2
 id = "im_not_a_cat"
 scene_path = "uid://dh3n3un5i122b"
 image_path = "uid://cp55rvnqppfi"
-metadata/_custom_type_script = ExtResource("1_uupf4")
+metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

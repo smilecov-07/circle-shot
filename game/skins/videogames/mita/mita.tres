@@ -10,4 +10,4 @@ rarity = 1
 id = "chibimita"
 scene_path = "uid://c7vnr4k6hi7cm"
 image_path = "uid://ijen7jsgkmxw"
-metadata/_custom_type_script = ExtResource("1_iiyws")
+metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

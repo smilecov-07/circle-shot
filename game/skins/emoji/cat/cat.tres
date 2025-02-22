@@ -10,4 +10,4 @@ rarity = 1
 id = "bacatina"
 scene_path = "uid://c4n2pkxv1n3or"
 image_path = "uid://cmugf7intv1pv"
-metadata/_custom_type_script = ExtResource("1_51011")
+metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

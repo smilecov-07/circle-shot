@@ -8,4 +8,4 @@ name = "Лес"
 brief_description = "Поединок в зимнем лесу."
 scene_path = "uid://bpli4nq3osyio"
 image_path = "uid://blj1aaljy7mb5"
-metadata/_custom_type_script = ExtResource("1_y7385")
+metadata/_custom_type_script = "uid://c2mew3f2rwarc"
