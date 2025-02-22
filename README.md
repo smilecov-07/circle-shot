@@ -1,8 +1,7 @@
 # Circle Shot
 
-Исходный код Circle Shot, игры в жанре "Шутер", выполненной в 2D.
-Если хотите помочь в разработке, ознакомьтесь с `docs/CONTRIBUTING.md`.
+Исходный код Circle Shot, игры в жанре "Шутер", выполненной в 2D. Если хотите помочь в разработке, ознакомьтесь с `docs/CONTRIBUTING.md`.
 
-Версия Godot: 4.4.beta1+
+Версия Godot: 4.4.rc1+
 
 ![Фон меню](./menu/main/background.png)
