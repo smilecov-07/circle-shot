@@ -61,12 +61,22 @@ func _ready() -> void:
 	_update_environment()
 	
 	_find_ips_for_broadcast()
+	
+	if Globals.main.console:
+		Globals.main.console.command_processors.append(_process_console_command)
+		Globals.main.console.help_processors.append(_print_help)
 
 
 func _notification(what: int) -> void:
 	match what:
 		NOTIFICATION_WM_GO_BACK_REQUEST when _game.state == Game.State.LOBBY:
 			_on_leave_pressed()
+
+
+func _exit_tree() -> void:
+	if Globals.main.console:
+		Globals.main.console.command_processors.erase(_process_console_command)
+		Globals.main.console.help_processors.erase(_print_help)
 
 
 @rpc("reliable", "call_local", "authority", 1)
@@ -130,7 +140,7 @@ func _register_new_player(player_name: String) -> void:
 	_chat.post_message.rpc("> [color=green]%s[/color] подключается!" % player_name)
 	_chat.players_names[sender_id] = player_name
 	
-	if _players.size() == 1:
+	if _admin_id < 0:
 		_admin_id = sender_id
 	_set_admin.rpc_id(sender_id, _admin_id)
 	
@@ -214,7 +224,7 @@ func _request_admin_action(id: int, action: AdminAction) -> void:
 		return
 	
 	var sender_id: int = multiplayer.get_remote_sender_id()
-	if sender_id != _admin_id:
+	if not sender_id in [_admin_id, MultiplayerPeer.TARGET_PEER_SERVER]:
 		push_warning("Admin action request rejected: player %d is not admin." % sender_id)
 		return
 	if id == _admin_id:
@@ -223,7 +233,7 @@ func _request_admin_action(id: int, action: AdminAction) -> void:
 	if _game.state != Game.State.LOBBY:
 		push_warning("Can't do admin actions if not in lobby.")
 		return
-	if not id in _players:
+	if not id in _players and id != MultiplayerPeer.TARGET_PEER_SERVER:
 		push_warning("Can't do admin actions on non-existent player %d." % id)
 		return
 	
@@ -494,14 +504,16 @@ func _find_ips_for_broadcast() -> void:
 	print_verbose("Finding IPs for broadcast...")
 	# Отсылаем пакеты по всем локальным адресам
 	for ip: String in IP.get_local_addresses():
-		if ip.begins_with("192.168.") or ip.begins_with("10.42.") or ip.begins_with("10.22."):
-			var udp := PacketPeerUDP.new()
-			udp.set_broadcast_enabled(true)
-			# Меняем конец IP на 255
-			var broadcast_ip: String = ip.rsplit('.', true, 1)[0] + ".255"
-			udp.set_dest_address(broadcast_ip, Game.LISTEN_PORT)
-			print_verbose("Found IP to broadcast: %s." % broadcast_ip)
-			_udp_peers.append(udp)
+		for prefix: String in Game.LOCAL_IP_PREFIXES:
+			if ip.begins_with(prefix):
+				var udp := PacketPeerUDP.new()
+				udp.set_broadcast_enabled(true)
+				# Меняем конец IP на 255
+				var broadcast_ip: String = ip.rsplit('.', true, 1)[0] + ".255"
+				udp.set_dest_address(broadcast_ip, Game.LISTEN_PORT)
+				print_verbose("Found IP to broadcast: %s." % broadcast_ip)
+				_udp_peers.append(udp)
+				break
 
 
 func _do_broadcast() -> void:
@@ -518,6 +530,107 @@ func _do_broadcast() -> void:
 		_players.size(),
 		_game.max_players,
 	])
+
+
+func _process_console_command(command: PackedStringArray) -> bool:
+	if not visible:
+		return false
+	var recognized := false
+	if command[0] == "list-players" and command.size() == 1:
+		recognized = true
+		if not multiplayer.is_server():
+			push_error("This command only available on server.")
+			return recognized
+		print("Connected players:")
+		for id: int in _players:
+			prints(id, _players[id])
+		if _admin_id in _players:
+			print("Current admin: %d (%s)." % [_admin_id, _players[_admin_id]])
+		else:
+			print("Current admin: %d." % _admin_id)
+		if Globals.headless:
+			print("Server ID is always 1.")
+	elif command[0] == "set-environment" and command.size() < 4:
+		recognized = true
+		if not _admin:
+			push_error("This command only available for admins.")
+			return recognized
+		if command.size() == 2:
+			_request_set_environment.rpc_id(MultiplayerPeer.TARGET_PEER_SERVER, int(command[1]), 0)
+		else:
+			_request_set_environment.rpc_id(MultiplayerPeer.TARGET_PEER_SERVER, int(command[1]),
+					int(command[2]))
+	elif command[0] == "start" and command.size() == 1:
+		recognized = true
+		if not _admin:
+			push_error("This command only available for admins.")
+			return recognized
+		_request_start_event.rpc_id(MultiplayerPeer.TARGET_PEER_SERVER)
+	elif (command[0] == "admin" or command[0] == "admin-id") and command.size() < 3:
+		recognized = true
+		if not _admin and not multiplayer.is_server():
+			push_error("This command only available for admins.")
+			return recognized
+		if command.size() == 1:
+			_request_admin_action.rpc_id(MultiplayerPeer.TARGET_PEER_SERVER,
+					MultiplayerPeer.TARGET_PEER_SERVER, AdminAction.TRANSFER_ADMIN_RIGHTS)
+		else:
+			var id: int
+			if command[0] == "admin":
+				id = _get_player_id(command[1])
+			else:
+				id = int(command[1])
+			_request_admin_action.rpc_id(MultiplayerPeer.TARGET_PEER_SERVER,
+					id, AdminAction.TRANSFER_ADMIN_RIGHTS)
+	elif (command[0] == "kick" or command[0] == "kick-id") and command.size() == 2:
+		recognized = true
+		if not _admin:
+			push_error("This command only available for admins.")
+			return recognized
+		var id: int
+		if command[0] == "kick":
+			id = _get_player_id(command[1])
+		else:
+			id = int(command[1])
+		_request_admin_action.rpc_id(MultiplayerPeer.TARGET_PEER_SERVER,
+				id, AdminAction.KICK)
+	elif (command[0] == "ban" or command[0] == "ban-id") and command.size() == 2:
+		recognized = true
+		if not _admin:
+			push_error("This command only available for admins.")
+			return recognized
+		var id: int
+		if command[0] == "ban":
+			id = _get_player_id(command[1])
+		else:
+			id = int(command[1])
+		_request_admin_action.rpc_id(MultiplayerPeer.TARGET_PEER_SERVER,
+				id, AdminAction.BAN)
+	
+	return recognized
+
+
+func _print_help() -> void:
+	if not visible:
+		return
+	print("list-players - list all connected players. Works only on server.")
+	print("These commands only available if you are admin:")
+	print("set-environment <event-id> [map-id] - Sets event and map to specified values.")
+	print("start - Starts event.")
+	print("admin [player] - Makes specified player admin. Current admin loses his rights. \
+Note: you can always set admin to yourself if you are server.")
+	print("admin-id [id] - Same as admin, but uses player ID.")
+	print("kick <player> - Kicks specified player.")
+	print("kick-id <id> - Same as kick, but uses player ID.")
+	print("ban <player> - Bans specified player.")
+	print("ban-id <id> - Same as ban, but uses player ID.")
+
+
+func _get_player_id(player: String) -> int:
+	for id: int in _players:
+		if _players[id].begins_with(player):
+			return id
+	return -1
 
 
 func _on_client_timer_timeout(id: int) -> void:
@@ -606,15 +719,16 @@ func _on_peer_disconnected(id: int) -> void:
 	_chat.post_message.rpc("> [color=green]%s[/color] отключается!" % _players[id])
 	_chat.players_names.erase(id)
 	_players.erase(id)
-	prints(_admin_id, id)
 	if id == _admin_id:
 		if not _players.is_empty():
 			_admin_id = _players.keys()[0]
 			_set_admin.rpc(_admin_id)
 		else:
 			_admin_id = -1
-			_chat.clear_chat()
 	_delete_player_entry.rpc(id)
+	
+	if _players.is_empty():
+		_chat.clear_chat()
 
 
 func _on_admin_actions_menu_id_pressed(action: AdminAction, peer: int) -> void:

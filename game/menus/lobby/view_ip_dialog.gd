@@ -1,15 +1,10 @@
 extends AcceptDialog
 
 
-const PREFFERED_IP_PREFIXES: Array[String] = [
-	"192.168.",
-	"10.",
-]
 const HIDE_IPS: Array[String] = [
 	"127.0.0.1",
 	"0:0:0:0:0:0:0:1",
 ]
-
 var _preffered_ips: Array[String]
 var _other_ips: Array[String]
 var _global_ip: String
@@ -37,7 +32,7 @@ func _find_ips() -> void:
 	for ip: String in ip_addresses:
 		if ip in HIDE_IPS:
 			continue
-		for prefix: String in PREFFERED_IP_PREFIXES:
+		for prefix: String in Game.LOCAL_IP_PREFIXES:
 			if ip.begins_with(prefix):
 				_preffered_ips.append(ip)
 				break

@@ -131,8 +131,7 @@ func remove_recursive(path: String) -> void:
 
 
 func restart_game() -> void:
-	OS.set_restart_on_exit(true, OS.get_cmdline_args())
-	get_tree().quit()
+	Globals.quit(true)
 
 
 func _toggle_input_method_settings_visibility(method: Main.InputMethod) -> void:

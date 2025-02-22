@@ -31,13 +31,14 @@ var data_file: ConfigFile
 
 
 func _notification(what: int) -> void:
-	if not save_file:
-		return
 	match what:
 		NOTIFICATION_APPLICATION_PAUSED, NOTIFICATION_PREDELETE, \
-		NOTIFICATION_WM_CLOSE_REQUEST, NOTIFICATION_WM_GO_BACK_REQUEST, \
-		NOTIFICATION_WM_WINDOW_FOCUS_OUT, NOTIFICATION_APPLICATION_FOCUS_OUT:
-			save_file.save_encrypted_pass(SAVE_FILE_PATH, SAVE_FILE_PASSWORD)
+		NOTIFICATION_APPLICATION_FOCUS_OUT, NOTIFICATION_WM_GO_BACK_REQUEST, \
+		NOTIFICATION_WM_WINDOW_FOCUS_OUT:
+			if save_file:
+				save_file.save_encrypted_pass(SAVE_FILE_PATH, SAVE_FILE_PASSWORD)
+		NOTIFICATION_WM_CLOSE_REQUEST:
+			quit()
 
 
 ## Инициализирует глобальный синглтон с объектом [param main] класса [Main].
@@ -49,6 +50,23 @@ func initialize(main_node: Main) -> void:
 	items_db.initialize()
 	
 	main = main_node
+
+
+## Выходит из игры. Если [param restart] равен [code]true[/code], перезапускает игру с аргументами,
+## указанными в [param args].
+func quit(restart := false, args: PackedStringArray = OS.get_cmdline_args()) -> void:
+	if save_file:
+		save_file.save_encrypted_pass(SAVE_FILE_PATH, SAVE_FILE_PASSWORD)
+	if main.upnp:
+		main.upnp.finalize()
+	
+	if Globals.main.console:
+		if restart:
+			OS.create_instance(args)
+		OS.kill(OS.get_process_id())
+	else:
+		OS.set_restart_on_exit(restart, args)
+		get_tree().quit()
 
 
 #region Функции задавания и получения значений

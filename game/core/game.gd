@@ -54,6 +54,11 @@ const LISTEN_PORT: int = 7414
 const MAX_CLIENTS: int = 11 # Ещё один чтобы успешно отклонять.
 ## Максимальная длина имени игрока.
 const MAX_PLAYER_NAME_LENGTH: int = 24
+## Список префиксов локальных IP-адресов.
+const LOCAL_IP_PREFIXES: Array[String] = [
+	"192.168.",
+	"10.",
+]
 
 ## Максимальное число игроков, превысив которое, сервер начнёт отклонять соединения.
 ## Задаётся лобби на основе выбранного события. Не имеет эффекта на клиентах.
@@ -76,9 +81,15 @@ var _players_not_ready: Array[int]
 func _ready() -> void:
 	_scene_multiplayer = multiplayer
 	_scene_multiplayer.auth_callback = _authenticate_callback
+	if Globals.main.console:
+		Globals.main.console.command_processors.append(_process_console_command)
+		Globals.main.console.help_processors.append(_print_help)
 
 
 func _exit_tree() -> void:
+	if Globals.main.console:
+		Globals.main.console.command_processors.erase(_process_console_command)
+		Globals.main.console.help_processors.erase(_print_help)
 	# Очистка на всякий случай
 	if multiplayer.multiplayer_peer:
 		close()
@@ -95,6 +106,9 @@ func init_connect_local() -> void:
 
 ## Создаёт сервер.
 func create(port: int = DEFAULT_PORT) -> void:
+	if state != State.CLOSED:
+		push_error("Can't create server: game isn't closed.")
+		return
 	var peer := ENetMultiplayerPeer.new()
 	var error: Error = peer.create_server(port, MAX_CLIENTS)
 	if error != OK:
@@ -116,6 +130,9 @@ func create(port: int = DEFAULT_PORT) -> void:
 func join(ip: String, port: int = DEFAULT_PORT) -> void:
 	if not ip.is_valid_ip_address():
 		show_error("Введён некорректный IP-адрес!")
+		return
+	if state != State.CLOSED:
+		push_error("Can't join to server: game isn't closed.")
 		return
 	var peer := ENetMultiplayerPeer.new()
 	var error: Error = peer.create_client(ip, port)
@@ -327,6 +344,32 @@ func _init_lobby() -> void:
 	print_verbose("Created lobby.")
 
 
+func _process_console_command(command: PackedStringArray) -> bool:
+	var recognized := false
+	if command[0] == "close" and command.size() == 1:
+		recognized = true
+		close()
+	elif command[0] == "create" and command.size() < 3:
+		recognized = true
+		if command.size() == 1:
+			create()
+		else:
+			create(int(command[1]))
+	elif command[0] == "join" and command.size() > 1 and command.size() < 4:
+		recognized = true
+		if command.size() == 2:
+			join(command[1])
+		else:
+			join(command[1], int(command[2]))
+	return recognized
+
+
+func _print_help() -> void:
+	print("close - Closes server or client.")
+	print("join <ip> [port] - Joins server by IP and port.")
+	print("create [port] - Creates server at specified port.")
+
+
 func _authenticate_callback(peer: int, data: PackedByteArray) -> void:
 	if not peer in _scene_multiplayer.get_authenticating_peers():
 		push_warning("Unexpected authenticating message: peer %d is not authenticating." % peer)
@@ -347,8 +390,8 @@ func _authenticate_callback(peer: int, data: PackedByteArray) -> void:
 				($ConnectingDialog as Window).hide()
 				show_error("Невозможно подключиться! \
 Версия сервера (%s) не совпадает с твоей (%s)." % [
-					Globals.version,
 					data.slice(1).get_string_from_utf8(),
+					Globals.version,
 				])
 				push_warning("Can't connect: different versions (%s - local and %s - server)." % [
 					Globals.version,

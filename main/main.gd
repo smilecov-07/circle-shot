@@ -45,6 +45,8 @@ var game: Game
 var menu: Menu
 ## Ссылка на [UPNPManager]. Отсутствует, если UPnP отключён.
 var upnp: UPNPManager
+## Ссылка на [Console]. Отсутствует, если консоль отключена.
+var console: Console
 ## Список открытых на данный момент экранов.
 var screens: Array[Control]
 ## Словарь загруженных пользовательских треков в формате "<имя файла> - <ресурс трека>".
@@ -145,8 +147,8 @@ func show_critical_error(info := "", log_error := "") -> void:
 		dialog.dialog_text += "\nИнформация: %s." % info
 	if not log_error.is_empty():
 		push_error(log_error)
-	dialog.canceled.connect(get_tree().quit)
-	dialog.confirmed.connect(get_tree().quit)
+	dialog.canceled.connect(Globals.quit)
+	dialog.confirmed.connect(Globals.quit)
 	dialog.transient = true
 	dialog.exclusive = true
 	dialog.process_mode = PROCESS_MODE_ALWAYS
@@ -399,7 +401,8 @@ func _start_load() -> void:
 	_loading_upnp()
 	await loading_stage_finished
 	
-	print_verbose("Loading completed. Game version: %s." % Globals.version)
+	print_verbose("Loading completed. Game version: %s" % Globals.version)
+	print_verbose("Use --list-args to see game specific arguments.")
 	_loading_open_menu()
 	await loading_stage_finished
 	$LoadingScreen.queue_free()
@@ -417,6 +420,12 @@ func _loading_init() -> void:
 	_load_progress_bar.value = 0.0
 	await get_tree().process_frame
 	
+	if "--list-args" in OS.get_cmdline_args():
+		print("--upnp: Enables UPnP regardless of current settings.")
+		print("--disable-update-check: Disables update check and hides settings related to it.")
+		print("--console: Enables built-in console.")
+		print("You always can use engine arguments, such as --headless and --verbose.")
+	
 	Globals.initialize(self)
 	if DisplayServer.get_name() == "headless":
 		print("Running in headless mode.")
@@ -432,6 +441,11 @@ func _loading_init() -> void:
 	apply_settings()
 	setup_controls_settings()
 	apply_controls_settings()
+	
+	if "--console" in OS.get_cmdline_args():
+		console = Console.new()
+		console.name = &"Console"
+		add_child(console)
 	
 	await get_tree().process_frame
 	print_verbose("Done initializing.")
@@ -603,7 +617,7 @@ func _loading_preload_resources() -> void:
 
 func _loading_upnp() -> void:
 	if not Globals.get_setting_bool("upnp") and not "--upnp" in OS.get_cmdline_args():
-		print_verbose('UPnP disabled. You can enable it with "--upnp" command line argument.')
+		print_verbose("UPnP disabled.")
 		loading_stage_finished.emit.call_deferred(false)
 		return
 	

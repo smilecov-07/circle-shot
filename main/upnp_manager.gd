@@ -32,17 +32,16 @@ func _ready() -> void:
 	add_child(timer)
 
 
-func _notification(what: int) -> void:
-	match what:
-		NOTIFICATION_WM_CLOSE_REQUEST:
-			if not WorkerThreadPool.is_task_completed(_task_id):
-				WorkerThreadPool.wait_for_task_completion(_task_id)
-			
-			if _forwarded_port > 0:
-				for device: UPNPDevice in _upnp_devices:
-					device.delete_port_mapping(_forwarded_port)
-				_forwarded_port = 0
-				print_verbose("UPnP: devices port %d forwarding deleted." % _forwarded_port)
+## Завершает UPnP.
+func finalize() -> void:
+	if not WorkerThreadPool.is_task_completed(_task_id):
+		WorkerThreadPool.wait_for_task_completion(_task_id)
+	
+	if _forwarded_port > 0:
+		for device: UPNPDevice in _upnp_devices:
+			device.delete_port_mapping(_forwarded_port)
+		_forwarded_port = 0
+		print_verbose("UPnP: devices port %d forwarding deleted." % _forwarded_port)
 
 
 ## Ищет устройства UPnP в локальной сети.

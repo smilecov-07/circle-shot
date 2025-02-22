@@ -96,6 +96,4 @@ func _on_update_dialog_confirmed() -> void:
 
 
 func _on_quit_pressed() -> void:
-	if Globals.main.upnp:
-		Globals.main.upnp.notification(NOTIFICATION_WM_CLOSE_REQUEST)
-	get_tree().quit()
+	Globals.quit()

@@ -16,8 +16,6 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wsgo3"]
 resource_local_to_scene = true
 shader = ExtResource("1_icbet")
-shader_parameter/glitch = 0.0
-shader_parameter/shift_glitch = 0.0
 shader_parameter/shift_glitch_texture = ExtResource("2_hw111")
 
 [sub_resource type="Animation" id="Animation_hqfjw"]

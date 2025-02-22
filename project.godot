@@ -17,6 +17,7 @@ run/main_scene="uid://b6r2eoge3orht"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="circle-shot"
 config/project_settings_override="user://engine_settings.cfg"
+config/auto_accept_quit=false
 config/quit_on_go_back=false
 config/features=PackedStringArray("4.4", "GL Compatibility")
 run/max_fps=60
