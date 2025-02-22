@@ -1,10 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://f0idrttogl6j"]
+[gd_scene load_steps=11 format=3 uid="uid://f0idrttogl6j"]
 
 [ext_resource type="Texture2D" uid="uid://co6yd10hdcpqe" path="res://game/skins/other/ruble/ruble.png" id="1_n815s"]
 [ext_resource type="Script" uid="uid://cq0kgeuna072k" path="res://game/skins/other/ruble/ruble.gd" id="2_2cxkh"]
 [ext_resource type="Texture2D" uid="uid://ctultwf070spd" path="res://game/skins/other/ruble/nonono.png" id="3_c4dhp"]
 [ext_resource type="PackedScene" uid="uid://di4mro4edml43" path="res://game/skins/other/ruble/down_hurt_vfx.tscn" id="3_dtmsv"]
-[ext_resource type="Script" uid="uid://nr21pnmv3b1n" path="res://game/player/equip/player_skin.gd" id="3_wdo1s"]
 [ext_resource type="PackedScene" uid="uid://c1qhrnuorldh0" path="res://game/skins/other/ruble/up_heal_vfx.tscn" id="4_0142f"]
 [ext_resource type="Texture2D" uid="uid://dahg8i0tk3jd3" path="res://game/skins/other/ruble/yesyesyes.png" id="4_dt7l5"]
 
@@ -101,7 +100,7 @@ texture = ExtResource("1_n815s")
 script = ExtResource("2_2cxkh")
 custom_hurt_vfx_scene = ExtResource("3_dtmsv")
 custom_heal_vfx_scene = ExtResource("4_0142f")
-metadata/_custom_type_script = ExtResource("3_wdo1s")
+metadata/_custom_type_script = "uid://nr21pnmv3b1n"
 
 [node name="Nonono" type="Sprite2D" parent="."]
 self_modulate = Color(1, 1, 1, 0)

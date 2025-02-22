@@ -9,7 +9,7 @@ offset_right = 200.0
 offset_bottom = 200.0
 pivot_offset = Vector2(100, 100)
 script = ExtResource("1_8x4dy")
-metadata/_custom_type_script = ExtResource("1_8x4dy")
+metadata/_custom_type_script = "uid://ct17mdmy2ddae"
 
 [node name="Base" type="TextureRect" parent="."]
 layout_mode = 1

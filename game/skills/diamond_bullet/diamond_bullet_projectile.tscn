@@ -32,7 +32,7 @@ target_position = Vector2(128, 0)
 max_results = 1
 collision_mask = 11
 script = ExtResource("2_6mcm8")
-metadata/_custom_type_script = ExtResource("2_6mcm8")
+metadata/_custom_type_script = "uid://dfhhd4es3t3i"
 
 [node name="Trail" type="Line2D" parent="." index="3"]
 position = Vector2(-32, 1)

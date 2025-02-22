@@ -199,7 +199,7 @@ autostart = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_ojm35")
+&"": SubResource("AnimationLibrary_ojm35")
 }
 autoplay = "Start"
 next/Start = &"Idle"

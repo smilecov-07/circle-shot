@@ -14,4 +14,4 @@ custom_hurt_vfx_scene = ExtResource("3_go1nj")
 custom_death_vfx_scene = ExtResource("2_fr12t")
 custom_heal_vfx_scene = ExtResource("5_bp77c")
 custom_blood_scene = ExtResource("4_osqjj")
-metadata/_custom_type_script = ExtResource("2_lsj16")
+metadata/_custom_type_script = "uid://nr21pnmv3b1n"

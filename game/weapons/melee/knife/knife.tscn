@@ -165,7 +165,7 @@ target_position = Vector2(96, 0)
 collision_mask = 11
 hit_from_inside = true
 script = ExtResource("4_2ry8l")
-metadata/_custom_type_script = ExtResource("4_2ry8l")
+metadata/_custom_type_script = "uid://bc7ffmlfu6nm7"
 
 [node name="AnimationPlayer" parent="." index="3"]
 libraries = {

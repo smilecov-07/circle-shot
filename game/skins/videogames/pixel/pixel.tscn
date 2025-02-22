@@ -1,7 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://bwh60wyedvw8h"]
+[gd_scene load_steps=9 format=3 uid="uid://bwh60wyedvw8h"]
 
 [ext_resource type="Texture2D" uid="uid://nfu2fikexo2b" path="res://game/skins/videogames/pixel/pixel.png" id="1_ur117"]
-[ext_resource type="Script" uid="uid://nr21pnmv3b1n" path="res://game/player/equip/player_skin.gd" id="1_y1k37"]
 [ext_resource type="Script" uid="uid://d3xaj26s8u422" path="res://game/skins/videogames/pixel/pixel.gd" id="2_aofr8"]
 [ext_resource type="Texture2D" uid="uid://oqwmuemdjsqu" path="res://game/skins/videogames/pixel/pixel_angry.png" id="3_pbavg"]
 [ext_resource type="PackedScene" uid="uid://duo2qoo3obbl0" path="res://game/skins/videogames/pixel/soul/soul_death_vfx.tscn" id="3_vtscn"]
@@ -64,7 +63,7 @@ texture_filter = 1
 texture = ExtResource("1_ur117")
 script = ExtResource("2_aofr8")
 custom_death_vfx_scene = ExtResource("3_vtscn")
-metadata/_custom_type_script = ExtResource("1_y1k37")
+metadata/_custom_type_script = "uid://nr21pnmv3b1n"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

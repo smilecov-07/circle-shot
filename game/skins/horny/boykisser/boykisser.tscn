@@ -6,4 +6,4 @@
 [node name="Boykisser" type="Sprite2D"]
 texture = ExtResource("1_rq5vm")
 script = ExtResource("1_nblu6")
-metadata/_custom_type_script = ExtResource("1_nblu6")
+metadata/_custom_type_script = "uid://nr21pnmv3b1n"

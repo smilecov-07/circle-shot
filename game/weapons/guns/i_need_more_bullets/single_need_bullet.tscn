@@ -21,6 +21,6 @@ target_position = Vector2(128, 0)
 collision_mask = 11
 hit_from_inside = true
 script = ExtResource("4_vlijj")
-metadata/_custom_type_script = ExtResource("4_vlijj")
+metadata/_custom_type_script = "uid://bc7ffmlfu6nm7"
 
 [connection signal="hit" from="RayDetector" to="." method="_on_detector_hit"]

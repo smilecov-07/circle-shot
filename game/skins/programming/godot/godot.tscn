@@ -12,4 +12,4 @@ script = ExtResource("2_c2a2l")
 custom_hurt_vfx_scene = ExtResource("3_qucak")
 custom_death_vfx_scene = ExtResource("4_nfy5b")
 custom_heal_vfx_scene = ExtResource("4_scuwd")
-metadata/_custom_type_script = ExtResource("2_c2a2l")
+metadata/_custom_type_script = "uid://nr21pnmv3b1n"

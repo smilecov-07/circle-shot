@@ -247,7 +247,7 @@ target_position = Vector2(40, 120)
 max_results = 1
 collision_mask = 11
 script = ExtResource("3_22au4")
-metadata/_custom_type_script = ExtResource("3_22au4")
+metadata/_custom_type_script = "uid://dfhhd4es3t3i"
 
 [node name="ShapeDetector2" type="ShapeCast2D" parent="Attack" index="1"]
 position = Vector2(144, 120)
@@ -257,7 +257,7 @@ target_position = Vector2(40, -120)
 max_results = 1
 collision_mask = 11
 script = ExtResource("3_22au4")
-metadata/_custom_type_script = ExtResource("3_22au4")
+metadata/_custom_type_script = "uid://dfhhd4es3t3i"
 
 [node name="AnimationPlayer" parent="." index="4"]
 libraries = {

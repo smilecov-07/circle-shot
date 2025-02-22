@@ -10,4 +10,4 @@ texture = ExtResource("1_bwwa0")
 script = ExtResource("2_oeuuy")
 custom_hurt_vfx_scene = ExtResource("3_4padw")
 custom_death_vfx_scene = ExtResource("4_10bfp")
-metadata/_custom_type_script = ExtResource("2_oeuuy")
+metadata/_custom_type_script = "uid://nr21pnmv3b1n"

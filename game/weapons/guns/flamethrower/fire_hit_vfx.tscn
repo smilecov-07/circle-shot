@@ -15,12 +15,11 @@ point_count = 2
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 z_index = 1
-emitting = false
 amount = 4
+texture = ExtResource("1_pupgo")
 lifetime = 0.5
 one_shot = true
 explosiveness = 1.0
-texture = ExtResource("1_pupgo")
 direction = Vector2(0, 0)
 spread = 180.0
 gravity = Vector2(0, 0)

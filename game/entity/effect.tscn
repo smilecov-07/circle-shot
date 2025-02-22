@@ -4,7 +4,7 @@
 
 [node name="Effect" type="Node2D"]
 script = ExtResource("1_hdjbs")
-metadata/_custom_type_script = ExtResource("1_hdjbs")
+metadata/_custom_type_script = "uid://blv7lwwhohl5r"
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true

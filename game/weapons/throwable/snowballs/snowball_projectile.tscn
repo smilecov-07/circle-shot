@@ -71,6 +71,6 @@ target_position = Vector2(80, 0)
 max_results = 1
 collision_mask = 11
 script = ExtResource("3_ya4yh")
-metadata/_custom_type_script = ExtResource("3_ya4yh")
+metadata/_custom_type_script = "uid://dfhhd4es3t3i"
 
 [connection signal="hit" from="ShapeDetector" to="." method="_on_detector_hit"]

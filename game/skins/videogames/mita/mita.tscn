@@ -6,4 +6,4 @@
 [node name="Mita" type="Sprite2D"]
 texture = ExtResource("1_bvsjt")
 script = ExtResource("1_nbedm")
-metadata/_custom_type_script = ExtResource("1_nbedm")
+metadata/_custom_type_script = "uid://nr21pnmv3b1n"

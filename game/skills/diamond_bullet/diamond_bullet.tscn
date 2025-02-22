@@ -1,6 +1,5 @@
-[gd_scene load_steps=8 format=3 uid="uid://dwy62fpecrhen"]
+[gd_scene load_steps=7 format=3 uid="uid://dwy62fpecrhen"]
 
-[ext_resource type="Script" uid="uid://c7xh6wcxwv4d4" path="res://game/player/equip/skill.gd" id="1_0yicg"]
 [ext_resource type="Script" uid="uid://fh0cnw0xa7iy" path="res://game/skills/diamond_bullet/diamond_bullet.gd" id="1_vjdej"]
 [ext_resource type="PackedScene" uid="uid://cwbyj0wl0k3ab" path="res://game/skills/diamond_bullet/diamond_bullet_projectile.tscn" id="2_i4kng"]
 [ext_resource type="Texture2D" uid="uid://bclxn23pu2df8" path="res://game/skills/diamond_bullet/bullet.png" id="4_i4kng"]
@@ -73,7 +72,7 @@ projectile_scene = ExtResource("2_i4kng")
 spread_walk = 4.0
 use_times = 5
 use_cooldown = 15
-metadata/_custom_type_script = ExtResource("1_0yicg")
+metadata/_custom_type_script = "uid://c7xh6wcxwv4d4"
 
 [node name="ActiveMarker" type="Sprite2D" parent="."]
 visible = false

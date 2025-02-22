@@ -7,4 +7,4 @@
 texture = ExtResource("1_jjg48")
 offset = Vector2(4, -4)
 script = ExtResource("1_us8v6")
-metadata/_custom_type_script = ExtResource("1_us8v6")
+metadata/_custom_type_script = "uid://nr21pnmv3b1n"

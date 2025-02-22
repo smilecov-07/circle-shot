@@ -581,7 +581,7 @@ layout_mode = 2
 focus_mode = 2
 script = ExtResource("3_amd3n")
 chat_button_path = NodePath("../Lobby/VBoxContainer/ControlButtons/Chat")
-metadata/_custom_type_script = ExtResource("3_amd3n")
+metadata/_custom_type_script = "uid://c5wn8p7yq48wc"
 metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panels/Chat"]
@@ -651,7 +651,7 @@ unique_name_in_owner = true
 layout_mode = 2
 columns = 3
 script = ExtResource("11_ncktp")
-metadata/_custom_type_script = ExtResource("11_ncktp")
+metadata/_custom_type_script = "uid://cq43botg0qg0m"
 
 [node name="ViewIPDialog" type="AcceptDialog" parent="."]
 title = "Твои IP-адреса"

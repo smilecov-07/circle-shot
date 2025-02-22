@@ -18,7 +18,7 @@ properties/3/replication_mode = 0
 
 [node name="Projectile" type="Node2D"]
 script = ExtResource("1_iq3wl")
-metadata/_custom_type_script = ExtResource("1_iq3wl")
+metadata/_custom_type_script = "uid://b87glapu60urx"
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 2.5

@@ -164,6 +164,8 @@ _data = {
 [node name="Console" type="Sprite2D" parent="."]
 z_index = -2
 material = SubResource("ShaderMaterial_yb8wo")
+instance_shader_parameters/glitch = 0.0
+instance_shader_parameters/shift_glitch = 0.0
 texture = ExtResource("3_fmk61")
 
 [node name="Particles" type="CPUParticles2D" parent="."]

@@ -99,13 +99,13 @@ _data = {
 
 [node name="Game" type="Node"]
 script = ExtResource("1_j8au2")
-metadata/_custom_type_script = ExtResource("1_j8au2")
+metadata/_custom_type_script = "uid://iq1642q07wum"
 
 [node name="Loader" type="CanvasLayer" parent="."]
 layer = 5
 visible = false
 script = ExtResource("2_p5b8s")
-metadata/_custom_type_script = ExtResource("2_p5b8s")
+metadata/_custom_type_script = "uid://cv3kjc76k7c58"
 
 [node name="Screen" type="Control" parent="Loader"]
 modulate = Color(1, 1, 1, 0)

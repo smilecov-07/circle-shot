@@ -17,9 +17,9 @@ metadata/_snap_count = 40
 [node name="NumbersBlood" type="CPUParticles2D"]
 material = SubResource("CanvasItemMaterial_0ip4g")
 position = Vector2(0, -32)
+texture = ExtResource("1_8gxxn")
 lifetime = 2.0
 draw_order = 1
-texture = ExtResource("1_8gxxn")
 emission_shape = 1
 emission_sphere_radius = 64.0
 gravity = Vector2(0, 98)

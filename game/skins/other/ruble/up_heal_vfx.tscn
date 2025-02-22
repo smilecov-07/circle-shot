@@ -11,11 +11,10 @@ colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
 [node name="Particles" type="CPUParticles2D" parent="."]
 z_index = 1
 position = Vector2(0, 8)
-emitting = false
+texture = ExtResource("1_vaynw")
 lifetime = 0.7
 one_shot = true
 explosiveness = 1.0
-texture = ExtResource("1_vaynw")
 emission_shape = 1
 emission_sphere_radius = 80.0
 direction = Vector2(0, -1)
