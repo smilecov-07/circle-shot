@@ -11,15 +11,13 @@ const BUFFER_SIZE: int = 16384
 var command_processors: Array[Callable]
 ## Список функций, которые выполняет этот класс, когда пользователем была введена команда "help".
 var help_processors: Array[Callable]
-## Поток, с которым идёт работа вручную (требуется для исправления багов на Windows)
-var command_thread: Thread
 
 
 func _ready() -> void:
-	command_thread = Thread.new()
-	command_thread.start(_command_thread_func)
+	WorkerThreadPool.add_task(_command_thread, true)
 
-func _command_thread_func() -> void:
+
+func _command_thread() -> void:
 	while true:
 		var command: String = OS.read_string_from_stdin(BUFFER_SIZE)
 		if not command.is_empty():
