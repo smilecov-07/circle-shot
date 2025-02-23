@@ -32,11 +32,14 @@ func _find_ips() -> void:
 	for ip: String in ip_addresses:
 		if ip in HIDE_IPS:
 			continue
+		var preffered := false
 		for prefix: String in Game.LOCAL_IP_PREFIXES:
 			if ip.begins_with(prefix):
 				_preffered_ips.append(ip)
+				preffered = true
 				break
-		_other_ips.append(ip)
+		if not preffered:
+			_other_ips.append(ip)
 	
 	dialog_text = ""
 	if not _preffered_ips.is_empty():

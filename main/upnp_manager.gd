@@ -40,8 +40,8 @@ func finalize() -> void:
 	if _forwarded_port > 0:
 		for device: UPNPDevice in _upnp_devices:
 			device.delete_port_mapping(_forwarded_port)
-		_forwarded_port = 0
 		print_verbose("UPnP: devices port %d forwarding deleted." % _forwarded_port)
+		_forwarded_port = 0
 
 
 ## Ищет устройства UPnP в локальной сети.
