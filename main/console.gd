@@ -14,20 +14,18 @@ var help_processors: Array[Callable]
 
 
 func _ready() -> void:
-	WorkerThreadPool.add_task(_command_thread)
+	WorkerThreadPool.add_task(_command_thread, true)
 
 
 func _command_thread() -> void:
 	while true:
 		var command: String = OS.read_string_from_stdin(BUFFER_SIZE)
-		_process_command.call_deferred(command)
+		if not command.is_empty():
+			_process_command.call_deferred(command)
+		OS.delay_msec(100)
 
 
 func _process_command(command_str: String) -> void:
-	if command_str.is_empty():
-		push_error("Empty command.")
-		return
-	
 	var command: PackedStringArray = command_str.split(' ')
 	if command[0] == "help" and command.size() == 1:
 		print("Help")

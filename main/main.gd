@@ -421,10 +421,14 @@ func _loading_init() -> void:
 	await get_tree().process_frame
 	
 	if "--list-args" in OS.get_cmdline_args():
+		print("Game specific arguments:")
 		print("--upnp: Enables UPnP regardless of current settings.")
 		print("--disable-update-check: Disables update check and hides settings related to it.")
 		print("--console: Enables built-in console.")
 		print("You always can use engine arguments, such as --headless and --verbose.")
+		if OS.get_name() == "Windows":
+			print("Note: to use --console on Windows, you must launch game from *.console.exe \
+file, otherwise it will NOT function.")
 	
 	Globals.initialize(self)
 	if DisplayServer.get_name() == "headless":
@@ -443,9 +447,13 @@ func _loading_init() -> void:
 	apply_controls_settings()
 	
 	if "--console" in OS.get_cmdline_args():
-		console = Console.new()
-		console.name = &"Console"
-		add_child(console)
+		if not OS.has_feature("pc"):
+			push_error("Console is only supported on PC platforms.")
+		else:
+			print_verbose("Starting console.")
+			console = Console.new()
+			console.name = &"Console"
+			add_child(console)
 	
 	await get_tree().process_frame
 	print_verbose("Done initializing.")
