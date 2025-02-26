@@ -127,7 +127,7 @@ func _register_new_player(player_name: String) -> void:
 		push_warning("Player %d is already registered.")
 		return
 	
-	if _client_timers.has(sender_id):
+	if sender_id in _client_timers:
 		_client_timers[sender_id].queue_free()
 		_client_timers.erase(sender_id)
 	for id: int in _players:
@@ -370,7 +370,7 @@ func _start_event(event_id: int, map_id: int) -> void:
 		for id: int in multiplayer.get_peers():
 			if not id in _players.keys():
 				(multiplayer as SceneMultiplayer).disconnect_peer(id)
-				if _client_timers.has(id):
+				if id in _client_timers:
 					_client_timers[id].queue_free()
 					_client_timers.erase(id)
 				push_warning("Start event: peer %d kicked as not registered." % id)
@@ -533,7 +533,7 @@ func _do_broadcast() -> void:
 
 
 func _process_console_command(command: PackedStringArray) -> bool:
-	if not visible:
+	if _game.state != Game.State.LOBBY:
 		return false
 	var recognized := false
 	if command[0] == "list-players" and command.size() == 1:
@@ -611,9 +611,13 @@ func _process_console_command(command: PackedStringArray) -> bool:
 
 
 func _print_help() -> void:
-	if not visible:
+	# Помошь по post здесь, потому что в Chat она будет дублироваться
+	if _game.state != Game.State.LOBBY:
+		if _game.state == Game.State.EVENT:
+			print("post <message> - Posts message in chat.")
 		return
-	print("list-players - list all connected players. Works only on server.")
+	print("post <message> - Posts message in chat.")
+	print("list-players - List all connected players. Works only on server.")
 	print("These commands only available if you are admin:")
 	print("set-environment <event-id> [map-id] - Sets event and map to specified values.")
 	print("start - Starts event.")

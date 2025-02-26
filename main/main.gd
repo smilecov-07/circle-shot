@@ -425,6 +425,7 @@ func _loading_init() -> void:
 		print("--upnp: Enables UPnP regardless of current settings.")
 		print("--disable-update-check: Disables update check and hides settings related to it.")
 		print("--console: Enables built-in console.")
+		print("--reset-window: Don't restore saved window state.")
 		print("You always can use engine arguments, such as --headless and --verbose.")
 		if OS.get_name() == "Windows":
 			print("Note: to use --console on Windows, you must launch game from *.console.exe \
@@ -438,6 +439,12 @@ file, otherwise it will NOT function.")
 	
 	_update_window_stretch_aspect()
 	get_window().size_changed.connect(_update_window_stretch_aspect)
+	if not "--reset-window" in OS.get_cmdline_args():
+		get_window().size.x = Globals.get_int("window_size_x", get_window().size.x)
+		get_window().size.y = Globals.get_int("window_size_y", get_window().size.y)
+		get_window().position.x = Globals.get_int("window_pos_x", get_window().position.x)
+		get_window().position.y = Globals.get_int("window_pos_y", get_window().position.y)
+	
 	multiplayer.multiplayer_peer = null # Чтобы убрать OfflineMultiplayerPeer
 	get_viewport().set_canvas_cull_mask_bit(1, false)
 	

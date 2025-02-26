@@ -53,6 +53,8 @@ func kill_player(which: int, killer: int = -1) -> void:
 	for idx: int in _alive_players.size():
 		if _alive_players[idx].id == killer:
 			_set_player_to_spectate(idx)
+			return
+	_set_player_to_spectate(randi() % _alive_players.size())
 
 
 func show_defeat() -> void:

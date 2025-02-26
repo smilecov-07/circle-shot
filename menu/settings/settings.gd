@@ -263,9 +263,9 @@ func _on_custom_tracks_check_toggled(toggled_on: bool) -> void:
 	if toggled_on and OS.has_feature("android"):
 		var perms: PackedStringArray = OS.get_granted_permissions()
 		if not (
-				perms.has("android.permission.READ_MEDIA_AUDIO") 
-				or perms.has("android.permission.READ_EXTERNAL_STORAGE")
-				or perms.has("android.permission.WRITE_EXTERNAL_STORAGE")
+				"android.permission.READ_MEDIA_AUDIO" in perms
+				or "android.permission.READ_EXTERNAL_STORAGE" in perms
+				or "android.permission.WRITE_EXTERNAL_STORAGE" in perms
 		):
 			(%CustomTracksCheck as BaseButton).set_pressed_no_signal(false)
 			get_tree().on_request_permissions_result.connect(_on_request_permissions_result,

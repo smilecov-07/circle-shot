@@ -56,6 +56,10 @@ func initialize(main_node: Main) -> void:
 ## указанными в [param args].
 func quit(restart := false, args: PackedStringArray = OS.get_cmdline_args()) -> void:
 	if save_file:
+		set_int("window_size_x", get_window().size.x)
+		set_int("window_size_y", get_window().size.y)
+		set_int("window_pos_x", get_window().position.x)
+		set_int("window_pos_y", get_window().position.y)
 		save_file.save_encrypted_pass(SAVE_FILE_PATH, SAVE_FILE_PASSWORD)
 	if main.upnp:
 		main.upnp.finalize()

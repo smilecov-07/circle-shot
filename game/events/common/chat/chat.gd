@@ -21,6 +21,16 @@ var players_teams: Dictionary[int, int]
 @onready var _chat_edit: LineEdit = $VBoxContainer/HBoxContainer/LineEdit
 
 
+func _ready() -> void:
+	if Globals.main.console:
+		Globals.main.console.command_processors.append(_process_command)
+
+
+func _exit_tree() -> void:
+	if Globals.main.console:
+		Globals.main.console.command_processors.erase(_process_command)
+
+
 ## Постит сообщение. Должно вызываться только сервером.
 @rpc("call_local", "authority", "reliable", 2)
 func post_message(message: String) -> void:
@@ -60,7 +70,7 @@ func _request_post_message(message: String) -> void:
 		return
 	
 	var sender_id: int = multiplayer.get_remote_sender_id()
-	if not players_names.has(sender_id):
+	if not sender_id in players_names:
 		push_warning("Received post message request from unknown peer (%d)." % sender_id)
 		return
 	
@@ -74,7 +84,7 @@ func _request_post_message(message: String) -> void:
 			MAX_MESSAGE_LENGTH,
 		])
 		message = message.left(MAX_MESSAGE_LENGTH)
-	if players_teams.has(sender_id):
+	if sender_id in players_teams:
 		message = "[color=#%s]%s[/color]: %s" % [
 			Entity.TEAM_COLORS[players_teams[sender_id]].to_html(false),
 			players_names[sender_id],
@@ -83,6 +93,19 @@ func _request_post_message(message: String) -> void:
 	else:
 		message = "[color=red]%s[/color]: %s" % [players_names[sender_id], message]
 	post_message.rpc(message)
+
+
+func _process_command(command: PackedStringArray) -> bool:
+	if not Globals.main.game.state in [Game.State.EVENT, Game.State.LOBBY]:
+		return false
+	if command[0] == "post" and command.size() > 1:
+		if multiplayer.is_server() and Globals.headless:
+			players_names[1] = Globals.get_string("player_name", "Local Server")
+		_request_post_message.rpc_id(MultiplayerPeer.TARGET_PEER_SERVER, ' '.join(command.slice(1)))
+		if multiplayer.is_server() and Globals.headless:
+			players_names.erase(1)
+		return true
+	return false
 
 
 func _on_chat_toggled(toggled_on: bool) -> void:
