@@ -250,8 +250,7 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
 text = "Скины эмоджи взяты с https://openmoji.org/.
-Михаил, привет.
-Удали снайперку."
+Косинус на синус, твоё лицо 1/2(sin(a+b) + sin(a-b))."
 autowrap_mode = 2
 
 [node name="Close" type="Button" parent="About/MarginContainer/VBoxContainer"]

@@ -1,9 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://dh3n3un5i122b"]
+[gd_scene load_steps=11 format=3 uid="uid://dh3n3un5i122b"]
 
 [ext_resource type="Texture2D" uid="uid://bo7tmcmbiwygj" path="res://game/skins/videogames/niko/niko.png" id="1_g7mfa"]
 [ext_resource type="Script" uid="uid://bp7lio17iay5f" path="res://game/skins/videogames/niko/niko.gd" id="2_6vdpt"]
 [ext_resource type="PackedScene" uid="uid://doywwitijchhc" path="res://game/skins/videogames/niko/sun_death_vfx.tscn" id="3_6gprp"]
 [ext_resource type="Texture2D" uid="uid://jqw3qarywcu8" path="res://game/skins/videogames/niko/niko_smile.png" id="4_6gprp"]
+[ext_resource type="Shader" uid="uid://c4ippucktvdbl" path="res://game/skins/videogames/niko/scarf.gdshader" id="5_66ovx"]
+[ext_resource type="Texture2D" uid="uid://bvhmrbn0eyjlt" path="res://game/skins/videogames/niko/scarf.png" id="6_ohq70"]
 
 [sub_resource type="Animation" id="Animation_66ovx"]
 resource_name = "Heal"
@@ -42,10 +44,16 @@ _data = {
 &"RESET": SubResource("Animation_ohq70")
 }
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7kvrj"]
+shader = ExtResource("5_66ovx")
+shader_parameter/time_multiplier = 3.142
+shader_parameter/stretch = 7.5
+
 [node name="Niko" type="Sprite2D"]
 texture_filter = 1
 texture = ExtResource("1_g7mfa")
 script = ExtResource("2_6vdpt")
+reach_angle_speed = 3.0
 custom_death_vfx_scene = ExtResource("3_6gprp")
 metadata/_custom_type_script = "uid://nr21pnmv3b1n"
 
@@ -53,3 +61,26 @@ metadata/_custom_type_script = "uid://nr21pnmv3b1n"
 libraries = {
 &"": SubResource("AnimationLibrary_7kvrj")
 }
+
+[node name="Scarfes" type="Node2D" parent="."]
+show_behind_parent = true
+position = Vector2(0, 48)
+
+[node name="Scarf1" type="Sprite2D" parent="Scarfes"]
+material = SubResource("ShaderMaterial_7kvrj")
+instance_shader_parameters/time_offset = 6.282
+instance_shader_parameters/tint = 0.85
+rotation = 0.104553
+texture = ExtResource("6_ohq70")
+offset = Vector2(-96, 0)
+region_enabled = true
+region_rect = Rect2(0, -16, 192, 80)
+
+[node name="Scarf2" type="Sprite2D" parent="Scarfes"]
+material = SubResource("ShaderMaterial_7kvrj")
+instance_shader_parameters/tint = 1.0
+rotation = -0.10472
+texture = ExtResource("6_ohq70")
+offset = Vector2(-96, 0)
+region_enabled = true
+region_rect = Rect2(0, -16, 192, 80)
