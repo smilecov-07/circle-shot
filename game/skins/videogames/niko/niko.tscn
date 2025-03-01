@@ -67,9 +67,9 @@ show_behind_parent = true
 position = Vector2(0, 48)
 
 [node name="Scarf1" type="Sprite2D" parent="Scarfes"]
+self_modulate = Color(0.85098, 0.85098, 0.85098, 1)
 material = SubResource("ShaderMaterial_7kvrj")
 instance_shader_parameters/time_offset = 6.282
-instance_shader_parameters/tint = 0.85
 rotation = 0.104553
 texture = ExtResource("6_ohq70")
 offset = Vector2(-96, 0)
@@ -78,7 +78,6 @@ region_rect = Rect2(0, -16, 192, 80)
 
 [node name="Scarf2" type="Sprite2D" parent="Scarfes"]
 material = SubResource("ShaderMaterial_7kvrj")
-instance_shader_parameters/tint = 1.0
 rotation = -0.10472
 texture = ExtResource("6_ohq70")
 offset = Vector2(-96, 0)

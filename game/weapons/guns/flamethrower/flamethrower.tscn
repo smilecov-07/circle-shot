@@ -12,8 +12,12 @@ _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(5, 10), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_tngnv"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0]
+point_count = 1
 
 [sub_resource type="Curve" id="Curve_m6ywg"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0]
+point_count = 1
 
 [sub_resource type="Animation" id="Animation_m6ywg"]
 resource_name = "Equip"

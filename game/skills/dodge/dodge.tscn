@@ -6,6 +6,7 @@
 script = ExtResource("1_366lt")
 roll_speed = 1100.0
 roll_duration = 0.4
+additional_invincibility = 0.08
 use_times = 15
 use_cooldown = 2
 metadata/_custom_type_script = "uid://c7xh6wcxwv4d4"

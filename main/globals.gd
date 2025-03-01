@@ -54,7 +54,7 @@ func initialize(main_node: Main) -> void:
 
 ## Выходит из игры. Если [param restart] равен [code]true[/code], перезапускает игру с аргументами,
 ## указанными в [param args].
-func quit(restart := false, args: PackedStringArray = OS.get_cmdline_args()) -> void:
+func quit(restart := false, args := PackedStringArray()) -> void:
 	if save_file:
 		set_int("window_size_x", get_window().size.x)
 		set_int("window_size_y", get_window().size.y)
@@ -64,6 +64,10 @@ func quit(restart := false, args: PackedStringArray = OS.get_cmdline_args()) -> 
 	if main.upnp:
 		main.upnp.finalize()
 	
+	if args.is_empty() and restart:
+		args = OS.get_cmdline_args()
+		args.append("--")
+		args.append_array(OS.get_cmdline_args())
 	if Globals.main.console:
 		if restart:
 			OS.create_instance(args)

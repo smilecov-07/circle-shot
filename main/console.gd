@@ -33,7 +33,8 @@ func _process_command(command_str: String) -> void:
 Players are specified by starting letters of their names (case-sensitive).")
 		print("Always available commands:")
 		print("quit - Quits game.")
-		print("restart [args] - Restarts game with given args. --console is always passed.")
+		print("restart [args] - Restarts game with given args.")
+		print("Note: restarting with --console may not work as expected.")
 		print("Current available commands:")
 		for callable: Callable in help_processors:
 			callable.call()
@@ -41,13 +42,11 @@ Players are specified by starting letters of their names (case-sensitive).")
 		Globals.quit()
 	elif command[0] == "restart":
 		var args: PackedStringArray = command.slice(1)
-		args.append("--console")
 		Globals.quit(true, args)
 	else:
 		var recognized := false
 		for callable: Callable in command_processors:
 			recognized = callable.call(command) or recognized
-			if recognized:
-				break
+		
 		if not recognized:
 			push_error('Command "%s" not recognized. Use "help" to see available.' % command_str)

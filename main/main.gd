@@ -493,7 +493,7 @@ func _loading_download_data() -> void:
 	await get_tree().process_frame
 	
 	var http := HTTPRequest.new()
-	http.timeout = 20.0
+	http.timeout = 8.0
 	http.request_completed.connect(_on_data_http_request_completed.bind(http))
 	add_child(http)
 	_download_http = http
