@@ -27,10 +27,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_jwkxy")
-help_messages = Array[String](["Включает отображение нанесенного и полученного урона (а также лечения) в виде отлетающих от персонажей чисел.", "Включает шейдерный кэш, призванный убрать просадки кадров при компиляции шейдеров. Рекомендуется отключить на телефонах, если вы испытываете падения игры.
+help_messages = Array[String](["", "Включает шейдерный кэш, призванный убрать просадки кадров при компиляции шейдеров. Рекомендуется отключить на телефонах, если вы испытываете падения игры.
 Изменения будут применены после перезапуска игры.", "Включает вибрацию при получении и нанесении урона.", "Очищает шейдерный кэш.
-После применения игра будет перезапущена.", "Предзагрузка ресурсов обеспечивает более реактивные переходы между сценами, однако делает загрузку игры дольше и увеличивает расход памяти. Стоит выключить, если требуется сильно экономить оперативную память.
-Изменения будут применены после перезапуска игры.", "Настраивает направление переката.
+После применения игра будет перезапущена.", "", "Настраивает направление переката.
 Движение - перекат будет выполняться в сторону (последнего) движения.
 Прицел - перекат будет выполняться в сторону прицела.", "Настраивает тип управления.
 Касания - управления джойстиками и кнопками на экране. Предназначено для управления на телефонах.
@@ -174,76 +173,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 0
 alignment = 1
 
-[node name="PreloadResources" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/PreloadResources"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 1
-theme_type_variation = &"HeaderSmall"
-text = "Предзагружать ресурсы"
-vertical_alignment = 1
-
-[node name="Setting" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/PreloadResources"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="PreloadCheck" type="CheckButton" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/PreloadResources/Setting"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 2
-
-[node name="Help" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/PreloadResources/Setting"]
-custom_minimum_size = Vector2(48, 0)
-layout_mode = 2
-icon = ExtResource("1_xh6xh")
-expand_icon = true
-
-[node name="UPNP" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/UPNP"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 1
-theme_type_variation = &"HeaderSmall"
-text = "Открытие портов через UPnP"
-vertical_alignment = 1
-
-[node name="Setting" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/UPNP"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="UPNPCheck" type="CheckButton" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/UPNP/Setting"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 2
-
-[node name="Help" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/UPNP/Setting"]
-custom_minimum_size = Vector2(48, 0)
-layout_mode = 2
-icon = ExtResource("1_xh6xh")
-expand_icon = true
-
-[node name="UPNPStatus" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General"]
-layout_mode = 2
-alignment = 1
-
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/UPNPStatus"]
-custom_minimum_size = Vector2(0, 1)
-layout_mode = 2
-theme_type_variation = &"HeaderSmall"
-text = "Статус UPnP:"
-vertical_alignment = 1
-
-[node name="UPNPStatus" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/UPNPStatus"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 1)
-layout_mode = 2
-theme_type_variation = &"HeaderSmall"
-vertical_alignment = 1
-
 [node name="CheckUpdates" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General"]
 layout_mode = 2
 
@@ -298,9 +227,49 @@ layout_mode = 2
 icon = ExtResource("1_xh6xh")
 expand_icon = true
 
-[node name="Restart" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General"]
+[node name="UPNP" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/UPNP"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_type_variation = &"HeaderSmall"
+text = "Открытие портов через UPnP"
+vertical_alignment = 1
+
+[node name="Setting" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/UPNP"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="UPNPCheck" type="CheckButton" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/UPNP/Setting"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="Help" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/UPNP/Setting"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+icon = ExtResource("1_xh6xh")
+expand_icon = true
+
+[node name="UPNPStatus" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General"]
 layout_mode = 2
 alignment = 1
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/UPNPStatus"]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+theme_type_variation = &"HeaderSmall"
+text = "Статус UPnP:"
+vertical_alignment = 1
+
+[node name="UPNPStatus" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/UPNPStatus"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+theme_type_variation = &"HeaderSmall"
+vertical_alignment = 1
 
 [node name="Actions" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General"]
 layout_mode = 2
@@ -347,6 +316,7 @@ text = "Удалить все данные"
 icon = ExtResource("12_g4yas")
 
 [node name="Game" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -403,32 +373,6 @@ layout_mode = 2
 icon = ExtResource("1_xh6xh")
 expand_icon = true
 
-[node name="ShowDamage" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/ShowDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 1
-theme_type_variation = &"HeaderSmall"
-text = "Отображать урон"
-vertical_alignment = 1
-
-[node name="Setting" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/ShowDamage"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="ShowDamageCheck" type="CheckButton" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/ShowDamage/Setting"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 2
-
-[node name="Help" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/ShowDamage/Setting"]
-custom_minimum_size = Vector2(48, 0)
-layout_mode = 2
-icon = ExtResource("1_xh6xh")
-expand_icon = true
-
 [node name="ChatInGame" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game"]
 layout_mode = 2
 
@@ -450,33 +394,6 @@ layout_mode = 2
 size_flags_horizontal = 2
 
 [node name="Help" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/ChatInGame/Setting"]
-visible = false
-custom_minimum_size = Vector2(48, 0)
-layout_mode = 2
-icon = ExtResource("1_xh6xh")
-expand_icon = true
-
-[node name="SmoothCamera" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/SmoothCamera"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 1
-theme_type_variation = &"HeaderSmall"
-text = "Плавная камера"
-vertical_alignment = 1
-
-[node name="Setting" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/SmoothCamera"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="SmoothCameraCheck" type="CheckButton" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/SmoothCamera/Setting"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 2
-
-[node name="Help" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/SmoothCamera/Setting"]
 visible = false
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 2
@@ -542,7 +459,6 @@ icon = ExtResource("1_xh6xh")
 expand_icon = true
 
 [node name="Video" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -1056,14 +972,12 @@ visible = false
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/Sections/Video" to="." method="show_section" binds= ["Video"]]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/Sections/Sound" to="." method="show_section" binds= ["Sound"]]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/Sections/Controls" to="." method="show_section" binds= ["Controls"]]
-[connection signal="toggled" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/PreloadResources/Setting/PreloadCheck" to="." method="_on_preload_check_toggled"]
-[connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/PreloadResources/Setting/Help" to="." method="show_help" binds= [4]]
-[connection signal="toggled" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/UPNP/Setting/UPNPCheck" to="." method="_on_upnp_check_toggled"]
-[connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/UPNP/Setting/Help" to="." method="show_help" binds= [10]]
 [connection signal="toggled" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/CheckUpdates/Setting/UpdatesCheck" to="." method="_on_updates_check_toggled"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/CheckUpdates/Setting/Help" to="." method="show_help" binds= [4]]
 [connection signal="toggled" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/CheckBetas/Setting/BetasCheck" to="." method="_on_betas_check_toggled"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/CheckBetas/Setting/Help" to="." method="show_help" binds= [4]]
+[connection signal="toggled" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/UPNP/Setting/UPNPCheck" to="." method="_on_upnp_check_toggled"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/UPNP/Setting/Help" to="." method="show_help" binds= [10]]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/Actions/RestartGame" to="." method="restart_game"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/Actions/ChangeName" to="." method="_on_change_name_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/Actions/ResetControlSettings" to="ResetControlsDialog" method="popup_centered"]
@@ -1072,10 +986,7 @@ visible = false
 [connection signal="toggled" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/ShowMinimap/Setting/ShowMinimapCheck" to="." method="_on_show_minimap_check_toggled"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/ShowMinimap/Setting/Help" to="." method="show_help" binds= [13]]
 [connection signal="toggled" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/ShowDebug/Setting/ShowDebugCheck" to="." method="_on_show_debug_check_toggled"]
-[connection signal="toggled" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/ShowDamage/Setting/ShowDamageCheck" to="." method="_on_show_damage_check_toggled"]
-[connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/ShowDamage/Setting/Help" to="." method="show_help" binds= [0]]
 [connection signal="toggled" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/ChatInGame/Setting/ChatInGameCheck" to="." method="_on_chat_in_game_check_toggled"]
-[connection signal="toggled" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/SmoothCamera/Setting/SmoothCameraCheck" to="." method="_on_smooth_camera_check_toggled"]
 [connection signal="toggled" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/Vibration/Setting/VibrationCheck" to="." method="_on_vibration_check_toggled"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/Vibration/Setting/Help" to="." method="show_help" binds= [2]]
 [connection signal="item_selected" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/DodgeDirection/Setting/DodgeOptions" to="." method="_on_dodge_options_item_selected"]

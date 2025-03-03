@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dq6lpemfo4iff"]
+[gd_scene load_steps=17 format=3 uid="uid://dq6lpemfo4iff"]
 
 [ext_resource type="PackedScene" uid="uid://8yrjqan0dqfx" path="res://game/weapons/grenades/common/grenade_projectile.tscn" id="1_vnids"]
 [ext_resource type="Script" uid="uid://d3dtb5f5fe825" path="res://game/weapons/grenades/molotov/molotov_projectile.gd" id="2_i84gj"]
@@ -32,7 +32,7 @@ radius = 32.0
 
 [sub_resource type="Animation" id="Animation_tlyri"]
 resource_name = "Explode"
-length = 9.5
+length = 10.2
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -65,7 +65,7 @@ tracks/2/path = NodePath("../Attack/AreaDetector/CollisionShape2D:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 7),
+"times": PackedFloat32Array(0, 7.7),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
@@ -77,7 +77,7 @@ tracks/3/path = NodePath("Burned1:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.15, 9.5),
+"times": PackedFloat32Array(0, 0.15, 10.2),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, true, false]
@@ -89,7 +89,7 @@ tracks/4/path = NodePath("Burned0:visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 9),
+"times": PackedFloat32Array(0, 9.7),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -125,7 +125,7 @@ tracks/7/path = NodePath("Burned1:modulate")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.15, 0.5, 9.05, 9.5),
+"times": PackedFloat32Array(0, 0.15, 0.5, 9.75, 10.2),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
@@ -137,7 +137,7 @@ tracks/8/path = NodePath("Burned0:modulate")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0, 0.3, 8.55, 9.05),
+"times": PackedFloat32Array(0, 0.3, 9.25, 9.75),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
@@ -149,7 +149,7 @@ tracks/9/path = NodePath("Fire1:modulate")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0, 0.15, 0.5, 7, 7.45),
+"times": PackedFloat32Array(0, 0.15, 0.5, 7.7, 8.15),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
@@ -161,7 +161,7 @@ tracks/10/path = NodePath("Fire0:modulate")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(0, 0.5, 6.75, 7.2),
+"times": PackedFloat32Array(0, 0.5, 7.45, 7.9),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
@@ -185,7 +185,7 @@ tracks/12/path = NodePath("..")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
-"times": PackedFloat32Array(9.5),
+"times": PackedFloat32Array(10.2),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -359,6 +359,18 @@ tracks/26/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(1, 1), Vector2(6, 6)]
+}
+tracks/27/type = "value"
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/path = NodePath("../ExtinguishArea/CollisionShape2D:disabled")
+tracks/27/interp = 1
+tracks/27/loop_wrap = true
+tracks/27/keys = {
+"times": PackedFloat32Array(0, 0.5, 7.45),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
 }
 
 [sub_resource type="Animation" id="Animation_md7om"]
@@ -675,12 +687,27 @@ tracks/25/keys = {
 "update": 0,
 "values": [Vector2(1, 1)]
 }
+tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath("../ExtinguishArea/CollisionShape2D:disabled")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cwnr0"]
 _data = {
 &"Explode": SubResource("Animation_tlyri"),
 &"RESET": SubResource("Animation_md7om")
 }
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_78usd"]
+radius = 480.0
 
 [node name="MolotovProjectile" instance=ExtResource("1_vnids")]
 script = ExtResource("2_i84gj")
@@ -709,7 +736,7 @@ replication_config = SubResource("SceneReplicationConfig_adfdp")
 [node name="Attack" type="Node2D" parent="." index="4"]
 script = ExtResource("5_l5qjx")
 damage = 6
-damage_interval = 0.25
+damage_interval = 0.2
 metadata/_custom_type_script = "uid://bgvirlnion8wa"
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
@@ -895,3 +922,13 @@ texture = ExtResource("8_wwvx1")
 [node name="Explode" type="Sprite2D" parent="Explosion" index="5"]
 visible = false
 texture = ExtResource("9_py4wg")
+
+[node name="ExtinguishArea" type="Area2D" parent="." index="6"]
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExtinguishArea" index="0"]
+shape = SubResource("CircleShape2D_78usd")
+disabled = true
+
+[connection signal="area_entered" from="ExtinguishArea" to="." method="_on_extinguish_area_area_entered"]

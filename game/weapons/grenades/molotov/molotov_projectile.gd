@@ -40,3 +40,8 @@ func _explode() -> void:
 			/ shake_max_distance
 	)
 	camera.shake(shake_max_amplitude * multiplier, shake_max_duration * multiplier)
+
+
+func _on_extinguish_area_area_entered(area: Area2D) -> void:
+	if area.is_in_group(&"AntiFire"):
+		($Explosion/AnimationPlayer as AnimationPlayer).seek(7.45)

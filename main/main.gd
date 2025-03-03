@@ -180,18 +180,12 @@ func setup_settings() -> void:
 			Globals.get_setting_float("sfx_volume", 1.0))
 	Globals.set_setting_bool("fullscreen",
 			Globals.get_setting_bool("fullscreen", not OS.has_feature("pc")))
-	Globals.set_setting_bool("preload",
-			Globals.get_setting_bool("preload", true))
 	Globals.set_setting_bool("aim_dodge",
 			Globals.get_setting_bool("aim_dodge", false))
 	Globals.set_setting_bool("custom_tracks",
 			Globals.get_setting_bool("custom_tracks", OS.has_feature("pc")))
 	Globals.set_setting_bool("vibration",
 			Globals.get_setting_bool("vibration", false))
-	Globals.set_setting_bool("smooth_camera",
-			Globals.get_setting_bool("smooth_camera", true))
-	Globals.set_setting_bool("show_damage",
-			Globals.get_setting_bool("show_damage", true))
 	Globals.set_setting_bool("check_updates",
 			Globals.get_setting_bool("check_updates", true))
 	Globals.set_setting_bool("check_betas",
@@ -600,11 +594,6 @@ func _loading_custom_tracks() -> void:
 
 
 func _loading_preload_resources() -> void:
-	if not Globals.get_setting_bool("preload"):
-		print_verbose("Not preloading resources: disabled.")
-		loading_stage_finished.emit.call_deferred(false) # Ждём await
-		return
-	
 	print_verbose("Preloading resources...")
 	_load_status_label.text = "Загрузка ресурсов..."
 	_load_progress_bar.value = 0.0

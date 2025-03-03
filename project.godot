@@ -72,6 +72,10 @@ folder_colors={
 
 import/fbx2gltf/enabled=false
 
+[global_group]
+
+AntiFire="Can extinguishe fire. Must be area."
+
 [gui]
 
 common/default_scroll_deadzone=24

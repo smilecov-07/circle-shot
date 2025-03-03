@@ -580,10 +580,9 @@ libraries = {
 &"": SubResource("AnimationLibrary_kply2")
 }
 
-[node name="SmokeZone" type="Area2D" parent="Explosion" index="4"]
+[node name="SmokeZone" type="Area2D" parent="Explosion" index="4" groups=["AntiFire"]]
 collision_mask = 0
 monitoring = false
-monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Explosion/SmokeZone" index="0"]
 shape = SubResource("CircleShape2D_i77hk")

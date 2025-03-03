@@ -4,7 +4,7 @@ uniform float time_multiplier = 1.0;
 uniform float stretch = 7.5;
 instance uniform float time_offset;
 instance uniform float amplitude = 0.1;
-varying vec4 color;
+varying flat vec4 color;
 
 void vertex() {
 	color = COLOR;

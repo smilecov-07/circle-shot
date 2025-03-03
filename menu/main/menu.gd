@@ -28,7 +28,7 @@ func check_updates() -> void:
 		return
 	if Globals.data_file.has_section_key("versions", "checked"):
 		var betas_checked: bool = Globals.data_file.get_value("versions", "checked")
-		if int(betas_checked) >= int(Globals.get_setting_bool("check_betas")):
+		if not betas_checked or Globals.get_setting_bool("check_betas"):
 			print_verbose("Updates check interrupted: already checked.")
 			return
 	if "--disable-update-check" in OS.get_cmdline_args() \
@@ -37,12 +37,14 @@ func check_updates() -> void:
 		return
 	
 	Globals.data_file.set_value("versions", "checked", Globals.get_setting_bool("check_betas"))
-	var remote_version: String = Globals.data_file.get_value("versions", "beta", Globals.version) \
-			if Globals.get_setting_bool("check_betas") \
-			else Globals.data_file.get_value("versions", "stable", Globals.version)
+	var remote_version: String = Globals.data_file.get_value("versions", "stable", Globals.version)
+	var beta := false
+	if Globals.get_setting_bool("check_betas") and _is_version_newer_than(
+			str(Globals.data_file.get_value("versions", "beta", Globals.version)), remote_version):
+		remote_version = Globals.data_file.get_value("versions", "beta", Globals.version)
+		beta = true
+	
 	if _is_version_newer_than(remote_version, Globals.version):
-		var beta: bool = remote_version \
-				== Globals.data_file.get_value("versions", "beta", Globals.version)
 		var text := "Доступна новая {prefix}версия игры: {version}!".format({
 			"prefix": "бета-" if beta else "",
 			"version": remote_version,

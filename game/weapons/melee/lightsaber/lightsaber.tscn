@@ -306,7 +306,7 @@ script = ExtResource("2_1b7xu")
 damage = 45
 shoot_interval = 0.75
 to_aim_time = 0.2
-speed_multiplier_when_current = 1.11
+speed_multiplier_when_current = 1.09
 shoot_on_joystick_release = true
 
 [node name="AttackPolygon" type="Polygon2D" parent="." index="0"]

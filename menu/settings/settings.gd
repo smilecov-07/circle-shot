@@ -23,7 +23,6 @@ func _ready() -> void:
 	(%MusicVolumeSlider as Range).set_value_no_signal(Globals.get_setting_float("music_volume"))
 	(%SFXVolumeSlider as Range).set_value_no_signal(Globals.get_setting_float("sfx_volume"))
 	(%FullscreenCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("fullscreen"))
-	(%PreloadCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("preload"))
 	(%DodgeOptions as OptionButton).selected = int(Globals.get_setting_bool("aim_dodge"))
 	(%InputOptions as OptionButton).selected = Globals.get_controls_int("input_method")
 	_toggle_input_method_settings_visibility(Globals.get_controls_int("input_method"))
@@ -32,11 +31,8 @@ func _ready() -> void:
 	(%FireModeOptions as OptionButton).selected = int(Globals.get_controls_bool("joystick_fire"))
 	(%SneakSlider as Range).value = Globals.get_controls_float("sneak_multiplier")
 	(%VibrationCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("vibration"))
-	(%SmoothCameraCheck as BaseButton).set_pressed_no_signal(
-			Globals.get_setting_bool("smooth_camera"))
 	(%AimDZoneSlider as Range).value = Globals.get_controls_float("aim_deadzone")
 	(%AimZoneSlider as Range).set_value_no_signal(Globals.get_controls_float("aim_zone"))
-	(%ShowDamageCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("show_damage"))
 	(%UpdatesCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("check_updates"))
 	_on_updates_check_toggled((%UpdatesCheck as BaseButton).button_pressed)
 	(%BetasCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("check_betas"))
@@ -277,10 +273,6 @@ func _on_custom_tracks_check_toggled(toggled_on: bool) -> void:
 	Globals.main.apply_settings()
 
 
-func _on_preload_check_toggled(toggled_on: bool) -> void:
-	Globals.set_setting_bool("preload", toggled_on)
-
-
 func _on_fire_mode_options_item_selected(index: int) -> void:
 	Globals.set_controls_bool("joystick_fire", bool(index))
 
@@ -298,10 +290,6 @@ func _on_configure_actions_pressed() -> void:
 	if $ActionsConfiguration is InstancePlaceholder:
 		($ActionsConfiguration as InstancePlaceholder).create_instance(true)
 	($ActionsConfiguration as Window).popup_centered()
-
-
-func _on_smooth_camera_check_toggled(toggled_on: bool) -> void:
-	Globals.set_setting_bool("smooth_camera", toggled_on)
 
 
 func _on_aim_d_zone_slider_value_changed(value: float) -> void:
@@ -330,10 +318,6 @@ func _on_aim_visual_draw() -> void:
 
 func _on_configure_controls_pressed() -> void:
 	Globals.main.open_screen(load("uid://5wx4yqp027gq") as PackedScene)
-
-
-func _on_show_damage_check_toggled(toggled_on: bool) -> void:
-	Globals.set_setting_bool("show_damage", toggled_on)
 
 
 func _on_updates_check_toggled(toggled_on: bool) -> void:

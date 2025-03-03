@@ -217,7 +217,7 @@ _data = {
 [node name="Sword" instance=ExtResource("1_f8krw")]
 damage = 65
 shoot_interval = 1.05
-speed_multiplier_when_current = 1.08
+speed_multiplier_when_current = 1.06
 shoot_on_joystick_release = true
 
 [node name="AttackPolygon" type="Polygon2D" parent="." index="0"]

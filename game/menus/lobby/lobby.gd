@@ -665,7 +665,7 @@ func _on_game_joined() -> void:
 	(%AdminPanel as CanvasItem).hide()
 	(%ClientHint as CanvasItem).show()
 	(%ControlButtons/ConnectedToIP as CanvasItem).show()
-	(%ControlButtons/ConnectedToIP as LinkButton).text = "Подключёно к %s" % \
+	(%ControlButtons/ConnectedToIP as LinkButton).text = "Подключено к %s" % \
 			(multiplayer.multiplayer_peer as ENetMultiplayerPeer).get_peer(
 			MultiplayerPeer.TARGET_PEER_SERVER).get_remote_address()
 	(%ControlButtons/ViewIPs as CanvasItem).hide()
