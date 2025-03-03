@@ -1,7 +1,7 @@
 extends PlayerSkin
 
 
-func _ready() -> void:
+func _initialize() -> void:
 	player.health_changed.connect(_on_player_health_changed)
 
 

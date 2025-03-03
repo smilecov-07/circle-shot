@@ -63,7 +63,7 @@ func _process(_delta: float) -> void:
 	_aim.hide()
 	
 	if can_shoot():
-		_aim.visible = _player.player_input.showing_aim
+		_aim.visible = player.player_input.showing_aim
 		rotation = _calculate_aim_angle() + deg_to_rad(_calculate_recoil())
 		
 		var spread: float = _calculate_spread()
@@ -72,12 +72,12 @@ func _process(_delta: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if multiplayer.is_server() and can_shoot() and _player.player_input.shooting \
+	if multiplayer.is_server() and can_shoot() and player.player_input.shooting \
 			and ammo >= ammo_per_shot and _shoot_timer <= 0.0:
 		shoot.rpc()
 	_shoot_timer -= delta
-	if _player.is_local() and can_reload() and ammo < ammo_per_shot:
-		_player.try_reload_weapon()
+	if player.is_local() and can_reload() and ammo < ammo_per_shot:
+		player.try_reload_weapon()
 
 
 func _initialize() -> void:
@@ -178,7 +178,7 @@ func reload() -> void:
 	var difference: int = min(ammo_per_load - ammo, ammo_in_stock)
 	ammo += difference
 	ammo_in_stock -= difference
-	_player.ammo_text_updated.emit(get_ammo_text())
+	player.ammo_text_updated.emit(get_ammo_text())
 	
 	await _turn_tween.finished
 	unlock_shooting()
@@ -200,7 +200,7 @@ func _calculate_shoot_spread() -> float:
 
 
 func _calculate_walk_spread() -> float:
-	return spread_walk * clampf((_player.entity_input.direction.length() - spread_walk_ratio)
+	return spread_walk * clampf((player.entity_input.direction.length() - spread_walk_ratio)
 			/ (1.0 - spread_walk_ratio), 0.0, 1.0)
 
 
@@ -211,12 +211,12 @@ func _calculate_spread() -> float:
 func _create_projectile() -> void:
 	var projectile: Projectile = projectile_scene.instantiate()
 	projectile.position = _shoot_point.global_position
-	projectile.damage_multiplier = _player.damage_multiplier
+	projectile.damage_multiplier = player.damage_multiplier
 	var spread: float = _calculate_spread()
-	projectile.rotation = _player.player_input.aim_direction.angle() \
+	projectile.rotation = player.player_input.aim_direction.angle() \
 			+ deg_to_rad(randf_range(-spread, spread)) \
-			+ deg_to_rad(_calculate_recoil()) * signf(_player.player_input.aim_direction.x)
-	projectile.team = _player.team
-	projectile.who = _player.id
+			+ deg_to_rad(_calculate_recoil()) * signf(player.player_input.aim_direction.x)
+	projectile.team = player.team
+	projectile.who = player.id
 	projectile.name += str(randi())
 	_projectiles_parent.add_child(projectile)

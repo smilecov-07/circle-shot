@@ -2,7 +2,7 @@ extends PlayerSkin
 
 @export var damaged_texture: Texture2D
 
-func _ready() -> void:
+func _initialize() -> void:
 	player.health_changed.connect(_on_player_health_changed)
 
 

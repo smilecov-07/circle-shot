@@ -169,14 +169,13 @@ func try_use_skill() -> void:
 
 ## Устанавливает скин из [param data].
 func set_skin(data: SkinData) -> void:
-	for old_skin: Node in $Visual/Skin.get_children():
-		old_skin.queue_free()
+	for old_skin: PlayerSkin in $Visual/Skin.get_children():
+		old_skin.finalize()
 	
 	var skin_scene: PackedScene = load(data.scene_path)
 	skin = skin_scene.instantiate()
-	skin.data = data
-	skin.player = self
 	$Visual/Skin.add_child(skin)
+	skin.initialize(self, data)
 	equip_data[0] = data.idx_in_db
 	print_verbose("Skin %s with ID %d on %s set." % [data.id, equip_data[0], name])
 

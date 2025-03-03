@@ -110,22 +110,22 @@ func _physics_process(delta: float) -> void:
 
 
 #region Методы эффектов
-## Добавляет эффект на сущность. В [param effect_id] должна быть передана одна из констант
+## Добавляет эффект на сущность. В [param effect_uid] должна быть передана одна из констант
 ## класса [Effect] с UID нужного эффекта. В [param duration] можно передать длительность эффекта, а
 ## в [param data] могут быть переданы данные для эффекта (если требуются).
 ## [param should_stack] может отключить возможность стакаться эффекту
 ## (если она уже не была отключена с помощью [member Effect.stackable]).[br]
 ## [b]Примечание[/b]: этот метод может быть вызван только сервером и только как RPC.
 @rpc("authority", "reliable", "call_local", 4)
-func add_effect(effect_id: String, duration := 1.0, data := [], should_stack := true) -> void:
+func add_effect(effect_uid: String, duration := 1.0, data := [], should_stack := true) -> void:
 	if multiplayer.get_remote_sender_id() != MultiplayerPeer.TARGET_PEER_SERVER:
 		push_error("This method must be called only by server.")
 		return
 	
-	var effect: Effect = (load(effect_id) as PackedScene).instantiate()
+	var effect: Effect = (load(effect_uid) as PackedScene).instantiate()
 	if not effect.stackable or not should_stack:
 		for existing_effect: Effect in _effects.get_children():
-			if existing_effect.id == effect_id:
+			if existing_effect.uid == effect_uid:
 				existing_effect.add_duration(duration)
 				effect.free()
 				print_verbose("Added duration %f to effect %s on %s." % [
@@ -136,7 +136,7 @@ func add_effect(effect_id: String, duration := 1.0, data := [], should_stack := 
 				return
 	
 	_effects.add_child(effect, true)
-	effect.initialize(self, effect_id, data, false, duration)
+	effect.initialize(self, effect_uid, data, false, duration)
 	print_verbose("Added effect %s with duration %f to %s." % [
 		effect.name,
 		duration,
@@ -144,41 +144,41 @@ func add_effect(effect_id: String, duration := 1.0, data := [], should_stack := 
 	])
 
 
-## Добавляет постоянный эффект на сущность. В [param effect_id] должна быть передана одна из
+## Добавляет постоянный эффект на сущность. В [param effect_uid] должна быть передана одна из
 ## констант класса [Effect] с UID нужного эффекта.
 ## В [param data] могут быть переданы данные для эффекта (если требуются).
 ## [param should_stack] может отключить возможность стакаться эффекту
 ## (если она уже не была отключена с помощью [member Effect.stackable]).[br]
 ## [b]Примечание[/b]: этот метод должен вызваться только сервером и только как RPC.
 @rpc("authority", "reliable", "call_local", 4)
-func add_timeless_effect(effect_id: String, data := [], should_stack := true) -> void:
+func add_timeless_effect(effect_uid: String, data := [], should_stack := true) -> void:
 	if multiplayer.get_remote_sender_id() != MultiplayerPeer.TARGET_PEER_SERVER:
 		push_error("This method must be called only by server.")
 		return
 	
-	var effect: Effect = (load(effect_id) as PackedScene).instantiate()
+	var effect: Effect = (load(effect_uid) as PackedScene).instantiate()
 	if not effect.stackable or not should_stack:
 		for existing_effect: Effect in _effects.get_children():
-			if existing_effect.id == effect_id:
+			if existing_effect.uid == effect_uid:
 				existing_effect.timeless_counter += 1
 				effect.free()
 				print_verbose("Increased counter of effect %s on %s." % [effect.name, name])
 				return
 	
 	_effects.add_child(effect, true)
-	effect.initialize(self, effect_id, data, true)
+	effect.initialize(self, effect_uid, data, true)
 	print_verbose("Added timeless effect %s to %s." % [effect.name, name])
 
 
-## Удаляет постоянный эффект с сущности, или уменьшает счётчик на нём. В [param effect_id] должна
+## Удаляет постоянный эффект с сущности, или уменьшает счётчик на нём. В [param effect_uid] должна
 ## быть передана одна из констант класса [Effect] с UID нужного эффекта.[br]
 ## [b]Примечание[/b]: этот метод должен вызываться только сервером и только как RPC.
 @rpc("authority", "reliable", "call_local", 4)
-func remove_timeless_effect(effect_id: String) -> void:
+func remove_timeless_effect(effect_uid: String) -> void:
 	if is_queued_for_deletion():
 		print_verbose("Entity %s is going to be deleted. Effect with ID %s is not removed." % [
 			name,
-			effect_id,
+			effect_uid,
 		])
 		return
 	
@@ -189,7 +189,7 @@ func remove_timeless_effect(effect_id: String) -> void:
 	var effects: Array[Node] = _effects.get_children()
 	effects.reverse()
 	for effect: Effect in effects:
-		if effect.id == effect_id:
+		if effect.uid == effect_uid:
 			effect.timeless_counter -= 1
 			print_verbose("Removed timeless effect %s on %s." % [effect.name, name])
 			return

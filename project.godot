@@ -74,7 +74,7 @@ import/fbx2gltf/enabled=false
 
 [global_group]
 
-AntiFire="Can extinguishe fire. Must be area."
+AntiFire="Can extinguish fire. Must be area."
 
 [gui]
 

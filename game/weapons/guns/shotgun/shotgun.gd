@@ -6,7 +6,7 @@ var _interrupt_reload := false
 
 func _process(delta: float) -> void:
 	super(delta)
-	if _reloading and (_player.player_input.shooting or _player.is_disarmed()):
+	if _reloading and (player.player_input.shooting or player.is_disarmed()):
 		_interrupt_reload = true
 
 
@@ -35,7 +35,7 @@ func reload() -> void:
 		
 		ammo += 1
 		ammo_in_stock -= 1
-		_player.ammo_text_updated.emit(get_ammo_text())
+		player.ammo_text_updated.emit(get_ammo_text())
 		
 		if _interrupt_reload:
 			break
@@ -61,11 +61,11 @@ func _create_projectile() -> void:
 	for i: int in buckshot_in_shot:
 		var projectile: Projectile = projectile_scene.instantiate()
 		projectile.global_position = _shoot_point.global_position
-		projectile.damage_multiplier = _player.damage_multiplier
-		projectile.rotation = _player.player_input.aim_direction.angle() \
+		projectile.damage_multiplier = player.damage_multiplier
+		projectile.rotation = player.player_input.aim_direction.angle() \
 				+ deg_to_rad(_calculate_spread() * (-1 + 2.0 / (buckshot_in_shot - 1) * i)) \
-				+ deg_to_rad(_calculate_recoil()) * signf(_player.player_input.aim_direction.x)
-		projectile.team = _player.team
-		projectile.who = _player.id
+				+ deg_to_rad(_calculate_recoil()) * signf(player.player_input.aim_direction.x)
+		projectile.team = player.team
+		projectile.who = player.id
 		projectile.name += str(randi())
 		_projectiles_parent.add_child(projectile)

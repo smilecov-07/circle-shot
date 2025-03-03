@@ -14,11 +14,11 @@ var _aiming := false
 func _process(delta: float) -> void:
 	super(delta)
 	if _aiming:
-		if _player.is_local():
+		if player.is_local():
 			_aim_target.global_position = _calculate_aim_target_position()
 			_aim_texture_material.set_shader_parameter(&"radius",
 					_calculate_spread() * BLUR_SPREAD_MULTIPLIER)
-		if _player.is_disarmed():
+		if player.is_disarmed():
 			end_aim()
 
 
@@ -63,8 +63,8 @@ func _calculate_spread() -> float:
 
 func start_aim() -> void:
 	_aiming = true
-	_player.speed_multiplier *= aim_slowdown
-	if _player.id != multiplayer.get_unique_id():
+	player.speed_multiplier *= aim_slowdown
+	if not player.is_local():
 		return
 	
 	($Aim as CanvasLayer).show()
@@ -77,8 +77,8 @@ func start_aim() -> void:
 
 func end_aim() -> void:
 	_aiming = false
-	_player.speed_multiplier /= aim_slowdown
-	if _player.id != multiplayer.get_unique_id():
+	player.speed_multiplier /= aim_slowdown
+	if not player.is_local():
 		return
 	
 	($Aim as CanvasLayer).hide()
@@ -90,7 +90,7 @@ func end_aim() -> void:
 	
 	camera.position_smoothing_enabled = true
 	if camera.target == _aim_target:
-		camera.target = _player
+		camera.target = player
 		camera.global_position = camera.target.global_position
 		camera.reset_smoothing()
 
@@ -100,4 +100,4 @@ func _calculate_aim_target_position() -> Vector2:
 	var ratio: float = (_aim_ray.get_collision_point() - _aim_ray.global_position).length() \
 			/ absf(_aim_ray.position.x - _end_aim.position.x) if _aim_ray.is_colliding() else 1.0
 	return _aim_ray.global_position.lerp(_end_aim.global_position,
-			minf(_player.player_input.aim_direction.length(), ratio))
+			minf(player.player_input.aim_direction.length(), ratio))

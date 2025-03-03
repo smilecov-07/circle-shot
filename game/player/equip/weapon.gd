@@ -31,9 +31,10 @@ var ammo: int
 var ammo_in_stock: int
 ## Данные оружия.
 var data: WeaponData
-var _blocked_shooting_counter: int = 0
 ## Ссылка на игрока.
-var _player: Player
+var player: Player
+
+var _blocked_shooting_counter: int = 0
 @warning_ignore("unused_private_class_variable") # Для дочерних классов
 @onready var _projectiles_parent: Node2D = get_tree().get_first_node_in_group(&"ProjectilesParent")
 
@@ -52,12 +53,12 @@ func shoot() -> void:
 		return
 	@warning_ignore("redundant_await") # кто знает, что написано в дочерних классах
 	await _shoot()
-	_player.ammo_text_updated.emit(get_ammo_text())
+	player.ammo_text_updated.emit(get_ammo_text())
 
 
-## Инициализирует оружие игроком [param player] и данными [param weapon_data].
-func initialize(player: Player, weapon_data: WeaponData) -> void:
-	_player = player
+## Инициализирует оружие игроком [param to_player] и данными [param weapon_data].
+func initialize(to_player: Player, weapon_data: WeaponData) -> void:
+	player = to_player
 	data = weapon_data
 	hide()
 	process_mode = PROCESS_MODE_DISABLED
@@ -68,7 +69,7 @@ func initialize(player: Player, weapon_data: WeaponData) -> void:
 func make_current() -> void:
 	show()
 	process_mode = PROCESS_MODE_INHERIT
-	_player.speed_multiplier *= speed_multiplier_when_current
+	player.speed_multiplier *= speed_multiplier_when_current
 	_make_current()
 
 
@@ -77,7 +78,7 @@ func unmake_current() -> void:
 	_unmake_current()
 	hide()
 	process_mode = PROCESS_MODE_DISABLED
-	_player.speed_multiplier /= speed_multiplier_when_current
+	player.speed_multiplier /= speed_multiplier_when_current
 
 
 ## Блокирует стрельбу.
@@ -92,7 +93,7 @@ func unlock_shooting() -> void:
 
 ## Возвращает [code]true[/code], если оружие может стрелять.
 func can_shoot() -> bool:
-	return _blocked_shooting_counter <= 0 and not _player.is_disarmed()
+	return _blocked_shooting_counter <= 0 and not player.is_disarmed()
 
 
 ## Метод для переопределения. Перезаряжает оружие. Вызывается объектом игрока.
@@ -128,7 +129,7 @@ func get_ammo_text() -> String:
 
 
 func _calculate_aim_angle() -> float:
-	var aim_direction: Vector2 = _player.player_input.aim_direction
+	var aim_direction: Vector2 = player.player_input.aim_direction
 	aim_direction.x = absf(aim_direction.x)
 	return aim_direction.angle()
 

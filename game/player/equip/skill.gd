@@ -10,7 +10,7 @@ extends Node2D
 ## Информация о навыке.
 var data: SkillData
 ## Ссылка на игрока.
-var _player: Player
+var player: Player
 var _cooldown_timer := 0.0
 @warning_ignore("unused_private_class_variable") # Для дочерних классов
 @onready var _other_parent: Node2D = get_tree().get_first_node_in_group(&"OtherParent")
@@ -18,31 +18,31 @@ var _cooldown_timer := 0.0
 
 func _physics_process(delta: float) -> void:
 	_cooldown_timer -= delta
-	_player.skill_vars[1] = ceili(_cooldown_timer)
+	player.skill_vars[1] = ceili(_cooldown_timer)
 
 
-## Инициализирует навык игроком [param player] и данными [param skill_data].
-func initialize(player: Player, skill_data: SkillData) -> void:
+## Инициализирует навык игроком [param to_player] и данными [param skill_data].
+func initialize(to_player: Player, skill_data: SkillData) -> void:
+	data = skill_data
+	player = to_player
 	if player.skill_vars.is_empty():
 		player.skill_vars = [use_times, 0]
 	_cooldown_timer = player.skill_vars[1]
-	data = skill_data
-	_player = player
 	_initialize()
 
 
 ## Использует навык.
 func use() -> void:
-	_player.skill_vars[0] -= 1
-	_player.skill_vars[1] = use_cooldown
+	player.skill_vars[0] -= 1
+	player.skill_vars[1] = use_cooldown
 	_cooldown_timer = use_cooldown
 	_use()
 
 
 ## Возвращает [code]true[/code], если навык можно использовать.
 func can_use() -> bool:
-	return not _player.is_disarmed() and _player.skill_vars[0] > 0 \
-			and _player.skill_vars[1] <= 0 and _can_use()
+	return not player.is_disarmed() and player.skill_vars[0] > 0 \
+			and player.skill_vars[1] <= 0 and _can_use()
 
 
 ## Метод для переопределения. Вызывается при инициализации навыка.

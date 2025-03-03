@@ -19,13 +19,13 @@ var _turn_tween: Tween
 func _process(_delta: float) -> void:
 	_aim.hide()
 	if can_shoot():
-		_aim.visible = _player.player_input.showing_aim
+		_aim.visible = player.player_input.showing_aim
 		rotation = _calculate_aim_angle()
 
 
 func _physics_process(delta: float) -> void:
 	if multiplayer.is_server() and can_shoot() \
-			and _player.player_input.shooting and _shoot_timer <= 0.0:
+			and player.player_input.shooting and _shoot_timer <= 0.0:
 		shoot.rpc()
 	_shoot_timer -= delta
 
@@ -37,9 +37,9 @@ func _shoot() -> void:
 	block_shooting()
 	
 	if multiplayer.is_server():
-		_attack.damage_multiplier = _player.damage_multiplier
-		_attack.team = _player.team
-		_attack.who = _player.id
+		_attack.damage_multiplier = player.damage_multiplier
+		_attack.team = player.team
+		_attack.who = player.id
 		_attack.clear_exceptions()
 	
 	await _anim.animation_finished

@@ -36,14 +36,14 @@ func _process(_delta: float) -> void:
 	if can_shoot():
 		if not visible and ammo_in_stock > 0:
 			_make_current()
-		_aim.visible = _player.player_input.showing_aim
+		_aim.visible = player.player_input.showing_aim
 		_throw_pivot.rotation = _calculate_aim_angle()
 		
 		_aim_spread_left.rotation_degrees = -_calculate_spread()
 		_aim_spread_right.rotation_degrees = _calculate_spread()
 		
 		# Вычисление длины пути гранаты через формулу по физике xD
-		var speed_multiplier: float = _player.player_input.aim_direction.length()
+		var speed_multiplier: float = player.player_input.aim_direction.length()
 		var time: float = minf(projectile_speed * speed_multiplier / projectile_damping,
 				projectile_explosion_time)
 		_aim.points[1].x = projectile_speed * time * speed_multiplier \
@@ -51,7 +51,7 @@ func _process(_delta: float) -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	if can_shoot() and multiplayer.is_server() and _player.player_input.shooting \
+	if can_shoot() and multiplayer.is_server() and player.player_input.shooting \
 			and ammo_in_stock > 0 and not _reloading:
 		shoot.rpc()
 
@@ -75,7 +75,7 @@ func _unmake_current() -> void:
 func _shoot() -> void:
 	block_shooting()
 	_anim.play(&"Throw")
-	var throw_direction: Vector2 = _player.player_input.aim_direction
+	var throw_direction: Vector2 = player.player_input.aim_direction
 	var anim_name: StringName = await _anim.animation_finished
 	if anim_name != &"Throw":
 		unlock_shooting()
@@ -114,7 +114,7 @@ func get_ammo_text() -> String:
 
 
 func _calculate_spread() -> float:
-	return spread_walk * clampf((_player.entity_input.direction.length() - spread_walk_ratio)
+	return spread_walk * clampf((player.entity_input.direction.length() - spread_walk_ratio)
 			/ (1.0 - spread_walk_ratio), 0.0, 1.0) + spread_base
 
 

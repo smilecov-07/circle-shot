@@ -14,17 +14,17 @@ var _use_effect_scene: PackedScene = preload("uid://c7rmbgdh6weme")
 
 func _use() -> void:
 	var use_effect: Node2D = _use_effect_scene.instantiate()
-	_player.visual.add_child(use_effect)
+	player.visual.add_child(use_effect)
 	
-	_player.make_disarmed()
+	player.make_disarmed()
 	_timer.start(1.25)
 	await _timer.timeout
 	if multiplayer.is_server():
-		_player.add_effect.rpc(Effect.DEFENSE_CHANGE, boost_duration, [1.0 - defense_boost])
-		_player.add_effect.rpc(Effect.SPEED_CHANGE, boost_duration, [1.0 + speed_boost])
-		_player.add_effect.rpc(Effect.DAMAGE_CHANGE, boost_duration, [1.0 + damage_boost])
-	if _player.is_local():
+		player.add_effect.rpc(Effect.DEFENSE_CHANGE, boost_duration, [1.0 - defense_boost])
+		player.add_effect.rpc(Effect.SPEED_CHANGE, boost_duration, [1.0 + speed_boost])
+		player.add_effect.rpc(Effect.DAMAGE_CHANGE, boost_duration, [1.0 + damage_boost])
+	if player.is_local():
 		(get_viewport().get_camera_2d() as SmartCamera).shake(shake_amplitude, shake_duration)
 	_timer.start(0.35)
 	await _timer.timeout
-	_player.unmake_disarmed()
+	player.unmake_disarmed()

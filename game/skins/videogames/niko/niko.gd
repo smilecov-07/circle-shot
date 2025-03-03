@@ -9,7 +9,7 @@ var _last_rotation := 0.0
 @onready var _scarfes: Node2D = $Scarfes
 
 
-func _ready() -> void:
+func _initialize() -> void:
 	player.health_changed.connect(_on_player_health_changed)
 
 

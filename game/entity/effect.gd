@@ -32,22 +32,24 @@ var timeless_counter: int = 0:
 		if value <= 0 and _timer.is_stopped():
 			clear()
 ## UID эффекта.
-var id: String
+var uid: String
 ## Данные эффекта, переданные в [method initialize].
-var _data: Array
+var data: Array
 ## Сущность, переданная в [method initialize].
-var _entity: Entity
+var entity: Entity
 @onready var _timer: Timer = $Timer
 
 
-## Инициализирует эффект сущностью  и UID эффекта . Опционально указываются:[br]
-## - Данные для эффекта в массиве [param data].[br]
+## Инициализирует эффект сущностью [param to_entity] и UID эффекта [param effet_uid].
+## Опционально указываются:[br]
+## - Данные для эффекта в массиве [param effect_data].[br]
 ## - Является ли этот эффект постоянным в [param timeless].[br]
 ## - Длительность эффекта (если он не постоянный) в [param duration].
-func initialize(entity: Entity, uid: String, data := [], timeless := false, duration := 1.0) -> void:
-	id = uid
-	_entity = entity
-	_data = data
+func initialize(to_entity: Entity, effect_uid: String, effect_data := [],
+		timeless := false, duration := 1.0) -> void:
+	uid = effect_uid
+	data = effect_data
+	entity = to_entity
 	if timeless:
 		timeless_counter += 1
 	else:

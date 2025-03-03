@@ -2,7 +2,7 @@ extends PlayerSkin
 
 @export var textures: Array[Texture2D]
 
-func _ready() -> void:
+func _initialize() -> void:
 	player.weapon_changed.connect(_on_player_weapon_changed)
 	player.health_changed.connect(_on_player_health_changed)
 

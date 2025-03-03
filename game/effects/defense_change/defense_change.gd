@@ -2,15 +2,15 @@ extends Effect
 
 
 func _start_effect() -> void:
-	if _data.size() != 1:
+	if data.size() != 1:
 		queue_free()
 		return
-	var multiplier: float = _data[0]
+	var multiplier: float = data[0]
 	if is_zero_approx(multiplier):
-		_entity.make_immune()
+		entity.make_immune()
 		# TODO: мб добавить особую анимку
 	else:
-		_entity.defense_multiplier *= multiplier
+		entity.defense_multiplier *= multiplier
 	if multiplier > 1.0:
 		($Down as CanvasItem).show()
 		negative = true
@@ -19,8 +19,8 @@ func _start_effect() -> void:
 
 
 func _end_effect() -> void:
-	var multiplier: float = _data[0]
+	var multiplier: float = data[0]
 	if is_zero_approx(multiplier):
-		_entity.unmake_immune()
+		entity.unmake_immune()
 	else:
-		_entity.defense_multiplier /= multiplier
+		entity.defense_multiplier /= multiplier
