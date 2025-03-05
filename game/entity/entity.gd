@@ -21,16 +21,16 @@ signal died(who: int)
 
 ## Цвета команд.
 const TEAM_COLORS: Array[Color] = [
-	Color.RED,
-	Color.BLUE,
-	Color.GREEN,
-	Color.YELLOW,
-	Color.ORANGE,
-	Color.CYAN,
-	Color.BLUE_VIOLET,
-	Color.GRAY,
-	Color.SADDLE_BROWN,
-	Color.HOT_PINK,
+	Color(0.953, 0.067, 0.0), # Красный
+	Color(0.113, 0.231, 1.0), # Синий
+	Color(0.0, 0.871, 0.0), # Зелёный
+	Color(0.973, 0.866, 0.0), # Жёлтый
+	Color(1.0, 0.592, 0.0), # Оранжевый
+	Color(0.0, 0.789, 1.0), # Голубой
+	Color(0.57, 0.0, 1.0), # Фиолетовый
+	Color(0.598, 0.598, 0.598), # Серый
+	Color(0.477, 0.292, 0.03), # Коричневый
+	Color(0.965, 0.426, 0.805), # Розовый
 ]
 
 ## Базовая скорость сущности.

@@ -139,6 +139,12 @@ func _register_new_player(player_name: String) -> void:
 	
 	_chat.post_message.rpc("> [color=green]%s[/color] подключается!" % player_name)
 	_chat.players_names[sender_id] = player_name
+	var new_team: int
+	for i in 10:
+		if not i in _chat.players_teams.values():
+			new_team = i
+			break
+	_chat.players_teams[sender_id] = new_team
 	
 	if _admin_id < 0:
 		_admin_id = sender_id
@@ -255,9 +261,7 @@ func _request_admin_action(id: int, action: AdminAction) -> void:
 			
 			(multiplayer as SceneMultiplayer).disconnect_peer(id)
 			_chat.post_message.rpc(message % [_players[_admin_id], _players[id]])
-			_chat.players_names.erase(id)
-			_players.erase(id)
-			_delete_player_entry.rpc(id)
+			_unregister_player(id)
 		AdminAction.TRANSFER_ADMIN_RIGHTS:
 			print_verbose("Accepted transfer admin rights request. New admin: %d." % id)
 			_admin_id = id
@@ -352,6 +356,22 @@ func _reject_start_event(reason: StartRejectReason, players_count: int) -> void:
 			])
 		_:
 			push_warning("Received invalid reject reason.")
+
+
+func _unregister_player(id: int) -> void:
+	_chat.players_names.erase(id)
+	_chat.players_teams.erase(id)
+	_players.erase(id)
+	if id == _admin_id:
+		if not _players.is_empty():
+			_admin_id = _players.keys()[0]
+			_set_admin.rpc(_admin_id)
+		else:
+			_admin_id = -1
+	_delete_player_entry.rpc(id)
+	
+	if _players.is_empty():
+		_chat.clear_chat()
 
 
 @rpc("call_local", "reliable", "authority", 1)
@@ -721,18 +741,7 @@ func _on_peer_disconnected(id: int) -> void:
 	if not multiplayer.is_server():
 		return
 	_chat.post_message.rpc("> [color=green]%s[/color] отключается!" % _players[id])
-	_chat.players_names.erase(id)
-	_players.erase(id)
-	if id == _admin_id:
-		if not _players.is_empty():
-			_admin_id = _players.keys()[0]
-			_set_admin.rpc(_admin_id)
-		else:
-			_admin_id = -1
-	_delete_player_entry.rpc(id)
-	
-	if _players.is_empty():
-		_chat.clear_chat()
+	_unregister_player(id)
 
 
 func _on_admin_actions_menu_id_pressed(action: AdminAction, peer: int) -> void:
