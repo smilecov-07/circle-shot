@@ -39,8 +39,7 @@ func kill_player(which: int, killer: int = -1) -> void:
 	if Globals.headless:
 		return
 	
-	_alive_players = Array(get_tree().get_nodes_in_group(&"Player"), TYPE_OBJECT,
-			&"CharacterBody2D", Player)
+	_alive_players.assign(get_tree().get_nodes_in_group(&"Player"))
 	for player: Player in _alive_players:
 		if player.id == which:
 			_alive_players.erase(player)

@@ -16,7 +16,7 @@ enum InputMethod {
 }
 ## Перечисление с допустимыми типами событий для действия при использовании
 ## [enum Main.InputMethod.KEYBOARD_AND_MOUSE].
-enum ActionEventType {
+enum EncodedInputEventType {
 	## События типа [InputEventKey].
 	KEY = 0,
 	## События типа [InputEventMouseButton].
@@ -219,23 +219,30 @@ func setup_controls_settings() -> void:
 		if action.begins_with("ui_"):
 			continue
 		
-		var event: InputEvent = InputMap.action_get_events(action)[0]
-		var coded_event_type: ActionEventType
-		var coded_event_value: int
+		var encoded_input_event_types: Array[EncodedInputEventType]
+		var encoded_input_event_values: Array[int]
+		for event: InputEvent in InputMap.action_get_events(action):
+			var encoded_input_event_type: EncodedInputEventType
+			var encoded_input_event_value: int
+			
+			var mb := event as InputEventMouseButton
+			if mb:
+				encoded_input_event_type = EncodedInputEventType.MOUSE_BUTTON
+				encoded_input_event_value = mb.button_index
+			var key := event as InputEventKey
+			if key:
+				encoded_input_event_type = EncodedInputEventType.KEY
+				encoded_input_event_value = key.keycode
+			
+			encoded_input_event_types.append(encoded_input_event_type)
+			encoded_input_event_values.append(encoded_input_event_value)
 		
-		var mb := event as InputEventMouseButton
-		if mb:
-			coded_event_type = ActionEventType.MOUSE_BUTTON
-			coded_event_value = mb.button_index
-		var key := event as InputEventKey
-		if key:
-			coded_event_type = ActionEventType.KEY
-			coded_event_value = key.keycode
-		
-		Globals.set_controls_int("action_%s_event_type" % action,
-				Globals.get_controls_int("action_%s_event_type" % action, coded_event_type))
-		Globals.set_controls_int("action_%s_event_value" % action,
-				Globals.get_controls_int("action_%s_event_value" % action, coded_event_value))
+		Globals.set_controls_variant("action_%s_event_types" % action,
+				Globals.get_controls_variant("action_%s_event_types" % action,
+				encoded_input_event_types))
+		Globals.set_controls_variant("action_%s_event_values" % action,
+				Globals.get_controls_variant("action_%s_event_values" % action,
+				encoded_input_event_values))
 	
 	#region Настройки управления на телефоне
 	Globals.set_controls_int("anchors_preset_health_bar",
@@ -325,29 +332,31 @@ func apply_settings() -> void:
 func apply_controls_settings() -> void:
 	Input.emulate_touch_from_mouse = Globals.get_controls_int("input_method") == InputMethod.TOUCH
 	
-	if not Globals.get_controls_int("input_method") == InputMethod.KEYBOARD_AND_MOUSE:
+	if Globals.get_controls_int("input_method") != InputMethod.KEYBOARD_AND_MOUSE:
 		return
 	for action: StringName in InputMap.get_actions():
 		if action.begins_with("ui_"):
 			continue
 		InputMap.action_erase_events(action)
 		
-		var coded_event_type: ActionEventType = \
-				Globals.get_controls_int("action_%s_event_type" % action) as ActionEventType
-		var coded_event_value: int = Globals.get_controls_int("action_%s_event_value" % action)
-		var event: InputEvent
+		var encoded_input_event_types: Array[EncodedInputEventType] = \
+				Globals.get_controls_variant("action_%s_event_types" % action, [] as Array[int])
+		var encoded_input_event_values: Array[int] = \
+				Globals.get_controls_variant("action_%s_event_values" % action, [] as Array[int])
 		
-		match coded_event_type:
-			ActionEventType.KEY:
-				var key := InputEventKey.new()
-				key.keycode = coded_event_value as Key
-				event = key
-			ActionEventType.MOUSE_BUTTON:
-				var mb := InputEventMouseButton.new()
-				mb.button_index = coded_event_value as MouseButton
-				event = mb
-		
-		InputMap.action_add_event(action, event)
+		for i: int in encoded_input_event_types.size():
+			var event: InputEvent
+			match encoded_input_event_types[i]:
+				EncodedInputEventType.KEY:
+					var key := InputEventKey.new()
+					key.keycode = encoded_input_event_values[i] as Key
+					event = key
+				EncodedInputEventType.MOUSE_BUTTON:
+					var mb := InputEventMouseButton.new()
+					mb.button_index = encoded_input_event_values[i] as MouseButton
+					event = mb
+			
+			InputMap.action_add_event(action, event)
 
 
 func _update_window_stretch_aspect() -> void:

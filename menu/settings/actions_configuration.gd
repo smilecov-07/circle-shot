@@ -1,15 +1,15 @@
 extends Window
 
 
-var _key_events: Dictionary[StringName, int]
-var _mouse_button_events: Dictionary[StringName, int]
+var _action_events: Dictionary[StringName, Array] # Array[EncodedInputEvent]
 
 var _waiting_for_input := false
 var _editing_action: StringName
-var _coded_event_candidate_type: Main.ActionEventType
-var _coded_event_candidate_value: int
-var _pending_coded_events_types: Dictionary[StringName, Main.ActionEventType]
-var _pending_coded_events_values: Dictionary[StringName, int]
+var _editing_action_event_idx: int
+var _event_candidate: EncodedInputEvent
+var _pending_actions: Array[StringName]
+
+var _action_event_scene: PackedScene = preload("uid://b8cprl60iu2or")
 
 
 func _ready() -> void:
@@ -19,51 +19,103 @@ func _ready() -> void:
 	_load_keys_from_map()
 
 
-func edit_action(action: StringName) -> void:
+func add_action_event(action: StringName) -> void:
+	edit_action_event(action, _action_events[action].size())
+	($EventSelector as Window).title = 'Добавление клавиши к действию "%s"...' % \
+			(%Actions.get_node(action.to_pascal_case()).get_node(^"Container/Name") as Label).text
+
+
+func edit_action_event(action: StringName, event_idx: int) -> void:
 	_editing_action = action
+	_editing_action_event_idx = event_idx
 	_waiting_for_input = true
 	($EventSelector as AcceptDialog).get_ok_button().hide()
 	($EventSelector as ConfirmationDialog).get_cancel_button().hide()
 	($EventSelector as Window).title = 'Редактирование действия "%s"...' % \
-			(%Actions.get_node(action.to_pascal_case()).get_node(^"Name") as Label).text
+			(%Actions.get_node(action.to_pascal_case()).get_node(^"Container/Name") as Label).text
 	($EventSelector as AcceptDialog).dialog_text = "Ожидание ввода..."
 	($EventSelector as Window).popup_centered()
 
 
+func remove_action_event(action: StringName, event_idx: int) -> void:
+	var events_container: VBoxContainer = %Actions.get_node(
+				action.to_pascal_case()).get_node(^"Container/Events")
+	events_container.get_child(event_idx).queue_free()
+	events_container.remove_child(events_container.get_child(event_idx))
+	_action_events[action].remove_at(event_idx)
+	
+	for i: int in range(event_idx, _action_events[action].size()):
+		var encoded_event: EncodedInputEvent = _action_events[action][i]
+		encoded_event.idx = i
+		(events_container.get_child(i).get_node(^"Edit") as BaseButton).pressed.disconnect(
+				edit_action_event)
+		(events_container.get_child(i).get_node(^"Edit") as BaseButton).pressed.connect(
+				edit_action_event.bind(action, i))
+		(events_container.get_child(i).get_node(^"Remove") as BaseButton).pressed.disconnect(
+				remove_action_event)
+		(events_container.get_child(i).get_node(^"Remove") as BaseButton).pressed.connect(
+				remove_action_event.bind(action, i))
+
+
 func _load_keys_from_map() -> void:
-	_key_events.clear()
-	_mouse_button_events.clear()
+	_action_events.clear()
 	
 	for action: StringName in InputMap.get_actions():
 		if action.begins_with("ui_"):
 			continue
-		var event: InputEvent = InputMap.action_get_events(action)[0]
-		(%Actions.get_node(action.to_pascal_case()).get_node(^"Event") as Label).text = \
-				_event_as_text(event)
+		var events_container: VBoxContainer = %Actions.get_node(
+				action.to_pascal_case()).get_node(^"Container/Events")
+		for child: Node in events_container.get_children():
+			child.queue_free()
 		
-		var mb := event as InputEventMouseButton
-		if mb:
-			_mouse_button_events[action] = mb.button_index
-		var key := event as InputEventKey
-		if key:
-			_key_events[action] = key.keycode
+		var idx: int = 0
+		for event: InputEvent in InputMap.action_get_events(action):
+			var encoded_event := EncodedInputEvent.new()
+			encoded_event.idx = idx
+			var mb := event as InputEventMouseButton
+			if mb:
+				encoded_event.type = Main.EncodedInputEventType.MOUSE_BUTTON
+				encoded_event.value = mb.button_index
+			var key := event as InputEventKey
+			if key:
+				encoded_event.type = Main.EncodedInputEventType.KEY
+				encoded_event.value = key.keycode
+			
+			if action in _action_events:
+				_action_events[action].append(encoded_event)
+			else:
+				_action_events[action] = [encoded_event]
+			
+			_create_action_event(action, events_container, encoded_event)
+			idx += 1
 
 
-func _set_coded_event_candidate(type: Main.ActionEventType, value: int) -> void:
+func _set_event_candidate(encoded_event: EncodedInputEvent) -> void:
 	_waiting_for_input = false
-	_coded_event_candidate_type = type
-	_coded_event_candidate_value = value
-	($EventSelector as AcceptDialog).dialog_text = _coded_event_as_text(type, value)
+	_event_candidate = encoded_event
+	($EventSelector as AcceptDialog).dialog_text = _encoded_input_event_as_text(encoded_event)
 	($EventSelector as AcceptDialog).get_ok_button().show()
 	($EventSelector as ConfirmationDialog).get_cancel_button().show()
 
 
-func _coded_event_as_text(type: Main.ActionEventType, value: int) -> String:
-	match type:
-		Main.ActionEventType.KEY:
-			return OS.get_keycode_string(value)
-		Main.ActionEventType.MOUSE_BUTTON:
-			match value:
+func _create_action_event(action: StringName, parent: Node,
+		encoded_event: EncodedInputEvent) -> void:
+	var event_node: HBoxContainer = _action_event_scene.instantiate()
+	event_node.name = "ActionEvent%d%d" % [encoded_event.type, encoded_event.value]
+	(event_node.get_node(^"Event") as Label).text = _encoded_input_event_as_text(encoded_event)
+	(event_node.get_node(^"Edit") as BaseButton).pressed.connect(
+			edit_action_event.bind(action, encoded_event.idx))
+	(event_node.get_node(^"Remove") as BaseButton).pressed.connect(
+			remove_action_event.bind(action, encoded_event.idx))
+	parent.add_child(event_node)
+
+
+func _encoded_input_event_as_text(encoded_input_event: EncodedInputEvent) -> String:
+	match encoded_input_event.type:
+		Main.EncodedInputEventType.KEY:
+			return OS.get_keycode_string(encoded_input_event.value)
+		Main.EncodedInputEventType.MOUSE_BUTTON:
+			match encoded_input_event.value:
 				MOUSE_BUTTON_LEFT:
 					return "ЛКМ"
 				MOUSE_BUTTON_MIDDLE:
@@ -77,91 +129,103 @@ func _coded_event_as_text(type: Main.ActionEventType, value: int) -> String:
 	return "НЕИЗВЕСТНО"
 
 
-func _event_as_text(event: InputEvent) -> String:
-	var mb := event as InputEventMouseButton
-	if mb:
-		return _coded_event_as_text(Main.ActionEventType.MOUSE_BUTTON, mb.button_index)
-	
-	var key := event as InputEventKey
-	if key:
-		return _coded_event_as_text(Main.ActionEventType.KEY, key.keycode)
-	
-	return "НЕИЗВЕСТНО"
-
-
 func _on_event_selector_window_input(event: InputEvent) -> void:
 	if not _waiting_for_input:
 		return
+	var new_event := EncodedInputEvent.new()
+	new_event.idx = _editing_action_event_idx
+	
+	var recognized := false
 	
 	var mb := event as InputEventMouseButton
-	if mb:
-		($EventSelector as Window).set_input_as_handled()
-		if _mouse_button_events.get(_editing_action, -1) == mb.button_index:
-			($EventSelector as AcceptDialog).dialog_text = "Эта кнопка занята этим же действием."
-			return
-		if mb.button_index in _mouse_button_events.values():
-			($EventSelector as AcceptDialog).dialog_text = "Эта кнопка занята другим действием."
-			return
-		if mb.button_index in [
-			MOUSE_BUTTON_LEFT,
-			MOUSE_BUTTON_RIGHT,
-			MOUSE_BUTTON_MIDDLE,
-			MOUSE_BUTTON_XBUTTON1,
-			MOUSE_BUTTON_XBUTTON2,
-		]:
-			_set_coded_event_candidate(Main.ActionEventType.MOUSE_BUTTON, mb.button_index)
+	if mb and mb.button_index in [
+		MOUSE_BUTTON_LEFT,
+		MOUSE_BUTTON_RIGHT,
+		MOUSE_BUTTON_MIDDLE,
+		MOUSE_BUTTON_XBUTTON1,
+		MOUSE_BUTTON_XBUTTON2,
+	]:
+		recognized = true
+		new_event.type = Main.EncodedInputEventType.MOUSE_BUTTON
+		new_event.value = mb.button_index
 	
 	var key := event as InputEventKey
 	if key:
-		($EventSelector as Window).set_input_as_handled()
-		if _key_events.get(_editing_action, -1) == key.keycode:
-			($EventSelector as AcceptDialog).dialog_text = "Эта кнопка занята этим же действием."
-			return
-		if key.keycode in _key_events.values():
-			($EventSelector as AcceptDialog).dialog_text = "Эта кнопка занята другим действием."
-			return
-		_set_coded_event_candidate(Main.ActionEventType.KEY, key.keycode)
+		recognized = true
+		new_event.type = Main.EncodedInputEventType.KEY
+		new_event.value = key.keycode
+	
+	if not recognized:
+		return
+	($EventSelector as Window).set_input_as_handled()
+	
+	for action: StringName in _action_events:
+		for action_event: EncodedInputEvent in _action_events[action]:
+			if action_event.type == new_event.type and action_event.value == new_event.value:
+				if _editing_action == action:
+					($EventSelector as AcceptDialog).dialog_text = \
+							"Эта кнопка занята этим же действием."
+				else:
+					($EventSelector as AcceptDialog).dialog_text = \
+							"Эта кнопка занята другим действием."
+				return
+	
+	_set_event_candidate(new_event)
 
 
 func _on_save_pressed() -> void:
-	for action: StringName in _pending_coded_events_types:
-		Globals.set_controls_int("action_%s_event_type" % action,
-				_pending_coded_events_types[action])
-		Globals.set_controls_int("action_%s_event_value" % action,
-				_pending_coded_events_values[action])
+	for action: StringName in _pending_actions:
+		var encoded_input_event_types: Array[Main.EncodedInputEventType]
+		var encoded_input_event_values: Array[int]
+		
+		for encoded_input_event: EncodedInputEvent in _action_events[action]:
+			encoded_input_event_types.append(encoded_input_event.type)
+			encoded_input_event_values.append(encoded_input_event.value)
+		
+		Globals.set_controls_variant("action_%s_event_types" % action,
+				encoded_input_event_types)
+		Globals.set_controls_variant("action_%s_event_values" % action,
+				encoded_input_event_values)
+	
 	Globals.main.apply_controls_settings()
-	_pending_coded_events_types.clear()
-	_pending_coded_events_values.clear()
+	_pending_actions.clear()
 	_load_keys_from_map()
 	($VBoxContainer/Buttons/Save as BaseButton).disabled = true
 	($VBoxContainer/Buttons/Discard as BaseButton).disabled = true
 
 
 func _on_discard_pressed() -> void:
-	_pending_coded_events_types.clear()
-	_pending_coded_events_values.clear()
+	_pending_actions.clear()
 	_load_keys_from_map()
 	($VBoxContainer/Buttons/Discard as BaseButton).disabled = true
 	($VBoxContainer/Buttons/Discard as BaseButton).disabled = true
 
 
 func _on_event_selector_confirmed() -> void:
-	_key_events.erase(_editing_action)
-	_mouse_button_events.erase(_editing_action)
-	match _coded_event_candidate_type:
-		Main.ActionEventType.KEY:
-			_key_events[_editing_action] = _coded_event_candidate_value
-		Main.ActionEventType.MOUSE_BUTTON:
-			_mouse_button_events[_editing_action] = _coded_event_candidate_value
-	(%Actions.get_node(_editing_action.to_pascal_case()).get_node(^"Event") as Label).text = \
-			_coded_event_as_text(_coded_event_candidate_type, _coded_event_candidate_value)
+	var events_container: VBoxContainer = %Actions.get_node(
+			_editing_action.to_pascal_case()).get_node(^"Container/Events")
 	
-	_pending_coded_events_types[_editing_action] = _coded_event_candidate_type
-	_pending_coded_events_values[_editing_action] = _coded_event_candidate_value
+	if _action_events[_editing_action].size() == _editing_action_event_idx:
+		_action_events[_editing_action].append(_event_candidate)
+		_create_action_event(_editing_action, events_container, _event_candidate)
+	else:
+		_action_events[_editing_action][_editing_action_event_idx] = _event_candidate
+		(events_container.get_child(_editing_action_event_idx).get_node(^"Event") as Label).text = \
+				_encoded_input_event_as_text(_event_candidate)
+	
+	if not _editing_action in _pending_actions:
+		_pending_actions.append(_editing_action)
 	($VBoxContainer/Buttons/Save as BaseButton).disabled = false
 	($VBoxContainer/Buttons/Discard as BaseButton).disabled = false
 
 
 func _on_event_selector_canceled() -> void:
 	_editing_action = &""
+	_editing_action_event_idx = -1
 	_waiting_for_input = false
+
+
+class EncodedInputEvent:
+	var type: Main.EncodedInputEventType
+	var value: int
+	var idx: int

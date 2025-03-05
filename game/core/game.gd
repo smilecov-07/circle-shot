@@ -199,8 +199,7 @@ func close() -> void:
 func load_event(event_id: int, map_id: int, player_name := "", equip_data: Array[int] = []) -> void:
 	state = State.LOADING
 	if multiplayer.is_server():
-		# Конвертация xD
-		_players_not_ready = Array(multiplayer.get_peers() as Array, TYPE_INT, StringName(), null)
+		_players_not_ready.assign(multiplayer.get_peers())
 		_players_not_ready.append(1)
 		_players_equip_data.clear()
 		_players_names.clear()

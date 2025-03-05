@@ -61,14 +61,14 @@ func quit(restart := false, args := PackedStringArray()) -> void:
 		set_int("window_pos_x", get_window().position.x)
 		set_int("window_pos_y", get_window().position.y)
 		save_file.save_encrypted_pass(SAVE_FILE_PATH, SAVE_FILE_PASSWORD)
-	if main.upnp:
+	if main and main.upnp:
 		main.upnp.finalize()
 	
 	if args.is_empty() and restart:
 		args = OS.get_cmdline_args()
 		args.append("--")
 		args.append_array(OS.get_cmdline_args())
-	if Globals.main.console:
+	if main and main.console:
 		if restart:
 			OS.create_instance(args)
 		OS.kill(OS.get_process_id())
@@ -191,7 +191,7 @@ func get_controls_variant(id: String, default_value: Variant) -> Variant:
 
 ## Задаёт значение настройки управления типа [Variant] под [param id].
 func set_controls_variant(id: String, value: Variant) -> void:
-	save_file.set_value(SETTINGS_SAVE_FILE_SECTION, id, value)
+	save_file.set_value(CONTROLS_SAVE_FILE_SECTION, id, value)
 
 
 ## Получает значение настройки управления типа [float] по [param id].
