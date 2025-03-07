@@ -126,6 +126,14 @@ func _encoded_input_event_as_text(encoded_input_event: EncodedInputEvent) -> Str
 					return "X1"
 				MOUSE_BUTTON_XBUTTON2:
 					return "X2"
+				MOUSE_BUTTON_WHEEL_DOWN:
+					return "Колесо вниз"
+				MOUSE_BUTTON_WHEEL_LEFT:
+					return "Колесо влево"
+				MOUSE_BUTTON_WHEEL_RIGHT:
+					return "Колесо вправо"
+				MOUSE_BUTTON_WHEEL_UP:
+					return "Колесо вверх"
 	return "НЕИЗВЕСТНО"
 
 
@@ -138,13 +146,7 @@ func _on_event_selector_window_input(event: InputEvent) -> void:
 	var recognized := false
 	
 	var mb := event as InputEventMouseButton
-	if mb and mb.button_index in [
-		MOUSE_BUTTON_LEFT,
-		MOUSE_BUTTON_RIGHT,
-		MOUSE_BUTTON_MIDDLE,
-		MOUSE_BUTTON_XBUTTON1,
-		MOUSE_BUTTON_XBUTTON2,
-	]:
+	if mb and mb.button_index != MOUSE_BUTTON_NONE:
 		recognized = true
 		new_event.type = Main.EncodedInputEventType.MOUSE_BUTTON
 		new_event.value = mb.button_index

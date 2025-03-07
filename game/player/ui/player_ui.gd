@@ -134,6 +134,16 @@ func select_weapon(type: Weapon.Type) -> void:
 		_player.try_change_weapon(type)
 
 
+func select_next_weapon() -> void:
+	var new_type := (_player.current_weapon_type + 1) % 4 as Weapon.Type
+	select_weapon(new_type)
+
+
+func select_previous_weapon() -> void:
+	var new_type := (_player.current_weapon_type + 3) % 4 as Weapon.Type
+	select_weapon(new_type)
+
+
 func reload() -> void:
 	if is_instance_valid(_player):
 		_player.try_reload_weapon()
@@ -248,6 +258,10 @@ func _unhandled_keyboard_and_mouse_input(event: InputEvent) -> void:
 		additional_button()
 	if event.is_action_pressed(&"use_skill"):
 		use_skill()
+	if event.is_action_pressed(&"next_weapon"):
+		select_next_weapon()
+	if event.is_action_pressed(&"previous_weapon"):
+		select_previous_weapon()
 
 
 func _process_touch_input_method(delta: float) -> void:
