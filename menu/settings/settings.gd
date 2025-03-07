@@ -223,7 +223,7 @@ func _on_reset_settings_dialog_confirmed() -> void:
 func _on_change_name_pressed() -> void:
 	($NameDialog as Window).title = \
 			"Смена имени (текущее: %s)" % Globals.get_string("player_name")
-	($NameDialog as AcceptDialog).popup_centered()
+	($NameDialog as Window).popup_centered()
 
 
 func _on_fullscreen_check_toggled(toggled_on: bool) -> void:

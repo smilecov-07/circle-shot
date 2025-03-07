@@ -157,6 +157,7 @@ shortcut_in_tooltip = false
 icon = ExtResource("12_k1ro1")
 
 [node name="NameDialog" parent="." instance=ExtResource("10_yw6bl")]
+visible = false
 
 [node name="About" type="Window" parent="."]
 title = "Об игре"

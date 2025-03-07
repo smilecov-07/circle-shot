@@ -958,9 +958,9 @@ cancel_button_text = "Отмена"
 
 [node name="NameDialog" parent="." instance=ExtResource("14_eq4mb")]
 title = "Смена имени"
-ok_button_text = "Сменить"
+visible = false
 
-[node name="LineEdit" parent="NameDialog" index="3"]
+[node name="LineEdit" parent="NameDialog/MarginContainer/VBoxContainer" index="1"]
 placeholder_text = "Новое имя..."
 
 [node name="ActionsConfiguration" parent="." instance_placeholder="res://menu/settings/actions_configuration.tscn"]
