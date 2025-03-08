@@ -756,6 +756,33 @@ layout_mode = 2
 icon = ExtResource("1_xh6xh")
 expand_icon = true
 
+[node name="AlwaysShowAim" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Controls/KeyboardSettings"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Controls/KeyboardSettings/AlwaysShowAim"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_type_variation = &"HeaderSmall"
+text = "Всегда показывать прицел"
+vertical_alignment = 1
+
+[node name="Setting" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Controls/KeyboardSettings/AlwaysShowAim"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AlwaysAimCheck" type="CheckButton" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Controls/KeyboardSettings/AlwaysShowAim/Setting"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="Help" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Controls/KeyboardSettings/AlwaysShowAim/Setting"]
+visible = false
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+icon = ExtResource("1_xh6xh")
+expand_icon = true
+
 [node name="SneakMultiplier" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Controls/KeyboardSettings"]
 layout_mode = 2
 
@@ -1006,6 +1033,8 @@ visible = false
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Controls/InputMethod/Setting/Help" to="." method="show_help" binds= [6]]
 [connection signal="toggled" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Controls/KeyboardSettings/FollowMouse/Setting/FollowMouseCheck" to="." method="_on_follow_mouse_check_toggled"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Controls/KeyboardSettings/FollowMouse/Setting/Help" to="." method="show_help" binds= [7]]
+[connection signal="toggled" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Controls/KeyboardSettings/AlwaysShowAim/Setting/AlwaysAimCheck" to="." method="_on_always_aim_check_toggled"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Controls/KeyboardSettings/AlwaysShowAim/Setting/Help" to="." method="show_help" binds= [4]]
 [connection signal="value_changed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Controls/KeyboardSettings/SneakMultiplier/Setting/SneakSlider" to="." method="_on_sneak_slider_value_changed"]
 [connection signal="value_changed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Controls/KeyboardSettings/Aim/Settings/AimDeadzone/Setting/AimDZoneSlider" to="." method="_on_aim_d_zone_slider_value_changed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Controls/KeyboardSettings/Aim/Settings/AimDeadzone/Setting/Help" to="." method="show_help" binds= [11]]

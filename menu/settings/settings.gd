@@ -39,6 +39,8 @@ func _ready() -> void:
 	(%UPNPCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("upnp")
 			or "--upnp" in OS.get_cmdline_args())
 	_on_upnp_check_toggled((%UPNPCheck as BaseButton).button_pressed)
+	(%AlwaysAimCheck as BaseButton).set_pressed_no_signal(
+			Globals.get_controls_bool("always_show_aim"))
 	
 	_update_aim_visual_size()
 	get_window().size_changed.connect(_update_aim_visual_size)
@@ -336,3 +338,7 @@ func _on_upnp_check_toggled(toggled_on: bool) -> void:
 
 func _on_chat_in_game_check_toggled(toggled_on: bool) -> void:
 	Globals.set_setting_bool("chat_in_game", toggled_on)
+
+
+func _on_always_aim_check_toggled(toggled_on: bool) -> void:
+	Globals.set_controls_bool("always_show_aim", toggled_on)

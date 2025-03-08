@@ -205,6 +205,8 @@ func setup_controls_settings() -> void:
 			Globals.get_controls_int("input_method", default_input_method))
 	Globals.set_controls_bool("follow_mouse",
 			Globals.get_controls_bool("follow_mouse", true))
+	Globals.set_controls_bool("always_show_aim",
+			Globals.get_controls_bool("always_show_aim", false))
 	Globals.set_controls_bool("joystick_fire",
 			Globals.get_controls_bool("joystick_fire", false))
 	Globals.set_controls_float("sneak_multiplier",

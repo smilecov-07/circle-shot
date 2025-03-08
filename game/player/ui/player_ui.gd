@@ -19,6 +19,7 @@ var _aim_deadzone: float
 var _aim_max_zone: float
 var _sneak_multiplier: float
 var _follow_mouse: bool
+var _always_show_aim: bool
 var _joystick_fire: bool
 
 var _player: Player
@@ -76,6 +77,7 @@ func _ready() -> void:
 			($Controller/Skill/TouchScreenButton as CanvasItem).hide()
 			get_window().focus_exited.connect(_on_window_focus_exited)
 			_follow_mouse = Globals.get_controls_bool("follow_mouse")
+			_always_show_aim = Globals.get_controls_bool("always_show_aim")
 			_sneak_multiplier = Globals.get_controls_float("sneak_multiplier")
 			var smallest_side: float = minf(get_viewport_rect().size.x, get_viewport_rect().size.y)
 			_aim_deadzone = Globals.get_controls_float("aim_deadzone") * smallest_side / 2
@@ -300,7 +302,7 @@ func _process_keyboard_and_mouse_input_method() -> void:
 		_player.entity_input.direction *= _sneak_multiplier
 	
 	_player.player_input.shooting = _shooting
-	_player.player_input.showing_aim = _showing_aim
+	_player.player_input.showing_aim = _showing_aim or _always_show_aim
 	
 	if _follow_mouse or _showing_aim:
 		var mouse_pos: Vector2 = _center.get_local_mouse_position()
