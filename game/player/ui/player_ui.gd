@@ -311,6 +311,9 @@ func _process_keyboard_and_mouse_input_method() -> void:
 					(clampf(mouse_distance, _aim_deadzone, _aim_max_zone) - _aim_deadzone)
 					/ _aim_zone * (1.0 - MIN_AIM_DIRECTION_LENGTH) + MIN_AIM_DIRECTION_LENGTH
 			)
+		else:
+			_player.player_input.aim_direction = _player.player_input.aim_direction.normalized() \
+					* MIN_AIM_DIRECTION_LENGTH
 	_player.player_input.turn_with_aim = _follow_mouse or _showing_aim
 
 

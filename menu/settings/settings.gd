@@ -294,7 +294,7 @@ func _on_configure_actions_pressed() -> void:
 
 func _on_aim_d_zone_slider_value_changed(value: float) -> void:
 	Globals.set_controls_float("aim_deadzone", value)
-	(%AimZoneSlider as Range).min_value = maxf(value + 0.1, 0.3)
+	(%AimZoneSlider as Range).min_value = maxf(value + 0.1, 0.25)
 	_aim_visual.queue_redraw()
 
 

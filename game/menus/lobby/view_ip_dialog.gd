@@ -18,9 +18,9 @@ func _ready() -> void:
 	copy_button.icon = load("uid://cp3wl6wn8h07v")
 
 
-func _show() -> void:
+func _on_about_to_popup() -> void:
 	_find_ips()
-	show()
+	size.y = 0 # Устанавливает минимальную высоту
 
 
 func _find_ips() -> void:
@@ -51,6 +51,7 @@ func _find_ips() -> void:
 			dialog_text += ip
 			first = false
 		dialog_text += '\n'
+	
 	if not _other_ips.is_empty():
 		dialog_text += "Остальные локальные IP-адреса: "
 		var first := true
@@ -59,11 +60,21 @@ func _find_ips() -> void:
 				dialog_text += ", "
 			dialog_text += ip
 			first = false
+		dialog_text += '\n'
+	
+	if Globals.main.upnp:
+		if Globals.main.upnp.status == UPNPManager.Status.INACTIVE:
+			dialog_text += "Статус UPnP: Неактивно."
+		else:
+			dialog_text += "Статус UPnP: Активно."
+			dialog_text += '\n'
+			dialog_text += "Глобальный IP-адрес UPnP: %s" % Globals.main.upnp.get_external_ip()
+		dialog_text += '\n'
 	
 	var error: Error = _http_request.request("https://ipv4.icanhazip.com/")
 	if error != OK:
 		push_warning("Quiry global IP: can't create request. Error: %s." % error_string(error))
-		dialog_text += '\n'
+		
 		dialog_text += "Невозможно создать запрос для получения глобального IP-адреса!
 Ошибка: %s." % error_string(error)
 
@@ -72,16 +83,13 @@ func _on_request_completed(result: int, response_code: int,
 		_headers: PackedStringArray, body: PackedByteArray) -> void:
 	if result != HTTPRequest.RESULT_SUCCESS:
 		push_warning("Quiry global IP: result is not Success. Result: %d." % result)
-		dialog_text += '\n'
 		dialog_text += "Ошибка запроса глобального IP-адреса! Код ошибки: %d." % result
 		return
 	if response_code != HTTPClient.RESPONSE_OK:
 		push_warning("Quiry global IP: response code is not 200. Response code: %d" % response_code)
-		dialog_text += '\n'
 		dialog_text += "Ошибка получения глобального IP-адреса! Код ошибки: %d." % response_code
 		return
 	_global_ip = body.get_string_from_utf8().strip_escapes()
-	dialog_text += '\n'
 	dialog_text += "Глобальный IP-адрес: %s" % _global_ip
 	dialog_text += '\n'
 	dialog_text += "Чтобы игроки могли подключиться по глобальному IP-адресу, \

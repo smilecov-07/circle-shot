@@ -210,9 +210,9 @@ func setup_controls_settings() -> void:
 	Globals.set_controls_float("sneak_multiplier",
 			Globals.get_controls_float("sneak_multiplier", 0.5))
 	Globals.set_controls_float("aim_deadzone",
-			Globals.get_controls_float("aim_deadzone", 0.2))
+			Globals.get_controls_float("aim_deadzone", 0.15))
 	Globals.set_controls_float("aim_zone",
-			Globals.get_controls_float("aim_zone", 0.6))
+			Globals.get_controls_float("aim_zone", 0.5))
 	
 	InputMap.load_from_project_settings()
 	for action: StringName in InputMap.get_actions():

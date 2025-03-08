@@ -459,6 +459,7 @@ icon = ExtResource("1_xh6xh")
 expand_icon = true
 
 [node name="Video" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -690,7 +691,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Controls" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -826,8 +826,8 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-min_value = 0.1
-max_value = 0.5
+min_value = 0.08
+max_value = 0.4
 step = 0.001
 value = 0.1
 allow_lesser = true
@@ -858,10 +858,10 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-min_value = 0.3
-max_value = 0.8
+min_value = 0.25
+max_value = 0.7
 step = 0.001
-value = 0.6
+value = 0.5
 
 [node name="Help" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Controls/KeyboardSettings/Aim/Settings/AimZone/Setting"]
 custom_minimum_size = Vector2(48, 0)

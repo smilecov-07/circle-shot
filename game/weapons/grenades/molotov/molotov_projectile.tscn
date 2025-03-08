@@ -735,8 +735,8 @@ replication_config = SubResource("SceneReplicationConfig_adfdp")
 
 [node name="Attack" type="Node2D" parent="." index="4"]
 script = ExtResource("5_l5qjx")
-damage = 6
-damage_interval = 0.2
+damage = 7
+damage_interval = 0.25
 metadata/_custom_type_script = "uid://bgvirlnion8wa"
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
