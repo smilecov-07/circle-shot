@@ -11,13 +11,16 @@ extends Node2D
 var data: SkillData
 ## Ссылка на игрока.
 var player: Player
+
 var _cooldown_timer := 0.0
+var _blocked_cooldown_counter: int = 0
 @warning_ignore("unused_private_class_variable") # Для дочерних классов
 @onready var _other_parent: Node2D = get_tree().get_first_node_in_group(&"OtherParent")
 
 
 func _physics_process(delta: float) -> void:
-	_cooldown_timer -= delta
+	if not is_cooldown_blocked():
+		_cooldown_timer -= delta
 	player.skill_vars[1] = ceili(_cooldown_timer)
 
 
@@ -37,6 +40,21 @@ func use() -> void:
 	player.skill_vars[1] = use_cooldown
 	_cooldown_timer = use_cooldown
 	_use()
+
+
+## Приостанавливает откат навыка.
+func block_cooldown() -> void:
+	_blocked_cooldown_counter += 1
+
+
+## Продолжает откат навыка.
+func unblock_cooldown() -> void:
+	_blocked_cooldown_counter -= 1
+
+
+## Возвращает [code]true[/code], если навык может откатываться.
+func is_cooldown_blocked() -> bool:
+	return _blocked_cooldown_counter > 0
 
 
 ## Возвращает [code]true[/code], если навык можно использовать.

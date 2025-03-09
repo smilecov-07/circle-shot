@@ -24,6 +24,7 @@ func _process(_delta: float) -> void:
 func _use() -> void:
 	($ActiveMarker/AnimationPlayer as AnimationPlayer).play(&"Active")
 	player.player_input.shooting_started.connect(_on_player_shooting_started, CONNECT_ONE_SHOT)
+	block_cooldown()
 
 
 func _can_use() -> bool:
@@ -37,6 +38,7 @@ func _calculate_spread() -> float:
 
 
 func _on_player_shooting_started() -> void:
+	unblock_cooldown()
 	($ActiveMarker/AnimationPlayer as AnimationPlayer).play(&"RESET")
 	if multiplayer.is_server() and not player.is_disarmed():
 		var projectile: Projectile = projectile_scene.instantiate()
