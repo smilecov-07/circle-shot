@@ -19,7 +19,7 @@ func _process(delta: float) -> void:
 	_scarfes.global_rotation = lerp_angle(_last_rotation, _last_walk_angle,
 			reach_angle_speed * delta)
 	_last_rotation = _scarfes.global_rotation
-	for child: Sprite2D in _scarfes.get_children():
+	for child: CanvasItem in _scarfes.get_children():
 		child.set_instance_shader_parameter(&"amplitude", lerpf(idle_scarf_amplitude,
 				walk_scarf_amplitude, player.entity_input.direction.length_squared()))
 

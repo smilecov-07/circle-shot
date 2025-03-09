@@ -45,6 +45,7 @@ func _finish_start() -> void:
 		_check_winner()
 	for smoke: Node2D in $PoisonSmoke.get_children():
 		var tween: Tween = smoke.create_tween()
+		tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 		tween.tween_property(smoke, ^":position", Vector2.ZERO, poison_smoke_time)
 
 

@@ -112,7 +112,7 @@ func _unmake_current() -> void:
 	
 	_anim.play(&"RESET")
 	_anim.advance(0.01)
-	for ammo_node: Node2D in _ammo_parent.get_children():
+	for ammo_node: Node in _ammo_parent.get_children():
 		(ammo_node.get_node(^"AnimationPlayer") as AnimationPlayer).play(&"RESET")
 		(ammo_node.get_node(^"AnimationPlayer") as AnimationPlayer).advance(0.01)
 

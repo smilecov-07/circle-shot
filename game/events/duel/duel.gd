@@ -88,6 +88,7 @@ func _start_round() -> void:
 	add_child(smokes)
 	for smoke: Node2D in smokes.get_children():
 		var move_tween: Tween = smoke.create_tween()
+		move_tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 		move_tween.tween_property(smoke, ^":position", Vector2.ZERO, poison_smoke_time)
 	var tween: Tween = smokes.create_tween()
 	tween.tween_property(smokes, ^":modulate", Color.WHITE, 0.3).from(Color.TRANSPARENT)

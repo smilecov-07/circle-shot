@@ -10,4 +10,4 @@ func _on_player_health_changed(old_value: int, new_value: int) -> void:
 		($AnimationPlayer as AnimationPlayer).play(&"Nonono")
 	else:
 		($AnimationPlayer as AnimationPlayer).play(&"Yesyesyes")
-	($AnimationPlayer as AnimationPlayer).seek(0.0, true)
+	($AnimationPlayer as AnimationPlayer).seek(0.0)

@@ -4,8 +4,10 @@ extends Melee
 
 func _shoot() -> void:
 	_shoot_timer = shoot_interval
-	_anim.play(&"Attack")
-	_anim.seek(0.0, true)
+	if _anim.current_animation != &"Attack":
+		_anim.play(&"Attack")
+	else:
+		_anim.seek(0.0)
 	
 	if not _attack_sfx.playing:
 		_attack_sfx.play()

@@ -126,7 +126,7 @@ func _shoot() -> void:
 	
 	ammo -= ammo_per_shot
 	_anim.play(&"Shoot")
-	_anim.seek(0.0, true)
+	_anim.seek(0.0)
 	if multiplayer.is_server():
 		_create_projectile()
 	

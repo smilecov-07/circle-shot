@@ -293,6 +293,7 @@ metadata/_custom_type_script = "uid://dfhhd4es3t3i"
 libraries = {
 &"": SubResource("AnimationLibrary_6bemp")
 }
+next/Attack = &"Idle"
 next/PostEquip = &"Idle"
 
 [node name="Saw" type="AnimatedSprite2D" parent="." index="2"]
@@ -313,5 +314,3 @@ max_distance = 1600.0
 bus = &"SFX"
 
 [node name="Aim" type="Node2D" parent="." index="5"]
-
-[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
