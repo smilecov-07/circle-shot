@@ -11,8 +11,8 @@ extends Resource
 @export var rarity := ItemsDB.Rarity.COMMON
 ## ID оружия. Должно быть уникальным.
 @export var id: String
-@export_group("Stats")
-## Словарь с различными статистиками оружия (урон, боезапас, разброс, ...).
+@export_group("About")
+## Словарь с различными статистиками оружия (урон, боезапас, ...).
 ## В [member damage_text], [member ammo_text] и [member description] можно подставлять значения
 ## отсюда, если написать в них [code]{<нужная статистика>}[/code].
 @export var stats: Dictionary[String, String] = {

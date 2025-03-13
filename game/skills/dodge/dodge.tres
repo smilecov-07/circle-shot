@@ -5,10 +5,22 @@
 [resource]
 script = ExtResource("1_8moi4")
 name = "Перекат"
-brief_description = "Уклонение от снарядов"
-usage_text = "15 исп./2 с"
 rarity = 2
 id = "rolling"
+stats = Dictionary[String, String]({
+"cooldown": "2",
+"count": "15",
+"duration": "0.45"
+})
+brief_description = "Уклонение от снарядов"
+usage_text = "{count} исп./{cooldown} с"
+description = "[color=deep_blue_sky]Выполняет перекат, во время которого игрок неуязвим[/color]
+Длительность переката: [color=red]{duration} с[/color]
+
+Количество использований: [color=blue]{count}[/color]
+Перезарядка: [color=blue]{cooldown} с[/color]
+
+Простой, но очень мощный навык, позволяющий сохранить большое количество ОЗ."
 scene_path = "uid://cubicepjijo6d"
 image_path = "uid://ctg2ax1bhhg3c"
 spawnable_scenes_paths = Array[String]([])

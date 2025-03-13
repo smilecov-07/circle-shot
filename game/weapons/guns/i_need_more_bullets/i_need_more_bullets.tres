@@ -18,7 +18,7 @@ stats = Dictionary[String, String]({
 })
 damage_text = "Урон/с: {dps}/{single_dps}"
 ammo_text = "{ammo_per_load}/{ammo_total}"
-description = "Имеет режимы стрельбы непрерывно и одиночными пулями
+description = "[color=deep_sky_blue]Имеет режимы стрельбы непрерывно и одиночными пулями[/color]
 Непрерывная стрельба:
 Урон/с: [color=red]{dps}[/color]
 Урон/снаряд: [color=red]{damage}[/color]

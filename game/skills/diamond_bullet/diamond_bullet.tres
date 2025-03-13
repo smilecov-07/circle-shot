@@ -5,10 +5,22 @@
 [resource]
 script = ExtResource("1_dv8cp")
 name = "Алмазная пуля"
-brief_description = "Урон: 25, отбрасывает"
-usage_text = "5 исп./15 с"
 rarity = 2
 id = "diamond_penis"
+stats = Dictionary[String, String]({
+"cooldown": "15",
+"count": "5",
+"damage": "25"
+})
+brief_description = "Урон: {damage}, отбрасывает"
+usage_text = "{count} исп./{cooldown} с"
+description = "[color=deep_blue_sky]Следующий выстрел выпустит алмазную пулю, отбрасывающую противника[/color]
+Урон: [color=red]{damage}[/color]
+
+Количество использований: [color=blue]{count}[/color]
+Перезарядка: [color=blue]{cooldown} с[/color]
+
+Эта пуля может здорово усилить одиночные выстрелы, или же просто послужить прибавкой к урону в секунду."
 scene_path = "uid://dwy62fpecrhen"
 image_path = "uid://dj136q4fo21rj"
 spawnable_scenes_paths = Array[String](["uid://cwbyj0wl0k3ab"])

@@ -5,10 +5,28 @@
 [resource]
 script = ExtResource("1_213rr")
 name = "Энергетик"
-brief_description = "Усиливает на 5 c"
-usage_text = "3 исп./30 с"
 rarity = 1
 id = "hypercharge"
+stats = Dictionary[String, String]({
+"cooldown": "30",
+"count": "3",
+"damage_boost": "15",
+"defense_boost": "10",
+"duration": "5",
+"speed_boost": "20"
+})
+brief_description = "Усиливает на {duration} c"
+usage_text = "{count} исп./{cooldown} с"
+description = "[color=deep_blue_sky]Усиляет игрока[/color]
+Длительность:
+Усиление скорости: [color=red]+{speed_boost}%[/color]
+Усиление урона: [color=red]+{damage_boost}%[/color]
+Понижение входящего урона: [color=red]-{defense_boost}%[/color]
+
+Количество использований: [color=blue]{count}[/color]
+Перезарядка: [color=blue]{cooldown} с[/color]
+
+Этот энергетик полностью легален даже для игроков-подростков."
 scene_path = "uid://bhlky5iu0nax1"
 image_path = "uid://c1jwuybk58v2w"
 spawnable_scenes_paths = Array[String]([])
