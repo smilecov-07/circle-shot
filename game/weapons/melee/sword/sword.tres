@@ -7,9 +7,19 @@ script = ExtResource("1_r8au4")
 name = "Меч"
 rarity = 1
 id = "svord"
-damage_text = "Урон: 65"
+stats = Dictionary[String, String]({
+"ammo_total": "не ограничено",
+"damage": "65",
+"dps": "62"
+})
+damage_text = "Урон: {damage}"
 ammo_text = "Не ограничено"
-description = ""
+description = "Урон/с: [color=red]{dps}[/color]
+Урон/удар: [color=red]{damage}[/color]
+
+Боеприпасы: [color=blue]{ammo_total}[/color]
+
+Рыцарский меч средней длины и скорости, наносящий много урона за один удар."
 scene_path = "uid://cdcbnw1l0jmi8"
 image_path = "uid://dmd6j30ggojbq"
 spawnable_scenes_paths = Array[String]([])

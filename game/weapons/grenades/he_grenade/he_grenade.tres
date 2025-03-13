@@ -7,9 +7,21 @@ script = ExtResource("1_25gnn")
 name = "Осколочная граната"
 rarity = 0
 id = "he_grenade"
-damage_text = "Урон: 20-75"
-ammo_text = "3 штуки"
-description = ""
+stats = Dictionary[String, String]({
+"ammo_total": "3",
+"damage": "20-75",
+"diameter": "11.2",
+"reload_time": "9"
+})
+damage_text = "Урон: {damage}"
+ammo_text = "Кол-во: {ammo_total}"
+description = "Урон: [color=red]{damage}[/color]
+Диаметр взрыва: [color=red]{diameter} бл.[/color]
+
+Количество: [color=blue]{ammo_total} шт.[/color]
+Перезарядка: [color=blue]{reload_time} с[/color]
+
+Обычная осколочная граната. Чем ближе противник к центру взрыва, тем больше урона он получит."
 scene_path = "uid://dkem1fmo3lqym"
 image_path = "uid://ctmye1qbi2nx2"
 spawnable_scenes_paths = Array[String](["uid://dixl482dlx0y5"])

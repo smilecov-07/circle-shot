@@ -7,9 +7,22 @@ script = ExtResource("1_23qcc")
 name = "FAMAS"
 rarity = 1
 id = "famasik"
-damage_text = "Урон/с: 46"
-ammo_text = "30/90"
-description = ""
+stats = Dictionary[String, String]({
+"ammo_per_load": "30",
+"ammo_total": "90",
+"damage": "6",
+"dps": "46",
+"reload_time": "2"
+})
+damage_text = "Урон/с: {dps}"
+ammo_text = "{ammo_per_load}/{ammo_total}"
+description = "Урон/с: [color=red]{dps}[/color]
+Урон/снаряд: [color=red]{damage}[/color]
+
+Боеприпасы: [color=blue]{ammo_per_load}/{ammo_total}[/color]
+Перезарядка: [color=blue]{reload_time} с[/color]
+
+Несмотря на относительно низкий урон, эта винтовка очень лёгкая и мобильная."
 scene_path = "uid://b5ktvv2dnbcgp"
 image_path = "uid://j5skuasygwff"
 spawnable_scenes_paths = Array[String](["uid://byoxdenhuuhfc"])

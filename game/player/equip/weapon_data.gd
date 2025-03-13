@@ -12,13 +12,29 @@ extends Resource
 ## ID оружия. Должно быть уникальным.
 @export var id: String
 @export_group("Stats")
+## Словарь с различными статистиками оружия (урон, боезапас, разброс, ...).
+## В [member damage_text], [member ammo_text] и [member description] можно подставлять значения
+## отсюда, если написать в них [code]{<нужная статистика>}[/code].
+@export var stats: Dictionary[String, String] = {
+	"dps": "",
+	"damage": "",
+	"ammo_per_load": "",
+	"ammo_total": "",
+	"reload_time": "",
+}
 ## Текст, кратко говорящий об уроне оружия. Чаще всего "Урон/с" или просто "Урон".
-@export var damage_text: String
+@export var damage_text := "Урон/с: {dps}"
 ## Текст, кратко говорящий об боеприпасах оружия. Чаще всего в формате "ХХ/ХХХ"
-@export var ammo_text: String
+@export var ammo_text := "{ammo_per_load}/{ammo_total}"
 ## Полное описание оружия, включающее в себя почти всю информацию о нём. Для форматирования можно
 ## использовать BBCode.
-@export_multiline var description: String
+@export_multiline var description := """Урон/с: [color=red]{dps}[/color]
+Урон/снаряд: [color=red]{damage}[/color]
+
+Боеприпасы: [color=blue]{ammo_per_load}/{ammo_total}[/color]
+Перезарядка: [color=blue]{reload_time} с[/color]
+
+Описание"""
 @export_group("Paths")
 ## Путь к сцене оружия.
 @export_file("PackedScene") var scene_path: String

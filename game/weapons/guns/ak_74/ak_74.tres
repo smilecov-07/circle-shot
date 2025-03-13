@@ -7,9 +7,22 @@ script = ExtResource("1_obf2e")
 name = "AK-74"
 rarity = 0
 id = "akr"
-damage_text = "Урон/с: 55"
-ammo_text = "30/90"
-description = ""
+stats = Dictionary[String, String]({
+"ammo_per_load": "30",
+"ammo_total": "90",
+"damage": "8",
+"dps": "55",
+"reload_time": "3.6"
+})
+damage_text = "Урон/с: {dps}"
+ammo_text = "{ammo_per_load}/{ammo_total}"
+description = "Урон/с: [color=red]{dps}[/color]
+Урон/снаряд: [color=red]{damage}[/color]
+
+Боеприпасы: [color=blue]{ammo_per_load}/{ammo_total}[/color]
+Перезарядка: [color=blue]{reload_time} с[/color]
+
+Стандартная и знакомая всем штурмовая винтовка. Хороший урон и посредственная точность."
 scene_path = "uid://b2v16qvrswdtd"
 image_path = "uid://bfak724toabd4"
 spawnable_scenes_paths = Array[String](["uid://tbn6kstqx2sj"])

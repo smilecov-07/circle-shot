@@ -80,8 +80,10 @@ func list_items(type: ItemsDB.Item, selected: int = -1, selected_event: int = 0)
 				if selected == weapon.idx_in_db:
 					(item.get_node(^"Name") as Label).add_theme_color_override(
 							&"font_color", Color.GREEN)
-				(item.get_node(^"Description") as Label).text = \
-						weapon.ammo_text + '\n' + weapon.damage_text
+				(item.get_node(^"Description") as Label).text = "%s\n%s" % [
+					weapon.ammo_text.format(weapon.stats),
+					weapon.damage_text.format(weapon.stats),
+				]
 				(item.get_node(^"RarityFill") as ColorRect).color = \
 						ItemsDB.RARITY_COLORS[weapon.rarity]
 				(item.get_node(^"Click") as BaseButton).pressed.connect(
@@ -98,8 +100,10 @@ func list_items(type: ItemsDB.Item, selected: int = -1, selected_event: int = 0)
 				if selected == weapon.idx_in_db:
 					(item.get_node(^"Name") as Label).add_theme_color_override(
 							&"font_color", Color.GREEN)
-				(item.get_node(^"Description") as Label).text = \
-						weapon.ammo_text + '\n' + weapon.damage_text
+				(item.get_node(^"Description") as Label).text = "%s\n%s" % [
+					weapon.ammo_text.format(weapon.stats),
+					weapon.damage_text.format(weapon.stats),
+				]
 				(item.get_node(^"RarityFill") as ColorRect).color = \
 						ItemsDB.RARITY_COLORS[weapon.rarity]
 				(item.get_node(^"Click") as BaseButton).pressed.connect(
@@ -116,8 +120,10 @@ func list_items(type: ItemsDB.Item, selected: int = -1, selected_event: int = 0)
 				if selected == weapon.idx_in_db:
 					(item.get_node(^"Name") as Label).add_theme_color_override(
 							&"font_color", Color.GREEN)
-				(item.get_node(^"Description") as Label).text = \
-						weapon.ammo_text + '\n' + weapon.damage_text
+				(item.get_node(^"Description") as Label).text = "%s\n%s" % [
+					weapon.ammo_text.format(weapon.stats),
+					weapon.damage_text.format(weapon.stats),
+				]
 				(item.get_node(^"RarityFill") as ColorRect).color = \
 						ItemsDB.RARITY_COLORS[weapon.rarity]
 				(item.get_node(^"Click") as BaseButton).pressed.connect(
@@ -134,8 +140,10 @@ func list_items(type: ItemsDB.Item, selected: int = -1, selected_event: int = 0)
 				if selected == weapon.idx_in_db:
 					(item.get_node(^"Name") as Label).add_theme_color_override(
 							&"font_color", Color.GREEN)
-				(item.get_node(^"Description") as Label).text = \
-						weapon.ammo_text + '\n' + weapon.damage_text
+				(item.get_node(^"Description") as Label).text = "%s\n%s" % [
+					weapon.ammo_text.format(weapon.stats),
+					weapon.damage_text.format(weapon.stats),
+				]
 				(item.get_node(^"RarityFill") as ColorRect).color = \
 						ItemsDB.RARITY_COLORS[weapon.rarity]
 				(item.get_node(^"Click") as BaseButton).pressed.connect(

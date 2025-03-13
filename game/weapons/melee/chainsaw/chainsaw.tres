@@ -7,9 +7,19 @@ script = ExtResource("1_dsrcm")
 name = "Бензопила"
 rarity = 2
 id = "pila"
-damage_text = "Урон/с: 100"
+stats = Dictionary[String, String]({
+"ammo_total": "не ограничено",
+"damage": "20",
+"dps": "100"
+})
+damage_text = "Урон/с: {dps}"
 ammo_text = "Не ограничено"
-description = ""
+description = "Урон/с: [color=red]{dps}[/color]
+Урон/удар: [color=red]{damage}[/color]
+
+Боеприпасы: [color=blue]{ammo_total}[/color]
+
+Мощное ближнее оружие с впечатляющим уроном, однако достаточно громкое."
 scene_path = "uid://dqptp3tatgmn"
 image_path = "uid://t8yuooskcmnw"
 spawnable_scenes_paths = Array[String]([])

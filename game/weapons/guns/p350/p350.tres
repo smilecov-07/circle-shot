@@ -7,9 +7,22 @@ script = ExtResource("1_cx1jm")
 name = "P350"
 rarity = 0
 id = "p350"
-damage_text = "Урон/с: 38"
-ammo_text = "13/52"
-description = ""
+stats = Dictionary[String, String]({
+"ammo_per_load": "13",
+"ammo_total": "52",
+"damage": "15",
+"dps": "38",
+"reload_time": "2.3"
+})
+damage_text = "Урон/с: {dps}"
+ammo_text = "{ammo_per_load}/{ammo_total}"
+description = "Урон/с: [color=red]{dps}[/color]
+Урон/снаряд: [color=red]{damage}[/color]
+
+Боеприпасы: [color=blue]{ammo_per_load}/{ammo_total}[/color]
+Перезарядка: [color=blue]{reload_time} с[/color]
+
+Простенький пистолет, наносящий неплохой урон. Идеален в моменты, когда основное оружие некогда перезарядить."
 scene_path = "uid://bsgtxdfb2n4u3"
 image_path = "uid://bxroqwsevr022"
 spawnable_scenes_paths = Array[String](["uid://c4cr4b5wn24yt"])

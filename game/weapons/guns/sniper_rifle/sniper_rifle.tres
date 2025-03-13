@@ -7,9 +7,23 @@ script = ExtResource("1_ko1gy")
 name = "Снайперская винтовка"
 rarity = 3
 id = "fuck_snipers"
-damage_text = "Урон: 40"
-ammo_text = "4/12"
-description = ""
+stats = Dictionary[String, String]({
+"ammo_per_load": "4",
+"ammo_total": "12",
+"damage": "40",
+"dps": "40",
+"reload_time": "2.3"
+})
+damage_text = "Урон: {damage}"
+ammo_text = "{ammo_per_load}/{ammo_total}"
+description = "Урон/с: [color=red]{dps}[/color]
+Урон/снаряд: [color=red]{damage}[/color]
+[color=deep_sky_blue]Имеет функцию прицеливания[/color]
+
+Боеприпасы: [color=blue]{ammo_per_load}/{ammo_total}[/color]
+Перезарядка: [color=blue]{reload_time} с[/color]
+
+Это оружие благодаря своей точности и функции прицеливания позволяет поражать цели с большого расстояния. Однако точность существенно понижается при стрельбе на ходу."
 scene_path = "uid://4q0rrm6arbyx"
 image_path = "uid://8k4hqd6lxca1"
 spawnable_scenes_paths = Array[String](["uid://cm0sqwulviy72"])

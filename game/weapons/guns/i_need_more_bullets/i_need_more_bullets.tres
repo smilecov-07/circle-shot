@@ -7,9 +7,29 @@ script = ExtResource("1_s825u")
 name = "I NEED MORE BULLETS"
 rarity = 4
 id = "nicecocksir"
-damage_text = "Урон/с: 44/33"
-ammo_text = "25/75"
-description = ""
+stats = Dictionary[String, String]({
+"ammo_per_load": "25",
+"ammo_total": "75",
+"damage": "8",
+"dps": "44",
+"reload_time": "2.9",
+"single_damage": "33",
+"single_dps": "33"
+})
+damage_text = "Урон/с: {dps}/{single_dps}"
+ammo_text = "{ammo_per_load}/{ammo_total}"
+description = "Имеет режимы стрельбы непрерывно и одиночными пулями
+Непрерывная стрельба:
+Урон/с: [color=red]{dps}[/color]
+Урон/снаряд: [color=red]{damage}[/color]
+Стрельба одиночными пулями:
+Урон/с: [color=red]{single_dps}[/color]
+Урон/снаряд: [color=red]{single_damage}[/color]
+
+Боеприпасы: [color=blue]{ammo_per_load}/{ammo_total}[/color]
+Перезарядка: [color=blue]{reload_time} с[/color]
+
+Это ПРАВИЛЬНОЕ оружие позволит получить тебе немного BULLETS и успешно посетить GYM."
 scene_path = "uid://tpvpkv3eid7i"
 image_path = "uid://che11gmsosjmk"
 spawnable_scenes_paths = Array[String](["uid://ll80nn6exap3", "uid://bh8r5gsd6ghjm"])

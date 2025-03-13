@@ -7,9 +7,23 @@ script = ExtResource("1_4g17s")
 name = "Снежки"
 rarity = 2
 id = "snow"
-damage_text = "Урон/с: 30"
-ammo_text = "2/30"
-description = ""
+stats = Dictionary[String, String]({
+"ammo_per_load": "2",
+"ammo_total": "30",
+"damage": "15",
+"dps": "30",
+"reload_time": "0.9"
+})
+damage_text = "Урон/с: {dps}"
+ammo_text = "{ammo_per_load}/{ammo_total}"
+description = "Урон/с: [color=red]{dps}[/color]
+Урон/снаряд: [color=red]{damage}[/color]
+[color=deep_sky_blue]Замедляют[/color]
+
+Боеприпасы: [color=blue]{ammo_per_load}/{ammo_total}[/color]
+Перезарядка: [color=blue]{reload_time} с[/color] за снаряд
+
+Несмотря на низкий урон, снежки - грозное оружие для контроля благодаря сильному и продолжительному замедлению. "
 scene_path = "uid://0sfmbuci74d7"
 image_path = "uid://e2hbaq6jty8"
 spawnable_scenes_paths = Array[String](["uid://4jod4xwjklj3"])

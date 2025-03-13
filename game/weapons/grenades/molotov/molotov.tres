@@ -7,9 +7,25 @@ script = ExtResource("1_cddvc")
 name = "Коктейль Молотова"
 rarity = 1
 id = "molotov"
-damage_text = "Урон/с: 30"
-ammo_text = "2 штуки"
-description = ""
+stats = Dictionary[String, String]({
+"ammo_total": "2",
+"damage": "7",
+"diameter": "10",
+"dps": "28",
+"duration": "7.4",
+"reload_time": "11"
+})
+damage_text = "Урон/с: {dps}"
+ammo_text = "{ammo_total} шт."
+description = "Урон/с: [color=red]{dps}[/color]
+Урон/удар: [color=red]{damage}[/color]
+Диаметр огня: [color=red]{diameter} бл.[/color]
+Длительность: [color=red]{duration} с[/color]
+
+Количество: [color=blue]{ammo_total} шт.[/color]
+Перезарядка: [color=blue]{reload_time} с[/color]
+
+Стеклянная буттылка с зажигательной смесью, идеально подходит для контроля области. Однако огонь можно потушить."
 scene_path = "uid://sfylru3mff2y"
 image_path = "uid://da8d8bw8e6naj"
 spawnable_scenes_paths = Array[String](["uid://dq6lpemfo4iff"])

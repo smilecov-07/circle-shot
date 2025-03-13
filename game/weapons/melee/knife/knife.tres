@@ -7,9 +7,19 @@ script = ExtResource("1_2u2my")
 name = "Нож"
 rarity = 0
 id = "knife"
-damage_text = "Урон: 52"
+stats = Dictionary[String, String]({
+"ammo_total": "не ограничено",
+"damage": "52",
+"dps": "74"
+})
+damage_text = "Урон: {damage}"
 ammo_text = "Не ограничено"
-description = ""
+description = "Урон/с: [color=red]{dps}[/color]
+Урон/удар: [color=red]{damage}[/color]
+
+Боеприпасы: [color=blue]{ammo_total}[/color]
+
+Обычный нож, который может быстро сделать свою работу в нужный момент."
 scene_path = "uid://dw483364uyeyn"
 image_path = "uid://dq8riqdpmm2vy"
 spawnable_scenes_paths = Array[String]([])

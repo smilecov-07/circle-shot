@@ -7,9 +7,22 @@ script = ExtResource("1_n5igo")
 name = "M4A1"
 rarity = 1
 id = "m4a1"
-damage_text = "Урон/с: 50"
-ammo_text = "25/75"
-description = ""
+stats = Dictionary[String, String]({
+"ammo_per_load": "25",
+"ammo_total": "50",
+"damage": "7",
+"dps": "50",
+"reload_time": "2.7"
+})
+damage_text = "Урон/с: {dps}"
+ammo_text = "{ammo_per_load}/{ammo_total}"
+description = "Урон/с: [color=red]{dps}[/color]
+Урон/снаряд: [color=red]{damage}[/color]
+
+Боеприпасы: [color=blue]{ammo_per_load}/{ammo_total}[/color]
+Перезарядка: [color=blue]{reload_time} с[/color]
+
+Длинная и достаточно точная штурмовая винтовка. Благодаря глушителю уровень шума ниже, чем у похожих оружий."
 scene_path = "uid://jhqjtl8ewlm5"
 image_path = "uid://bxu6w2rhuxcjg"
 spawnable_scenes_paths = Array[String](["uid://duvq6s4rriwpi"])
