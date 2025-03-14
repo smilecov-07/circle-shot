@@ -2,8 +2,8 @@ shader_type canvas_item;
 
 uniform float time_multiplier = 1.0;
 uniform float stretch = 7.5;
+uniform float amplitude = 0.1;
 instance uniform float time_offset;
-instance uniform float amplitude = 0.1;
 varying flat vec4 color;
 
 void vertex() {

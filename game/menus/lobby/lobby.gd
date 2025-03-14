@@ -534,9 +534,14 @@ func _find_ips_for_broadcast() -> void:
 				print_verbose("Found IP to broadcast: %s." % broadcast_ip)
 				_udp_peers.append(udp)
 				break
+	
+	if _udp_peers.is_empty():
+		print_verbose("No IPs found.")
 
 
 func _do_broadcast() -> void:
+	if _udp_peers.is_empty():
+		return
 	var data := PackedByteArray()
 	data.append(_broadcast_lobby_id)
 	data.append(_players.size())

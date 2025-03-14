@@ -44,13 +44,12 @@ func _process(_delta: float) -> void:
 		])
 		
 		if _lobbies_container.has_node(id_nodepath):
-			(_lobbies_container.get_node(id_nodepath).get_node(^"Timer") as Timer).start()
-			(_lobbies_container.get_node(id_nodepath) as Button).text = "%s (%d/%d)" % [
-				player_name,
-				players,
-				max_players,
-			]
-			print_verbose("Lobby %d already in list. Updating timer." % data[0])
+			var local_lobby_entry: Button = _lobbies_container.get_node(id_nodepath)
+			(local_lobby_entry.get_node(^"Timer") as Timer).start()
+			local_lobby_entry.text = "%s (%d/%d)" % [player_name, players, max_players]
+			local_lobby_entry.pressed.disconnect(_game.join)
+			local_lobby_entry.pressed.connect(_game.join.bind(peer.get_packet_ip()))
+			print_verbose("Lobby %d already in list. Updating IP and timer." % data[0])
 		else:
 			var local_lobby_entry: Button = _local_lobby_entry_scene.instantiate()
 			local_lobby_entry.name = id_nodepath.get_concatenated_names() # Конвертация в StringName
@@ -65,7 +64,7 @@ func _process(_delta: float) -> void:
 func _notification(what: int) -> void:
 	match what:
 		NOTIFICATION_WM_GO_BACK_REQUEST when _game.state == Game.State.CLOSED:
-			_on_quit_pressed()
+			_on_quit_pressed.call_deferred() # Избегаем мгновенное закрытие
 
 
 func _cleanup_ip(ip: String) -> String:

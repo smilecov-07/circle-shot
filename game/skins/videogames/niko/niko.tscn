@@ -48,6 +48,7 @@ _data = {
 shader = ExtResource("5_66ovx")
 shader_parameter/time_multiplier = 3.142
 shader_parameter/stretch = 7.5
+shader_parameter/amplitude = 0.1
 
 [node name="Niko" type="Sprite2D"]
 texture_filter = 1
