@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2fdo1s1ybj4x"]
+
+[ext_resource type="Script" uid="uid://b80372sl7b41w" path="res://game/skills/beartrap/beartrap.gd" id="1_tm3gs"]
+[ext_resource type="PackedScene" uid="uid://bj2tr5ocunuo7" path="res://game/skills/beartrap/beartrap_trap.tscn" id="2_7g1ey"]
+
+[node name="Beartrap" type="Node2D"]
+script = ExtResource("1_tm3gs")
+trap_scene = ExtResource("2_7g1ey")
+use_cooldown = 40
+metadata/_custom_type_script = "uid://c7xh6wcxwv4d4"
+
+[node name="PlaceTimer" type="Timer" parent="."]
+wait_time = 0.7
+one_shot = true
+
+[connection signal="timeout" from="PlaceTimer" to="." method="_on_place_timer_timeout"]

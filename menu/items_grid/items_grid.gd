@@ -160,8 +160,10 @@ func list_items(type: ItemsDB.Item, selected: int = -1, selected_event: int = 0)
 				if selected == skill.idx_in_db:
 					(item.get_node(^"Name") as Label).add_theme_color_override(
 							&"font_color", Color.GREEN)
-				(item.get_node(^"Description") as Label).text = \
-						skill.usage_text + '\n' + skill.brief_description
+				(item.get_node(^"Description") as Label).text = "%s\n%s" % [
+					skill.brief_description.format(skill.stats),
+					skill.usage_text.format(skill.stats),
+				]
 				(item.get_node(^"RarityFill") as ColorRect).color = \
 						ItemsDB.RARITY_COLORS[skill.rarity]
 				(item.get_node(^"Click") as BaseButton).pressed.connect(

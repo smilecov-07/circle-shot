@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="SkillData" load_steps=2 format=3 uid="uid://ccm47j21hpmyx"]
+
+[ext_resource type="Script" uid="uid://iwsanxyoxs5s" path="res://game/player/equip/skill_data.gd" id="1_pj2c3"]
+
+[resource]
+script = ExtResource("1_pj2c3")
+name = "Капкан"
+rarity = 2
+id = "beartrap"
+stats = Dictionary[String, String]({
+"cooldown": "40",
+"count": "2",
+"damage": "10",
+"slow_duration": "6",
+"stun_duration": "3"
+})
+brief_description = "Урон: {damage}, оглушает"
+usage_text = "{count} исп./{cooldown} с"
+description = "[color=deep_blue_sky]Устанавливает невидимую ловушку, оглушающую и замедляющую противника при контакте.[/color]
+Урон: [color=red]{damage}[/color]
+Длительность оглушения: [color=red]{stun_duration} с[/color]
+Длительность замедления: [color=red]{slow_duration} с[/color]
+
+Количество использований: [color=blue]{count}[/color]
+Перезарядка: [color=blue]{cooldown} с[/color]
+
+Этот навык позволит как и уйти от погони, так и устроить засаду."
+scene_path = "uid://b2fdo1s1ybj4x"
+image_path = "uid://bgjakwqiu62f6"
+spawnable_scenes_paths = Array[String](["uid://bj2tr5ocunuo7"])
+metadata/_custom_type_script = "uid://iwsanxyoxs5s"
