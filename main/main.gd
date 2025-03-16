@@ -35,6 +35,8 @@ const MAX_MUSIC_FILE_NAME_LENGTH: int = 45
 ## Максимальный размер файла пользовательского трека. Если размер больше максимального,
 ## он не будет загружен.
 const MAX_MUSIC_FILE_SIZE_MB := 15.0
+## Максимальное количество пользовательских треков.
+const MAX_CUSTOM_TRACKS: int = 20
 
 ## Список путей к ресурсам для загрузки в память при запуске игры.
 ## Ускоряет последующую загрузку этих ресурсов.
@@ -196,6 +198,8 @@ func setup_settings() -> void:
 			Globals.get_setting_bool("chat_in_game", true))
 	Globals.set_setting_int("max_fps",
 			Globals.get_setting_int("max_fps", 130))
+	Globals.set_setting_bool("check_patches",
+			Globals.get_setting_bool("check_patches", true))
 
 
 ## Устанавливает настройки управления по умолчанию, если их ещё нет.
@@ -515,6 +519,11 @@ func _loading_download_data() -> void:
 
 
 func _loading_check_patches() -> void:
+	if not Globals.get_setting_bool("check_patches"):
+		print_verbose("Not checking patches: disabled.")
+		loading_stage_finished.emit.call_deferred(false) # Ждём await
+		return
+	
 	print_verbose("Checking patches...")
 	_load_status_label.text = "Проверка патчей..."
 	_load_progress_bar.value = 0.0
@@ -591,16 +600,12 @@ func _loading_custom_tracks() -> void:
 		return
 	
 	var to_load: Dictionary[String, String]
-	dir.list_dir_begin()
-	var file_name: String = dir.get_next()
-	while not file_name.is_empty():
-		if to_load.size() >= 20:
+	for file: String in dir.get_files():
+		if to_load.size() >= MAX_CUSTOM_TRACKS:
 			break
-		if not dir.current_is_dir():
-			if file_name.get_extension() in ALLOWED_MUSIC_FILE_EXTENSIONS:
-				to_load[dir.get_current_dir().path_join(file_name)] = file_name.get_extension()
-				print_verbose("Found track: %s." % dir.get_current_dir().path_join(file_name))
-		file_name = dir.get_next()
+		if file.get_extension() in ALLOWED_MUSIC_FILE_EXTENSIONS:
+			to_load[dir.get_current_dir().path_join(file)] = file.get_extension()
+			print_verbose("Found track: %s." % dir.get_current_dir().path_join(file))
 	
 	var to_load_count: int = to_load.size()
 	var counter: int = 0

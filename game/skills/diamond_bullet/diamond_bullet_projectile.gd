@@ -6,7 +6,7 @@ extends Projectile
 func _ready() -> void:
 	super()
 	var tween: Tween = create_tween()
-	tween.tween_property($Trail as Node2D, ^":scale:x", 1.0, 0.25).from(0.1)
+	tween.tween_property($Trail as Node2D, ^":scale:x", 1.0, 0.4).from(0.1)
 
 
 func _deal_damage(entity: Entity) -> void:

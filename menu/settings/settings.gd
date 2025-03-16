@@ -42,6 +42,7 @@ func _ready() -> void:
 	(%AlwaysAimCheck as BaseButton).set_pressed_no_signal(
 			Globals.get_controls_bool("always_show_aim"))
 	(%FPSSlider as Range).value = Globals.get_setting_int("max_fps")
+	(%PatchesCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("check_patches"))
 	
 	_update_aim_visual_size()
 	get_window().size_changed.connect(_update_aim_visual_size)
@@ -109,21 +110,9 @@ func show_help(help_idx: int) -> void:
 func remove_recursive(path: String) -> void:
 	var dir_access := DirAccess.open(path)
 	if dir_access:
-		dir_access.list_dir_begin()
-		var dirs_to_remove: Array[String]
-		var files_to_remove: Array[String]
-		var file_name: String = dir_access.get_next()
-		
-		while not file_name.is_empty():
-			if dir_access.current_is_dir():
-				dirs_to_remove.append(file_name)
-			else:
-				files_to_remove.append(file_name)
-			file_name = dir_access.get_next()
-		
-		for file: String in files_to_remove:
+		for file: String in dir_access.get_files():
 			dir_access.remove(file)
-		for dir: String in dirs_to_remove:
+		for dir: String in dir_access.get_directories():
 			remove_recursive(dir_access.get_current_dir().path_join(dir))
 		
 		dir_access.remove(dir_access.get_current_dir())
@@ -352,3 +341,13 @@ func _on_fps_slider_value_changed(value: float) -> void:
 	else:
 		(%FPSValue as Label).text = "%d" % value
 	Globals.main.apply_settings()
+
+
+func _on_clear_patches_pressed() -> void:
+	remove_recursive("user://patches")
+	Globals.set_variant("patches", {} as Dictionary[String, int])
+	Globals.quit(true)
+
+
+func _on_patches_check_toggled(toggled_on: bool) -> void:
+	Globals.set_setting_bool("check_patches", toggled_on)
