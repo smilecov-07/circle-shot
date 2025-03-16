@@ -20,6 +20,7 @@ var _was_hit := false
 
 
 func _ready() -> void:
+	reset_physics_interpolation()
 	direction = Vector2.from_angle(rotation)
 
 

@@ -439,7 +439,6 @@ file, otherwise it will NOT function.")
 	Globals.initialize(self)
 	if DisplayServer.get_name() == "headless":
 		print("Running in headless mode.")
-		Engine.max_fps = 0
 		Globals.headless = true
 	
 	_update_window_stretch_aspect()
@@ -452,6 +451,7 @@ file, otherwise it will NOT function.")
 	
 	multiplayer.multiplayer_peer = null # Чтобы убрать OfflineMultiplayerPeer
 	get_viewport().set_canvas_cull_mask_bit(1, false)
+	get_tree().root.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF
 	
 	setup_settings()
 	apply_settings()

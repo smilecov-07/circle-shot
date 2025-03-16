@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_pj2c3")
 name = "Капкан"
-rarity = 2
+rarity = 3
 id = "beartrap"
 stats = Dictionary[String, String]({
 "cooldown": "40",

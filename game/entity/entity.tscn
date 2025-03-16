@@ -35,8 +35,10 @@ metadata/_custom_type_script = "uid://rhkygnaclmgq"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
 [node name="Visual" type="Node2D" parent="."]
+physics_interpolation_mode = 2
 
 [node name="Effects" type="Node2D" parent="."]
+physics_interpolation_mode = 2
 
 [node name="Input" type="MultiplayerSynchronizer" parent="."]
 root_path = NodePath(".")

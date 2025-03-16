@@ -21,7 +21,7 @@ var _shake_tween: Tween
 var _pan_tween: Tween
 
 
-func _process(_delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if is_instance_valid(target):
 		global_position = target.global_position
 
@@ -37,6 +37,7 @@ func pan(to: Vector2, duration: float, ease_type := Tween.EASE_OUT,
 	
 	_pan_tween = create_tween()
 	_pan_tween.set_trans(trans_type).set_ease(ease_type)
+	_pan_tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	_pan_tween.tween_property(self, ^":position", to, duration).from(from)
 	await _pan_tween.finished
 	pan_finished.emit()
@@ -54,6 +55,7 @@ func pan_to_target(to: Node2D, duration: float, ease_type := Tween.EASE_OUT,
 	target = null
 	_pan_tween = create_tween()
 	_pan_tween.set_trans(trans_type).set_ease(ease_type)
+	_pan_tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	_pan_tween.tween_method(_lerp_to.bind(from, to), 0.0, 1.0, duration)
 	await _pan_tween.finished
 	pan_finished.emit()

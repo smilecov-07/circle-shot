@@ -208,10 +208,10 @@ horizontal_alignment = 1
 [node name="Authors" type="Label" parent="About/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
-text = "Summersay415 - идея, программирование, оружия и скины
+text = "Summersay415 - идея, программирование, карты, оружия и скины
+ZerkaloWorld - оружия и навыки
 wiziritka - скины и карты
 DanKras - скины и оружие, загрузочный экран
-ZerkaloWorld - оружия
 BaCat86, Kaurt, MilDeV, ZeroHero135 - скины
 Тестировщики (и благодарность):
 LohDebil228, ATINY, smilecov_07, YanniKss"
