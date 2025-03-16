@@ -200,6 +200,8 @@ func setup_settings() -> void:
 			Globals.get_setting_int("max_fps", 130))
 	Globals.set_setting_bool("check_patches",
 			Globals.get_setting_bool("check_patches", true))
+	Globals.set_setting_bool("broadcast",
+			Globals.get_setting_bool("broadcast", true))
 
 
 ## Устанавливает настройки управления по умолчанию, если их ещё нет.

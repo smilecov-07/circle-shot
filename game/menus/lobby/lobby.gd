@@ -521,6 +521,9 @@ func _get_start_reject_reason() -> StartRejectReason:
 
 func _find_ips_for_broadcast() -> void:
 	_udp_peers.clear()
+	if not Globals.get_setting_bool("broadcast"):
+		print_verbose("Not finding IPs for broadcast: disabled.")
+		return
 	print_verbose("Finding IPs for broadcast...")
 	# Отсылаем пакеты по всем локальным адресам
 	for ip: String in IP.get_local_addresses():

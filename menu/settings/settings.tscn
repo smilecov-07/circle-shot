@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c2leb2h0qjtmo"]
+[gd_scene load_steps=19 format=3 uid="uid://c2leb2h0qjtmo"]
 
 [ext_resource type="Script" uid="uid://bhvr3p7vj2nb4" path="res://menu/settings/settings.gd" id="1_jwkxy"]
 [ext_resource type="Texture2D" uid="uid://cj0xdsi2q6ea4" path="res://menu/settings/icons/general.png" id="1_n6g3h"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://65yjl3wjlqpc" path="res://menu/settings/icons/sound.png" id="3_4iv1j"]
 [ext_resource type="Texture2D" uid="uid://durmmh0vjl0eg" path="res://menu/theme/icons/exit.png" id="3_kafpn"]
 [ext_resource type="Texture2D" uid="uid://c4rtsjndqjkbc" path="res://menu/settings/icons/controls.png" id="4_bdj5p"]
+[ext_resource type="Texture2D" uid="uid://c7utfxkubmvch" path="res://menu/settings/icons/network.png" id="5_ptnea"]
 [ext_resource type="Texture2D" uid="uid://b3int4i23wkyl" path="res://menu/settings/icons/reset_name.png" id="9_0iguj"]
 [ext_resource type="Texture2D" uid="uid://b3dr78bao6pop" path="res://menu/settings/icons/restart.png" id="10_260xk"]
 [ext_resource type="Texture2D" uid="uid://djfqfio1aley7" path="res://menu/settings/icons/reset_controls.png" id="10_kedwe"]
@@ -45,7 +46,7 @@ help_messages = Array[String](["Удаляет все загруженные р�
 Зона стрельбы - чтобы вести огонь, удерживайте левый верхний угол.
 Джойстик прицеливания - чтобы отвести огонь, отведите в сторону джойстик прицеливания. На некоторых оружиях выстрел будет совершён только после того, как вы отпустите палец.", "Включает UPnP для открытия портов. Это позволит игрокам вне локальной сети подключиться к твоей комнате.
 Необходимо включить UPnP на роутере, чтобы этот способ заработал.
-Изменения будут применены после перезапуска игры.", "Настраивает мёртвую зону прицеливания, в которой направление прицела остаётся неизменным вне зависимости от положения курсора.", "Настраивает зону прицеливания, в которой расстояние курсора от центра определяет дальность прицеливания (например, насколько сильно должна быть брошена граната). Если курсор выходит за пределы этой зоны, дальность прицеливания считается максимальной.", "Отключение мини-карты может повысить производительность на слабых устройствах."])
+Изменения будут применены после перезапуска игры.", "Настраивает мёртвую зону прицеливания, в которой направление прицела остаётся неизменным вне зависимости от положения курсора.", "Настраивает зону прицеливания, в которой расстояние курсора от центра определяет дальность прицеливания (например, насколько сильно должна быть брошена граната). Если курсор выходит за пределы этой зоны, дальность прицеливания считается максимальной.", "Отключение мини-карты может повысить производительность на слабых устройствах.", "Если включено, созданная комната может быть найдена другими игроками в локальной сети. Иначе подключение может быть выполнено только по IP-адресу."])
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 1
@@ -119,6 +120,14 @@ text = "Основное"
 icon = ExtResource("1_n6g3h")
 alignment = 0
 
+[node name="Network" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/Sections"]
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_xsh6l")
+text = "Сеть"
+icon = ExtResource("5_ptnea")
+alignment = 0
+
 [node name="Game" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/Sections"]
 layout_mode = 2
 toggle_mode = true
@@ -168,6 +177,7 @@ theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
 [node name="General" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
@@ -254,50 +264,6 @@ layout_mode = 2
 icon = ExtResource("1_xh6xh")
 expand_icon = true
 
-[node name="UPNP" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/UPNP"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 1
-theme_type_variation = &"HeaderSmall"
-text = "Открытие портов через UPnP"
-vertical_alignment = 1
-
-[node name="Setting" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/UPNP"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="UPNPCheck" type="CheckButton" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/UPNP/Setting"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 2
-
-[node name="Help" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/UPNP/Setting"]
-custom_minimum_size = Vector2(48, 0)
-layout_mode = 2
-icon = ExtResource("1_xh6xh")
-expand_icon = true
-
-[node name="UPNPStatus" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General"]
-layout_mode = 2
-alignment = 1
-
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/UPNPStatus"]
-custom_minimum_size = Vector2(0, 1)
-layout_mode = 2
-theme_type_variation = &"HeaderSmall"
-text = "Статус UPnP:"
-vertical_alignment = 1
-
-[node name="UPNPStatus" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/UPNPStatus"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 1)
-layout_mode = 2
-theme_type_variation = &"HeaderSmall"
-vertical_alignment = 1
-
 [node name="ClearPatches" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General"]
 layout_mode = 2
 alignment = 1
@@ -357,6 +323,80 @@ theme_override_colors/font_focus_color = Color(1, 0, 0, 1)
 theme_override_colors/font_pressed_color = Color(1, 0, 0, 1)
 text = "Удалить все данные"
 icon = ExtResource("12_g4yas")
+
+[node name="Network" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Broadcast" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Network"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Network/Broadcast"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_type_variation = &"HeaderSmall"
+text = "Показывать комнату в сети"
+vertical_alignment = 1
+
+[node name="Setting" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Network/Broadcast"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BroadcastCheck" type="CheckButton" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Network/Broadcast/Setting"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="Help" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Network/Broadcast/Setting"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+icon = ExtResource("1_xh6xh")
+expand_icon = true
+
+[node name="UPNP" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Network"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Network/UPNP"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_type_variation = &"HeaderSmall"
+text = "Открытие портов через UPnP"
+vertical_alignment = 1
+
+[node name="Setting" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Network/UPNP"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="UPNPCheck" type="CheckButton" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Network/UPNP/Setting"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="Help" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Network/UPNP/Setting"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+icon = ExtResource("1_xh6xh")
+expand_icon = true
+
+[node name="UPNPStatus" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Network"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Network/UPNPStatus"]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+theme_type_variation = &"HeaderSmall"
+text = "Статус UPnP:"
+vertical_alignment = 1
+
+[node name="UPNPStatus" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Network/UPNPStatus"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+theme_type_variation = &"HeaderSmall"
+vertical_alignment = 1
 
 [node name="Game" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections"]
 visible = false
@@ -1081,6 +1121,7 @@ visible = false
 
 [connection signal="pressed" from="PanelContainer/VBoxContainer/Title/Quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/Sections/General" to="." method="show_section" binds= ["General"]]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/Sections/Network" to="." method="show_section" binds= ["Network"]]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/Sections/Game" to="." method="show_section" binds= ["Game"]]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/Sections/Video" to="." method="show_section" binds= ["Video"]]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/Sections/Sound" to="." method="show_section" binds= ["Sound"]]
@@ -1091,8 +1132,6 @@ visible = false
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/CheckBetas/Setting/Help" to="." method="show_help" binds= [4]]
 [connection signal="toggled" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/CheckPatches/Setting/PatchesCheck" to="." method="_on_patches_check_toggled"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/CheckPatches/Setting/Help" to="." method="show_help" binds= [4]]
-[connection signal="toggled" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/UPNP/Setting/UPNPCheck" to="." method="_on_upnp_check_toggled"]
-[connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/UPNP/Setting/Help" to="." method="show_help" binds= [10]]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/ClearPatches/ClearPatches" to="." method="_on_clear_patches_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/ClearPatches/Help" to="." method="show_help" binds= [0]]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/Actions/RestartGame" to="." method="restart_game"]
@@ -1100,6 +1139,10 @@ visible = false
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/Actions/ResetControlSettings" to="ResetControlsDialog" method="popup_centered"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/Actions2/ResetSettings" to="ResetSettingsDialog" method="popup_centered"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/Actions2/DeleteData" to="ResetDataDialog" method="popup_centered"]
+[connection signal="toggled" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Network/Broadcast/Setting/BroadcastCheck" to="." method="_on_broadcast_check_toggled"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Network/Broadcast/Setting/Help" to="." method="show_help" binds= [14]]
+[connection signal="toggled" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Network/UPNP/Setting/UPNPCheck" to="." method="_on_upnp_check_toggled"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Network/UPNP/Setting/Help" to="." method="show_help" binds= [10]]
 [connection signal="toggled" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/ShowMinimap/Setting/ShowMinimapCheck" to="." method="_on_show_minimap_check_toggled"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/ShowMinimap/Setting/Help" to="." method="show_help" binds= [13]]
 [connection signal="toggled" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/ShowDebug/Setting/ShowDebugCheck" to="." method="_on_show_debug_check_toggled"]

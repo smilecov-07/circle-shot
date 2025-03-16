@@ -43,6 +43,7 @@ func _ready() -> void:
 			Globals.get_controls_bool("always_show_aim"))
 	(%FPSSlider as Range).value = Globals.get_setting_int("max_fps")
 	(%PatchesCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("check_patches"))
+	(%BroadcastCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("broadcast"))
 	
 	_update_aim_visual_size()
 	get_window().size_changed.connect(_update_aim_visual_size)
@@ -136,7 +137,7 @@ func _update_aim_visual_size() -> void:
 	var viewport_size: Vector2 = get_viewport_rect().size
 	if viewport_size.x >= viewport_size.y:
 		_aim_visual.custom_minimum_size.x = AIM_VISUAL_MAX_SIZE
-		_aim_visual.custom_minimum_size.y = 1 / viewport_size.aspect() * AIM_VISUAL_MAX_SIZE
+		_aim_visual.custom_minimum_size.y = 1.0 / viewport_size.aspect() * AIM_VISUAL_MAX_SIZE
 	else:
 		_aim_visual.custom_minimum_size.y = AIM_VISUAL_MAX_SIZE
 		_aim_visual.custom_minimum_size.x = viewport_size.aspect() * AIM_VISUAL_MAX_SIZE
@@ -351,3 +352,7 @@ func _on_clear_patches_pressed() -> void:
 
 func _on_patches_check_toggled(toggled_on: bool) -> void:
 	Globals.set_setting_bool("check_patches", toggled_on)
+
+
+func _on_broadcast_check_toggled(toggled_on: bool) -> void:
+	Globals.set_setting_bool("broadcast", toggled_on)
