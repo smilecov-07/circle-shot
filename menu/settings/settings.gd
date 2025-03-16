@@ -41,6 +41,7 @@ func _ready() -> void:
 	_on_upnp_check_toggled((%UPNPCheck as BaseButton).button_pressed)
 	(%AlwaysAimCheck as BaseButton).set_pressed_no_signal(
 			Globals.get_controls_bool("always_show_aim"))
+	(%FPSSlider as Range).value = Globals.get_setting_int("max_fps")
 	
 	_update_aim_visual_size()
 	get_window().size_changed.connect(_update_aim_visual_size)
@@ -342,3 +343,12 @@ func _on_chat_in_game_check_toggled(toggled_on: bool) -> void:
 
 func _on_always_aim_check_toggled(toggled_on: bool) -> void:
 	Globals.set_controls_bool("always_show_aim", toggled_on)
+
+
+func _on_fps_slider_value_changed(value: float) -> void:
+	Globals.set_setting_int("max_fps", int(value))
+	if value > 125.0:
+		(%FPSValue as Label).text = "Нет"
+	else:
+		(%FPSValue as Label).text = "%d" % value
+	Globals.main.apply_settings()

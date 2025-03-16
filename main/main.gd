@@ -194,6 +194,8 @@ func setup_settings() -> void:
 			Globals.get_setting_bool("upnp", false))
 	Globals.set_setting_bool("chat_in_game",
 			Globals.get_setting_bool("chat_in_game", true))
+	Globals.set_setting_int("max_fps",
+			Globals.get_setting_int("max_fps", 130))
 
 
 ## Устанавливает настройки управления по умолчанию, если их ещё нет.
@@ -328,6 +330,8 @@ func apply_settings() -> void:
 			get_window().mode = Window.MODE_WINDOWED
 	if Globals.get_setting_bool("custom_tracks"):
 		DirAccess.make_dir_recursive_absolute(music_path)
+	var max_fps: int = Globals.get_setting_int("max_fps")
+	Engine.max_fps = max_fps if max_fps < 125 else 0
 
 
 ## Применяет настройки управления.

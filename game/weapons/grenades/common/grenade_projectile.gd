@@ -15,6 +15,7 @@ var _exploded := false
 
 
 func _ready() -> void:
+	reset_physics_interpolation()
 	_current_speed = speed
 
 
