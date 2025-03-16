@@ -397,8 +397,8 @@ func _start_load() -> void:
 		_loading_download_data()
 		success = await loading_stage_finished
 		if success:
-			# Проверка патчей
-			pass
+			_loading_check_patches()
+			await loading_stage_finished
 	
 	if not Globals.headless:
 		_loading_custom_tracks()
@@ -505,8 +505,6 @@ func _loading_download_data() -> void:
 	http.timeout = 8.0
 	http.request_completed.connect(_on_data_http_request_completed.bind(http))
 	add_child(http)
-	_download_http = http
-	set_process(true)
 	
 	var err: Error = http.request(SERVER_URL.path_join("data.cfg"))
 	if err != OK:
@@ -514,7 +512,62 @@ func _loading_download_data() -> void:
 		push_warning("Can't download data. Error: %s." % error_string(err))
 		loading_stage_finished.emit(false)
 		http.queue_free()
-		set_process(false)
+
+
+func _loading_check_patches() -> void:
+	print_verbose("Checking patches...")
+	_load_status_label.text = "Проверка патчей..."
+	_load_progress_bar.value = 0.0
+	await get_tree().process_frame
+	
+	var patches: Dictionary[String, int] = \
+			Globals.get_variant("patches", {} as Dictionary[String, int])
+	var remote_patch_code: int = Globals.data_file.get_value("patches", Globals.version, 0)
+	var local_patch_code: int = patches.get(Globals.version, 0)
+	print_verbose("Local patch version: %d, remote: %d." % [local_patch_code, remote_patch_code])
+	
+	if remote_patch_code > local_patch_code:
+		print_verbose("New version of patch detected (%d), downloading..." % remote_patch_code)
+		_load_status_label.text = "Загрузка патча..."
+		if not DirAccess.dir_exists_absolute("user://patches"):
+			DirAccess.make_dir_recursive_absolute("user://patches")
+		var http := HTTPRequest.new()
+		http.timeout = 20.0
+		http.download_file = "user://patches/tmp.pck"
+		http.request_completed.connect(
+				_on_patch_http_request_completed.bind(http, remote_patch_code))
+		add_child(http)
+		_download_http = http
+		set_process(true)
+		
+		var err: Error = http.request(
+				SERVER_URL.path_join("patches").path_join("%s.pck" % Globals.version))
+		if err != OK:
+			http.request_completed.disconnect(_on_patch_http_request_completed)
+			push_warning("Can't download patch. Error: %s." % error_string(err))
+			http.queue_free()
+			set_process(false)
+		else:
+			return
+	_loading_apply_patch()
+
+
+func _loading_apply_patch() -> void:
+	var patches: Dictionary[String, int] = \
+			Globals.get_variant("patches", {} as Dictionary[String, int])
+	if Globals.version in patches:
+		var patch_path := "user://patches/%s.pck" % Globals.version
+		if FileAccess.file_exists(patch_path):
+			ProjectSettings.load_resource_pack(patch_path)
+			print_verbose("Patch with code %d applied." % patches[Globals.version])
+			Globals.version += "patched%d" % patches[Globals.version]
+		else:
+			push_warning("Patch entry exists, but file not found.")
+			patches.erase(Globals.version)
+			Globals.set_variant("patches", patches)
+	else:
+		print_verbose("No patch to apply.")
+	loading_stage_finished.emit(true)
 
 
 func _loading_custom_tracks() -> void:
@@ -719,7 +772,6 @@ func _on_data_http_request_completed(result: HTTPRequest.Result,
 		response_code: HTTPClient.ResponseCode, _headers: PackedStringArray, 
 		body: PackedByteArray, http: HTTPRequest) -> void:
 	http.queue_free()
-	set_process(false)
 	if result != HTTPRequest.RESULT_SUCCESS:
 		push_warning("Download data: result is not Success. Result: %d." % result)
 		loading_stage_finished.emit(false)
@@ -730,9 +782,6 @@ func _on_data_http_request_completed(result: HTTPRequest.Result,
 		loading_stage_finished.emit(false)
 		return
 	
-	_load_status_label.text = "Чтение данных..."
-	_load_progress_bar.value = 100.0
-	await get_tree().process_frame
 	var data_file := ConfigFile.new()
 	var err: Error = data_file.parse(body.get_string_from_utf8())
 	if err != OK:
@@ -742,3 +791,34 @@ func _on_data_http_request_completed(result: HTTPRequest.Result,
 		print_verbose("Data downloaded successfully.")
 		Globals.data_file = data_file
 		loading_stage_finished.emit(true)
+
+
+func _on_patch_http_request_completed(result: HTTPRequest.Result,
+		response_code: HTTPClient.ResponseCode, _headers: PackedStringArray, 
+		_body: PackedByteArray, http: HTTPRequest, new_patch_code: int) -> void:
+	http.queue_free()
+	set_process(false)
+	var tmp_patch_path := "user://patches/tmp.pck"
+	if result != HTTPRequest.RESULT_SUCCESS:
+		push_warning("Download patch: result is not Success. Result: %d." % result)
+		if FileAccess.file_exists(tmp_patch_path):
+			DirAccess.remove_absolute(tmp_patch_path)
+		_loading_apply_patch()
+		return
+	if response_code != HTTPClient.RESPONSE_OK:
+		push_warning(
+				"Download patch: response code is not 200. Response code: %d." % response_code)
+		if FileAccess.file_exists(tmp_patch_path):
+			DirAccess.remove_absolute(tmp_patch_path)
+		_loading_apply_patch()
+		return
+	
+	var patch_path := "user://patches/%s.pck" % Globals.version
+	if FileAccess.file_exists(patch_path):
+		DirAccess.remove_absolute(patch_path)
+	DirAccess.rename_absolute(tmp_patch_path, patch_path)
+	var patches: Dictionary[String, int] = \
+			Globals.get_variant("patches", {} as Dictionary[String, int])
+	patches[Globals.version] = new_patch_code
+	Globals.set_variant("patches", patches)
+	_loading_apply_patch()
