@@ -65,9 +65,13 @@ func quit(restart := false, args := PackedStringArray()) -> void:
 		main.upnp.finalize()
 	
 	if args.is_empty() and restart:
-		args = OS.get_cmdline_args()
+		var all_args: PackedStringArray = OS.get_cmdline_args()
+		var user_args: PackedStringArray = OS.get_cmdline_user_args()
+		for arg: String in all_args:
+			if not arg in user_args:
+				args.append(arg)
 		args.append("--")
-		args.append_array(OS.get_cmdline_args())
+		args.append_array(user_args)
 	if main and main.console:
 		if restart:
 			OS.create_instance(args)

@@ -571,7 +571,7 @@ func _loading_apply_patch() -> void:
 		if FileAccess.file_exists(patch_path):
 			ProjectSettings.load_resource_pack(patch_path)
 			print_verbose("Patch with code %d applied." % patches[Globals.version])
-			Globals.version += "patched%d" % patches[Globals.version]
+			Globals.version += "-patched%d" % patches[Globals.version]
 		else:
 			push_warning("Patch entry exists, but file not found.")
 			patches.erase(Globals.version)
