@@ -10,47 +10,52 @@ var _override_file := ConfigFile.new()
 func _ready() -> void:
 	show_section("General")
 	
-	# Конфигурация настроек
 	_override_file.load("user://engine_settings.cfg")
-	var shader_cache: bool = \
-			_override_file.get_value("rendering", "shader_compiler/shader_cache/enabled")
-	(%ShaderCacheCheck as BaseButton).set_pressed_no_signal(shader_cache)
 	
+	# Основное
+	(%UpdatesCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("check_updates"))
+	_on_updates_check_toggled((%UpdatesCheck as BaseButton).button_pressed)
+	(%BetasCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("check_betas"))
+	(%PatchesCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("check_patches"))
+	# Сеть
+	(%BroadcastCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("broadcast"))
+	(%UPNPCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("upnp"))
+	_on_upnp_check_toggled((%UPNPCheck as BaseButton).button_pressed)
+	# Игра
 	(%ChatInGameCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("chat_in_game"))
 	(%ShowMinimapCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("minimap"))
 	(%ShowDebugCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("debug_info"))
+	(%DodgeOptions as OptionButton).selected = int(Globals.get_setting_bool("aim_dodge"))
+	(%VibrationCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("vibration"))
+	# Графика
+	var shader_cache: bool = \
+			_override_file.get_value("rendering", "shader_compiler/shader_cache/enabled")
+	(%ShaderCacheCheck as BaseButton).set_pressed_no_signal(shader_cache)
+	(%FullscreenCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("fullscreen"))
+	(%FPSSlider as Range).value = Globals.get_setting_int("max_fps")
+	# Звук
 	(%MasterVolumeSlider as Range).set_value_no_signal(Globals.get_setting_float("master_volume"))
 	(%MusicVolumeSlider as Range).set_value_no_signal(Globals.get_setting_float("music_volume"))
 	(%SFXVolumeSlider as Range).set_value_no_signal(Globals.get_setting_float("sfx_volume"))
-	(%FullscreenCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("fullscreen"))
-	(%DodgeOptions as OptionButton).selected = int(Globals.get_setting_bool("aim_dodge"))
+	(%CustomTracksCheck as BaseButton).set_pressed_no_signal(
+			Globals.get_setting_bool("custom_tracks"))
+	_on_custom_tracks_check_toggled((%CustomTracksCheck as BaseButton).button_pressed)
+	# Управление
 	(%InputOptions as OptionButton).selected = Globals.get_controls_int("input_method")
 	_toggle_input_method_settings_visibility(Globals.get_controls_int("input_method"))
 	(%FollowMouseCheck as BaseButton).set_pressed_no_signal(
 			Globals.get_controls_bool("follow_mouse"))
 	(%FireModeOptions as OptionButton).selected = int(Globals.get_controls_bool("joystick_fire"))
 	(%SneakSlider as Range).value = Globals.get_controls_float("sneak_multiplier")
-	(%VibrationCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("vibration"))
 	(%AimDZoneSlider as Range).value = Globals.get_controls_float("aim_deadzone")
 	(%AimZoneSlider as Range).set_value_no_signal(Globals.get_controls_float("aim_zone"))
-	(%UpdatesCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("check_updates"))
-	_on_updates_check_toggled((%UpdatesCheck as BaseButton).button_pressed)
-	(%BetasCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("check_betas"))
-	(%UPNPCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("upnp")
-			or "--upnp" in OS.get_cmdline_args())
-	_on_upnp_check_toggled((%UPNPCheck as BaseButton).button_pressed)
 	(%AlwaysAimCheck as BaseButton).set_pressed_no_signal(
 			Globals.get_controls_bool("always_show_aim"))
-	(%FPSSlider as Range).value = Globals.get_setting_int("max_fps")
-	(%PatchesCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("check_patches"))
-	(%BroadcastCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("broadcast"))
 	
 	_update_aim_visual_size()
 	get_window().size_changed.connect(_update_aim_visual_size)
 	
 	# UPnP
-	if "--upnp" in OS.get_cmdline_args():
-		(%UPNPCheck.get_parent().get_parent() as CanvasItem).hide()
 	var upnp_status := "Отключено"
 	if Globals.main.upnp:
 		match Globals.main.upnp.status:
@@ -61,9 +66,6 @@ func _ready() -> void:
 	(%UPNPStatus as Label).text = upnp_status
 	
 	# Кастомные треки
-	(%CustomTracksCheck as BaseButton).set_pressed_no_signal(
-			Globals.get_setting_bool("custom_tracks"))
-	_on_custom_tracks_check_toggled((%CustomTracksCheck as BaseButton).button_pressed)
 	(%CustomTracksPath as Label).text = "Путь к папке с треками: %s" % Globals.main.music_path
 	if not Globals.main.custom_tracks.is_empty():
 		for node: Node in %LoadedTracks.get_children():
@@ -74,6 +76,9 @@ func _ready() -> void:
 			label.text = track
 			%LoadedTracks.add_child(label)
 	
+	# Скрытие настроек
+	if "--upnp" in OS.get_cmdline_args():
+		(%UPNPCheck.get_parent().get_parent() as CanvasItem).hide()
 	if not OS.has_feature("pc"):
 		(%FullscreenCheck.get_parent().get_parent() as CanvasItem).hide()
 	if not OS.has_feature("mobile"):
@@ -119,10 +124,6 @@ func remove_recursive(path: String) -> void:
 		dir_access.remove(dir_access.get_current_dir())
 
 
-func restart_game() -> void:
-	Globals.quit(true)
-
-
 func _toggle_input_method_settings_visibility(method: Main.InputMethod) -> void:
 	(%KeyboardSettings as CanvasItem).hide()
 	(%TouchSettings as CanvasItem).hide()
@@ -156,47 +157,45 @@ func _on_quit_pressed() -> void:
 	queue_free()
 
 
-func _on_show_minimap_check_toggled(toggled_on: bool) -> void:
-	Globals.set_setting_bool("minimap", toggled_on)
+#region Основное
+func _on_updates_check_toggled(toggled_on: bool) -> void:
+	Globals.set_setting_bool("check_updates", toggled_on)
+	(%BetasCheck.get_parent().get_parent() as CanvasItem).visible = toggled_on
 
 
-func _on_show_debug_check_toggled(toggled_on: bool) -> void:
-	Globals.set_setting_bool("debug_info", toggled_on)
+func _on_betas_check_toggled(toggled_on: bool) -> void:
+	Globals.set_setting_bool("check_betas", toggled_on)
 
 
-func _on_master_volume_slider_value_changed(value: float) -> void:
-	Globals.set_setting_float("master_volume", value)
-	Globals.main.apply_settings()
+func _on_patches_check_toggled(toggled_on: bool) -> void:
+	Globals.set_setting_bool("check_patches", toggled_on)
 
 
-func _on_music_volume_slider_value_changed(value: float) -> void:
-	Globals.set_setting_float("music_volume", value)
-	Globals.main.apply_settings()
+func _on_clear_patches_pressed() -> void:
+	remove_recursive("user://patches")
+	Globals.set_variant("patches", {} as Dictionary[String, int])
+	Globals.quit(true)
 
 
-func _on_sfx_volume_slider_value_changed(value: float) -> void:
-	Globals.set_setting_float("sfx_volume", value)
-	Globals.main.apply_settings()
-
-
-func _on_shader_cache_check_toggled(toggled_on: bool) -> void:
-	_override_file.set_value("rendering", "shader_compiler/shader_cache/enabled", toggled_on)
-	_override_file.set_value("rendering", "shader_compiler/shader_cache/enabled.mobile", toggled_on)
-	_override_file.set_value("rendering", "rendering_device/pipeline_cache/enable", toggled_on)
-	_override_file.set_value("rendering",
-			"rendering_device/pipeline_cache/enable.mobile", toggled_on)
-	_override_file.save("user://engine_settings.cfg")
-
-
-func _on_clear_shader_cache_pressed() -> void:
-	remove_recursive("user://shader_cache")
-	remove_recursive("user://vulkan")
-	restart_game()
+func _on_change_name_pressed() -> void:
+	($NameDialog as Window).title = \
+			"Смена имени (текущее: %s)" % Globals.get_string("player_name")
+	($NameDialog as Window).popup_centered()
 
 
 func _on_reset_data_dialog_confirmed() -> void:
 	remove_recursive("user://")
-	restart_game()
+	Globals.quit(true)
+
+
+func _on_reset_controls_dialog_confirmed() -> void:
+	Globals.save_file.erase_section(Globals.CONTROLS_SAVE_FILE_SECTION)
+	Globals.main.setup_controls_settings()
+	Globals.main.apply_controls_settings()
+	
+	name = &"OldSettings"
+	queue_free()
+	Globals.main.open_screen(load("uid://c2leb2h0qjtmo") as PackedScene)
 
 
 func _on_reset_settings_dialog_confirmed() -> void:
@@ -213,39 +212,89 @@ func _on_reset_settings_dialog_confirmed() -> void:
 	Globals.main.open_screen(load("uid://c2leb2h0qjtmo") as PackedScene)
 
 
-func _on_change_name_pressed() -> void:
-	($NameDialog as Window).title = \
-			"Смена имени (текущее: %s)" % Globals.get_string("player_name")
-	($NameDialog as Window).popup_centered()
+func _on_restart_game_pressed() -> void:
+	Globals.quit(true)
+#endregion
 
 
-func _on_fullscreen_check_toggled(toggled_on: bool) -> void:
-	Globals.set_setting_bool("fullscreen", toggled_on)
-	Globals.main.apply_settings()
+#region Сеть
+func _on_broadcast_check_toggled(toggled_on: bool) -> void:
+	Globals.set_setting_bool("broadcast", toggled_on)
+
+
+func _on_upnp_check_toggled(toggled_on: bool) -> void:
+	Globals.set_setting_bool("upnp", toggled_on)
+	(%UPNPStatus.get_parent() as CanvasItem).visible = toggled_on
+#endregion
+
+
+#region Игра
+func _on_show_minimap_check_toggled(toggled_on: bool) -> void:
+	Globals.set_setting_bool("minimap", toggled_on)
+
+
+func _on_chat_in_game_check_toggled(toggled_on: bool) -> void:
+	Globals.set_setting_bool("chat_in_game", toggled_on)
+
+
+func _on_show_debug_check_toggled(toggled_on: bool) -> void:
+	Globals.set_setting_bool("debug_info", toggled_on)
 
 
 func _on_dodge_options_item_selected(index: int) -> void:
 	Globals.set_setting_bool("aim_dodge", bool(index))
 
 
-func _on_input_options_item_selected(index: int) -> void:
-	Globals.set_controls_int("input_method", index)
-	Globals.main.apply_controls_settings()
-	_toggle_input_method_settings_visibility(index)
+func _on_vibration_check_toggled(toggled_on: bool) -> void:
+	Globals.set_setting_bool("vibration", toggled_on)
+#endregion
 
 
-func _on_follow_mouse_check_toggled(toggled_on: bool) -> void:
-	Globals.set_controls_bool("follow_mouse", toggled_on)
+#region Графика
+func _on_fullscreen_check_toggled(toggled_on: bool) -> void:
+	Globals.set_setting_bool("fullscreen", toggled_on)
+	Globals.main.apply_settings()
 
 
-func _on_reset_controls_dialog_confirmed() -> void:
-	Globals.save_file.erase_section(Globals.CONTROLS_SAVE_FILE_SECTION)
-	Globals.main.setup_controls_settings()
-	Globals.main.apply_controls_settings()
-	
-	name = &"OldSettings"
-	queue_free()
-	Globals.main.open_screen(load("uid://c2leb2h0qjtmo") as PackedScene)
+func _on_fps_slider_value_changed(value: float) -> void:
+	Globals.set_setting_int("max_fps", int(value))
+	if value > 125.0:
+		(%FPSValue as Label).text = "Нет"
+	else:
+		(%FPSValue as Label).text = "%d" % value
+	Globals.main.apply_settings()
+
+
+func _on_shader_cache_check_toggled(toggled_on: bool) -> void:
+	_override_file.set_value("rendering", "shader_compiler/shader_cache/enabled", toggled_on)
+	_override_file.set_value("rendering", "shader_compiler/shader_cache/enabled.mobile", toggled_on)
+	_override_file.set_value("rendering", "rendering_device/pipeline_cache/enable", toggled_on)
+	_override_file.set_value("rendering",
+			"rendering_device/pipeline_cache/enable.mobile", toggled_on)
+	_override_file.save("user://engine_settings.cfg")
+
+
+func _on_clear_shader_cache_pressed() -> void:
+	remove_recursive("user://shader_cache")
+	remove_recursive("user://vulkan")
+	Globals.quit(true)
+#endregion
+
+
+#region Звук
+func _on_master_volume_slider_value_changed(value: float) -> void:
+	Globals.set_setting_float("master_volume", value)
+	Globals.main.apply_settings()
+
+
+func _on_music_volume_slider_value_changed(value: float) -> void:
+	Globals.set_setting_float("music_volume", value)
+	Globals.main.apply_settings()
+
+
+func _on_sfx_volume_slider_value_changed(value: float) -> void:
+	Globals.set_setting_float("sfx_volume", value)
+	Globals.main.apply_settings()
 
 
 func _on_custom_tracks_check_toggled(toggled_on: bool) -> void:
@@ -264,6 +313,28 @@ func _on_custom_tracks_check_toggled(toggled_on: bool) -> void:
 	(%CustomTracksSettings as CanvasItem).visible = toggled_on
 	Globals.set_setting_bool("custom_tracks", toggled_on)
 	Globals.main.apply_settings()
+#endregion
+
+
+#region Управление
+func _on_configure_controls_pressed() -> void:
+	Globals.main.open_screen(load("uid://5wx4yqp027gq") as PackedScene)
+
+
+func _on_configure_actions_pressed() -> void:
+	if $ActionsConfiguration is InstancePlaceholder:
+		($ActionsConfiguration as InstancePlaceholder).create_instance(true)
+	($ActionsConfiguration as Window).popup_centered()
+
+
+func _on_input_options_item_selected(index: int) -> void:
+	Globals.set_controls_int("input_method", index)
+	Globals.main.apply_controls_settings()
+	_toggle_input_method_settings_visibility(index)
+
+
+func _on_follow_mouse_check_toggled(toggled_on: bool) -> void:
+	Globals.set_controls_bool("follow_mouse", toggled_on)
 
 
 func _on_fire_mode_options_item_selected(index: int) -> void:
@@ -273,16 +344,6 @@ func _on_fire_mode_options_item_selected(index: int) -> void:
 func _on_sneak_slider_value_changed(value: float) -> void:
 	Globals.set_controls_float("sneak_multiplier", value)
 	(%SneakValue as Label).text = "x%.2f" % value
-
-
-func _on_vibration_check_toggled(toggled_on: bool) -> void:
-	Globals.set_setting_bool("vibration", toggled_on)
-
-
-func _on_configure_actions_pressed() -> void:
-	if $ActionsConfiguration is InstancePlaceholder:
-		($ActionsConfiguration as InstancePlaceholder).create_instance(true)
-	($ActionsConfiguration as Window).popup_centered()
 
 
 func _on_aim_d_zone_slider_value_changed(value: float) -> void:
@@ -296,6 +357,10 @@ func _on_aim_zone_slider_value_changed(value: float) -> void:
 	_aim_visual.queue_redraw()
 
 
+func _on_always_aim_check_toggled(toggled_on: bool) -> void:
+	Globals.set_controls_bool("always_show_aim", toggled_on)
+
+
 func _on_aim_visual_draw() -> void:
 	var min_side: float = minf(_aim_visual.size.x, _aim_visual.size.y) / 2
 	_aim_visual.draw_circle(_aim_visual.size / 2,
@@ -307,52 +372,4 @@ func _on_aim_visual_draw() -> void:
 			Vector2(_aim_visual.size.x / 2, _aim_visual.size.y), Color.BLACK)
 	_aim_visual.draw_line(Vector2(0.0, _aim_visual.size.y / 2),
 			Vector2(_aim_visual.size.x, _aim_visual.size.y / 2), Color.BLACK)
-
-
-func _on_configure_controls_pressed() -> void:
-	Globals.main.open_screen(load("uid://5wx4yqp027gq") as PackedScene)
-
-
-func _on_updates_check_toggled(toggled_on: bool) -> void:
-	Globals.set_setting_bool("check_updates", toggled_on)
-	(%BetasCheck.get_parent().get_parent() as CanvasItem).visible = toggled_on
-
-
-func _on_betas_check_toggled(toggled_on: bool) -> void:
-	Globals.set_setting_bool("check_betas", toggled_on)
-
-
-func _on_upnp_check_toggled(toggled_on: bool) -> void:
-	Globals.set_setting_bool("upnp", toggled_on)
-	(%UPNPStatus.get_parent() as CanvasItem).visible = toggled_on
-
-
-func _on_chat_in_game_check_toggled(toggled_on: bool) -> void:
-	Globals.set_setting_bool("chat_in_game", toggled_on)
-
-
-func _on_always_aim_check_toggled(toggled_on: bool) -> void:
-	Globals.set_controls_bool("always_show_aim", toggled_on)
-
-
-func _on_fps_slider_value_changed(value: float) -> void:
-	Globals.set_setting_int("max_fps", int(value))
-	if value > 125.0:
-		(%FPSValue as Label).text = "Нет"
-	else:
-		(%FPSValue as Label).text = "%d" % value
-	Globals.main.apply_settings()
-
-
-func _on_clear_patches_pressed() -> void:
-	remove_recursive("user://patches")
-	Globals.set_variant("patches", {} as Dictionary[String, int])
-	Globals.quit(true)
-
-
-func _on_patches_check_toggled(toggled_on: bool) -> void:
-	Globals.set_setting_bool("check_patches", toggled_on)
-
-
-func _on_broadcast_check_toggled(toggled_on: bool) -> void:
-	Globals.set_setting_bool("broadcast", toggled_on)
+#endregion

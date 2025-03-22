@@ -170,38 +170,43 @@ func setup_settings() -> void:
 			"shader_compiler/shader_cache/enabled.mobile", shader_cache)
 	override_file.save("user://engine_settings.cfg")
 	
+	# Основное
+	Globals.set_setting_bool("check_updates",
+			Globals.get_setting_bool("check_updates", true))
+	Globals.set_setting_bool("check_betas",
+			Globals.get_setting_bool("check_betas", Globals.version.count('.') == 3))
+	Globals.set_setting_bool("check_patches",
+			Globals.get_setting_bool("check_patches", true))
+	# Сеть
+	Globals.set_setting_bool("upnp",
+			Globals.get_setting_bool("upnp", false))
+	Globals.set_setting_bool("broadcast",
+			Globals.get_setting_bool("broadcast", true))
+	# Игра
 	Globals.set_setting_bool("minimap",
 			Globals.get_setting_bool("minimap", true))
 	Globals.set_setting_bool("debug_info",
 			Globals.get_setting_bool("debug_info", false))
+	Globals.set_setting_bool("chat_in_game",
+			Globals.get_setting_bool("chat_in_game", true))
+	Globals.set_setting_bool("vibration",
+			Globals.get_setting_bool("vibration", false))
+	Globals.set_setting_bool("aim_dodge",
+			Globals.get_setting_bool("aim_dodge", false))
+	# Графика
+	Globals.set_setting_bool("fullscreen",
+			Globals.get_setting_bool("fullscreen", not OS.has_feature("pc")))
+	Globals.set_setting_int("max_fps",
+			Globals.get_setting_int("max_fps", 130))
+	# Звук
 	Globals.set_setting_float("master_volume",
 			Globals.get_setting_float("master_volume", 1.0))
 	Globals.set_setting_float("music_volume",
 			Globals.get_setting_float("music_volume", 0.7))
 	Globals.set_setting_float("sfx_volume",
 			Globals.get_setting_float("sfx_volume", 1.0))
-	Globals.set_setting_bool("fullscreen",
-			Globals.get_setting_bool("fullscreen", not OS.has_feature("pc")))
-	Globals.set_setting_bool("aim_dodge",
-			Globals.get_setting_bool("aim_dodge", false))
 	Globals.set_setting_bool("custom_tracks",
 			Globals.get_setting_bool("custom_tracks", OS.has_feature("pc")))
-	Globals.set_setting_bool("vibration",
-			Globals.get_setting_bool("vibration", false))
-	Globals.set_setting_bool("check_updates",
-			Globals.get_setting_bool("check_updates", true))
-	Globals.set_setting_bool("check_betas",
-			Globals.get_setting_bool("check_betas", Globals.version.count('.') == 3))
-	Globals.set_setting_bool("upnp",
-			Globals.get_setting_bool("upnp", false))
-	Globals.set_setting_bool("chat_in_game",
-			Globals.get_setting_bool("chat_in_game", true))
-	Globals.set_setting_int("max_fps",
-			Globals.get_setting_int("max_fps", 130))
-	Globals.set_setting_bool("check_patches",
-			Globals.get_setting_bool("check_patches", true))
-	Globals.set_setting_bool("broadcast",
-			Globals.get_setting_bool("broadcast", true))
 
 
 ## Устанавливает настройки управления по умолчанию, если их ещё нет.
