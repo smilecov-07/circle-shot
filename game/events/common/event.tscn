@@ -224,9 +224,8 @@ spawn_path = NodePath("../Other")
 spawn_limit = 50
 
 [node name="Camera" type="Camera2D" parent="."]
-physics_interpolation_mode = 1
+process_physics_priority = -1
 zoom = Vector2(0.5, 0.5)
-process_callback = 0
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 script = ExtResource("2_mo4dc")
@@ -471,15 +470,14 @@ libraries = {
 }
 
 [node name="MinimapViewport" type="SubViewport" parent="UI"]
+physics_interpolation_mode = 2
 disable_3d = true
 gui_disable_input = true
 canvas_cull_mask = 4293918722
 size = Vector2i(256, 256)
 
 [node name="Camera" type="Camera2D" parent="UI/MinimapViewport"]
-physics_interpolation_mode = 1
 zoom = Vector2(0.05, 0.05)
-process_callback = 0
 
 [node name="QuitDialog" type="ConfirmationDialog" parent="UI"]
 title = "Покинуть игру?"

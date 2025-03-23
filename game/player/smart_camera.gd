@@ -16,14 +16,26 @@ var target: Node2D:
 		if is_instance_valid(_pan_tween):
 			_pan_tween.finished.emit()
 			_pan_tween.kill()
+		if is_instance_valid(value) and value.is_physics_interpolated_and_enabled():
+			_physics_interpolation_previous_position = value.global_position
 		target = value
 var _shake_tween: Tween
 var _pan_tween: Tween
+var _physics_interpolation_previous_position: Vector2
+
+
+func _process(_delta: float) -> void:
+	if is_instance_valid(target):
+		if target.is_physics_interpolated_and_enabled():
+			global_position = _physics_interpolation_previous_position.lerp(target.global_position,
+					Engine.get_physics_interpolation_fraction())
+		else:
+			global_position = target.global_position
 
 
 func _physics_process(_delta: float) -> void:
-	if is_instance_valid(target):
-		global_position = target.global_position
+	if is_instance_valid(target) and target.is_physics_interpolated_and_enabled():
+		_physics_interpolation_previous_position = target.global_position
 
 
 ## Панорамирует камеру из текущей позиции (если не указан [param from]) в позицию [param to]
@@ -37,7 +49,6 @@ func pan(to: Vector2, duration: float, ease_type := Tween.EASE_OUT,
 	
 	_pan_tween = create_tween()
 	_pan_tween.set_trans(trans_type).set_ease(ease_type)
-	_pan_tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	_pan_tween.tween_property(self, ^":position", to, duration).from(from)
 	await _pan_tween.finished
 	pan_finished.emit()
@@ -55,7 +66,6 @@ func pan_to_target(to: Node2D, duration: float, ease_type := Tween.EASE_OUT,
 	target = null
 	_pan_tween = create_tween()
 	_pan_tween.set_trans(trans_type).set_ease(ease_type)
-	_pan_tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	_pan_tween.tween_method(_lerp_to.bind(from, to), 0.0, 1.0, duration)
 	await _pan_tween.finished
 	pan_finished.emit()

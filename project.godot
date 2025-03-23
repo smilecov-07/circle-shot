@@ -199,6 +199,7 @@ buffering/agile_event_flushing=true
 2d_physics/layer_5="Fence"
 2d_physics/layer_6="Items"
 2d_physics/layer_7="Mobs"
+2d_physics/layer_8="Other"
 
 [physics]
 

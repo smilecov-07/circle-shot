@@ -925,6 +925,7 @@ texture = ExtResource("9_py4wg")
 
 [node name="ExtinguishArea" type="Area2D" parent="." index="6"]
 collision_layer = 0
+collision_mask = 128
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExtinguishArea" index="0"]
