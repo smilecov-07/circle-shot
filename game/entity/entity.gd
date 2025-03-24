@@ -109,6 +109,15 @@ func _physics_process(delta: float) -> void:
 		visual.scale.x = -1 if self_velocity.x < 0 else 1
 
 
+## Телепортирует сущность в точку [param destination].
+## [b]Примечание[/b]: этот метод может быть вызван только сервером и только как RPC.
+@rpc("call_local", "authority", "reliable", 4)
+func teleport_to(destination: Vector2) -> void:
+	position = destination
+	server_position = destination
+	reset_physics_interpolation()
+
+
 #region Методы эффектов
 ## Добавляет эффект на сущность. В [param effect_uid] должна быть передана одна из констант
 ## класса [Effect] с UID нужного эффекта. В [param duration] можно передать длительность эффекта, а
@@ -161,8 +170,8 @@ func add_timeless_effect(effect_uid: String, data := [], should_stack := true) -
 		for existing_effect: Effect in _effects.get_children():
 			if existing_effect.uid == effect_uid:
 				existing_effect.timeless_counter += 1
-				effect.free()
 				print_verbose("Increased counter of effect %s on %s." % [effect.name, name])
+				effect.free()
 				return
 	
 	_effects.add_child(effect, true)

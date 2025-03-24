@@ -113,7 +113,7 @@ func create(port: int = DEFAULT_PORT) -> void:
 	var error: Error = peer.create_server(port, MAX_CLIENTS)
 	if error != OK:
 		show_error("Невозможно создать сервер! Ошибка: %s" % error_string(error))
-		print_verbose("Can't create server with error: %s." % error_string(error))
+		push_error("Can't create server with error: %s." % error_string(error))
 		return
 	multiplayer.multiplayer_peer = peer
 	multiplayer.peer_connected.connect(_on_peer_connected)

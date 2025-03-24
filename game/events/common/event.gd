@@ -25,7 +25,7 @@ const KILL_VIBRATION_INTENSITY := 0.15
 ## Длительность вибрации при убийстве.
 const KILL_VIBRATION_DURATION_MS: int = 300
 
-## Определяет максимум случайного расстояние от заданной точки появления.
+## Определяет максимум случайного расстояния от заданной точки появления.
 @export var spawn_point_randomness := 40.0
 ## Сцены игроков для предзагрузки.
 @export var player_scenes: Array[PackedScene]
