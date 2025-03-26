@@ -90,7 +90,7 @@ func load_event(event_id: int, map_id: int) -> Event:
 		return null
 	var map_scene: PackedScene = ResourceLoader.load_threaded_get(_loading_path)
 	print_verbose("Done loading map %s." % _loading_path)
-	var map: Node = map_scene.instantiate()
+	var map: Node2D = map_scene.instantiate()
 	event.add_child(map)
 	
 	set_process(false)

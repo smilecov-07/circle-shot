@@ -2,9 +2,11 @@
 
 [ext_resource type="TileSet" uid="uid://ci04ocvnien3" path="res://game/events/common/minimap/tile_set.tres" id="1_o3igp"]
 
-[node name="Map" type="Node"]
+[node name="Map" type="Node2D"]
 
-[node name="MinimapTiles" type="TileMapLayer" parent="."]
+[node name="Minimap" type="Node" parent="."]
+
+[node name="MinimapTiles" type="TileMapLayer" parent="Minimap"]
 visibility_layer = 2
 z_index = -10
 texture_filter = 1
