@@ -130,7 +130,7 @@ func _end_round(win_team: int, winner: int, end_event := false) -> void:
 	await get_tree().create_timer(0.5).timeout
 	if end_event:
 		end.rpc()
-	else:
+	elif _current_round < 3:
 		for player: int in _players_names:
 			spawn_player(player)
 		_start_round.rpc()

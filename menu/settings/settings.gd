@@ -31,6 +31,8 @@ func _ready() -> void:
 	var shader_cache: bool = \
 			_override_file.get_value("rendering", "shader_compiler/shader_cache/enabled")
 	(%ShaderCacheCheck as BaseButton).set_pressed_no_signal(shader_cache)
+	(%LowGraphicsCheck as BaseButton).set_pressed_no_signal(
+			Globals.get_setting_bool("low_graphics"))
 	(%FullscreenCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("fullscreen"))
 	(%FPSSlider as Range).value = Globals.get_setting_int("max_fps")
 	# Звук
@@ -262,6 +264,11 @@ func _on_fps_slider_value_changed(value: float) -> void:
 		(%FPSValue as Label).text = "Нет"
 	else:
 		(%FPSValue as Label).text = "%d" % value
+	Globals.main.apply_settings()
+
+
+func _on_low_graphics_check_toggled(toggled_on: bool) -> void:
+	Globals.set_setting_bool("low_graphics", toggled_on)
 	Globals.main.apply_settings()
 
 

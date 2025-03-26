@@ -24,7 +24,6 @@ shader_parameter/noise = ExtResource("3_2wypa")
 shader_parameter/time_multiplier = 0.05
 shader_parameter/alpha_multiplier = 0.375
 shader_parameter/noise_scale = 0.5
-shader_parameter/alpha_total_multiplier = 0.5
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6sal7"]
 size = Vector2(640, 256)
@@ -107,6 +106,8 @@ mouse_filter = 2
 
 [node name="BloodVignette" type="TextureRect" parent="Controller"]
 visible = false
+modulate = Color(1, 0, 0, 0.501961)
+visibility_layer = 4
 material = SubResource("ShaderMaterial_l5du6")
 layout_mode = 1
 anchors_preset = 15

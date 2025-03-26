@@ -46,7 +46,7 @@ help_messages = Array[String](["Удаляет все загруженные р�
 Зона стрельбы - чтобы вести огонь, удерживайте левый верхний угол.
 Джойстик прицеливания - чтобы отвести огонь, отведите в сторону джойстик прицеливания. На некоторых оружиях выстрел будет совершён только после того, как вы отпустите палец.", "Включает UPnP для открытия портов. Это позволит игрокам вне локальной сети подключиться к твоей комнате.
 Необходимо включить UPnP на роутере, чтобы этот способ заработал.
-Изменения будут применены после перезапуска игры.", "Настраивает мёртвую зону прицеливания, в которой направление прицела остаётся неизменным вне зависимости от положения курсора.", "Настраивает зону прицеливания, в которой расстояние курсора от центра определяет дальность прицеливания (например, насколько сильно должна быть брошена граната). Если курсор выходит за пределы этой зоны, дальность прицеливания считается максимальной.", "Отключение мини-карты может повысить производительность на слабых устройствах.", "Если включено, созданная комната может быть найдена другими игроками в локальной сети. Иначе подключение может быть выполнено только по IP-адресу."])
+Изменения будут применены после перезапуска игры.", "Настраивает мёртвую зону прицеливания, в которой направление прицела остаётся неизменным вне зависимости от положения курсора.", "Настраивает зону прицеливания, в которой расстояние курсора от центра определяет дальность прицеливания (например, насколько сильно должна быть брошена граната). Если курсор выходит за пределы этой зоны, дальность прицеливания считается максимальной.", "Отключение мини-карты может повысить производительность на слабых устройствах.", "Если включено, созданная комната может быть найдена другими игроками в локальной сети. Иначе подключение может быть выполнено только по IP-адресу.", "Если включено, убирает некоторые детали для повышения производительности."])
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 1
@@ -325,6 +325,7 @@ text = "Удалить все данные"
 icon = ExtResource("12_g4yas")
 
 [node name="Network" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -542,7 +543,6 @@ icon = ExtResource("1_xh6xh")
 expand_icon = true
 
 [node name="Video" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -610,6 +610,32 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Help" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Video/MaxFPS/Setting"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+icon = ExtResource("1_xh6xh")
+expand_icon = true
+
+[node name="LowGraphics" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Video"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Video/LowGraphics"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_type_variation = &"HeaderSmall"
+text = "Упрощённая графика"
+vertical_alignment = 1
+
+[node name="Setting" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Video/LowGraphics"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LowGraphicsCheck" type="CheckButton" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Video/LowGraphics/Setting"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="Help" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Video/LowGraphics/Setting"]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 2
 icon = ExtResource("1_xh6xh")
@@ -1155,6 +1181,8 @@ visible = false
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Video/Fullscreen/Setting/Help" to="." method="show_help" binds= [1]]
 [connection signal="value_changed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Video/MaxFPS/Setting/FPSSlider" to="." method="_on_fps_slider_value_changed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Video/MaxFPS/Setting/Help" to="." method="show_help" binds= [4]]
+[connection signal="toggled" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Video/LowGraphics/Setting/LowGraphicsCheck" to="." method="_on_low_graphics_check_toggled"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Video/LowGraphics/Setting/Help" to="." method="show_help" binds= [15]]
 [connection signal="toggled" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Video/ShaderCache/Setting/ShaderCacheCheck" to="." method="_on_shader_cache_check_toggled"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Video/ShaderCache/Setting/Help" to="." method="show_help" binds= [1]]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Video/ClearCache/ClearShaderCache" to="." method="_on_clear_shader_cache_pressed"]
