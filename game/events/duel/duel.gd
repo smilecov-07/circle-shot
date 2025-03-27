@@ -100,19 +100,19 @@ func _start_round() -> void:
 
 
 @rpc("reliable", "call_local", "authority", 3)
-func _end_round(win_team: int, winner: int, end_event := false) -> void:
+func _end_round(win_team: int, winner: int, ends := false) -> void:
 	if multiplayer.get_remote_sender_id() != MultiplayerPeer.TARGET_PEER_SERVER:
 		push_error("This method must be called only by server.")
 		return
 	
-	_duel_ui.end_round(_current_round, win_team, winner, end_event)
-	if end_event:
+	_duel_ui.end_round(_current_round, win_team, winner, ends)
+	if ends:
 		_current_round = 3
 	else:
 		_current_round += 1
 	
 	var tween: Tween = $PoisonSmokes.create_tween()
-	tween.tween_interval(6.5 if end_event else 3.5)
+	tween.tween_interval(6.5 if ends else 3.5)
 	tween.tween_callback($PoisonSmokes.queue_free)
 	
 	get_tree().call_group(&"Player", &"make_disarmed")
@@ -124,11 +124,11 @@ func _end_round(win_team: int, winner: int, end_event := false) -> void:
 		return
 	
 	await get_tree().create_timer(3.5).timeout
-	if end_event:
+	if ends:
 		await get_tree().create_timer(3.0).timeout
 	cleanup()
 	await get_tree().create_timer(0.5).timeout
-	if end_event:
+	if ends:
 		end.rpc()
 	elif _current_round < 3:
 		for player: int in _players_names:
