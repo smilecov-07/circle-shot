@@ -31,29 +31,38 @@ func _process(_delta: float) -> void:
 	if _udp.is_connection_available():
 		var peer: PacketPeerUDP = _udp.take_connection()
 		var data: PackedByteArray = peer.get_packet()
+		if data.size() < 4:
+			print_verbose("Found invalid lobby packet.")
+			return
 		var id_nodepath := NodePath("Lobby%d" % data[0])
-		var player_name: String = Game.validate_player_name(data.slice(3).get_string_from_utf8())
+		var player_name: String = Game.validate_player_name(data.slice(4).get_string_from_utf8())
 		var players: int = data[1]
 		var max_players: int = data[2]
-		print_verbose("Found lobby: %s (%d/%d) with ID %d from IP: %s." % [
+		if data[3] < 0 or data[3] >= Globals.items_db.events.size():
+			print_verbose("Found lobby packet with invalid event ID.")
+			return
+		var event: String = Globals.items_db.events[data[3]].name
+		print_verbose("Found lobby: %s (%d/%d) with ID %d with event %s (ID: %d) at IP: %s." % [
 			player_name,
 			players,
 			max_players,
 			data[0],
+			event,
+			data[3],
 			peer.get_packet_ip(),
 		])
 		
 		if _lobbies_container.has_node(id_nodepath):
 			var local_lobby_entry: Button = _lobbies_container.get_node(id_nodepath)
 			(local_lobby_entry.get_node(^"Timer") as Timer).start()
-			local_lobby_entry.text = "%s (%d/%d)" % [player_name, players, max_players]
+			local_lobby_entry.text = "%s (%d/%d)\n%s" % [player_name, players, max_players, event]
 			local_lobby_entry.pressed.disconnect(_game.join)
 			local_lobby_entry.pressed.connect(_game.join.bind(peer.get_packet_ip()))
 			print_verbose("Lobby %d already in list. Updating IP and timer." % data[0])
 		else:
 			var local_lobby_entry: Button = _local_lobby_entry_scene.instantiate()
 			local_lobby_entry.name = id_nodepath.get_concatenated_names() # Конвертация в StringName
-			local_lobby_entry.text = "%s (%d/%d)" % [player_name, players, max_players]
+			local_lobby_entry.text = "%s (%d/%d)\n%s" % [player_name, players, max_players, event]
 			local_lobby_entry.pressed.connect(_game.join.bind(peer.get_packet_ip()))
 			_lobbies_container.add_child(local_lobby_entry)
 			print_verbose("Lobby %d added to the list." % data[0])

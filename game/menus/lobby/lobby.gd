@@ -549,14 +549,17 @@ func _do_broadcast() -> void:
 	data.append(_broadcast_lobby_id)
 	data.append(_players.size())
 	data.append(_game.max_players)
+	data.append(_selected_event)
 	data.append_array(Globals.get_string("player_name", "Local Server").to_utf8_buffer()) # Имя
 	for peer: PacketPeerUDP in _udp_peers:
 		peer.put_packet(data)
-	print_verbose("Broadcast of lobby %d done. Data sent: %s (%d/%d)." % [
+	print_verbose("Broadcast of lobby %d done. Data sent: %s (%d/%d), event: %s (ID: %d)." % [
 		_broadcast_lobby_id,
 		Globals.get_string("player_name", "Local Server"),
 		_players.size(),
 		_game.max_players,
+		Globals.items_db.events[_selected_event].name,
+		_selected_event,
 	])
 
 
