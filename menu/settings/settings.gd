@@ -42,6 +42,8 @@ func _ready() -> void:
 	(%CustomTracksCheck as BaseButton).set_pressed_no_signal(
 			Globals.get_setting_bool("custom_tracks"))
 	_on_custom_tracks_check_toggled((%CustomTracksCheck as BaseButton).button_pressed)
+	(%OfficialTracksCheck as BaseButton).set_pressed_no_signal(
+			Globals.get_setting_bool("official_tracks"))
 	# Управление
 	(%InputOptions as OptionButton).selected = Globals.get_controls_int("input_method")
 	_toggle_input_method_settings_visibility(Globals.get_controls_int("input_method"))
@@ -320,6 +322,10 @@ func _on_custom_tracks_check_toggled(toggled_on: bool) -> void:
 	(%CustomTracksSettings as CanvasItem).visible = toggled_on
 	Globals.set_setting_bool("custom_tracks", toggled_on)
 	Globals.main.apply_settings()
+
+
+func _on_official_tracks_check_toggled(toggled_on: bool) -> void:
+	Globals.set_setting_bool("official_tracks", toggled_on)
 #endregion
 
 

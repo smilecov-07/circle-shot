@@ -5,7 +5,7 @@ var _ended := false
 var _spectating_player: Player
 var _alive_players: Array[Player]
 
-@rpc("call_local", "reliable")
+@rpc("call_local", "reliable", "authority", 3)
 func set_alive_players(count: int) -> void:
 	if multiplayer.get_remote_sender_id() != MultiplayerPeer.TARGET_PEER_SERVER:
 		push_error("This method must be called only by server.")
@@ -15,7 +15,7 @@ func set_alive_players(count: int) -> void:
 	print_verbose("Alive players: %d." % count)
 
 
-@rpc("reliable", "call_local")
+@rpc("reliable", "call_local", "authority", 3)
 func show_winner(winner: int, winner_name: String) -> void:
 	if multiplayer.get_remote_sender_id() != MultiplayerPeer.TARGET_PEER_SERVER:
 		push_error("This method must be called only by server.")
@@ -24,6 +24,7 @@ func show_winner(winner: int, winner_name: String) -> void:
 	_ended = true
 	if winner == multiplayer.get_unique_id():
 		($Main/GameEnd as Label).text = "ТЫ ПОБЕДИЛ!!!"
+		(get_parent() as Event).end_event(true)
 	else:
 		($Main/GameEnd as Label).text = "ПОБЕДИТЕЛЬ: %s" % winner_name
 	($Main/GameEnd/AnimationPlayer as AnimationPlayer).play(&"Victory")
@@ -31,7 +32,7 @@ func show_winner(winner: int, winner_name: String) -> void:
 	print_verbose("Winner: %s." % winner_name)
 
 
-@rpc("reliable", "call_local")
+@rpc("reliable", "call_local", "authority", 3)
 func kill_player(which: int, killer: int = -1) -> void:
 	if multiplayer.get_remote_sender_id() != MultiplayerPeer.TARGET_PEER_SERVER:
 		push_error("This method must be called only by server.")
@@ -57,6 +58,7 @@ func kill_player(which: int, killer: int = -1) -> void:
 
 
 func show_defeat() -> void:
+	(get_parent() as Event).end_event(false)
 	if _ended:
 		return
 	($Main/GameEnd as Label).text = "ПОРАЖЕНИЕ!"

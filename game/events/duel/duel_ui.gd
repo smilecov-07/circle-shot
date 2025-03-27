@@ -16,9 +16,11 @@ func end_round(idx: int, win_team: int, winner: int, end := false) -> void:
 		if winner == multiplayer.get_unique_id():
 			($Main/GameEnd/AnimationPlayer as AnimationPlayer).play(&"Victory")
 			($Main/GameEnd as Label).text = "ПОБЕДА!"
+			(get_parent() as Event).end_event(true)
 		else:
 			($Main/GameEnd/AnimationPlayer as AnimationPlayer).play(&"Defeat")
 			($Main/GameEnd as Label).text = "ПОРАЖЕНИЕ!"
+			(get_parent() as Event).end_event(false)
 		print_verbose("Winner: %d." % winner)
 		return
 	if winner == multiplayer.get_unique_id():

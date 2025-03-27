@@ -19,6 +19,7 @@ func show_winner(team_won: int) -> void:
 		push_error("This method must be called only by server.")
 		return
 	
+	(get_parent() as Event).end_event(team_won == (get_parent() as Event).local_team)
 	if team_won < 0:
 		($Main/GameEnd/AnimationPlayer as AnimationPlayer).play(&"Draw")
 		return

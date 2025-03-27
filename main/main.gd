@@ -45,12 +45,14 @@ const MAX_CUSTOM_TRACKS: int = 20
 var game: Game
 ## Ссылка на [Menu]. Может отсутствовать.
 var menu: Menu
+## Список открытых на данный момент экранов.
+var screens: Array[Control]
+## Ссылка на узел воспроизведения музыки меню.
+var menu_music: AudioStreamPlayer
 ## Ссылка на [UPNPManager]. Отсутствует, если UPnP отключён.
 var upnp: UPNPManager
 ## Ссылка на [Console]. Отсутствует, если консоль отключена.
 var console: Console
-## Список открытых на данный момент экранов.
-var screens: Array[Control]
 ## Словарь загруженных пользовательских треков в формате "<имя файла> - <ресурс трека>".
 var custom_tracks: Dictionary[String, AudioStream]
 var _preloaded_resources: Array[Resource]
@@ -209,6 +211,8 @@ func setup_settings() -> void:
 			Globals.get_setting_float("sfx_volume", 1.0))
 	Globals.set_setting_bool("custom_tracks",
 			Globals.get_setting_bool("custom_tracks", OS.has_feature("pc")))
+	Globals.set_setting_bool("official_tracks",
+			Globals.get_setting_bool("official_tracks", true))
 
 
 ## Устанавливает настройки управления по умолчанию, если их ещё нет.
@@ -475,6 +479,14 @@ file, otherwise it will NOT function.")
 	apply_settings()
 	setup_controls_settings()
 	apply_controls_settings()
+	
+	menu_music = AudioStreamPlayer.new()
+	menu_music.name = &"MenuMusic"
+	menu_music.bus = &"Music"
+	menu_music.autoplay = true
+	menu_music.stream = load("uid://dbrfe66ser7ub")
+	add_child(menu_music)
+	move_child(menu_music, 0)
 	
 	if "--console" in OS.get_cmdline_args():
 		if not OS.has_feature("pc"):

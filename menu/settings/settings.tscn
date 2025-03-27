@@ -42,11 +42,11 @@ help_messages = Array[String](["Удаляет все загруженные р�
 Поддерживаемые форматы треков: MP3, WAV и OGG.
 Требуется предоставить разрешение на чтение файлов на Android.
 Если включить эту опцию не получается, то попробуйте в настройках приложения самостоятельно выдать нужное разрешение.
-Изменения будут применены после перезапуска игры.", "Настраивает способ стрельбы.
+Чтобы загрузить новые треки, необходимо перезапустить игру.", "Настраивает способ стрельбы.
 Зона стрельбы - чтобы вести огонь, удерживайте левый верхний угол.
 Джойстик прицеливания - чтобы отвести огонь, отведите в сторону джойстик прицеливания. На некоторых оружиях выстрел будет совершён только после того, как вы отпустите палец.", "Включает UPnP для открытия портов. Это позволит игрокам вне локальной сети подключиться к твоей комнате.
 Необходимо включить UPnP на роутере, чтобы этот способ заработал.
-Изменения будут применены после перезапуска игры.", "Настраивает мёртвую зону прицеливания, в которой направление прицела остаётся неизменным вне зависимости от положения курсора.", "Настраивает зону прицеливания, в которой расстояние курсора от центра определяет дальность прицеливания (например, насколько сильно должна быть брошена граната). Если курсор выходит за пределы этой зоны, дальность прицеливания считается максимальной.", "Отключение мини-карты может повысить производительность на слабых устройствах.", "Если включено, созданная комната может быть найдена другими игроками в локальной сети. Иначе подключение может быть выполнено только по IP-адресу.", "Если включено, убирает некоторые детали для повышения производительности."])
+Изменения будут применены после перезапуска игры.", "Настраивает мёртвую зону прицеливания, в которой направление прицела остаётся неизменным вне зависимости от положения курсора.", "Настраивает зону прицеливания, в которой расстояние курсора от центра определяет дальность прицеливания (например, насколько сильно должна быть брошена граната). Если курсор выходит за пределы этой зоны, дальность прицеливания считается максимальной.", "Отключение мини-карты может повысить производительность на слабых устройствах.", "Если включено, созданная комната может быть найдена другими игроками в локальной сети. Иначе подключение может быть выполнено только по IP-адресу.", "Если включено, убирает некоторые детали для повышения производительности.", "Если отключено, официальные треки, встроенные в игру, не будут случайно попадаться."])
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 1
@@ -543,6 +543,7 @@ icon = ExtResource("1_xh6xh")
 expand_icon = true
 
 [node name="Video" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -684,7 +685,6 @@ icon = ExtResource("1_xh6xh")
 expand_icon = true
 
 [node name="Sound" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -810,6 +810,32 @@ expand_icon = true
 [node name="CustomTracksSettings" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Sound"]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="OfficialTracks" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Sound/CustomTracksSettings"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Sound/CustomTracksSettings/OfficialTracks"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_type_variation = &"HeaderSmall"
+text = "Официальные треки"
+vertical_alignment = 1
+
+[node name="Setting" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Sound/CustomTracksSettings/OfficialTracks"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="OfficialTracksCheck" type="CheckButton" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Sound/CustomTracksSettings/OfficialTracks/Setting"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="Help" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Sound/CustomTracksSettings/OfficialTracks/Setting"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+icon = ExtResource("1_xh6xh")
+expand_icon = true
 
 [node name="CustomTracksPath" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Sound/CustomTracksSettings"]
 unique_name_in_owner = true
@@ -1192,6 +1218,8 @@ visible = false
 [connection signal="value_changed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Sound/SFXVolume/Setting/SFXVolumeSlider" to="." method="_on_sfx_volume_slider_value_changed"]
 [connection signal="toggled" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Sound/CustomTracks/Setting/CustomTracksCheck" to="." method="_on_custom_tracks_check_toggled"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Sound/CustomTracks/Setting/Help" to="." method="show_help" binds= [8]]
+[connection signal="toggled" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Sound/CustomTracksSettings/OfficialTracks/Setting/OfficialTracksCheck" to="." method="_on_official_tracks_check_toggled"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Sound/CustomTracksSettings/OfficialTracks/Setting/Help" to="." method="show_help" binds= [16]]
 [connection signal="item_selected" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Controls/InputMethod/Setting/InputOptions" to="." method="_on_input_options_item_selected"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Controls/InputMethod/Setting/Help" to="." method="show_help" binds= [6]]
 [connection signal="toggled" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Controls/KeyboardSettings/FollowMouse/Setting/FollowMouseCheck" to="." method="_on_follow_mouse_check_toggled"]

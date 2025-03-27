@@ -29,6 +29,8 @@ const KILL_VIBRATION_DURATION_MS: int = 300
 @export var spawn_point_randomness := 40.0
 ## Сцены игроков для предзагрузки.
 @export var player_scenes: Array[PackedScene]
+## Официальные треки.
+@export var tracks: Array[AudioStream]
 
 ## Локальный игрок. Может быть [code]null[/code].
 var local_player: Player
@@ -56,6 +58,7 @@ var _kill_marker_scene: PackedScene = preload("uid://blhm6uka1p287")
 
 
 func _ready() -> void:
+	Globals.main.menu_music.stream_paused = true
 	if multiplayer.is_server():
 		multiplayer.peer_disconnected.connect(_on_peer_disconnected)
 	
@@ -78,6 +81,10 @@ func _ready() -> void:
 		_setup()
 	
 	_event_ui.show_intro()
+
+
+func _exit_tree() -> void:
+	Globals.main.menu_music.stream_paused = false
 
 
 ## Задаёт данные игроков. Вызывается [Game] при завершении загрузки.
@@ -119,14 +126,13 @@ func set_local_player(player: Player) -> void:
 	local_player_created.emit(player)
 	set_local_team(player.team)
 	
-	var camera: SmartCamera = $Camera
 	if was_started:
-		camera.pan_to_target(player, 0.3)
+		($Camera as SmartCamera).pan_to_target(player, 0.3)
 	else:
 		if not multiplayer.is_server():
 			local_player.make_disarmed()
 			local_player.make_immobile()
-		camera.pan_to_target(player, 4.0)
+		($Camera as SmartCamera).pan_to_target(player, 4.0)
 
 
 ## Задаёт команду локального игрока.
@@ -135,13 +141,23 @@ func set_local_team(team: int) -> void:
 	local_team_set.emit(team)
 
 
-## Уничтожает всех игроков, все снаряды и остальные объекты, появляющиеся во время игры.[br]
+## Заканчивает событие победой или поражением.
+func end_event(victory: bool) -> void:
+	($Music as AudioStreamPlayer).stop()
+	if victory:
+		($VictoryMusic as AudioStreamPlayer).play()
+	else:
+		($DefeatMusic as AudioStreamPlayer).play()
+
+
+## Уничтожает всех сущностей, все снаряды и остальные объекты, появляющиеся во время игры.[br]
 ## [b]Примечание[/b]: этот метод должен вызываться только на сервере.
 func cleanup() -> void:
 	if not multiplayer.is_server():
 		push_error("Unexpected call on client.")
 		return
-	get_tree().call_group(&"Entity", &"queue_free")
+	for entity: Node in $Entities.get_children():
+		entity.queue_free()
 	for projectile: Node in $Projectiles.get_children():
 		projectile.queue_free()
 	for other: Node in $Other.get_children():
@@ -167,6 +183,14 @@ func _start() -> void:
 		push_error("This method must be called only by server.")
 		return
 	
+	if Globals.get_setting_bool("custom_tracks"):
+		if not Globals.get_setting_bool("official_tracks"):
+			tracks.clear()
+		tracks.append_array(Globals.main.custom_tracks.values())
+	if not tracks.is_empty():
+		($Music as AudioStreamPlayer).stream = tracks.pick_random()
+		($Music as AudioStreamPlayer).play()
+	
 	_finish_start()
 	if multiplayer.is_server():
 		get_tree().call_group(&"Player", &"unmake_disarmed")
@@ -177,11 +201,6 @@ func _start() -> void:
 	started.emit()
 	was_started = true
 	
-	if Globals.get_setting_bool("custom_tracks") \
-			and not Globals.main.custom_tracks.is_empty():
-		($Music as AudioStreamPlayer).stream = \
-				Globals.main.custom_tracks.values().pick_random()
-		($Music as AudioStreamPlayer).play()
 	print_verbose("Event started.")
 
 
