@@ -57,6 +57,10 @@ var id: int = -1:
 var current_health: int
 ## Команда сущности. Сущности из одной команды не могут наносить урон друг другу.
 var team: int = 0
+## Позиция сущности на сервере. Ипользуется при интерполяции движения сущности на клиентах.
+## @deprecated: интерполяция движения будет переработана в будущем.
+var server_position: Vector2
+
 ## Множитель скорости. НЕ устанавливайте на 0, используйте [method make_immobile] вместо этого.
 var speed_multiplier := 1.0
 ## Множитель исходящего урона. НЕ устанавливайте на 0, используйте
@@ -67,9 +71,12 @@ var damage_multiplier := 1.0
 var defense_multiplier := 1.0
 ## Вектор отбрасывания. Всегда добавляется к результируещему движению сущности.
 var knockback := Vector2.ZERO
-## Позиция сущности на сервере. Ипользуется при интерполяции движения сущности на клиентах.
-## @deprecated: интерполяция движения будет переработана в будущем.
-var server_position: Vector2
+## Массив из функций-модификаторов, вызываемых при получении урона/лечении. Должны принимать
+## один параметр типа [int], обозначающий изменение здоровья (отрицательный, если получил урон,
+## иначе положительный). Возвращаемое значение типа [int] должно содержать итоговое изменение
+## здоровья.[br]
+## [b]Примечание[/b]: эти функции вызываются только на сервере.
+var change_health_modifiers: Array[Callable]
 
 var _immune_counter: int = 0
 var _immobile_counter: int = 0
@@ -291,7 +298,12 @@ func damage(amount: int, by: int) -> void:
 	if not multiplayer.is_server():
 		push_error("Unexpected call on client.")
 		return
-	if is_immune() or current_health <= 0 or amount <= 0:
+	if is_immune() or current_health <= 0:
+		return
+	
+	for modifier: Callable in change_health_modifiers:
+		amount = -modifier.call(-amount)
+	if amount <= 0:
 		return
 	
 	var new_health: int = clampi(current_health - maxi(roundi(amount * defense_multiplier), 1),
@@ -309,7 +321,12 @@ func heal(amount: int) -> void:
 	if not multiplayer.is_server():
 		push_error("Unexpected call on client.")
 		return
-	if current_health <= 0 or amount <= 0 or current_health >= max_health:
+	if current_health <= 0 or current_health >= max_health:
+		return
+	
+	for modifier: Callable in change_health_modifiers:
+		amount = modifier.call(amount)
+	if amount <= 0:
 		return
 	
 	var new_health: int = clampi(current_health + amount, 0, max_health)
