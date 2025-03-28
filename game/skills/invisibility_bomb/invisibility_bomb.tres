@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="SkillData" load_steps=2 format=3 uid="uid://wx68f4o4qijn"]
+
+[ext_resource type="Script" uid="uid://iwsanxyoxs5s" path="res://game/player/equip/skill_data.gd" id="1_hc15b"]
+
+[resource]
+script = ExtResource("1_hc15b")
+name = "Бомба невидимости"
+rarity = 1
+id = "invisibility"
+stats = Dictionary[String, String]({
+"cooldown": "60",
+"count": "2",
+"duration": "4"
+})
+brief_description = "Делает невидимым"
+usage_text = "{count} исп./{cooldown} с"
+description = "[color=deep_blue_sky]Делает игрока невидимым на некоторое время[/color]
+Длительность: [color=red]{duration}[/color]
+
+Количество использований: [color=blue]{count}[/color]
+Перезарядка: [color=blue]{cooldown} с[/color]
+
+Этот навык позволяет незаметно подкрадываться к врагам и наносить внезапные удары."
+scene_path = "uid://cm8g3yu8l3tdi"
+image_path = "uid://eamtcxi63dmo"
+spawnable_scenes_paths = Array[String]([])
+metadata/_custom_type_script = "uid://iwsanxyoxs5s"

@@ -34,6 +34,7 @@ func dodge(direction: Vector2) -> void:
 		push_error("This method must be called only by server.")
 		return
 	
+	block_cooldown()
 	player.make_disarmed()
 	player.make_immobile()
 	player.knockback = direction * roll_speed
@@ -55,6 +56,7 @@ func dodge(direction: Vector2) -> void:
 	await _roll_timer.timeout
 	
 	player.collision_layer = previous_collision_layer
+	unblock_cooldown()
 
 
 @rpc("reliable", "call_local", "any_peer", 5)

@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cm8g3yu8l3tdi"]
+
+[ext_resource type="Script" uid="uid://3sba7goistkj" path="res://game/skills/invisibility_bomb/invisibility_bomb.gd" id="1_v0q2m"]
+
+[node name="InvisibilityBomb" type="Node2D"]
+script = ExtResource("1_v0q2m")
+use_cooldown = 60
+metadata/_custom_type_script = "uid://c7xh6wcxwv4d4"
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true

@@ -10,6 +10,7 @@ func _use() -> void:
 	if player.is_local():
 		(use_effect.get_node(^"Tint/AnimationPlayer") as AnimationPlayer).play(&"Tint")
 	
+	block_cooldown()
 	player.make_disarmed()
 	if multiplayer.is_server():
 		_timer.start(1.25)
@@ -27,6 +28,7 @@ func _use() -> void:
 		_timer.start(2.5)
 		await _timer.timeout
 	player.unmake_disarmed()
+	unblock_cooldown()
 
 
 func _can_use() -> bool:

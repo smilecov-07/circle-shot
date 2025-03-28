@@ -16,6 +16,7 @@ func _use() -> void:
 	var use_effect: Node2D = _use_effect_scene.instantiate()
 	player.visual.add_child(use_effect)
 	
+	block_cooldown()
 	player.make_disarmed()
 	_timer.start(1.25)
 	await _timer.timeout
@@ -28,3 +29,6 @@ func _use() -> void:
 	_timer.start(0.35)
 	await _timer.timeout
 	player.unmake_disarmed()
+	_timer.start(boost_duration - 0.35)
+	await _timer.timeout
+	unblock_cooldown()
