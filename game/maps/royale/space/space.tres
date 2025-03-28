@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="MapData" load_steps=2 format=3 uid="uid://bwdhlwdrv1a5w"]
+
+[ext_resource type="Script" uid="uid://c2mew3f2rwarc" path="res://game/events/common/map_data.gd" id="1_c6cdg"]
+
+[resource]
+script = ExtResource("1_c6cdg")
+name = "Космос"
+brief_description = "Сражение на космической станции."
+scene_path = "uid://cbmb8arq01pl8"
+image_path = "uid://brte0hjuacqpc"
+metadata/_custom_type_script = "uid://c2mew3f2rwarc"

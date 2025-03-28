@@ -1,10 +1,8 @@
-[gd_resource type="TileSet" load_steps=17 format=3 uid="uid://cqtubyifhoudw"]
+[gd_resource type="TileSet" load_steps=14 format=3 uid="uid://cqtubyifhoudw"]
 
 [ext_resource type="Texture2D" uid="uid://b0tjnwaa51lsv" path="res://game/maps/teamfight/river/floor_tiles.png" id="1_3vy2u"]
 [ext_resource type="Texture2D" uid="uid://dr3gkvc3kct5j" path="res://game/maps/teamfight/river/fence.png" id="1_t3krv"]
-[ext_resource type="Shader" uid="uid://jfbv4srgoh02" path="res://game/maps/teamfight/river/water.gdshader" id="2_vp6r0"]
 [ext_resource type="Texture2D" uid="uid://b0ppb2f5o052p" path="res://game/maps/teamfight/river/water.png" id="3_db4np"]
-[ext_resource type="Texture2D" uid="uid://dl1tjq48egrhv" path="res://game/maps/teamfight/river/noise.tres" id="3_t3krv"]
 [ext_resource type="Texture2D" uid="uid://omfdhfar6rqn" path="res://game/maps/teamfight/river/wall_tiles.png" id="6_w2u7q"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_dpl6s"]
@@ -305,17 +303,10 @@ texture_region_size = Vector2i(160, 160)
 7:3/0/terrains_peering_bit/top_right_corner = 1
 6:3/0 = 0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_t3krv"]
-shader = ExtResource("2_vp6r0")
-shader_parameter/dist_texture = ExtResource("3_t3krv")
-shader_parameter/distortion = 0.05
-shader_parameter/time_multiplier = 0.2
-
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w2u7q"]
 texture = ExtResource("3_db4np")
 texture_region_size = Vector2i(160, 160)
 0:0/0 = 0
-0:0/0/material = SubResource("ShaderMaterial_t3krv")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_e64b4"]
 texture = ExtResource("6_w2u7q")
