@@ -231,7 +231,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.35, 0.6),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(-56, 0), Vector2(-56, 0), Vector2(-4, 23), Vector2(49, -2)]
+"values": [Vector2(-56, 0), Vector2(-56, 0), Vector2(-4, 23), Vector2(57, -9)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -373,19 +373,19 @@ offset = Vector2(56, 0)
 [node name="Shoot" type="Sprite2D" parent="Base" index="0"]
 visible = false
 show_behind_parent = true
-position = Vector2(195, -23)
+position = Vector2(195, -16)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("3_17owv")
 offset = Vector2(20, 0)
 
 [node name="Shutter" type="Sprite2D" parent="Base" index="1"]
 texture = ExtResource("6_cukv2")
-offset = Vector2(124, -12)
+offset = Vector2(132, -8)
 region_enabled = true
-region_rect = Rect2(176, 8, 72, 32)
+region_rect = Rect2(184, 16, 72, 24)
 
 [node name="Sleeve" type="CPUParticles2D" parent="Base" index="2"]
-position = Vector2(43, -21)
+position = Vector2(62, -15)
 emitting = false
 amount = 1
 texture = ExtResource("5_stexv")
@@ -400,7 +400,7 @@ angular_velocity_max = 720.0
 color_ramp = SubResource("Gradient_d2dv7")
 
 [node name="ShootPoint" parent="." index="2"]
-position = Vector2(196, -23)
+position = Vector2(195, -16)
 
 [node name="AnimationPlayer" parent="." index="3"]
 libraries = {

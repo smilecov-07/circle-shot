@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bhqnmcped5aoq"
-path="res://.godot/imported/flamethrower.png-153fcd6b1d9dbf8412043bd6165268b9.ctex"
+uid="uid://dc1e1bva63m6t"
+path="res://.godot/imported/magazine.png-628e9746d85a9596dba72d23e51e1202.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/weapons/guns/flamethrower/flamethrower.png"
-dest_files=["res://.godot/imported/flamethrower.png-153fcd6b1d9dbf8412043bd6165268b9.ctex"]
+source_file="res://game/weapons/guns/flamethrower/magazine.png"
+dest_files=["res://.godot/imported/magazine.png-628e9746d85a9596dba72d23e51e1202.ctex"]
 
 [params]
 

@@ -390,24 +390,24 @@ speed_multiplier_when_current = 0.95
 [node name="Magazine" type="Sprite2D" parent="." index="0"]
 visible = false
 texture = ExtResource("3_4hyw8")
-offset = Vector2(-20, 8)
+offset = Vector2(-24, 16)
 region_enabled = true
-region_rect = Rect2(48, 56, 40, 56)
+region_rect = Rect2(56, 64, 32, 48)
 
 [node name="Base" type="Sprite2D" parent="." index="1"]
 texture = ExtResource("2_gmio7")
-offset = Vector2(40, -12)
+offset = Vector2(32, -8)
 
 [node name="Magazine" type="Sprite2D" parent="Base" index="0"]
 show_behind_parent = true
 texture = ExtResource("3_4hyw8")
-offset = Vector2(-20, 8)
+offset = Vector2(-24, 16)
 region_enabled = true
-region_rect = Rect2(48, 56, 40, 56)
+region_rect = Rect2(56, 64, 32, 48)
 
 [node name="Sleeve" type="CPUParticles2D" parent="Base" index="1"]
 show_behind_parent = true
-position = Vector2(40, -34)
+position = Vector2(42, -30)
 emitting = false
 amount = 1
 texture = ExtResource("6_inlcm")
@@ -424,19 +424,19 @@ color_ramp = SubResource("Gradient_eqhs3")
 [node name="Shutter" type="Sprite2D" parent="Base" index="2"]
 show_behind_parent = true
 texture = ExtResource("4_luxdp")
-offset = Vector2(64, -36)
+offset = Vector2(60, -36)
 region_enabled = true
-region_rect = Rect2(136, 32, 32, 16)
+region_rect = Rect2(144, 24, 24, 24)
 
 [node name="Shoot" type="Sprite2D" parent="Base" index="3"]
 visible = false
 show_behind_parent = true
-position = Vector2(184, -22)
+position = Vector2(173, -19)
 scale = Vector2(1, -1)
 texture = ExtResource("7_4h4it")
 
 [node name="ShootPoint" parent="." index="2"]
-position = Vector2(164, -23)
+position = Vector2(155, -20)
 
 [node name="AnimationPlayer" parent="." index="3"]
 libraries = {

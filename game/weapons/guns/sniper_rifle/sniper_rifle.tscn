@@ -456,7 +456,7 @@ region_enabled = true
 region_rect = Rect2(104, 104, 40, 24)
 
 [node name="Sleeve" type="CPUParticles2D" parent="Weapon" index="3"]
-position = Vector2(77, -22)
+position = Vector2(61, -24)
 emitting = false
 amount = 1
 texture = ExtResource("8_y68u3")
