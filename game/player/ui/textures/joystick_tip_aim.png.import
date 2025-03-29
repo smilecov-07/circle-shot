@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d4b1wfymlf7bu"
-path="res://.godot/imported/health_bar_empty.png-f4811f1ae6c67671f82443a2d832f152.ctex"
+uid="uid://chfx32osm5nwo"
+path="res://.godot/imported/joystick_tip_aim.png-b28aab36e3344d4975e2598279075539.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/player/ui/health_bar_empty.png"
-dest_files=["res://.godot/imported/health_bar_empty.png-f4811f1ae6c67671f82443a2d832f152.ctex"]
+source_file="res://game/player/ui/textures/joystick_tip_aim.png"
+dest_files=["res://.godot/imported/joystick_tip_aim.png-b28aab36e3344d4975e2598279075539.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bqmrnwa8isfbe"
-path="res://.godot/imported/health_bar_immediate.png-314ddbae32691e8c7c22c988499def92.ctex"
+uid="uid://djbso2agyek2p"
+path="res://.godot/imported/additional_button.png-41e7999a49c560dfec90f1d9148825a4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/player/ui/health_bar_immediate.png"
-dest_files=["res://.godot/imported/health_bar_immediate.png-314ddbae32691e8c7c22c988499def92.ctex"]
+source_file="res://game/player/ui/textures/additional_button.png"
+dest_files=["res://.godot/imported/additional_button.png-41e7999a49c560dfec90f1d9148825a4.ctex"]
 
 [params]
 

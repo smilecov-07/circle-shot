@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://d3nsak46hbo2c"]
+[gd_scene load_steps=16 format=3 uid="uid://d3nsak46hbo2c"]
 
 [ext_resource type="Script" uid="uid://ciktx11hqv3ox" path="res://game/events/common/event.gd" id="1_kxt6o"]
 [ext_resource type="PackedScene" uid="uid://3l0k1cn63ahd" path="res://game/player/player.tscn" id="2_i4nrm"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://c5wn8p7yq48wc" path="res://game/events/common/chat/chat.gd" id="3_8d55t"]
 [ext_resource type="AudioStream" uid="uid://cygr2p3xlblws" path="res://game/music/battle0.ogg" id="3_w1x71"]
 [ext_resource type="Script" uid="uid://buk2lt6westdi" path="res://game/events/common/event_ui.gd" id="4_10cmx"]
+[ext_resource type="AudioStream" uid="uid://cx6cuaaws3vre" path="res://game/music/battle1.ogg" id="4_t8n0q"]
 [ext_resource type="PackedScene" uid="uid://0wc72b0o2o11" path="res://game/player/ui/player_ui.tscn" id="8_2up8s"]
 [ext_resource type="Texture2D" uid="uid://dwtddg0cmagg1" path="res://game/events/common/chat/chat_send.png" id="9_2uw6w"]
 [ext_resource type="Texture2D" uid="uid://durmmh0vjl0eg" path="res://menu/theme/icons/exit.png" id="13_j0bsh"]
@@ -199,7 +200,7 @@ _data = {
 [node name="Event" type="Node" groups=["Event"]]
 script = ExtResource("1_kxt6o")
 player_scenes = Array[PackedScene]([ExtResource("2_i4nrm")])
-tracks = Array[AudioStream]([ExtResource("3_w1x71")])
+tracks = Array[AudioStream]([ExtResource("3_w1x71"), ExtResource("4_t8n0q")])
 metadata/_custom_type_script = "uid://ciktx11hqv3ox"
 
 [node name="Entities" type="Node2D" parent="."]

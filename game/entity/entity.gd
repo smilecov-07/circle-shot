@@ -143,12 +143,12 @@ func add_effect(effect_uid: String, duration := 1.0, data := [], should_stack :=
 		for existing_effect: Effect in _effects.get_children():
 			if existing_effect.uid == effect_uid:
 				existing_effect.add_duration(duration)
-				effect.free()
 				print_verbose("Added duration %f to effect %s on %s." % [
 					duration,
 					effect.name,
 					name,
 				])
+				effect.free()
 				return
 	
 	_effects.add_child(effect, true)

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://p85ppsyx0g2n"
-path="res://.godot/imported/weapon_bg.png-f82ef38c32813c9d54242e341bd918ba.ctex"
+uid="uid://low3v5d2q65l"
+path="res://.godot/imported/health_bar.png-1618c89361c959a8b045ab303047e00d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/player/ui/weapon_bg.png"
-dest_files=["res://.godot/imported/weapon_bg.png-f82ef38c32813c9d54242e341bd918ba.ctex"]
+source_file="res://game/player/ui/textures/health_bar.png"
+dest_files=["res://.godot/imported/health_bar.png-1618c89361c959a8b045ab303047e00d.ctex"]
 
 [params]
 
