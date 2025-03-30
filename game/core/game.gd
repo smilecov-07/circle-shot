@@ -91,7 +91,7 @@ func _exit_tree() -> void:
 		Globals.main.console.command_processors.erase(_process_console_command)
 		Globals.main.console.help_processors.erase(_print_help)
 	# Очистка на всякий случай
-	if multiplayer.multiplayer_peer:
+	if multiplayer.has_multiplayer_peer():
 		close()
 
 

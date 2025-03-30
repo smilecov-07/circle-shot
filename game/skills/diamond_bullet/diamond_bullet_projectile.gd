@@ -4,9 +4,10 @@ extends Projectile
 @export var knockback_duration := 0.5
 
 func _ready() -> void:
-	super()
 	var tween: Tween = create_tween()
 	tween.tween_property($Trail as Node2D, ^":scale:x", 1.0, 0.4).from(0.1)
+	tween.custom_step(0.01)
+	super()
 
 
 func _deal_damage(entity: Entity) -> void:

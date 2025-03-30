@@ -4,7 +4,6 @@ extends Projectile
 var base_speed: float
 
 func _ready() -> void:
-	super()
 	base_speed = speed
 	var tween: Tween = create_tween()
 	tween.tween_property($Sprite2D as Node2D, ^":scale", Vector2.ONE, 0.3).from(Vector2.ONE * 0.5)
@@ -12,6 +11,8 @@ func _ready() -> void:
 	tween.tween_callback(func() -> void: ($ShapeDetector as ShapeCast2D).enabled = false)
 	tween.tween_property($Sprite2D as CanvasItem, ^":modulate", Color.TRANSPARENT, 0.3)
 	tween.parallel().tween_property($Sprite2D as Node2D, ^":scale", Vector2.ONE * 0.5, 0.3)
+	tween.custom_step(0.01)
+	super()
 
 
 func _physics_process(delta: float) -> void:
