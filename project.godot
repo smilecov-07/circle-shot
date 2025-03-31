@@ -192,6 +192,7 @@ buffering/agile_event_flushing=true
 2d_render/layer_1="Default"
 2d_render/layer_2="Minimap"
 2d_render/layer_3="High Graphics"
+2d_render/layer_4="Low Graphics"
 2d_physics/layer_1="World"
 2d_physics/layer_2="Entity"
 2d_physics/layer_3="Attack"

@@ -350,6 +350,7 @@ func apply_settings() -> void:
 	var max_fps: int = Globals.get_setting_int("max_fps")
 	Engine.max_fps = max_fps if max_fps < 125 else 0
 	get_viewport().set_canvas_cull_mask_bit(2, not Globals.get_setting_bool("low_graphics"))
+	get_viewport().set_canvas_cull_mask_bit(3, Globals.get_setting_bool("low_graphics"))
 
 
 ## Применяет настройки управления.

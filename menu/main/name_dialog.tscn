@@ -43,6 +43,7 @@ _data = {
 
 [node name="NameDialog" type="Window"]
 title = "Как тебя зовут, игрок?"
+position = Vector2i(0, 28)
 size = Vector2i(456, 152)
 unresizable = true
 script = ExtResource("1_n2mo3")
@@ -125,4 +126,5 @@ color = Color(0.574219, 0, 0, 1)
 
 [connection signal="close_requested" from="." to="." method="hide"]
 [connection signal="text_changed" from="MarginContainer/VBoxContainer/LineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="text_submitted" from="MarginContainer/VBoxContainer/LineEdit" to="." method="_on_confirm_pressed" unbinds=1]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Confirm" to="." method="_on_confirm_pressed"]

@@ -1,8 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://dp6wxqvjukdht"]
+[gd_scene load_steps=3 format=3 uid="uid://dp6wxqvjukdht"]
 
+[ext_resource type="Script" uid="uid://btu1g3prgu2l8" path="res://game/events/common/map.gd" id="1_h66jf"]
 [ext_resource type="TileSet" uid="uid://ci04ocvnien3" path="res://game/events/common/minimap/tile_set.tres" id="1_o3igp"]
 
 [node name="Map" type="Node2D"]
+script = ExtResource("1_h66jf")
+metadata/_custom_type_script = "uid://btu1g3prgu2l8"
 
 [node name="Minimap" type="Node" parent="."]
 

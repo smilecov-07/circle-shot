@@ -1,9 +1,9 @@
-extends Node2D
+extends Map
 
 @onready var _anim: AnimationPlayer = $TileMapLayers/AnimationPlayer
 
-func _ready() -> void:
-	var duel: Duel = get_parent()
+func _initialize() -> void:
+	var duel: Duel = event
 	duel.round_started.connect(_on_round_started)
 	duel.round_ended.connect(_on_round_ended)
 

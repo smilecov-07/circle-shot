@@ -1,9 +1,7 @@
-[gd_scene load_steps=15 format=4 uid="uid://cbmb8arq01pl8"]
+[gd_scene load_steps=13 format=4 uid="uid://cbmb8arq01pl8"]
 
 [ext_resource type="PackedScene" uid="uid://c4157ddj75w7o" path="res://game/events/royale/base_map.tscn" id="1_5erqo"]
 [ext_resource type="Texture2D" uid="uid://ccit1ha8122h0" path="res://game/maps/royale/space/background.png" id="2_p6x1d"]
-[ext_resource type="Script" uid="uid://c5v5rs6vnf7md" path="res://game/maps/royale/space/space.gd" id="2_x1q66"]
-[ext_resource type="AudioStream" uid="uid://dpdrqash4lyw2" path="res://game/maps/royale/space/music.ogg" id="3_2n7ht"]
 [ext_resource type="TileSet" uid="uid://bbtp28pgym4wy" path="res://game/maps/royale/space/tile_set.tres" id="3_x1q66"]
 [ext_resource type="Shader" uid="uid://cqxut0urqm01l" path="res://game/maps/royale/space/change_color.gdshader" id="5_h260c"]
 
@@ -65,8 +63,6 @@ _data = {
 }
 
 [node name="Map" instance=ExtResource("1_5erqo")]
-script = ExtResource("2_x1q66")
-custom_tracks = Array[AudioStream]([ExtResource("3_2n7ht")])
 
 [node name="0" parent="SpawnPoints" index="0"]
 position = Vector2(5555, -8)
@@ -213,13 +209,18 @@ scroll_scale = Vector2(0.2, 0.2)
 repeat_size = Vector2(2560, 1440)
 repeat_times = 2
 
-[node name="Background" type="Sprite2D" parent="BackgroundParallax" index="0"]
+[node name="SimpleBackground" type="ColorRect" parent="BackgroundParallax" index="0"]
+visibility_layer = 8
+offset_right = 2560.0
+offset_bottom = 1440.0
+color = Color(0.413717, 0.113678, 0.582031, 1)
+
+[node name="Background" type="Sprite2D" parent="BackgroundParallax" index="1"]
 visibility_layer = 4
 texture_repeat = 2
 scale = Vector2(2, 2)
 texture = ExtResource("2_p6x1d")
 centered = false
-region_enabled = true
 region_rect = Rect2(0, 0, 1280, 720)
 
 [node name="TileMapLayers" type="Node2D" parent="." index="6"]
