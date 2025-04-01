@@ -14,6 +14,7 @@ func _exit_tree() -> void:
 
 func _explode() -> void:
 	($AnimationPlayer as AnimationPlayer).play(&"Explode")
+	($AnimationPlayer as AnimationPlayer).advance(0.0) # Мгновенно показываем спрайт взрыва
 	var event: Event = get_tree().get_first_node_in_group(&"Event")
 	if ($VisibleOnScreenNotifier2D as VisibleOnScreenNotifier2D).is_on_screen():
 		if event.local_team != ($Explosion/Attack as Attack).team \
@@ -27,6 +28,8 @@ func _explode() -> void:
 			($Stun/Sound as AudioStreamPlayer).volume_db = _previous_sfx_db
 			_muted = true
 			
+			# Ждём кадр чтобы запечатлить, где был взрыв флешки
+			await get_tree().process_frame
 			var screen: Image = get_viewport().get_texture().get_image()
 			($Stun/Effect/Texture as TextureRect).texture = ImageTexture.create_from_image(screen)
 			($Stun/AnimationPlayer as AnimationPlayer).play(&"Stun")
