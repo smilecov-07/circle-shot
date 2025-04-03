@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://d3nsak46hbo2c"]
+[gd_scene load_steps=17 format=3 uid="uid://d3nsak46hbo2c"]
 
 [ext_resource type="Script" uid="uid://ciktx11hqv3ox" path="res://game/events/common/event.gd" id="1_kxt6o"]
 [ext_resource type="PackedScene" uid="uid://3l0k1cn63ahd" path="res://game/player/player.tscn" id="2_i4nrm"]
@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://cx6cuaaws3vre" path="res://game/music/battle1.ogg" id="4_t8n0q"]
 [ext_resource type="PackedScene" uid="uid://0wc72b0o2o11" path="res://game/player/ui/player_ui.tscn" id="8_2up8s"]
 [ext_resource type="Texture2D" uid="uid://dwtddg0cmagg1" path="res://game/events/common/chat/chat_send.png" id="9_2uw6w"]
+[ext_resource type="AudioStream" uid="uid://hs3bh8qllach" path="res://game/music/defeat.ogg" id="12_jddfk"]
 [ext_resource type="Texture2D" uid="uid://durmmh0vjl0eg" path="res://menu/theme/icons/exit.png" id="13_j0bsh"]
 [ext_resource type="Texture2D" uid="uid://d14nbphg5o3a" path="res://game/events/common/chat/chat.png" id="14_05fx8"]
 
@@ -496,6 +497,7 @@ bus = &"Music"
 bus = &"Music"
 
 [node name="DefeatMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_jddfk")
 bus = &"Music"
 
 [connection signal="local_player_created" from="." to="UI/Main/PlayerUI" method="_on_local_player_created"]

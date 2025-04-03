@@ -216,7 +216,7 @@ wiziritka - скины и карты
 Ronill - фоны
 BaCat86, Kaurt, MilDeV, ZeroHero135, smilecov_07 - скины
 Тестировщики (и благодарность):
-LohDebil228, ATINY, smilecov_07, YanniKss"
+LohDebil228, ATINY, YanniKss"
 autowrap_mode = 2
 
 [node name="TelegramLink" type="LinkButton" parent="About/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]

@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=4 uid="uid://cbmb8arq01pl8"]
+[gd_scene load_steps=14 format=4 uid="uid://cbmb8arq01pl8"]
 
 [ext_resource type="PackedScene" uid="uid://c4157ddj75w7o" path="res://game/events/royale/base_map.tscn" id="1_5erqo"]
+[ext_resource type="AudioStream" uid="uid://dpdrqash4lyw2" path="res://game/maps/royale/space/music.ogg" id="2_2n7ht"]
 [ext_resource type="Texture2D" uid="uid://ccit1ha8122h0" path="res://game/maps/royale/space/background.png" id="2_p6x1d"]
 [ext_resource type="TileSet" uid="uid://bbtp28pgym4wy" path="res://game/maps/royale/space/tile_set.tres" id="3_x1q66"]
 [ext_resource type="Shader" uid="uid://cqxut0urqm01l" path="res://game/maps/royale/space/change_color.gdshader" id="5_h260c"]
@@ -63,6 +64,7 @@ _data = {
 }
 
 [node name="Map" instance=ExtResource("1_5erqo")]
+custom_tracks = Array[AudioStream]([ExtResource("2_2n7ht")])
 
 [node name="0" parent="SpawnPoints" index="0"]
 position = Vector2(5555, -8)
