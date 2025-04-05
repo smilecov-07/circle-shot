@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SkinData" load_steps=2 format=3 uid="uid://cnb11eku2le8l"]
+
+[ext_resource type="Script" uid="uid://d6lhqjoo2iuf" path="res://game/player/equip/skin_data.gd" id="1_iq21s"]
+
+[resource]
+script = ExtResource("1_iq21s")
+name = "Меттатон"
+brief_description = "Кумир человечества"
+rarity = 2
+id = "mettaton"
+scene_path = "uid://cg27rk21dp4m8"
+image_path = "uid://jysolhexc2ex"
+metadata/_custom_type_script = "uid://d6lhqjoo2iuf"
