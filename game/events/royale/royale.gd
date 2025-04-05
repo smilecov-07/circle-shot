@@ -11,8 +11,6 @@ extends Event
 @export var ammo_box_spawn_interval_base := 40.0
 ## Увеличение интервала появления коробок с боеприпасами за каждого живого игрока.
 @export var ammo_box_spawn_interval_per_player := 2.5
-## Время, за которое ядовитый дым покроет всю карту.
-@export var poison_smoke_time := 400.0
 
 var _spawn_counter: int = 0
 var _heal_box_counter: int = 0
@@ -21,6 +19,7 @@ var _alive_players: Array[int]
 
 var _heal_box_scene: PackedScene = preload("uid://bysyaaj2r7stt")
 var _ammo_box_scene: PackedScene = preload("uid://bdtqr6mv231py")
+var _poison_smokes_scene: PackedScene = preload("uid://cr1m37xm3w88w")
 
 @onready var _spawn_points: Array[Node] = $Map/SpawnPoints.get_children()
 @onready var _heal_box_points: Array[Node] = $Map/HealPoints.get_children()
@@ -35,6 +34,10 @@ func _initialize() -> void:
 
 
 func _finish_start() -> void:
+	var smokes: Node2D = _poison_smokes_scene.instantiate()
+	add_child(smokes)
+	var tween: Tween = smokes.create_tween()
+	tween.tween_property(smokes, ^":modulate", smokes.modulate, 0.3).from(Color.TRANSPARENT)
 	if multiplayer.is_server():
 		_alive_players = _players_names.keys()
 		($HealBoxSpawnTimer as Timer).start(heal_box_spawn_interval_base
@@ -43,10 +46,6 @@ func _finish_start() -> void:
 				+ ammo_box_spawn_interval_per_player * _alive_players.size())
 		_royale_ui.set_alive_players.rpc(_alive_players.size())
 		_check_winner()
-	for smoke: Node2D in $PoisonSmoke.get_children():
-		var tween: Tween = smoke.create_tween()
-		tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
-		tween.tween_property(smoke, ^":position", Vector2.ZERO, poison_smoke_time)
 
 
 func _make_teams() -> void:

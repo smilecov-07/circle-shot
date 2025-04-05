@@ -4,6 +4,13 @@ extends Attack
 @export var slowdown_duration := 4.0
 @export var slowdown_multiplier := 0.7
 
+func _ready() -> void:
+	if (get_tree().get_first_node_in_group(&"Event") as Event).local_team == team:
+		($AnimationPlayer as AnimationPlayer).play(&"PlaceFriendly")
+	else:
+		($AnimationPlayer as AnimationPlayer).play(&"Place")
+
+
 func _deal_damage(entity: Entity) -> void:
 	entity.add_effect.rpc(Effect.STUN, stun_duration)
 	entity.add_effect.rpc(Effect.SPEED_CHANGE, slowdown_duration, [slowdown_multiplier])

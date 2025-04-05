@@ -1,0 +1,496 @@
+[gd_scene load_steps=9 format=3 uid="uid://b4h27swncrquh"]
+
+[ext_resource type="Script" uid="uid://dk6xb2fo1sicm" path="res://game/events/common/poison_smokes/poison_smokes.gd" id="1_a2moi"]
+[ext_resource type="Script" uid="uid://ccr5t8s5ui45t" path="res://game/entity/attack/area_detector.gd" id="2_8ot81"]
+[ext_resource type="Texture2D" uid="uid://ln5yw64d6ydf" path="res://game/events/common/poison_smokes/poison_smoke.png" id="3_jp17w"]
+[ext_resource type="Texture2D" uid="uid://covm4tksm55vv" path="res://game/events/common/poison_smokes/poison_smoke_base.png" id="4_d8b6i"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_k7uj4"]
+
+[sub_resource type="Animation" id="Animation_3xxqq"]
+resource_name = "Move"
+length = 20.0
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Top:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 20),
+"transitions": PackedFloat32Array(1, 1e-05),
+"update": 0,
+"values": [Rect2(0, 2, 4096, 510), Rect2(2048, 2, 4096, 510)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Top2:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 20),
+"transitions": PackedFloat32Array(1, 1e-05),
+"update": 0,
+"values": [Rect2(0, 2, 4096, 510), Rect2(2048, 2, 4096, 510)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Top3:region_rect")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 20),
+"transitions": PackedFloat32Array(1, 1e-05),
+"update": 0,
+"values": [Rect2(0, 2, 4096, 510), Rect2(2048, 2, 4096, 510)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Top4:region_rect")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 20),
+"transitions": PackedFloat32Array(1, 1e-05),
+"update": 0,
+"values": [Rect2(0, 2, 4096, 510), Rect2(2048, 2, 4096, 510)]
+}
+
+[sub_resource type="Animation" id="Animation_nkyee"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Top:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(0, 2, 4096, 510)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Top2:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(0, 2, 4096, 510)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Top3:region_rect")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(0, 2, 4096, 510)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Top4:region_rect")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(0, 2, 4096, 510)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vpitb"]
+_data = {
+&"Move": SubResource("Animation_3xxqq"),
+&"RESET": SubResource("Animation_nkyee")
+}
+
+[node name="PoisonSmokes" type="Node2D"]
+physics_interpolation_mode = 1
+script = ExtResource("1_a2moi")
+damage = 20
+damage_interval = 1.0
+metadata/_custom_type_script = "uid://bgvirlnion8wa"
+
+[node name="Bottom" type="Area2D" parent="."]
+position = Vector2(0, 6400)
+collision_layer = 4
+collision_mask = 2
+monitorable = false
+script = ExtResource("2_8ot81")
+metadata/_custom_type_script = "uid://ccr5t8s5ui45t"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bottom"]
+shape = SubResource("WorldBoundaryShape2D_k7uj4")
+
+[node name="Top" type="Sprite2D" parent="Bottom"]
+z_index = 4
+texture_repeat = 2
+position = Vector2(-6144, 132)
+texture = ExtResource("3_jp17w")
+region_enabled = true
+region_rect = Rect2(0, 2, 4096, 510)
+
+[node name="Top2" type="Sprite2D" parent="Bottom"]
+z_index = 4
+texture_repeat = 2
+position = Vector2(-2048, 132)
+texture = ExtResource("3_jp17w")
+region_enabled = true
+region_rect = Rect2(0, 2, 4096, 510)
+
+[node name="Top3" type="Sprite2D" parent="Bottom"]
+z_index = 4
+texture_repeat = 2
+position = Vector2(2048, 132)
+texture = ExtResource("3_jp17w")
+region_enabled = true
+region_rect = Rect2(0, 2, 4096, 510)
+
+[node name="Top4" type="Sprite2D" parent="Bottom"]
+z_index = 4
+texture_repeat = 2
+position = Vector2(6144, 132)
+texture = ExtResource("3_jp17w")
+region_enabled = true
+region_rect = Rect2(0, 2, 4096, 510)
+
+[node name="Base" type="Sprite2D" parent="Bottom"]
+z_index = 4
+position = Vector2(-6144, 4482)
+scale = Vector2(4, 4)
+texture = ExtResource("4_d8b6i")
+region_enabled = true
+region_rect = Rect2(0, 0, 1024, 2048)
+
+[node name="Base2" type="Sprite2D" parent="Bottom"]
+z_index = 4
+position = Vector2(-2048, 4482)
+scale = Vector2(4, 4)
+texture = ExtResource("4_d8b6i")
+region_enabled = true
+region_rect = Rect2(0, 0, 1024, 2048)
+
+[node name="Base3" type="Sprite2D" parent="Bottom"]
+z_index = 4
+position = Vector2(2048, 4482)
+scale = Vector2(4, 4)
+texture = ExtResource("4_d8b6i")
+region_enabled = true
+region_rect = Rect2(0, 0, 1024, 2048)
+
+[node name="Base4" type="Sprite2D" parent="Bottom"]
+z_index = 4
+position = Vector2(6144, 4482)
+scale = Vector2(4, 4)
+texture = ExtResource("4_d8b6i")
+region_enabled = true
+region_rect = Rect2(0, 0, 1024, 2048)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Bottom"]
+libraries = {
+&"": SubResource("AnimationLibrary_vpitb")
+}
+autoplay = "Move"
+
+[node name="MinimapMarker" type="Node" parent="Bottom"]
+
+[node name="Line" type="Line2D" parent="Bottom/MinimapMarker"]
+visibility_layer = 2
+z_index = -9
+position = Vector2(0, 6400)
+points = PackedVector2Array(-6400, 80, 6400, 80)
+width = 160.0
+default_color = Color(0, 0, 0, 1)
+
+[node name="Top" type="Area2D" parent="."]
+position = Vector2(0, -6400)
+rotation = 3.14159
+collision_layer = 4
+collision_mask = 2
+monitorable = false
+script = ExtResource("2_8ot81")
+metadata/_custom_type_script = "uid://ccr5t8s5ui45t"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Top"]
+shape = SubResource("WorldBoundaryShape2D_k7uj4")
+
+[node name="Top" type="Sprite2D" parent="Top"]
+z_index = 4
+texture_repeat = 2
+position = Vector2(-6144, 132)
+texture = ExtResource("3_jp17w")
+region_enabled = true
+region_rect = Rect2(0, 2, 4096, 510)
+
+[node name="Top2" type="Sprite2D" parent="Top"]
+z_index = 4
+texture_repeat = 2
+position = Vector2(-2048, 132)
+texture = ExtResource("3_jp17w")
+region_enabled = true
+region_rect = Rect2(0, 2, 4096, 510)
+
+[node name="Top3" type="Sprite2D" parent="Top"]
+z_index = 4
+texture_repeat = 2
+position = Vector2(2048, 132)
+texture = ExtResource("3_jp17w")
+region_enabled = true
+region_rect = Rect2(0, 2, 4096, 510)
+
+[node name="Top4" type="Sprite2D" parent="Top"]
+z_index = 4
+texture_repeat = 2
+position = Vector2(6144, 132)
+texture = ExtResource("3_jp17w")
+region_enabled = true
+region_rect = Rect2(0, 2, 4096, 510)
+
+[node name="Base" type="Sprite2D" parent="Top"]
+z_index = 4
+position = Vector2(-6144, 4482)
+scale = Vector2(4, 4)
+texture = ExtResource("4_d8b6i")
+region_enabled = true
+region_rect = Rect2(0, 0, 1024, 2048)
+
+[node name="Base2" type="Sprite2D" parent="Top"]
+z_index = 4
+position = Vector2(-2048, 4482)
+scale = Vector2(4, 4)
+texture = ExtResource("4_d8b6i")
+region_enabled = true
+region_rect = Rect2(0, 0, 1024, 2048)
+
+[node name="Base3" type="Sprite2D" parent="Top"]
+z_index = 4
+position = Vector2(2048, 4482)
+scale = Vector2(4, 4)
+texture = ExtResource("4_d8b6i")
+region_enabled = true
+region_rect = Rect2(0, 0, 1024, 2048)
+
+[node name="Base4" type="Sprite2D" parent="Top"]
+z_index = 4
+position = Vector2(6144, 4482)
+scale = Vector2(4, 4)
+texture = ExtResource("4_d8b6i")
+region_enabled = true
+region_rect = Rect2(0, 0, 1024, 2048)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Top"]
+libraries = {
+&"": SubResource("AnimationLibrary_vpitb")
+}
+autoplay = "Move"
+
+[node name="MinimapMarker" type="Node" parent="Top"]
+
+[node name="Line" type="Line2D" parent="Top/MinimapMarker"]
+visibility_layer = 2
+z_index = -9
+position = Vector2(0, -6400)
+rotation = 3.14159
+points = PackedVector2Array(-6400, 80, 6400, 80)
+width = 160.0
+default_color = Color(0, 0, 0, 1)
+
+[node name="Left" type="Area2D" parent="."]
+position = Vector2(-6400, 0)
+rotation = 1.5708
+collision_layer = 4
+collision_mask = 2
+monitorable = false
+script = ExtResource("2_8ot81")
+metadata/_custom_type_script = "uid://ccr5t8s5ui45t"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Left"]
+shape = SubResource("WorldBoundaryShape2D_k7uj4")
+
+[node name="Top" type="Sprite2D" parent="Left"]
+z_index = 4
+texture_repeat = 2
+position = Vector2(-6144, 132)
+texture = ExtResource("3_jp17w")
+region_enabled = true
+region_rect = Rect2(0, 2, 4096, 510)
+
+[node name="Top2" type="Sprite2D" parent="Left"]
+z_index = 4
+texture_repeat = 2
+position = Vector2(-2048, 132)
+texture = ExtResource("3_jp17w")
+region_enabled = true
+region_rect = Rect2(0, 2, 4096, 510)
+
+[node name="Top3" type="Sprite2D" parent="Left"]
+z_index = 4
+texture_repeat = 2
+position = Vector2(2048, 132)
+texture = ExtResource("3_jp17w")
+region_enabled = true
+region_rect = Rect2(0, 2, 4096, 510)
+
+[node name="Top4" type="Sprite2D" parent="Left"]
+z_index = 4
+texture_repeat = 2
+position = Vector2(6144, 132)
+texture = ExtResource("3_jp17w")
+region_enabled = true
+region_rect = Rect2(0, 2, 4096, 510)
+
+[node name="Base" type="Sprite2D" parent="Left"]
+z_index = 4
+position = Vector2(-6144, 4482)
+scale = Vector2(4, 4)
+texture = ExtResource("4_d8b6i")
+region_enabled = true
+region_rect = Rect2(0, 0, 1024, 2048)
+
+[node name="Base2" type="Sprite2D" parent="Left"]
+z_index = 4
+position = Vector2(-2048, 4482)
+scale = Vector2(4, 4)
+texture = ExtResource("4_d8b6i")
+region_enabled = true
+region_rect = Rect2(0, 0, 1024, 2048)
+
+[node name="Base3" type="Sprite2D" parent="Left"]
+z_index = 4
+position = Vector2(2048, 4482)
+scale = Vector2(4, 4)
+texture = ExtResource("4_d8b6i")
+region_enabled = true
+region_rect = Rect2(0, 0, 1024, 2048)
+
+[node name="Base4" type="Sprite2D" parent="Left"]
+z_index = 4
+position = Vector2(6144, 4482)
+scale = Vector2(4, 4)
+texture = ExtResource("4_d8b6i")
+region_enabled = true
+region_rect = Rect2(0, 0, 1024, 2048)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Left"]
+libraries = {
+&"": SubResource("AnimationLibrary_vpitb")
+}
+autoplay = "Move"
+
+[node name="MinimapMarker" type="Node" parent="Left"]
+
+[node name="Line" type="Line2D" parent="Left/MinimapMarker"]
+visibility_layer = 2
+z_index = -9
+position = Vector2(-6400, 0)
+rotation = 1.5708
+points = PackedVector2Array(-6400, 80, 6400, 80)
+width = 160.0
+default_color = Color(0, 0, 0, 1)
+
+[node name="Right" type="Area2D" parent="."]
+position = Vector2(6400, 0)
+rotation = -1.5708
+collision_layer = 4
+collision_mask = 2
+monitorable = false
+script = ExtResource("2_8ot81")
+metadata/_custom_type_script = "uid://ccr5t8s5ui45t"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Right"]
+shape = SubResource("WorldBoundaryShape2D_k7uj4")
+
+[node name="Top" type="Sprite2D" parent="Right"]
+z_index = 4
+texture_repeat = 2
+position = Vector2(-6144, 132)
+texture = ExtResource("3_jp17w")
+region_enabled = true
+region_rect = Rect2(0, 2, 4096, 510)
+
+[node name="Top2" type="Sprite2D" parent="Right"]
+z_index = 4
+texture_repeat = 2
+position = Vector2(-2048, 132)
+texture = ExtResource("3_jp17w")
+region_enabled = true
+region_rect = Rect2(0, 2, 4096, 510)
+
+[node name="Top3" type="Sprite2D" parent="Right"]
+z_index = 4
+texture_repeat = 2
+position = Vector2(2048, 132)
+texture = ExtResource("3_jp17w")
+region_enabled = true
+region_rect = Rect2(0, 2, 4096, 510)
+
+[node name="Top4" type="Sprite2D" parent="Right"]
+z_index = 4
+texture_repeat = 2
+position = Vector2(6144, 132)
+texture = ExtResource("3_jp17w")
+region_enabled = true
+region_rect = Rect2(0, 2, 4096, 510)
+
+[node name="Base" type="Sprite2D" parent="Right"]
+z_index = 4
+position = Vector2(-6144, 4482)
+scale = Vector2(4, 4)
+texture = ExtResource("4_d8b6i")
+region_enabled = true
+region_rect = Rect2(0, 0, 1024, 2048)
+
+[node name="Base2" type="Sprite2D" parent="Right"]
+z_index = 4
+position = Vector2(-2048, 4482)
+scale = Vector2(4, 4)
+texture = ExtResource("4_d8b6i")
+region_enabled = true
+region_rect = Rect2(0, 0, 1024, 2048)
+
+[node name="Base3" type="Sprite2D" parent="Right"]
+z_index = 4
+position = Vector2(2048, 4482)
+scale = Vector2(4, 4)
+texture = ExtResource("4_d8b6i")
+region_enabled = true
+region_rect = Rect2(0, 0, 1024, 2048)
+
+[node name="Base4" type="Sprite2D" parent="Right"]
+z_index = 4
+position = Vector2(6144, 4482)
+scale = Vector2(4, 4)
+texture = ExtResource("4_d8b6i")
+region_enabled = true
+region_rect = Rect2(0, 0, 1024, 2048)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Right"]
+libraries = {
+&"": SubResource("AnimationLibrary_vpitb")
+}
+autoplay = "Move"
+
+[node name="MinimapMarker" type="Node" parent="Right"]
+
+[node name="Line" type="Line2D" parent="Right/MinimapMarker"]
+visibility_layer = 2
+z_index = -9
+position = Vector2(6400, 0)
+rotation = -1.5708
+points = PackedVector2Array(-6400, 80, 6400, 80)
+width = 160.0
+default_color = Color(0, 0, 0, 1)

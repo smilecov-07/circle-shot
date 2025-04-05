@@ -8,13 +8,10 @@ signal round_started
 ## Издаётся когда раунд закончился. [param team_won] - ID победившей команды.
 signal round_ended(team_won: int)
 
-## Время, за которое ядовитый дым покроет всю карту.
-@export var poison_smoke_time := 400.0
-
 var _red_rounds_won: int = 0
 var _blue_rounds_won: int = 0
 var _current_round: int = 0
-var _poison_smokes_scene: PackedScene = preload("uid://dkhofq2eo6jbk")
+var _poison_smokes_scene: PackedScene = preload("uid://cp5ag64gc1s3k")
 
 @onready var _duel_ui: DuelUI = $UI
 
@@ -86,12 +83,8 @@ func _start_round() -> void:
 	_duel_ui.start_round(_current_round)
 	var smokes: Node2D = _poison_smokes_scene.instantiate()
 	add_child(smokes)
-	for smoke: Node2D in smokes.get_children():
-		var move_tween: Tween = smoke.create_tween()
-		move_tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
-		move_tween.tween_property(smoke, ^":position", Vector2.ZERO, poison_smoke_time)
 	var tween: Tween = smokes.create_tween()
-	tween.tween_property(smokes, ^":modulate", Color.WHITE, 0.3).from(Color.TRANSPARENT)
+	tween.tween_property(smokes, ^":modulate", smokes.modulate, 0.3).from(Color.TRANSPARENT)
 	round_started.emit()
 	
 	if multiplayer.is_server():
@@ -112,7 +105,7 @@ func _end_round(win_team: int, winner: int, ends := false) -> void:
 		_current_round += 1
 	
 	var tween: Tween = $PoisonSmokes.create_tween()
-	tween.tween_interval(6.5 if ends else 3.5)
+	tween.tween_property($PoisonSmokes, ^":modulate", Color.TRANSPARENT, 0.3)
 	tween.tween_callback($PoisonSmokes.queue_free)
 	
 	get_tree().call_group(&"Player", &"make_disarmed")

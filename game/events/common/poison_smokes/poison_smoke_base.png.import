@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ln5yw64d6ydf"
-path="res://.godot/imported/poison_smoke.png-6cb64d24806147f61348c25329de31e7.ctex"
+uid="uid://covm4tksm55vv"
+path="res://.godot/imported/poison_smoke_base.png-d3b611af87d7be3457833aa806d2ec16.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/events/common/poison_smoke/poison_smoke.png"
-dest_files=["res://.godot/imported/poison_smoke.png-6cb64d24806147f61348c25329de31e7.ctex"]
+source_file="res://game/events/common/poison_smokes/poison_smoke_base.png"
+dest_files=["res://.godot/imported/poison_smoke_base.png-d3b611af87d7be3457833aa806d2ec16.ctex"]
 
 [params]
 

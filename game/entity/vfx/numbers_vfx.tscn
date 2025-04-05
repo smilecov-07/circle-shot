@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dxiacndmn0qr7"]
 
-[ext_resource type="Script" uid="uid://bf8aaj15ik74h" path="res://game/entity/numbers_vfx/numbers_vfx.gd" id="1_obvo0"]
+[ext_resource type="Script" uid="uid://bf8aaj15ik74h" path="res://game/entity/vfx/numbers_vfx.gd" id="1_obvo0"]
 
 [node name="NumbersVfx" type="Node2D"]
 z_index = 1

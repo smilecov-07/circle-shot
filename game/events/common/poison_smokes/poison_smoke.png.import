@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ddbtmivurfknj"
-path="res://.godot/imported/heal_plus.png-4b5de7133b41d063c622515ac40b6ea0.ctex"
+uid="uid://ln5yw64d6ydf"
+path="res://.godot/imported/poison_smoke.png-d8cfb99bfe93cc39c1bd7081afedd7fa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/entity/heal_vfx/heal_plus.png"
-dest_files=["res://.godot/imported/heal_plus.png-4b5de7133b41d063c622515ac40b6ea0.ctex"]
+source_file="res://game/events/common/poison_smokes/poison_smoke.png"
+dest_files=["res://.godot/imported/poison_smoke.png-d8cfb99bfe93cc39c1bd7081afedd7fa.ctex"]
 
 [params]
 
