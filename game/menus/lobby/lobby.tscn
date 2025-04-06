@@ -590,10 +590,8 @@ layout_mode = 2
 [node name="Messages" type="RichTextLabel" parent="Panels/Chat/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_colors/default_color = Color(0, 0, 0, 1)
 bbcode_enabled = true
 scroll_following = true
-shortcut_keys_enabled = false
 meta_underlined = false
 hint_underlined = false
 

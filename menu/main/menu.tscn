@@ -188,27 +188,12 @@ theme_override_constants/margin_bottom = 8
 [node name="VBoxContainer" type="VBoxContainer" parent="About/MarginContainer"]
 layout_mode = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="About/MarginContainer/VBoxContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="About/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-horizontal_scroll_mode = 0
-vertical_scroll_mode = 4
-
-[node name="VBoxContainer" type="VBoxContainer" parent="About/MarginContainer/VBoxContainer/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="AuthorsTitle" type="Label" parent="About/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_type_variation = &"HeaderSmall"
-text = "Авторы"
-horizontal_alignment = 1
-
-[node name="Authors" type="Label" parent="About/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(1, 0)
-layout_mode = 2
-text = "Summersay415 - идея, программирование, карты и скины
+bbcode_enabled = true
+text = "[font_size=20][center]Авторы[/center][/font_size]
+Summersay415 - идея, программирование, карты и скины
 ZerkaloWorld - скины, карты, оружия и навыки
 DanKras - скины и загрузочные экраны
 Kesha1026 - музыка
@@ -216,44 +201,13 @@ wiziritka - скины и карты
 Ronill - фоны
 BaCat86, Kaurt, MilDeV, ZeroHero135, smilecov_07 - скины
 Тестировщики (и благодарность):
-LohDebil228, ATINY, YanniKss"
-autowrap_mode = 2
-
-[node name="TelegramLink" type="LinkButton" parent="About/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "Telegram-канал Diamond Studio GAMES"
-uri = "https://t.me/dsgames31"
-
-[node name="EngineTitle" type="Label" parent="About/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_type_variation = &"HeaderSmall"
-text = "Движок"
-horizontal_alignment = 1
-
-[node name="Engine" type="Label" parent="About/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(1, 0)
-layout_mode = 2
-text = "Игра сделана на движке Godot Engine, имеющем лицензию MIT. С текстом лицензии можно ознакомиться по ссылке ниже:"
-autowrap_mode = 2
-
-[node name="EngineLicenseLink" type="LinkButton" parent="About/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "Лицензия Godot Engine"
-uri = "https://godotengine.org/license"
-
-[node name="OtherTitle" type="Label" parent="About/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_type_variation = &"HeaderSmall"
-text = "Другое"
-horizontal_alignment = 1
-
-[node name="Other" type="Label" parent="About/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(1, 0)
-layout_mode = 2
-text = "Скины эмоджи взяты с https://openmoji.org/.
-Бесконечность есть предел."
+LohDebil228, ATINY, YanniKss
+[url=https://t.me/dsgames31][center]Telegram-канал Diamond Studio GAMES[/center][/url]
+[font_size=20][center]Движок[/center][/font_size]
+Игра сделана на движке Godot Engine, имеющем лицензию MIT. С текстом лицензии можно ознакомиться [url=https://godotengine.org/license]здесь[/url].
+[font_size=20][center]Другое[/center][/font_size]
+Скины эмоджи взяты с [url]https://openmoji.org/[/url].
+Фиксим баги движка..."
 autowrap_mode = 2
 
 [node name="Close" type="Button" parent="About/MarginContainer/VBoxContainer"]
