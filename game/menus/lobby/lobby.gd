@@ -1,29 +1,46 @@
+class_name Lobby
 extends Control
 
+## Лобби игры.
+##
+## Здесь игрок выбирает событие и карту, оружие, скин и навык, а также общается с другими игроками.
 
+## Причина, по которой запрос на старт игры был отклонён.
 enum StartRejectReason {
+	## Всё ОК.
 	OK = 0,
+	## Слишком мало игроков.
 	TOO_FEW_PLAYERS = 1,
+	## Слишком много игроков.
 	TOO_MANY_PLAYERS = 2,
+	## Количеситво игроков не делится на значение, указанное в текущем событии.
 	INDIVISIBLE_NUMBER_OF_PLAYERS = 3,
 }
+## Перечисления действий администратора.
 enum AdminAction {
+	## Выгнать из комнаты.
 	KICK = 0,
+	## Выгнать из комнаты и забанить по IP-адресу.
 	BAN = 1,
+	## Передать права админа.
 	TRANSFER_ADMIN_RIGHTS = 2,
 }
 
-var _selected_event: int = 0
-var _selected_map: int = 0
-var _selected_skin: int = 0
-var _selected_light_weapon: int = 0
-var _selected_heavy_weapon: int = 0
-var _selected_support_weapon: int = 0
-var _selected_melee_weapon: int = 0
-var _selected_skill: int = 0
+var selected_event: int
+var selected_map: int
+var selected_maps: Array[int]
+
+var selected_skin: int
+var selected_light_weapon: int
+var selected_heavy_weapon: int
+var selected_support_weapon: int
+var selected_melee_weapon: int
+var selected_skill: int
+
 var _players: Dictionary[int, String]
 var _admin := false
 var _admin_id: int = -1
+
 var _broadcast_lobby_id: int = 0
 var _udp_peers: Array[PacketPeerUDP]
 var _client_timers: Dictionary[int, Timer]
@@ -47,14 +64,17 @@ func _ready() -> void:
 	multiplayer.peer_connected.connect(_on_peer_connected)
 	hide()
 	
-	_selected_event = Globals.get_int("selected_event")
-	_selected_map = Globals.get_int("selected_map")
-	_selected_skin = Globals.get_int("selected_skin")
-	_selected_light_weapon = Globals.get_int("selected_light_weapon")
-	_selected_heavy_weapon = Globals.get_int("selected_heavy_weapon")
-	_selected_support_weapon = Globals.get_int("selected_support_weapon")
-	_selected_melee_weapon = Globals.get_int("selected_melee_weapon")
-	_selected_skill = Globals.get_int("selected_skill")
+	selected_event = Globals.get_int("selected_event")
+	selected_maps = Globals.get_variant("selected_maps", [] as Array[int])
+	if selected_maps.size() < Globals.items_db.events.size():
+		selected_maps.resize(Globals.items_db.events.size())
+	
+	selected_skin = Globals.get_int("selected_skin")
+	selected_light_weapon = Globals.get_int("selected_light_weapon")
+	selected_heavy_weapon = Globals.get_int("selected_heavy_weapon")
+	selected_support_weapon = Globals.get_int("selected_support_weapon")
+	selected_melee_weapon = Globals.get_int("selected_melee_weapon")
+	selected_skill = Globals.get_int("selected_skill")
 	
 	_validate_selected_items()
 	_update_equip()
@@ -132,7 +152,7 @@ func _register_new_player(player_name: String) -> void:
 		_client_timers.erase(sender_id)
 	for id: int in _players:
 		_add_player_entry.rpc_id(sender_id, id, _players[id])
-	_set_environment.rpc_id(sender_id, _selected_event, _selected_map)
+	_set_environment.rpc_id(sender_id, selected_event, selected_map)
 	player_name = Game.validate_player_name(player_name, sender_id)
 	_players[sender_id] = player_name
 	_add_player_entry.rpc(sender_id, player_name)
@@ -166,9 +186,9 @@ func _set_admin(admin_id: int) -> void:
 		(entry.get_node(^"AdminActions") as CanvasItem).visible = admin
 		(entry.get_node(^"Admin") as CanvasItem).visible = int(entry.name) == admin_id
 	if admin:
-		# Просим сервер установить выбранные ранее НАМИ карты
+		# Просим сервер установить выбранные ранее НАМИ событие и карту
 		_request_set_environment.rpc_id(MultiplayerPeer.TARGET_PEER_SERVER,
-				Globals.get_int("selected_event"), Globals.get_int("selected_map"))
+				Globals.get_int("selected_event"), selected_maps[Globals.get_int("selected_event")])
 	else:
 		(%ClientHint as Label).text = "Начать игру может только админ."
 	_admin = admin
@@ -217,8 +237,11 @@ func _set_environment(event_id: int, map_id: int) -> void:
 		push_error("This method must be called only by server.")
 		return
 	
-	_selected_event = event_id
-	_selected_map = map_id
+	selected_event = event_id
+	selected_map = map_id
+	if _admin:
+		selected_maps[event_id] = map_id
+		_save_selected_items(true)
 	print_verbose("Environment set: Event ID - %d, Map ID - %d." % [event_id, map_id])
 	_update_environment()
 
@@ -333,26 +356,26 @@ func _reject_start_event(reason: StartRejectReason, players_count: int) -> void:
 			push_warning("This method can't be called with OK reject reason.")
 		StartRejectReason.TOO_FEW_PLAYERS:
 			_game.show_error("Невозможно начать игру: слишком мало игроков (%d) \
-при минимуме в %d!" % [players_count, Globals.items_db.events[_selected_event].min_players])
+при минимуме в %d!" % [players_count, Globals.items_db.events[selected_event].min_players])
 			print_verbose("Start rejected: too few players (%d) with minimum %d." % [
 				players_count,
-				Globals.items_db.events[_selected_event].min_players,
+				Globals.items_db.events[selected_event].min_players,
 			])
 		StartRejectReason.TOO_MANY_PLAYERS:
 			_game.show_error("Невозможно начать игру: слишком много игроков (%d) \
-при максимуме в %d!" % [players_count, Globals.items_db.events[_selected_event].max_players])
+при максимуме в %d!" % [players_count, Globals.items_db.events[selected_event].max_players])
 			print_verbose("Start rejected: too many players (%d) with maximum %d." % [
 				players_count,
-				Globals.items_db.events[_selected_event].max_players,
+				Globals.items_db.events[selected_event].max_players,
 			])
 		StartRejectReason.INDIVISIBLE_NUMBER_OF_PLAYERS:
 			_game.show_error("Невозможно начать игру: количество игроков (%d) не делится на %d!" % [
 				players_count,
-				Globals.items_db.events[_selected_event].players_divider,
+				Globals.items_db.events[selected_event].players_divider,
 			])
 			print_verbose("Start rejected: number of players (%d) doesn't divide on %d." % [
 				players_count,
-				Globals.items_db.events[_selected_event].players_divider,
+				Globals.items_db.events[selected_event].players_divider,
 			])
 		_:
 			push_warning("Received invalid reject reason.")
@@ -400,97 +423,115 @@ func _start_event(event_id: int, map_id: int) -> void:
 	_item_selector.hide()
 	
 	_game.load_event(event_id, map_id, Globals.get_string("player_name"), [
-		_selected_skin,
-		_selected_light_weapon,
-		_selected_heavy_weapon,
-		_selected_support_weapon,
-		_selected_melee_weapon,
-		_selected_skill,
+		selected_skin,
+		selected_light_weapon,
+		selected_heavy_weapon,
+		selected_support_weapon,
+		selected_melee_weapon,
+		selected_skill,
 	])
 
 
 func _validate_selected_items() -> void:
-	if _selected_event < 0 or _selected_event >= Globals.items_db.events.size():
-		push_warning("Incorrect selected event: %d. Reverting to default." % _selected_event)
-		_selected_event = 0
-		Globals.set_int("selected_event", _selected_event)
-	if _selected_map < 0 or _selected_map >= Globals.items_db.events[_selected_event].maps.size():
-		push_warning("Incorrect selected map: %d. Reverting to default." % _selected_map)
-		_selected_map = 0
-		Globals.set_int("selected_map", _selected_map)
+	if selected_event < 0 or selected_event >= Globals.items_db.events.size():
+		push_warning("Incorrect selected event: %d. Reverting to default." % selected_event)
+		selected_event = 0
+	if selected_map < 0 or selected_map >= Globals.items_db.events[selected_event].maps.size():
+		push_warning("Incorrect selected map for event %d: %d. Reverting to default." % [
+			selected_event,
+			selected_map,
+		])
+		selected_map = 0
+	for event_idx: int in Globals.items_db.events.size():
+		if selected_maps[event_idx] < 0 \
+				or selected_maps[event_idx] >= Globals.items_db.events[event_idx].maps.size():
+			push_warning("Incorrect selected map for event %d: %d. Reverting to default." % [
+				event_idx,
+				selected_maps[event_idx],
+			])
+			selected_maps[event_idx] = 0
 	
-	if _selected_skin < 0 or _selected_skin >= Globals.items_db.skins.size():
-		push_warning("Incorrect selected skin: %d. Reverting to default." % _selected_skin)
-		_selected_skin = 0
-		Globals.set_int("selected_skin", _selected_skin)
-	if _selected_light_weapon < 0 \
-			or _selected_light_weapon >= Globals.items_db.weapons_light.size():
+	if selected_skin < 0 or selected_skin >= Globals.items_db.skins.size():
+		push_warning("Incorrect selected skin: %d. Reverting to default." % selected_skin)
+		selected_skin = 0
+	if selected_light_weapon < 0 \
+			or selected_light_weapon >= Globals.items_db.weapons_light.size():
 		push_warning("Incorrect selected light weapon: %d. Reverting to default."
-				% _selected_light_weapon)
-		_selected_light_weapon = 0
-		Globals.set_int("selected_light_weapon", _selected_light_weapon)
-	if _selected_heavy_weapon < 0 \
-			or _selected_heavy_weapon >= Globals.items_db.weapons_heavy.size():
+				% selected_light_weapon)
+		selected_light_weapon = 0
+	if selected_heavy_weapon < 0 \
+			or selected_heavy_weapon >= Globals.items_db.weapons_heavy.size():
 		push_warning("Incorrect selected heavy weapon: %d. Reverting to default."
-				% _selected_heavy_weapon)
-		_selected_heavy_weapon = 0
-		Globals.set_int("selected_heavy_weapon", _selected_heavy_weapon)
-	if _selected_support_weapon < 0 \
-			or _selected_support_weapon >= Globals.items_db.weapons_support.size():
+				% selected_heavy_weapon)
+		selected_heavy_weapon = 0
+	if selected_support_weapon < 0 \
+			or selected_support_weapon >= Globals.items_db.weapons_support.size():
 		push_warning("Incorrect selected support weapon: %d. Reverting to default."
-				% _selected_support_weapon)
-		_selected_support_weapon = 0
-		Globals.set_int("selected_support_weapon", _selected_support_weapon)
-	if _selected_melee_weapon < 0 \
-			or _selected_melee_weapon >= Globals.items_db.weapons_melee.size():
+				% selected_support_weapon)
+		selected_support_weapon = 0
+	if selected_melee_weapon < 0 \
+			or selected_melee_weapon >= Globals.items_db.weapons_melee.size():
 		push_warning("Incorrect selected melee weapon: %d. Reverting to default."
-				% _selected_melee_weapon)
-		_selected_melee_weapon = 0
-		Globals.set_int("selected_melee_weapon", _selected_melee_weapon)
-	if _selected_skill < 0 or _selected_skill >= Globals.items_db.skills.size():
-		push_warning("Incorrect selected skill: %d. Reverting to default." % _selected_skill)
-		_selected_skill = 0
-		Globals.set_int("selected_skill", _selected_skill)
+				% selected_melee_weapon)
+		selected_melee_weapon = 0
+	if selected_skill < 0 or selected_skill >= Globals.items_db.skills.size():
+		push_warning("Incorrect selected skill: %d. Reverting to default." % selected_skill)
+		selected_skill = 0
+	
+	_save_selected_items(true)
+
+
+func _save_selected_items(save_environment := false) -> void:
+	if save_environment:
+		Globals.set_int("selected_event", selected_event)
+		Globals.set_variant("selected_maps", selected_maps)
+	Globals.set_int("selected_skin", selected_skin)
+	Globals.set_int("selected_light_weapon", selected_light_weapon)
+	Globals.set_int("selected_heavy_weapon", selected_heavy_weapon)
+	Globals.set_int("selected_support_weapon", selected_support_weapon)
+	Globals.set_int("selected_melee_weapon", selected_melee_weapon)
+	Globals.set_int("selected_skill", selected_skill)
 
 
 func _update_environment() -> void:
-	var event: EventData = Globals.items_db.events[_selected_event]
+	var event: EventData = Globals.items_db.events[selected_event]
 	(%Event as TextureRect).texture = load(event.image_path)
 	(%Event/Container/Name as Label).text = event.name
 	(%Event/Container/Description as Label).text = event.brief_description
 	
-	(%Map as TextureRect).texture = load(event.maps[_selected_map].image_path)
-	(%Map/Container/Name as Label).text = event.maps[_selected_map].name
-	(%Map/Container/Description as Label).text = event.maps[_selected_map].brief_description
+	(%Map as TextureRect).texture = load(event.maps[selected_map].image_path)
+	(%Map/Container/Name as Label).text = event.maps[selected_map].name
+	(%Map/Container/Description as Label).text = \
+			event.maps[selected_map].brief_description
 
 
 func _update_equip() -> void:
-	var skin: SkinData = Globals.items_db.skins[_selected_skin]
+	var skin: SkinData = Globals.items_db.skins[selected_skin]
 	(%Skin/Name as Label).text = skin.name
 	(%Skin/RarityFill as ColorRect).color = ItemsDB.RARITY_COLORS[skin.rarity]
 	(%Skin as TextureRect).texture = load(skin.image_path)
 	
-	var light_weapon: WeaponData = Globals.items_db.weapons_light[_selected_light_weapon]
+	var light_weapon: WeaponData = Globals.items_db.weapons_light[selected_light_weapon]
 	(%LightWeapon/Name as Label).text = light_weapon.name
 	(%LightWeapon/RarityFill as ColorRect).color = ItemsDB.RARITY_COLORS[light_weapon.rarity]
 	(%LightWeapon as TextureRect).texture = load(light_weapon.image_path)
 	
-	var heavy_weapon: WeaponData = Globals.items_db.weapons_heavy[_selected_heavy_weapon]
+	var heavy_weapon: WeaponData = Globals.items_db.weapons_heavy[selected_heavy_weapon]
 	(%HeavyWeapon/Name as Label).text = heavy_weapon.name
 	(%HeavyWeapon/RarityFill as ColorRect).color = ItemsDB.RARITY_COLORS[heavy_weapon.rarity]
 	(%HeavyWeapon as TextureRect).texture = load(heavy_weapon.image_path)
 	
-	var support_weapon: WeaponData = Globals.items_db.weapons_support[_selected_support_weapon]
+	var support_weapon: WeaponData = Globals.items_db.weapons_support[selected_support_weapon]
 	(%SupportWeapon/Name as Label).text = support_weapon.name
 	(%SupportWeapon/RarityFill as ColorRect).color = ItemsDB.RARITY_COLORS[support_weapon.rarity]
 	(%SupportWeapon as TextureRect).texture = load(support_weapon.image_path)
 	
-	var melee_weapon: WeaponData = Globals.items_db.weapons_melee[_selected_melee_weapon]
+	var melee_weapon: WeaponData = Globals.items_db.weapons_melee[selected_melee_weapon]
 	(%MeleeWeapon/Name as Label).text = melee_weapon.name
 	(%MeleeWeapon/RarityFill as ColorRect).color = ItemsDB.RARITY_COLORS[melee_weapon.rarity]
 	(%MeleeWeapon as TextureRect).texture = load(melee_weapon.image_path)
 	
-	var skill: SkillData = Globals.items_db.skills[_selected_skill]
+	var skill: SkillData = Globals.items_db.skills[selected_skill]
 	(%Skill/Name as Label).text = skill.name
 	(%Skill/RarityFill as ColorRect).color = ItemsDB.RARITY_COLORS[skill.rarity]
 	(%Skill as TextureRect).texture = load(skill.image_path)
@@ -498,23 +539,23 @@ func _update_equip() -> void:
 
 func _get_start_reject_reason() -> StartRejectReason:
 	var start_reject_reason := StartRejectReason.OK
-	if _players.size() < Globals.items_db.events[_selected_event].min_players:
+	if _players.size() < Globals.items_db.events[selected_event].min_players:
 		start_reject_reason = StartRejectReason.TOO_FEW_PLAYERS
 		print_verbose("Rejecting start: too few players (%d), need %d." % [
 			_players.size(),
-			Globals.items_db.events[_selected_event].min_players,
+			Globals.items_db.events[selected_event].min_players,
 		])
-	elif _players.size() > Globals.items_db.events[_selected_event].max_players:
+	elif _players.size() > Globals.items_db.events[selected_event].max_players:
 		start_reject_reason = StartRejectReason.TOO_MANY_PLAYERS
 		print_verbose("Rejecting start: too many players (%d), max %d." % [
 			_players.size(),
-			Globals.items_db.events[_selected_event].max_players,
+			Globals.items_db.events[selected_event].max_players,
 		])
-	elif _players.size() % Globals.items_db.events[_selected_event].players_divider != 0:
+	elif _players.size() % Globals.items_db.events[selected_event].players_divider != 0:
 		start_reject_reason = StartRejectReason.INDIVISIBLE_NUMBER_OF_PLAYERS
 		print_verbose("Rejecting start: indivisible number of players (%d), must divide on %d." % [
 			_players.size(),
-			Globals.items_db.events[_selected_event].players_divider,
+			Globals.items_db.events[selected_event].players_divider,
 		])
 	return start_reject_reason
 
@@ -549,7 +590,7 @@ func _do_broadcast() -> void:
 	data.append(_broadcast_lobby_id)
 	data.append(_players.size())
 	data.append(_game.max_players)
-	data.append(_selected_event)
+	data.append(selected_event)
 	data.append_array(Globals.get_string("player_name", "Local Server").to_utf8_buffer()) # Имя
 	for peer: PacketPeerUDP in _udp_peers:
 		peer.put_packet(data)
@@ -558,8 +599,8 @@ func _do_broadcast() -> void:
 		Globals.get_string("player_name", "Local Server"),
 		_players.size(),
 		_game.max_players,
-		Globals.items_db.events[_selected_event].name,
-		_selected_event,
+		Globals.items_db.events[selected_event].name,
+		selected_event,
 	])
 
 
@@ -768,7 +809,7 @@ func _on_countdown_timer_timeout() -> void:
 		return
 	
 	print_verbose("Starting...")
-	_start_event.rpc(_selected_event, _selected_map)
+	_start_event.rpc(selected_event, selected_map)
 
 
 func _on_start_event_pressed() -> void:
@@ -785,49 +826,49 @@ func _on_connected_to_ip_pressed() -> void:
 
 
 func _on_change_event_pressed() -> void:
-	_items_grid.list_items(ItemsDB.Item.EVENT, _selected_event)
+	_items_grid.list_items(ItemsDB.Item.EVENT, selected_event)
 	_item_selector.title = "Выбор события"
 	_item_selector.popup_centered()
 
 
 func _on_change_map_pressed() -> void:
-	_items_grid.list_items(ItemsDB.Item.MAP, _selected_map, _selected_event)
+	_items_grid.list_items(ItemsDB.Item.MAP, selected_map, selected_event)
 	_item_selector.title = "Выбор карты"
 	_item_selector.popup_centered()
 
 
 func _on_change_skin_pressed() -> void:
-	_items_grid.list_items(ItemsDB.Item.SKIN, _selected_skin)
+	_items_grid.list_items(ItemsDB.Item.SKIN, selected_skin)
 	_item_selector.title = "Выбор скина"
 	_item_selector.popup_centered()
 
 
 func _on_change_light_weapon_pressed() -> void:
-	_items_grid.list_items(ItemsDB.Item.WEAPON_LIGHT, _selected_light_weapon)
+	_items_grid.list_items(ItemsDB.Item.WEAPON_LIGHT, selected_light_weapon)
 	_item_selector.title = "Выбор лёгкого оружия"
 	_item_selector.popup_centered()
 
 
 func _on_change_heavy_weapon_pressed() -> void:
-	_items_grid.list_items(ItemsDB.Item.WEAPON_HEAVY, _selected_heavy_weapon)
+	_items_grid.list_items(ItemsDB.Item.WEAPON_HEAVY, selected_heavy_weapon)
 	_item_selector.title = "Выбор тяжёлого оружия"
 	_item_selector.popup_centered()
 
 
 func _on_change_support_weapon_pressed() -> void:
-	_items_grid.list_items(ItemsDB.Item.WEAPON_SUPPORT, _selected_support_weapon)
+	_items_grid.list_items(ItemsDB.Item.WEAPON_SUPPORT, selected_support_weapon)
 	_item_selector.title = "Выбор оружия поддержки"
 	_item_selector.popup_centered()
 
 
 func _on_change_melee_weapon_pressed() -> void:
-	_items_grid.list_items(ItemsDB.Item.WEAPON_MELEE, _selected_melee_weapon)
+	_items_grid.list_items(ItemsDB.Item.WEAPON_MELEE, selected_melee_weapon)
 	_item_selector.title = "Выбор ближнего оружия"
 	_item_selector.popup_centered()
 
 
 func _on_change_skill_pressed() -> void:
-	_items_grid.list_items(ItemsDB.Item.SKILL, _selected_skill)
+	_items_grid.list_items(ItemsDB.Item.SKILL, selected_skill)
 	_item_selector.title = "Выбор навыка"
 	_item_selector.popup_centered()
 
@@ -836,34 +877,23 @@ func _on_item_selected(type: ItemsDB.Item, id: int) -> void:
 	_item_selector.hide()
 	match type:
 		ItemsDB.Item.EVENT:
-			if id != _selected_event:
-				_request_set_environment.rpc_id(MultiplayerPeer.TARGET_PEER_SERVER, id, 0)
-				Globals.set_int("selected_event", id)
-				Globals.set_int("selected_map", 0)
+			_request_set_environment.rpc_id(MultiplayerPeer.TARGET_PEER_SERVER,
+					id, selected_maps[id])
+			return
 		ItemsDB.Item.MAP:
-			_request_set_environment.rpc_id(MultiplayerPeer.TARGET_PEER_SERVER, _selected_event, id)
-			Globals.set_int("selected_map", id)
+			_request_set_environment.rpc_id(MultiplayerPeer.TARGET_PEER_SERVER, selected_event, id)
+			return
 		ItemsDB.Item.SKIN:
-			_selected_skin = id
-			Globals.set_int("selected_skin", id)
-			_update_equip()
+			selected_skin = id
 		ItemsDB.Item.WEAPON_LIGHT:
-			_selected_light_weapon = id
-			Globals.set_int("selected_light_weapon", id)
-			_update_equip()
+			selected_light_weapon = id
 		ItemsDB.Item.WEAPON_HEAVY:
-			_selected_heavy_weapon = id
-			Globals.set_int("selected_heavy_weapon", id)
-			_update_equip()
+			selected_heavy_weapon = id
 		ItemsDB.Item.WEAPON_SUPPORT:
-			_selected_support_weapon = id
-			Globals.set_int("selected_support_weapon", id)
-			_update_equip()
+			selected_support_weapon = id
 		ItemsDB.Item.WEAPON_MELEE:
-			_selected_melee_weapon = id
-			Globals.set_int("selected_melee_weapon", id)
-			_update_equip()
+			selected_melee_weapon = id
 		ItemsDB.Item.SKILL:
-			_selected_skill = id
-			Globals.set_int("selected_skill", id)
-			_update_equip()
+			selected_skill = id
+	_save_selected_items()
+	_update_equip()
