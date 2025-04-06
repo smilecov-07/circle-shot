@@ -419,6 +419,9 @@ func _start_load() -> void:
 			_loading_check_patches()
 			await loading_stage_finished
 	
+	_loading_apply_patch()
+	await loading_stage_finished
+	
 	if not Globals.headless:
 		_loading_custom_tracks()
 		await loading_stage_finished
@@ -547,7 +550,7 @@ func _loading_check_patches() -> void:
 		loading_stage_finished.emit.call_deferred(false) # Ждём await
 		return
 	
-	print_verbose("Checking patches...")
+	print_verbose("Checking remote patches...")
 	_load_status_label.text = "Проверка патчей..."
 	_load_progress_bar.value = 0.0
 	await get_tree().process_frame
@@ -579,12 +582,22 @@ func _loading_check_patches() -> void:
 			push_warning("Can't download patch. Error: %s." % error_string(err))
 			http.queue_free()
 			set_process(false)
-		else:
-			return
-	_loading_apply_patch()
+			loading_stage_finished.emit(false)
+	else:
+		loading_stage_finished.emit(true)
 
 
 func _loading_apply_patch() -> void:
+	if not Globals.get_setting_bool("check_patches"):
+		print_verbose("Not applying patches: disabled.")
+		loading_stage_finished.emit.call_deferred(false) # Ждём await
+		return
+	
+	print_verbose("Checking patch to apply...")
+	_load_status_label.text = "Применение патча..."
+	_load_progress_bar.value = 100.0
+	await get_tree().process_frame
+	
 	var patches: Dictionary[String, int] = \
 			Globals.get_variant("patches", {} as Dictionary[String, int])
 	if Globals.version in patches:
@@ -826,27 +839,27 @@ func _on_patch_http_request_completed(result: HTTPRequest.Result,
 		_body: PackedByteArray, http: HTTPRequest, new_patch_code: int) -> void:
 	http.queue_free()
 	set_process(false)
-	var tmp_patch_path := "user://patches/tmp.pck"
+	const TMP_PATCH_PATH := "user://patches/tmp.pck"
 	if result != HTTPRequest.RESULT_SUCCESS:
 		push_warning("Download patch: result is not Success. Result: %d." % result)
-		if FileAccess.file_exists(tmp_patch_path):
-			DirAccess.remove_absolute(tmp_patch_path)
-		_loading_apply_patch()
+		if FileAccess.file_exists(TMP_PATCH_PATH):
+			DirAccess.remove_absolute(TMP_PATCH_PATH)
+		loading_stage_finished.emit(false)
 		return
 	if response_code != HTTPClient.RESPONSE_OK:
 		push_warning(
 				"Download patch: response code is not 200. Response code: %d." % response_code)
-		if FileAccess.file_exists(tmp_patch_path):
-			DirAccess.remove_absolute(tmp_patch_path)
-		_loading_apply_patch()
+		if FileAccess.file_exists(TMP_PATCH_PATH):
+			DirAccess.remove_absolute(TMP_PATCH_PATH)
+		loading_stage_finished.emit(false)
 		return
 	
 	var patch_path := "user://patches/%s.pck" % Globals.version
 	if FileAccess.file_exists(patch_path):
 		DirAccess.remove_absolute(patch_path)
-	DirAccess.rename_absolute(tmp_patch_path, patch_path)
+	DirAccess.rename_absolute(TMP_PATCH_PATH, patch_path)
 	var patches: Dictionary[String, int] = \
 			Globals.get_variant("patches", {} as Dictionary[String, int])
 	patches[Globals.version] = new_patch_code
 	Globals.set_variant("patches", patches)
-	_loading_apply_patch()
+	loading_stage_finished.emit(true)
