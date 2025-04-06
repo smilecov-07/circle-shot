@@ -74,6 +74,7 @@ var banned_ips: Array[String]
 var _scene_multiplayer: SceneMultiplayer
 var _players_names: Dictionary[int, String]
 var _players_equip_data: Dictionary[int, Array]
+var _preloading_equip := false
 var _players_not_ready: Array[int]
 @onready var _loader: Loader = $Loader
 
@@ -199,6 +200,7 @@ func close() -> void:
 func load_event(event_id: int, map_id: int, player_name := "", equip_data: Array[int] = []) -> void:
 	state = State.LOADING
 	if multiplayer.is_server():
+		_preloading_equip = false
 		_players_not_ready.assign(multiplayer.get_peers())
 		_players_not_ready.append(1)
 		_players_equip_data.clear()
@@ -299,6 +301,44 @@ func _send_player_data(player_name: String, equip_data: Array[int]) -> void:
 
 
 @rpc("call_local", "reliable", "authority", 1)
+func _preload_equip(skins: Array[int], light_weapons: Array[int],
+		heavy_weapons: Array[int], support_weapons: Array[int],
+		melee_weapons: Array[int], skills: Array[int]) -> void:
+	closed.disconnect(_loader.finish_load)
+	if multiplayer.is_server():
+		_preloading_equip = true
+		_players_not_ready.assign(multiplayer.get_peers())
+		_players_not_ready.append(1)
+	var equip_scenes: Array[PackedScene] = await _loader.preload_equip(skins, light_weapons,
+			heavy_weapons, support_weapons, melee_weapons, skills)
+	if equip_scenes.is_empty():
+		show_error("Ошибка при предзагрузке экипировки! Отключаюсь.")
+		push_error("Preload equip failed. Disconnecting.")
+		if state != State.CLOSED:
+			close()
+		return
+	event.cached_scenes.append_array(equip_scenes)
+	closed.connect(_loader.finish_load.bind(false), CONNECT_ONE_SHOT)
+	if multiplayer.is_server() and Globals.headless:
+		_players_not_ready.erase(MultiplayerPeer.TARGET_PEER_SERVER)
+		_check_players_ready()
+		return
+	_send_ready.rpc_id(MultiplayerPeer.TARGET_PEER_SERVER)
+
+
+@rpc("any_peer", "reliable", "call_local", 1)
+func _send_ready() -> void:
+	if not multiplayer.is_server():
+		push_error("Unexpected call on client.")
+		return
+	
+	var sender_id: int = multiplayer.get_remote_sender_id()
+	print_verbose("Player %d done loading." % sender_id)
+	_players_not_ready.erase(sender_id)
+	_check_players_ready()
+
+
+@rpc("call_local", "reliable", "authority", 1)
 func _start_event() -> void:
 	if multiplayer.get_remote_sender_id() != MultiplayerPeer.TARGET_PEER_SERVER:
 		push_error("This method must be called only by server.")
@@ -320,11 +360,15 @@ func _check_players_ready() -> void:
 	if not multiplayer.is_server():
 		push_error("Unexpected call on client.")
 		return
+	
 	print_verbose("Waiting for players: %s." % str(_players_not_ready))
 	if _players_not_ready.is_empty():
 		if not _players_names.is_empty():
-			($WaitPlayersTimer as Timer).stop()
-			_start_event.rpc()
+			if _preloading_equip:
+				($WaitPlayersTimer as Timer).stop()
+				_start_event.rpc()
+			else:
+				_determine_equip_to_preload()
 		else:
 			print_verbose("All players disconnected, returning to lobby.")
 			closed.disconnect(_loader.finish_load)
@@ -334,6 +378,31 @@ func _check_players_ready() -> void:
 			started.emit()
 			ended.emit()
 			state = State.LOBBY
+
+
+func _determine_equip_to_preload() -> void:
+	var skins: Array[int]
+	var light_weapons: Array[int]
+	var heavy_weapons: Array[int]
+	var support_weapons: Array[int]
+	var melee_weapons: Array[int]
+	var skills: Array[int]
+	
+	for equip_data: Array in _players_equip_data.values():
+		if not equip_data[0] in skins:
+			skins.append(equip_data[0])
+		if not equip_data[1] in light_weapons:
+			light_weapons.append(equip_data[1])
+		if not equip_data[2] in heavy_weapons:
+			heavy_weapons.append(equip_data[2])
+		if not equip_data[3] in support_weapons:
+			support_weapons.append(equip_data[3])
+		if not equip_data[4] in melee_weapons:
+			melee_weapons.append(equip_data[4])
+		if not equip_data[5] in skills:
+			skills.append(equip_data[5])
+	
+	_preload_equip.rpc(skins, light_weapons, heavy_weapons, support_weapons, melee_weapons, skills)
 
 
 func _init_lobby() -> void:
@@ -494,9 +563,10 @@ func _on_peer_connected(id: int) -> void:
 func _on_peer_disconnected(id: int) -> void:
 	if id in _players_not_ready:
 		_players_not_ready.erase(id)
+		_check_players_ready()
+	if id in _players_names:
 		_players_names.erase(id)
 		_players_equip_data.erase(id)
-		_check_players_ready()
 	print_verbose("Peer disconnected: %d." % id)
 
 

@@ -224,7 +224,7 @@ ok_button_text = "Отмена"
 dialog_text = "Подключение к 192.168.100.1..."
 
 [node name="WaitPlayersTimer" type="Timer" parent="."]
-wait_time = 8.0
+wait_time = 10.0
 one_shot = true
 
 [connection signal="closed" from="." to="Loader" method="_on_game_closed"]

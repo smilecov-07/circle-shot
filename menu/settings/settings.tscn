@@ -269,6 +269,7 @@ layout_mode = 2
 alignment = 1
 
 [node name="ClearPatches" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/General/ClearPatches"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Удалить загруженные патчи"

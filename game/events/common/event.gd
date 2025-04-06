@@ -38,6 +38,8 @@ var local_player: Player
 var local_team: int = -1
 ## Началось ли событие.
 var was_started := false
+## Список кэшированных сцен.
+var cached_scenes: Array[PackedScene]
 ## Словарь формата <ID игрока> - <массив данных об экипировке> (см. [member Player.equip_data]).
 ## Доступно только на сервере.
 var _players_equip_data: Dictionary[int, Array]

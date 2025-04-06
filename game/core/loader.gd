@@ -5,10 +5,12 @@ extends CanvasLayer
 ##
 ## В комбинации с [Game], загружает события и прочее.
 
-## Внутренний сигнал, издаётся при завершении части загрузки.
-signal loaded_part(success: bool)
-var _loaded_part := false
-var _loading_path: String
+## Внутренний сигнал, издаётся при завершении загрузки.
+signal loaded(success: bool)
+
+var _requested_paths: Array[String]
+var _loaded_paths: Array[String]
+
 @onready var _anim: AnimationPlayer = $AnimationPlayer
 @onready var _bar: ProgressBar = $Screen/ProgressBar
 @onready var _status_text: Label = $Screen/ProgressBar/Label
@@ -19,85 +21,138 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	var progress: Array[float]
-	var status: ResourceLoader.ThreadLoadStatus = \
-			ResourceLoader.load_threaded_get_status(_loading_path, progress)
-	print_verbose("Status for loading %s: progress - %f, status - %d." % [
-		_loading_path,
-		progress[0],
-		status,
-	])
-	match status:
-		ResourceLoader.THREAD_LOAD_LOADED:
-			loaded_part.emit(true)
-		ResourceLoader.THREAD_LOAD_IN_PROGRESS:
-			_bar.value = roundf(progress[0] * 50) + 50 * int(_loaded_part)
-		ResourceLoader.THREAD_LOAD_FAILED, ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
-			loaded_part.emit(false)
+	var total_progress := 0.0
+	for path: String in _requested_paths:
+		if path in _loaded_paths:
+			total_progress += 1.0
+			continue
+		var progress: Array[float]
+		var status: ResourceLoader.ThreadLoadStatus = \
+				ResourceLoader.load_threaded_get_status(path, progress)
+		match status:
+			ResourceLoader.THREAD_LOAD_LOADED:
+				total_progress += 1.0
+				_loaded_paths.append(path)
+				print_verbose("Done loading resource %s." % path)
+			ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+				total_progress += progress[0]
+			ResourceLoader.THREAD_LOAD_FAILED, ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
+				print_verbose("Failed loading resource %s." % path)
+				loaded.emit(false)
+				return
+	
+	_bar.value = total_progress / _requested_paths.size() * 100.0
+	print_verbose("Status of loading paths: %d%%" % roundi(_bar.value))
+	if _loaded_paths.size() == _requested_paths.size():
+		loaded.emit(true)
 
 
-## Загружает события и карту по [param event_id] и [param map_id] соответственно. Возвращает [Event],
-## если загрузка прошла удачно, иначе возвращает [code]null[/code].[br]
+## Загружает события и карту по [param event_id] и [param map_id] соответственно. Возвращает
+## [Event], если загрузка прошла удачно, иначе возвращает [code]null[/code].[br]
 ## [b]Внимание[/b]: этот метод - [b]корутина[/b], так что Вам необходимо подождать его с помощью
 ## [code]await[/code].
 func load_event(event_id: int, map_id: int) -> Event:
 	_anim.play(&"StartLoad")
-	_status_text.text = "Загрузка события..."
+	_status_text.text = "Загрузка события и карты..."
+	_requested_paths.clear()
+	_loaded_paths.clear()
 	
-	_loading_path = Globals.items_db.events[event_id].scene_path
-	print_verbose("Requesting load for event path %s." % _loading_path)
-	var err: Error = ResourceLoader.load_threaded_request(_loading_path)
+	var event_path: String = Globals.items_db.events[event_id].scene_path
+	print_verbose("Requesting load for event %s." % event_path)
+	var err: Error = ResourceLoader.load_threaded_request(event_path)
 	if err != OK:
 		push_error("Load request for event %s failed with error: %s." % [
-			_loading_path,
+			event_path,
 			error_string(err),
 		])
 		finish_load(false)
 		return null
-	set_process(true)
-	_loaded_part = false
+	_requested_paths.append(event_path)
 	
-	var success: bool = await loaded_part
-	if not success:
-		push_error("Loading of event %s failed." % _loading_path)
-		finish_load(false)
-		return null
-	var event_scene: PackedScene = ResourceLoader.load_threaded_get(_loading_path)
-	print_verbose("Done loading event %s." % _loading_path)
-	var event: Event = event_scene.instantiate()
-	_loaded_part = true
-	
-	_bar.value = 50
-	_status_text.text = "Загрузка карты..."
-	
-	_loading_path = Globals.items_db.events[event_id].maps[map_id].scene_path
-	print_verbose("Requesting load for map path %s." % _loading_path)
-	err = ResourceLoader.load_threaded_request(_loading_path)
+	var map_path: String = Globals.items_db.events[event_id].maps[map_id].scene_path
+	print_verbose("Requesting load for map %s." % map_path)
+	err = ResourceLoader.load_threaded_request(map_path)
 	if err != OK:
 		push_error("Load request for map %s failed with error: %s." % [
-			_loading_path,
+			map_path,
 			error_string(err),
 		])
-		event.free()
+		finish_load(false)
+		return null
+	_requested_paths.append(map_path)
+	
+	set_process(true)
+	var success: bool = await loaded
+	if not success:
+		push_error("Failed loading of event and map.")
 		finish_load(false)
 		return null
 	
-	success = await loaded_part
-	if not success:
-		push_error("Loading of map %s failed." % _loading_path)
-		event.free()
-		finish_load(false)
-		return null
-	var map_scene: PackedScene = ResourceLoader.load_threaded_get(_loading_path)
-	print_verbose("Done loading map %s." % _loading_path)
+	print_verbose("Done loading resources.")
+	var event_scene: PackedScene = ResourceLoader.load_threaded_get(event_path)
+	var map_scene: PackedScene = ResourceLoader.load_threaded_get(map_path)
+	var event: Event = event_scene.instantiate()
 	var map: Node2D = map_scene.instantiate()
 	event.add_child(map)
 	
 	set_process(false)
-	_bar.value = 100
+	_bar.value = 100.0
 	_status_text.text = "Ожидание других игроков..."
 	print_verbose("Done loading event.")
 	return event
+
+## Предзагружает пушки по указанным в параметрах индексам. Возвращает список [PackedScene],
+## если загрузка прошла удачно, иначе возвращает этот список будет пуст.[br]
+## [b]Внимание[/b]: этот метод - [b]корутина[/b], так что Вам необходимо подождать его с помощью
+## [code]await[/code].
+func preload_equip(skins: Array[int], light_weapons: Array[int],
+		heavy_weapons: Array[int], support_weapons: Array[int],
+		melee_weapons: Array[int], skills: Array[int]) -> Array[PackedScene]:
+	_status_text.text = "Предзагрузка экипировки..."
+	_requested_paths.clear()
+	_loaded_paths.clear()
+	var result: Array[PackedScene]
+	
+	for idx: int in skins:
+		_requested_paths.append(Globals.items_db.skins[idx].scene_path)
+	for idx: int in light_weapons:
+		_requested_paths.append(Globals.items_db.weapons_light[idx].scene_path)
+	for idx: int in heavy_weapons:
+		_requested_paths.append(Globals.items_db.weapons_heavy[idx].scene_path)
+	for idx: int in support_weapons:
+		_requested_paths.append(Globals.items_db.weapons_support[idx].scene_path)
+	for idx: int in melee_weapons:
+		_requested_paths.append(Globals.items_db.weapons_melee[idx].scene_path)
+	for idx: int in skills:
+		_requested_paths.append(Globals.items_db.skills[idx].scene_path)
+	
+	for path: String in _requested_paths:
+		print_verbose("Requesting load for equip %s." % path)
+		var err: Error = ResourceLoader.load_threaded_request(path)
+		if err != OK:
+			push_error("Load request for equip %s failed with error: %s." % [
+				path,
+				error_string(err),
+			])
+			finish_load(false)
+			return result
+	
+	set_process(true)
+	var success: bool = await loaded
+	if not success:
+		push_error("Failed preloading equip.")
+		finish_load(false)
+		return result
+	
+	print_verbose("Done loading resources.")
+	for path: String in _requested_paths:
+		result.append(ResourceLoader.load_threaded_get(path))
+	
+	set_process(false)
+	_bar.value = 100.0
+	_status_text.text = "Ожидание других игроков..."
+	print_verbose("Done preloading equip.")
+	return result
 
 
 ## Завершает загрузку, а именно анимацию.
@@ -115,4 +170,4 @@ func finish_load(success: bool) -> void:
 func _on_game_closed() -> void:
 	if is_processing():
 		print_verbose("Game closed, aborting load.")
-		loaded_part.emit(false)
+		loaded.emit(false)

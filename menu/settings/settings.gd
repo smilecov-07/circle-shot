@@ -87,6 +87,9 @@ func _ready() -> void:
 		(%FullscreenCheck.get_parent().get_parent() as CanvasItem).hide()
 	if not OS.has_feature("mobile"):
 		(%VibrationCheck.get_parent().get_parent() as CanvasItem).hide()
+	if OS.has_feature("editor"):
+		(%PatchesCheck.get_parent().get_parent() as CanvasItem).hide()
+		(%ClearPatches.get_parent() as CanvasItem).hide()
 	if "--disable-update-check" in OS.get_cmdline_args():
 		(%UpdatesCheck.get_parent().get_parent() as CanvasItem).hide()
 		(%BetasCheck.get_parent().get_parent() as CanvasItem).hide()

@@ -545,7 +545,7 @@ func _loading_download_data() -> void:
 
 
 func _loading_check_patches() -> void:
-	if not Globals.get_setting_bool("check_patches"):
+	if not Globals.get_setting_bool("check_patches") or OS.has_feature("editor"):
 		print_verbose("Not checking patches: disabled.")
 		loading_stage_finished.emit.call_deferred(false) # Ждём await
 		return
@@ -588,14 +588,12 @@ func _loading_check_patches() -> void:
 
 
 func _loading_apply_patch() -> void:
-	if not Globals.get_setting_bool("check_patches"):
+	if not Globals.get_setting_bool("check_patches") or OS.has_feature("editor"):
 		print_verbose("Not applying patches: disabled.")
 		loading_stage_finished.emit.call_deferred(false) # Ждём await
 		return
 	
 	print_verbose("Checking patch to apply...")
-	_load_status_label.text = "Применение патча..."
-	_load_progress_bar.value = 100.0
 	await get_tree().process_frame
 	
 	var patches: Dictionary[String, int] = \
@@ -603,6 +601,9 @@ func _loading_apply_patch() -> void:
 	if Globals.version in patches:
 		var patch_path := "user://patches/%s.pck" % Globals.version
 		if FileAccess.file_exists(patch_path):
+			_load_status_label.text = "Применение патча..."
+			_load_progress_bar.value = 100.0
+			await get_tree().process_frame
 			ProjectSettings.load_resource_pack(patch_path)
 			print_verbose("Patch with code %d applied." % patches[Globals.version])
 			Globals.version += "-patched%d" % patches[Globals.version]
