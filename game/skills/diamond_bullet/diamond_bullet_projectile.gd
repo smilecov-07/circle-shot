@@ -10,6 +10,7 @@ func _ready() -> void:
 	super()
 
 
-func _deal_damage(entity: Entity) -> void:
+func _deal_damage(entity: Entity, amount: int) -> int:
 	entity.add_effect.rpc(Effect.KNOCKBACK, knockback_duration,
 			[knockback_power * Vector2.from_angle(rotation)])
+	return amount

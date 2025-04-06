@@ -11,11 +11,12 @@ func _ready() -> void:
 		($AnimationPlayer as AnimationPlayer).play(&"Place")
 
 
-func _deal_damage(entity: Entity) -> void:
+func _deal_damage(entity: Entity, amount: int) -> int:
 	entity.add_effect.rpc(Effect.STUN, stun_duration)
 	entity.add_effect.rpc(Effect.SPEED_CHANGE, slowdown_duration, [slowdown_multiplier])
 	($AreaDetector/CollisionShape2D as CollisionShape2D).disabled = true
 	_show_trapped.rpc(entity.position + Vector2.DOWN * 40)
+	return amount
 
 
 @rpc("reliable", "authority", "call_local", 5)

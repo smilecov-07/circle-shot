@@ -4,9 +4,10 @@
 extends _BASE_
 
 
-func _deal_damage(entity: Entity) -> void:
-_TS_pass
+func _deal_damage(entity: Entity, amount: int) -> int:
+_TS_# Пишите логику здесь
+_TS_return amount
 
 
 #func _can_deal_damage(entity: Entity) -> bool:
-_TS_#return # Пиши условия здесь
+_TS_#return # Пишите условия здесь

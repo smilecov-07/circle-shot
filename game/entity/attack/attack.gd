@@ -4,12 +4,15 @@ extends Node2D
 ## Узел атаки.
 ##
 ## Узел, отвечающий за нанесения урона сущностям. Для работы добавьте дочерний
-## узел типа [AreaDetector], [ShapeDetector] или [RayDetector].
+## узел типа [AreaDetector], [ShapeDetector] или [RayDetector]. 
+## [b]Заметка[/b]: не забывайте вызывать [code]super()[/code] в [method Node._physics_process],
+## если Вы переопределяете его (если, конечно, не хотите перезаписать существующую логику).
 
 ## Урон, который будет нанесён сущности.
 @export var damage: int
 ## Интервал между нанесениями урона сущностям, попавших под эту атаку.
 @export var damage_interval := 0.3
+
 ## Множитель наносимого урона для удобства. При перемножение используется стандартное округление.
 var damage_multiplier := 1.0
 ## [Entity.id] сущности, которой принадлежит эта атака. Если меньше либо равен 0, в сообщении о
@@ -24,6 +27,7 @@ var ray_detectors: Array[RayDetector]
 var shape_detectors: Array[ShapeDetector]
 ## [AreaDetector]-ы этой атаки.
 var area_detectors: Array[AreaDetector]
+
 var _exceptions: Dictionary[StringName, float]
 
 
@@ -40,8 +44,10 @@ func _physics_process(delta: float) -> void:
 func deal_damage(entity: Entity, amount: int = damage) -> bool:
 	if not can_deal_damage(entity):
 		return false
-	entity.damage(roundi(amount * damage_multiplier), who)
-	_deal_damage(entity)
+	amount = _deal_damage(entity, roundi(amount * damage_multiplier))
+	if amount <= 0:
+		return false
+	entity.damage(amount, who)
 	_exceptions[entity.name] = damage_interval
 	return true
 
@@ -62,12 +68,14 @@ func clear_exceptions() -> void:
 		sd.clear_exceptions()
 
 
-## Переопредели этот метод в дочернем классе, чтобы добавить логику при успешном нанесении урона.
-func _deal_damage(_entity: Entity) -> void:
-	pass
+## Метод для переопределения. Здесь можно добавить логику при нанесении урона. Метод должен
+## возвращать значение типа [int] - количество наносимого урона. Чаще всего достаточно просто
+## вернуть аргумент [param amount].
+func _deal_damage(_entity: Entity, amount: int) -> int:
+	return amount
 
 
-## Переопредели этот метод в дочернем классе, чтобы добавить условия для нанесения урона.
-## Возвращай [code]true[/code] если можно, иначе возвращай [code]false[/code].
+## Метод для переопределения. Здесь можно добавить условия для нанесения урона.
+## Возвращайте [code]true[/code] если можно, иначе возвращайте [code]false[/code].
 func _can_deal_damage(_entity: Entity) -> bool:
 	return true

@@ -1,5 +1,6 @@
 extends Attack
 
+
 enum Side {
 	LEFT = 1,
 	RIGHT = 2,
@@ -10,6 +11,9 @@ enum Side {
 @export var duration := 400.0
 @export var start_distance := 4800.0
 @export_flags("Left:1", "Right:2", "Top:4", "Bottom:8") var sides: int = 15
+
+var _damage_increase_for_entity: Dictionary[StringName, int]
+var _damage_increase_timers: Dictionary[StringName, float]
 
 func _ready() -> void:
 	var tween: Tween = create_tween()
@@ -43,7 +47,19 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	super(delta)
+	for entity: StringName in _damage_increase_timers.keys():
+		_damage_increase_timers[entity] -= delta
+		if _damage_increase_timers[entity] <= 0.0:
+			_damage_increase_timers.erase(entity)
+			_damage_increase_for_entity.erase(entity)
 	_draw_box()
+
+
+func _deal_damage(entity: Entity, amount: int) -> int:
+	var old_damage: int = _damage_increase_for_entity.get_or_add(entity.name, 0)
+	_damage_increase_for_entity[entity.name] += 10
+	_damage_increase_timers[entity.name] = damage_interval + 0.1
+	return amount + old_damage
 
 
 func _draw_box() -> void:
