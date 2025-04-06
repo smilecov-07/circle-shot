@@ -38,6 +38,8 @@ var local_player: Player
 var local_team: int = -1
 ## Началось ли событие.
 var was_started := false
+## Количество тиков в момент создания события. Используется для корректировки анимации начала.
+var created_ticks_msec: int
 ## Список кэшированных сцен.
 var cached_scenes: Array[PackedScene]
 ## Словарь формата <ID игрока> - <массив данных об экипировке> (см. [member Player.equip_data]).
@@ -134,7 +136,9 @@ func set_local_player(player: Player) -> void:
 		if not multiplayer.is_server():
 			local_player.make_disarmed()
 			local_player.make_immobile()
-		($Camera as SmartCamera).pan_to_target(player, 4.0)
+		var offset: float = (Time.get_ticks_msec() - created_ticks_msec) / 1000.0
+		($Camera as SmartCamera).pan_to_target(player, maxf(4.0 - offset, 1.0))
+		_event_ui.seek_intro(offset)
 
 
 ## Задаёт команду локального игрока.

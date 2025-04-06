@@ -349,6 +349,7 @@ func _start_event() -> void:
 	closed.disconnect(_loader.finish_load)
 	if multiplayer.is_server():
 		event.set_players_data(_players_names, _players_equip_data)
+	event.created_ticks_msec = Time.get_ticks_msec()
 	add_child(event)
 	_loader.finish_load(true)
 	started.emit()

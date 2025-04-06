@@ -50,6 +50,10 @@ func show_intro() -> void:
 	($Intro/AnimationPlayer as AnimationPlayer).advance(0.0) # костыль
 
 
+func seek_intro(at_time: float) -> void:
+	($Intro/AnimationPlayer as AnimationPlayer).seek(at_time)
+
+
 func _on_message_posted(message: String) -> void:
 	if _chat_button.button_pressed or not _chat_button.visible:
 		return
