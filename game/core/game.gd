@@ -180,11 +180,9 @@ func close() -> void:
 	if _scene_multiplayer.peer_authentication_failed.is_connected(_on_peer_authentication_failed):
 		_scene_multiplayer.peer_authentication_failed.disconnect(_on_peer_authentication_failed)
 	
-	multiplayer.multiplayer_peer.close()
+	multiplayer.multiplayer_peer.close.call_deferred()
 	multiplayer.set_deferred(&"multiplayer_peer", null)
 	if is_instance_valid(event):
-		# Чтобы _process не вызывались
-		event.process_mode = Node.PROCESS_MODE_DISABLED
 		event.queue_free()
 		print_verbose("Event deleted.")
 	
@@ -348,7 +346,9 @@ func _start_event() -> void:
 	event.ended.connect(_on_event_ended)
 	closed.disconnect(_loader.finish_load)
 	if multiplayer.is_server():
-		event.set_players_data(_players_names, _players_equip_data)
+		event.set_players_data(_players_names.duplicate(), _players_equip_data.duplicate())
+		_players_names.clear()
+		_players_equip_data.clear()
 	event.created_ticks_msec = Time.get_ticks_msec()
 	add_child(event)
 	_loader.finish_load(true)
