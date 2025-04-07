@@ -104,9 +104,10 @@ func _end_round(win_team: int, winner: int, ends := false) -> void:
 	else:
 		_current_round += 1
 	
-	var tween: Tween = $PoisonSmokes.create_tween()
-	tween.tween_property($PoisonSmokes, ^":modulate", Color.TRANSPARENT, 0.3)
-	tween.tween_callback($PoisonSmokes.queue_free)
+	if has_node(^"PoisonSmokes"):
+		var tween: Tween = $PoisonSmokes.create_tween()
+		tween.tween_property($PoisonSmokes, ^":modulate", Color.TRANSPARENT, 0.3)
+		tween.tween_callback($PoisonSmokes.queue_free)
 	
 	get_tree().call_group(&"Player", &"make_disarmed")
 	get_tree().call_group(&"Player", &"make_immobile")

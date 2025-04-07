@@ -180,9 +180,10 @@ func close() -> void:
 	if _scene_multiplayer.peer_authentication_failed.is_connected(_on_peer_authentication_failed):
 		_scene_multiplayer.peer_authentication_failed.disconnect(_on_peer_authentication_failed)
 	
-	multiplayer.multiplayer_peer.close.call_deferred()
+	multiplayer.multiplayer_peer.close()
 	multiplayer.set_deferred(&"multiplayer_peer", null)
 	if is_instance_valid(event):
+		event.process_mode = Node.PROCESS_MODE_DISABLED # Чтобы _process не вызывались
 		event.queue_free()
 		print_verbose("Event deleted.")
 	

@@ -368,8 +368,6 @@ func _on_local_player_created(player: Player) -> void:
 	_health_bar.max_value = player.max_health
 	_health_immediate_bar.max_value = player.max_health
 	_on_player_health_changed(player.max_health, player.max_health)
-	_health_bar_tween.kill()
-	_change_health_bar_glow(0.0) # Убрать эффект отхила
 	
 	_tint_anim.play(&"RESET")
 	var tween: Tween = create_tween()
@@ -398,7 +396,7 @@ func _on_player_health_changed(old_value: int, new_value: int) -> void:
 		_health_immediate_bar_tween = create_tween()
 		if _health_immediate_bar.value < old_value:
 			_health_immediate_bar.value = old_value
-		_health_bar_tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+		_health_immediate_bar_tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
 		_health_immediate_bar_tween.tween_interval(0.3)
 		_health_immediate_bar_tween.tween_property(_health_immediate_bar, ^":value", new_value, 0.5)
 		
@@ -410,12 +408,19 @@ func _on_player_health_changed(old_value: int, new_value: int) -> void:
 					MIN_VIBRATION_AMPLITUDE +
 					roundi((MAX_VIBRATION_AMPLITUDE - MIN_VIBRATION_AMPLITUDE) * change_ratio)
 			)
-	else:
+	elif new_value > old_value:
 		if is_instance_valid(_health_bar_tween):
 			_health_bar_tween.kill()
 		_health_bar_tween = create_tween()
 		_health_bar_tween.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
 		_health_bar_tween.tween_method(_change_health_bar_glow, 1.0, 0.0, 1.0)
+	else:
+		if is_instance_valid(_health_immediate_bar_tween):
+			_health_immediate_bar_tween.kill()
+		_health_immediate_bar.value = old_value
+		if is_instance_valid(_health_bar_tween):
+			_health_bar_tween.kill()
+		_change_health_bar_glow(0.0)
 	
 	_blood_vignette.visible = new_value < _health_bar.max_value * 0.34
 
