@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3 uid="uid://bup65dc37kog2"]
+
+[ext_resource type="Script" uid="uid://55g8njvkg07g" path="res://game/player/equip/weapon_data.gd" id="1_hkscv"]
+
+[resource]
+script = ExtResource("1_hkscv")
+name = "Tес-9"
+rarity = 1
+id = "tec9"
+stats = Dictionary[String, String]({
+"ammo_per_load": "18",
+"ammo_total": "72",
+"damage": "12",
+"dps": "39",
+"reload_time": "2.5"
+})
+damage_text = "Урон/с: {dps}"
+ammo_text = "{ammo_per_load}/{ammo_total}"
+description = "Урон/с: [color=red]{dps}[/color]
+Урон/снаряд: [color=red]{damage}[/color]
+
+Боеприпасы: [color=blue]{ammo_per_load}/{ammo_total}[/color]
+Перезарядка: [color=blue]{reload_time} с[/color]
+
+Средний пистолет с хорошей скорострельностью и боезапасом, но средней отдачей и разбросом."
+scene_path = "uid://bltslbj5qgpco"
+image_path = "uid://b5wqktd54bkd3"
+spawnable_scenes_paths = Array[String](["uid://dqb1dkircv0dw"])
+metadata/_custom_type_script = "uid://55g8njvkg07g"
