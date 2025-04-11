@@ -229,5 +229,6 @@ cancel_button_text = "Позже"
 [connection signal="name_accepted" from="NameDialog" to="." method="_on_name_dialog_name_accepted"]
 [connection signal="visibility_changed" from="NameDialog" to="." method="_on_name_dialog_visibility_changed"]
 [connection signal="close_requested" from="About" to="About" method="hide"]
+[connection signal="meta_clicked" from="About/MarginContainer/VBoxContainer/RichTextLabel" to="." method="_on_rich_text_label_meta_clicked"]
 [connection signal="pressed" from="About/MarginContainer/VBoxContainer/Close" to="About" method="hide"]
 [connection signal="confirmed" from="UpdateDialog" to="." method="_on_update_dialog_confirmed"]

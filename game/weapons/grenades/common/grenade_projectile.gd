@@ -9,6 +9,7 @@ extends AnimatableBody2D
 @export var damping := 200.0
 ## Направление снаряда.
 var direction: Vector2
+
 var _current_speed: float
 var _exploded := false
 @onready var _anim: AnimationPlayer = $Grenade/AnimationPlayer
@@ -17,6 +18,8 @@ var _exploded := false
 func _ready() -> void:
 	reset_physics_interpolation()
 	_current_speed = speed
+	($Grenade/AnimationPlayer as AnimationPlayer).play(
+			&"Rotation" if direction.x > 0.0 else &"InvertedRotation")
 
 
 func _physics_process(delta: float) -> void:

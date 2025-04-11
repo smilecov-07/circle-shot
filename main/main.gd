@@ -551,8 +551,6 @@ func _loading_check_patches() -> void:
 		return
 	
 	print_verbose("Checking remote patches...")
-	_load_status_label.text = "Проверка патчей..."
-	_load_progress_bar.value = 0.0
 	await get_tree().process_frame
 	
 	var patches: Dictionary[String, int] = \
@@ -699,6 +697,8 @@ func _loading_custom_tracks() -> void:
 			await get_tree().process_frame
 			last_ticks = Time.get_ticks_msec()
 	
+	_load_progress_bar.value = 100.0
+	await get_tree().process_frame
 	print_verbose("Done loading custom tracks.")
 	loading_stage_finished.emit(true)
 
@@ -725,6 +725,8 @@ func _loading_preload_resources() -> void:
 			await get_tree().process_frame
 			last_ticks = Time.get_ticks_msec()
 	
+	_load_progress_bar.value = 100.0
+	await get_tree().process_frame
 	print_verbose("Done preloading resources.")
 	loading_stage_finished.emit(true)
 

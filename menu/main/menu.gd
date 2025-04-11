@@ -99,3 +99,7 @@ func _on_update_dialog_confirmed() -> void:
 
 func _on_quit_pressed() -> void:
 	Globals.quit()
+
+
+func _on_rich_text_label_meta_clicked(meta: Variant) -> void:
+	OS.shell_open(str(meta))
