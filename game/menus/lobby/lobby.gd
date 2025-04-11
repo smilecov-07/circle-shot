@@ -31,11 +31,11 @@ var selected_map: int
 var selected_maps: Array[int]
 
 var selected_skin: int
+var selected_skill: int
 var selected_light_weapon: int
 var selected_heavy_weapon: int
 var selected_support_weapon: int
 var selected_melee_weapon: int
-var selected_skill: int
 
 var _players: Dictionary[int, String]
 var _admin := false
@@ -70,11 +70,11 @@ func _ready() -> void:
 		selected_maps.resize(Globals.items_db.events.size())
 	
 	selected_skin = Globals.get_int("selected_skin")
+	selected_skill = Globals.get_int("selected_skill")
 	selected_light_weapon = Globals.get_int("selected_light_weapon")
 	selected_heavy_weapon = Globals.get_int("selected_heavy_weapon")
 	selected_support_weapon = Globals.get_int("selected_support_weapon")
 	selected_melee_weapon = Globals.get_int("selected_melee_weapon")
-	selected_skill = Globals.get_int("selected_skill")
 	
 	_validate_selected_items()
 	_update_equip()
@@ -424,11 +424,11 @@ func _start_event(event_id: int, map_id: int) -> void:
 	
 	_game.load_event(event_id, map_id, Globals.get_string("player_name"), [
 		selected_skin,
+		selected_skill,
 		selected_light_weapon,
 		selected_heavy_weapon,
 		selected_support_weapon,
 		selected_melee_weapon,
-		selected_skill,
 	])
 
 
@@ -454,6 +454,9 @@ func _validate_selected_items() -> void:
 	if selected_skin < 0 or selected_skin >= Globals.items_db.skins.size():
 		push_warning("Incorrect selected skin: %d. Reverting to default." % selected_skin)
 		selected_skin = 0
+	if selected_skill < 0 or selected_skill >= Globals.items_db.skills.size():
+		push_warning("Incorrect selected skill: %d. Reverting to default." % selected_skill)
+		selected_skill = 0
 	if selected_light_weapon < 0 \
 			or selected_light_weapon >= Globals.items_db.weapons_light.size():
 		push_warning("Incorrect selected light weapon: %d. Reverting to default."
@@ -474,9 +477,6 @@ func _validate_selected_items() -> void:
 		push_warning("Incorrect selected melee weapon: %d. Reverting to default."
 				% selected_melee_weapon)
 		selected_melee_weapon = 0
-	if selected_skill < 0 or selected_skill >= Globals.items_db.skills.size():
-		push_warning("Incorrect selected skill: %d. Reverting to default." % selected_skill)
-		selected_skill = 0
 	
 	_save_selected_items(true)
 
@@ -486,11 +486,11 @@ func _save_selected_items(save_environment := false) -> void:
 		Globals.set_int("selected_event", selected_event)
 		Globals.set_variant("selected_maps", selected_maps)
 	Globals.set_int("selected_skin", selected_skin)
+	Globals.set_int("selected_skill", selected_skill)
 	Globals.set_int("selected_light_weapon", selected_light_weapon)
 	Globals.set_int("selected_heavy_weapon", selected_heavy_weapon)
 	Globals.set_int("selected_support_weapon", selected_support_weapon)
 	Globals.set_int("selected_melee_weapon", selected_melee_weapon)
-	Globals.set_int("selected_skill", selected_skill)
 
 
 func _update_environment() -> void:
@@ -511,6 +511,11 @@ func _update_equip() -> void:
 	(%Skin/RarityFill as ColorRect).color = ItemsDB.RARITY_COLORS[skin.rarity]
 	(%Skin as TextureRect).texture = load(skin.image_path)
 	
+	var skill: SkillData = Globals.items_db.skills[selected_skill]
+	(%Skill/Name as Label).text = skill.name
+	(%Skill/RarityFill as ColorRect).color = ItemsDB.RARITY_COLORS[skill.rarity]
+	(%Skill as TextureRect).texture = load(skill.image_path)
+	
 	var light_weapon: WeaponData = Globals.items_db.weapons_light[selected_light_weapon]
 	(%LightWeapon/Name as Label).text = light_weapon.name
 	(%LightWeapon/RarityFill as ColorRect).color = ItemsDB.RARITY_COLORS[light_weapon.rarity]
@@ -530,11 +535,6 @@ func _update_equip() -> void:
 	(%MeleeWeapon/Name as Label).text = melee_weapon.name
 	(%MeleeWeapon/RarityFill as ColorRect).color = ItemsDB.RARITY_COLORS[melee_weapon.rarity]
 	(%MeleeWeapon as TextureRect).texture = load(melee_weapon.image_path)
-	
-	var skill: SkillData = Globals.items_db.skills[selected_skill]
-	(%Skill/Name as Label).text = skill.name
-	(%Skill/RarityFill as ColorRect).color = ItemsDB.RARITY_COLORS[skill.rarity]
-	(%Skill as TextureRect).texture = load(skill.image_path)
 
 
 func _get_start_reject_reason() -> StartRejectReason:
@@ -843,6 +843,12 @@ func _on_change_skin_pressed() -> void:
 	_item_selector.popup_centered()
 
 
+func _on_change_skill_pressed() -> void:
+	_items_grid.list_items(ItemsDB.Item.SKILL, selected_skill)
+	_item_selector.title = "Выбор навыка"
+	_item_selector.popup_centered()
+
+
 func _on_change_light_weapon_pressed() -> void:
 	_items_grid.list_items(ItemsDB.Item.WEAPON_LIGHT, selected_light_weapon)
 	_item_selector.title = "Выбор лёгкого оружия"
@@ -867,12 +873,6 @@ func _on_change_melee_weapon_pressed() -> void:
 	_item_selector.popup_centered()
 
 
-func _on_change_skill_pressed() -> void:
-	_items_grid.list_items(ItemsDB.Item.SKILL, selected_skill)
-	_item_selector.title = "Выбор навыка"
-	_item_selector.popup_centered()
-
-
 func _on_item_selected(type: ItemsDB.Item, id: int) -> void:
 	_item_selector.hide()
 	match type:
@@ -885,6 +885,8 @@ func _on_item_selected(type: ItemsDB.Item, id: int) -> void:
 			return
 		ItemsDB.Item.SKIN:
 			selected_skin = id
+		ItemsDB.Item.SKILL:
+			selected_skill = id
 		ItemsDB.Item.WEAPON_LIGHT:
 			selected_light_weapon = id
 		ItemsDB.Item.WEAPON_HEAVY:
@@ -893,7 +895,5 @@ func _on_item_selected(type: ItemsDB.Item, id: int) -> void:
 			selected_support_weapon = id
 		ItemsDB.Item.WEAPON_MELEE:
 			selected_melee_weapon = id
-		ItemsDB.Item.SKILL:
-			selected_skill = id
 	_save_selected_items()
 	_update_equip()

@@ -272,26 +272,26 @@ func _send_player_data(player_name: String, equip_data: Array[int]) -> void:
 	if equip_data[0] < 0 or equip_data[0] >= Globals.items_db.skins.size():
 		push_warning("Client's %d skin has invalid ID: %d." % [sender_id, equip_data[0]])
 		equip_data[0] = 0
-	if equip_data[1] < 0 or equip_data[1] >= Globals.items_db.weapons_light.size():
-		push_warning("Client's %d light weapon has invalid ID: %d." % [sender_id, equip_data[1]])
+	if equip_data[1] < 0 or equip_data[1] >= Globals.items_db.skills.size():
+		push_warning("Client's %d skill has invalid ID: %d." % [sender_id, equip_data[1]])
 		equip_data[1] = 0
-	if equip_data[2] < 0 or equip_data[2] >= Globals.items_db.weapons_heavy.size():
-		push_warning("Client's %d heavy weapon has invalid ID: %d." % [sender_id, equip_data[2]])
+	if equip_data[2] < 0 or equip_data[2] >= Globals.items_db.weapons_light.size():
+		push_warning("Client's %d light weapon has invalid ID: %d." % [sender_id, equip_data[2]])
 		equip_data[2] = 0
-	if equip_data[3] < 0 or equip_data[3] >= Globals.items_db.weapons_support.size():
-		push_warning("Client's %d support weapon has invalid ID: %d." % [sender_id, equip_data[3]])
+	if equip_data[3] < 0 or equip_data[3] >= Globals.items_db.weapons_heavy.size():
+		push_warning("Client's %d heavy weapon has invalid ID: %d." % [sender_id, equip_data[3]])
 		equip_data[3] = 0
-	if equip_data[4] < 0 or equip_data[4] >= Globals.items_db.weapons_melee.size():
-		push_warning("Client's %d melee weapon has invalid ID: %d." % [sender_id, equip_data[4]])
+	if equip_data[4] < 0 or equip_data[4] >= Globals.items_db.weapons_support.size():
+		push_warning("Client's %d support weapon has invalid ID: %d." % [sender_id, equip_data[4]])
 		equip_data[4] = 0
-	if equip_data[5] < 0 or equip_data[5] >= Globals.items_db.skills.size():
-		push_warning("Client's %d skill has invalid ID: %d." % [sender_id, equip_data[5]])
+	if equip_data[5] < 0 or equip_data[5] >= Globals.items_db.weapons_melee.size():
+		push_warning("Client's %d melee weapon has invalid ID: %d." % [sender_id, equip_data[5]])
 		equip_data[5] = 0
 	
 	_players_names[sender_id] = player_name
 	_players_equip_data[sender_id] = equip_data
 	_players_not_ready.erase(sender_id)
-	print_verbose("Player %d sent data. Name: %s, Equip data: %s." % [
+	print_verbose("Player %d sent data. Name: %s, equip data: %s." % [
 		sender_id,
 		player_name,
 		str(equip_data),
@@ -300,16 +300,16 @@ func _send_player_data(player_name: String, equip_data: Array[int]) -> void:
 
 
 @rpc("call_local", "reliable", "authority", 1)
-func _preload_equip(skins: Array[int], light_weapons: Array[int],
-		heavy_weapons: Array[int], support_weapons: Array[int],
-		melee_weapons: Array[int], skills: Array[int]) -> void:
+func _preload_equip(skins: Array[int], skills: Array[int],
+		light_weapons: Array[int], heavy_weapons: Array[int],
+		support_weapons: Array[int], melee_weapons: Array[int]) -> void:
 	closed.disconnect(_loader.finish_load)
 	if multiplayer.is_server():
 		_preloading_equip = true
 		_players_not_ready.assign(multiplayer.get_peers())
 		_players_not_ready.append(1)
-	var equip_scenes: Array[PackedScene] = await _loader.preload_equip(skins, light_weapons,
-			heavy_weapons, support_weapons, melee_weapons, skills)
+	var equip_scenes: Array[PackedScene] = await _loader.preload_equip(skins, skills,
+			light_weapons, heavy_weapons, support_weapons, melee_weapons)
 	if equip_scenes.is_empty():
 		show_error("Ошибка при предзагрузке экипировки! Отключаюсь.")
 		push_error("Preload equip failed. Disconnecting.")
@@ -384,27 +384,27 @@ func _check_players_ready() -> void:
 
 func _determine_equip_to_preload() -> void:
 	var skins: Array[int]
+	var skills: Array[int]
 	var light_weapons: Array[int]
 	var heavy_weapons: Array[int]
 	var support_weapons: Array[int]
 	var melee_weapons: Array[int]
-	var skills: Array[int]
 	
 	for equip_data: Array in _players_equip_data.values():
 		if not equip_data[0] in skins:
 			skins.append(equip_data[0])
-		if not equip_data[1] in light_weapons:
-			light_weapons.append(equip_data[1])
-		if not equip_data[2] in heavy_weapons:
-			heavy_weapons.append(equip_data[2])
-		if not equip_data[3] in support_weapons:
-			support_weapons.append(equip_data[3])
-		if not equip_data[4] in melee_weapons:
-			melee_weapons.append(equip_data[4])
-		if not equip_data[5] in skills:
-			skills.append(equip_data[5])
+		if not equip_data[1] in skills:
+			skills.append(equip_data[1])
+		if not equip_data[2] in light_weapons:
+			light_weapons.append(equip_data[2])
+		if not equip_data[3] in heavy_weapons:
+			heavy_weapons.append(equip_data[3])
+		if not equip_data[4] in support_weapons:
+			support_weapons.append(equip_data[4])
+		if not equip_data[5] in melee_weapons:
+			melee_weapons.append(equip_data[5])
 	
-	_preload_equip.rpc(skins, light_weapons, heavy_weapons, support_weapons, melee_weapons, skills)
+	_preload_equip.rpc(skins, skills, light_weapons, heavy_weapons, support_weapons, melee_weapons)
 
 
 func _init_lobby() -> void:

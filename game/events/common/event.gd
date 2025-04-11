@@ -110,6 +110,7 @@ func spawn_player(id: int) -> void:
 	player.id = id
 	player.player_name = _players_names[id]
 	player.equip_data = _players_equip_data[id].duplicate()
+	player.equip_data.append(-1)
 	if id in _players_skill_vars:
 		player.skill_vars = _players_skill_vars[id].duplicate()
 	player.name = "Player%d" % id

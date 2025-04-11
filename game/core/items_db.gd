@@ -13,16 +13,16 @@ enum Item {
 	MAP = 1,
 	## Скин.
 	SKIN = 2,
-	## Лёгкое оружие.
-	WEAPON_LIGHT = 3,
-	## Тяжёлое оружие.
-	WEAPON_HEAVY = 4,
-	## Оружие поддержки.
-	WEAPON_SUPPORT = 5,
-	## Ближнее оружие.
-	WEAPON_MELEE = 6,
 	## Навык.
-	SKILL = 7,
+	SKILL = 3,
+	## Лёгкое оружие.
+	WEAPON_LIGHT = 4,
+	## Тяжёлое оружие.
+	WEAPON_HEAVY = 5,
+	## Оружие поддержки.
+	WEAPON_SUPPORT = 6,
+	## Ближнее оружие.
+	WEAPON_MELEE = 7,
 }
 ## Редкость некоторых предметов.
 enum Rarity {

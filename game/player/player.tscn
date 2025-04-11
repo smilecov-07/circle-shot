@@ -109,6 +109,8 @@ gizmo_extents = 32.0
 
 [node name="Melee" type="Node" parent="Visual/Weapons" index="3"]
 
+[node name="Additional" type="Node" parent="Visual/Weapons" index="4"]
+
 [node name="ControlIndicator" type="Sprite2D" parent="." index="4"]
 visible = false
 z_index = 10

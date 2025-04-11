@@ -105,9 +105,9 @@ func load_event(event_id: int, map_id: int) -> Event:
 ## если загрузка прошла удачно, иначе возвращает этот список будет пуст.[br]
 ## [b]Внимание[/b]: этот метод - [b]корутина[/b], так что Вам необходимо подождать его с помощью
 ## [code]await[/code].
-func preload_equip(skins: Array[int], light_weapons: Array[int],
-		heavy_weapons: Array[int], support_weapons: Array[int],
-		melee_weapons: Array[int], skills: Array[int]) -> Array[PackedScene]:
+func preload_equip(skins: Array[int], skills: Array[int],
+		light_weapons: Array[int], heavy_weapons: Array[int],
+		support_weapons: Array[int], melee_weapons: Array[int]) -> Array[PackedScene]:
 	_status_text.text = "Предзагрузка экипировки..."
 	_requested_paths.clear()
 	_loaded_paths.clear()

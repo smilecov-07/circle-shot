@@ -43,12 +43,12 @@ func _get_spawn_point(id: int) -> Vector2:
 func _customize_player(player: Player) -> void:
 	match _current_round:
 		0:
-			player.equip_data[2] = -1
+			player.equip_data[3] = -1
 		1:
-			player.equip_data[1] = -1
-		2:
-			player.equip_data[1] = -1
 			player.equip_data[2] = -1
+		2:
+			player.equip_data[2] = -1
+			player.equip_data[3] = -1
 
 
 func _player_killed(who: int, _by: int) -> void:

@@ -326,6 +326,28 @@ layout_mode = 2
 size_flags_vertical = 4
 icon = ExtResource("2_h33al")
 
+[node name="WeaponAdditional" type="PanelContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/Actions"]
+layout_mode = 2
+
+[node name="Container" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/Actions/WeaponAdditional"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="VBoxContainer/ScrollContainer/MarginContainer/Actions/WeaponAdditional/Container"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+theme_type_variation = &"HeaderSmall"
+text = "Дополнительное оружие"
+
+[node name="Events" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/Actions/WeaponAdditional/Container"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Add" type="Button" parent="VBoxContainer/ScrollContainer/MarginContainer/Actions/WeaponAdditional/Container"]
+layout_mode = 2
+size_flags_vertical = 4
+icon = ExtResource("2_h33al")
+
 [node name="NextWeapon" type="PanelContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/Actions"]
 layout_mode = 2
 
@@ -520,6 +542,7 @@ cancel_button_text = "Отмена"
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/MarginContainer/Actions/WeaponHeavy/Container/Add" to="." method="add_action_event" binds= [&"weapon_heavy"]]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/MarginContainer/Actions/WeaponSupport/Container/Add" to="." method="add_action_event" binds= [&"weapon_support"]]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/MarginContainer/Actions/WeaponMelee/Container/Add" to="." method="add_action_event" binds= [&"weapon_melee"]]
+[connection signal="pressed" from="VBoxContainer/ScrollContainer/MarginContainer/Actions/WeaponAdditional/Container/Add" to="." method="add_action_event" binds= [&"weapon_additional"]]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/MarginContainer/Actions/NextWeapon/Container/Add" to="." method="add_action_event" binds= [&"next_weapon"]]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/MarginContainer/Actions/PreviousWeapon/Container/Add" to="." method="add_action_event" binds= [&"previous_weapon"]]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/MarginContainer/Actions/ShowWeapons/Container/Add" to="." method="add_action_event" binds= [&"show_weapons"]]

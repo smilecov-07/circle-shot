@@ -16,9 +16,9 @@ signal skill_equipped(data: SkillData)
 
 ## Имя игрока.
 var player_name: String
-## Массив идентификаторов экипировки. Порядок: скин, лёгкое оружие, тяжёлое оружие,
-## оружие поддержки, ближнее оружие, навык. Если ID равен -1, то оружие/навык не экипирован.
-## Если же равен -2, то оружие/навык экипирован, но он отсутствует в [ItemsDB].
+## Массив идентификаторов экипировки. Порядок: скин, навык, лёгкое оружие, тяжёлое оружие,
+## оружие поддержки, ближнее оружие, дополнительное оружие. Если ID равен -1, то оружие/навык не
+## экипирован. Если же равен -2, то оружие/навык экипирован, но он отсутствует в [ItemsDB].
 var equip_data: Array[int]
 ## Массив из двух элементов. Первый - количество оставшихся использований, второй - откат.
 var skill_vars: Array[int]
@@ -28,7 +28,7 @@ var skin: PlayerSkin
 var current_weapon: Weapon
 ## Тип текущего оружия.
 var current_weapon_type := Weapon.Type.LIGHT
-## Ссылка на экипированный навык. Может быть равным [code]null[/code].
+## Ссылка на экипированный навык. Может быть равной [code]null[/code].
 var skill: Skill
 
 ## Узел, содержащий ввод игрока.
@@ -51,19 +51,18 @@ func _ready() -> void:
 		($ControlIndicator as CanvasItem).self_modulate = TEAM_COLORS[team]
 		($AudioListener2D as AudioListener2D).make_current()
 	
-	
 	set_skin(Globals.items_db.skins[equip_data[0]])
+	set_skill(Globals.items_db.skills[equip_data[1]] if equip_data[1] >= 0 else null)
 	
 	set_weapon(Weapon.Type.LIGHT,
-			Globals.items_db.weapons_light[equip_data[1]] if equip_data[1] >= 0 else null)
+			Globals.items_db.weapons_light[equip_data[2]] if equip_data[2] >= 0 else null)
 	set_weapon(Weapon.Type.HEAVY,
-			Globals.items_db.weapons_heavy[equip_data[2]] if equip_data[2] >= 0 else null)
+			Globals.items_db.weapons_heavy[equip_data[3]] if equip_data[3] >= 0 else null)
 	set_weapon(Weapon.Type.SUPPORT,
-			Globals.items_db.weapons_support[equip_data[3]] if equip_data[3] >= 0 else null)
+			Globals.items_db.weapons_support[equip_data[4]] if equip_data[4] >= 0 else null)
 	set_weapon(Weapon.Type.MELEE,
-			Globals.items_db.weapons_melee[equip_data[4]] if equip_data[4] >= 0 else null)
-	
-	set_skill(Globals.items_db.skills[equip_data[5]] if equip_data[5] >= 0 else null)
+			Globals.items_db.weapons_melee[equip_data[5]] if equip_data[5] >= 0 else null)
+	set_weapon(Weapon.Type.ADDITIONAL, null)
 	
 	($Minimap/MinimapMarker/Visual as CanvasItem).self_modulate = TEAM_COLORS[team]
 	await get_tree().process_frame # Ждём пока заработает VisibleOnScreenNotifier2D
@@ -194,7 +193,7 @@ func set_weapon(type: Weapon.Type, data: WeaponData) -> void:
 		placeholder.name = "NoWeapon%d" % type
 		_weapons.add_child(placeholder)
 		_weapons.move_child(placeholder, type)
-		equip_data[1 + type] = -2
+		equip_data[2 + type] = -1
 		weapon_equipped.emit(type, null)
 		print_verbose("Removed weapon with type %d on %s." % [type, name])
 		
@@ -207,7 +206,7 @@ func set_weapon(type: Weapon.Type, data: WeaponData) -> void:
 	_weapons.add_child(weapon)
 	_weapons.move_child(weapon, type)
 	weapon.initialize(self, data)
-	equip_data[1 + type] = data.idx_in_db
+	equip_data[2 + type] = data.idx_in_db
 	
 	weapon_equipped.emit(type, data)
 	print_verbose("Set weapon %s with ID %d with type %d on %s." % [
@@ -241,7 +240,7 @@ func set_skill(data: SkillData, reset_skill_vars := false) -> void:
 	skill = skill_scene.instantiate()
 	add_child(skill)
 	skill.initialize(self, data)
-	equip_data[5] = data.idx_in_db
+	equip_data[1] = data.idx_in_db
 	skill_equipped.emit(data)
 	print_verbose("Set skill %s with ID %d on %s." % [data.id, equip_data[5], name])
 
@@ -257,6 +256,8 @@ func _request_change_weapon(to: Weapon.Type) -> void:
 		push_warning("RPC Sender ID (%d) doesn't match with player ID (%d)." % [sender_id, id])
 		return
 	if to == current_weapon_type or is_disarmed():
+		return
+	if to == Weapon.Type.ADDITIONAL and equip_data[6] == -1:
 		return
 	
 	change_weapon.rpc(to)

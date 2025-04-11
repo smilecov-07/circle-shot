@@ -148,6 +148,10 @@ id = "additional"
 script = ExtResource("3_mu25c")
 id = "weapon"
 
+[node name="PositionEditor" type="Node" parent="PlayerUI/Controller/AdditionalWeapon" index="4"]
+script = ExtResource("3_mu25c")
+id = "spare_weapon"
+
 [node name="Count" parent="PlayerUI/Controller/Skill" index="1"]
 text = "99"
 
@@ -433,6 +437,7 @@ text = "Сбросить"
 [connection signal="save_requested" from="." to="PlayerUI/Controller/HealthBar/PositionEditor" method="_on_controls_save_requested"]
 [connection signal="save_requested" from="." to="PlayerUI/Controller/TouchControls/Anchor/PositionEditor" method="_on_controls_save_requested"]
 [connection signal="save_requested" from="." to="PlayerUI/Controller/CurrentWeapon/PositionEditor" method="_on_controls_save_requested"]
+[connection signal="save_requested" from="." to="PlayerUI/Controller/AdditionalWeapon/PositionEditor" method="_on_controls_save_requested"]
 [connection signal="save_requested" from="." to="PlayerUI/Controller/Skill/PositionEditor" method="_on_controls_save_requested"]
 [connection signal="save_requested" from="." to="PlayerUI/Controller/MoveJoystickEditor" method="_on_controls_save_requested"]
 [connection signal="save_requested" from="." to="PlayerUI/Controller/MoveJoystickEditor/PositionEditor" method="_on_controls_save_requested"]

@@ -75,6 +75,7 @@ func _ready() -> void:
 		Main.InputMethod.KEYBOARD_AND_MOUSE:
 			($Controller/TouchControls as CanvasItem).hide()
 			($Controller/Skill/TouchScreenButton as CanvasItem).hide()
+			($Controller/AdditionalWeapon/TouchScreenButton as CanvasItem).hide()
 			get_window().focus_exited.connect(_on_window_focus_exited)
 			_follow_mouse = Globals.get_controls_bool("follow_mouse")
 			_always_show_aim = Globals.get_controls_bool("always_show_aim")
@@ -137,11 +138,15 @@ func select_weapon(type: Weapon.Type) -> void:
 
 
 func select_next_weapon() -> void:
+	if not is_instance_valid(_player):
+		return
 	var new_type := (_player.current_weapon_type + 1) % 4 as Weapon.Type
 	select_weapon(new_type)
 
 
 func select_previous_weapon() -> void:
+	if not is_instance_valid(_player):
+		return
 	var new_type := (_player.current_weapon_type + 3) % 4 as Weapon.Type
 	select_weapon(new_type)
 
@@ -254,6 +259,8 @@ func _unhandled_keyboard_and_mouse_input(event: InputEvent) -> void:
 		select_weapon(Weapon.Type.SUPPORT)
 	if event.is_action_pressed(&"weapon_melee"):
 		select_weapon(Weapon.Type.MELEE)
+	if event.is_action_pressed(&"weapon_additional") and _player.equip_data[6] != -1:
+		select_weapon(Weapon.Type.ADDITIONAL)
 	if event.is_action_pressed(&"reload"):
 		reload()
 	if event.is_action_pressed(&"additional_button"):
@@ -461,6 +468,10 @@ func _on_weapon_equipped(type: Weapon.Type, data: WeaponData) -> void:
 		Weapon.Type.MELEE:
 			weapon_icon = $Controller/WeaponSelection/MeleeWeaponIcon
 			weapon_text = $Controller/WeaponSelection/MeleeWeaponName
+		Weapon.Type.ADDITIONAL:
+			weapon_icon = $Controller/AdditionalWeapon/Icon
+			weapon_text = $Controller/AdditionalWeapon/Label
+			($Controller/AdditionalWeapon as CanvasItem).visible = is_instance_valid(data)
 	
 	if not data:
 		weapon_icon.texture = null

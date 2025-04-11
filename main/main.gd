@@ -301,6 +301,13 @@ func setup_controls_settings() -> void:
 	Globals.set_controls_vector2("offsets_rb_weapon",
 			Globals.get_controls_vector2("offsets_rb_weapon", Vector2(0.0, -88.0)))
 	
+	Globals.set_controls_int("anchors_preset_spare_weapon",
+			Globals.get_controls_int("anchors_preset_spare_weapon", Control.PRESET_CENTER_BOTTOM))
+	Globals.set_controls_vector2("offsets_lt_spare_weapon",
+			Globals.get_controls_vector2("offsets_lt_spare_weapon", Vector2(-96.0, -176.0)))
+	Globals.set_controls_vector2("offsets_rb_spare_weapon",
+			Globals.get_controls_vector2("offsets_rb_spare_weapon", Vector2(96.0, -80.0)))
+	
 	Globals.set_controls_int("anchors_preset_skill",
 			Globals.get_controls_int("anchors_preset_skill", Control.PRESET_CENTER_RIGHT))
 	Globals.set_controls_vector2("offsets_lt_skill",

@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://0wc72b0o2o11"]
+[gd_scene load_steps=27 format=3 uid="uid://0wc72b0o2o11"]
 
 [ext_resource type="Script" uid="uid://dnfj2pxuibak6" path="res://game/player/ui/player_ui.gd" id="1_2pprn"]
 [ext_resource type="Shader" uid="uid://coxueocca4drx" path="res://game/player/ui/blood_vignette/blood_vignette.gdshader" id="2_bioi4"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://m3oouj1lspki" path="res://game/player/ui/position_loader.gd" id="8_witf6"]
 [ext_resource type="Texture2D" uid="uid://dhhiaodkovkws" path="res://game/player/ui/textures/weapon_selection_bg.png" id="11_kgyyy"]
 [ext_resource type="Texture2D" uid="uid://cqlo1boor0w4t" path="res://game/player/ui/textures/skill_button.png" id="14_nojcu"]
+[ext_resource type="Texture2D" uid="uid://cldx4o161bsqt" path="res://game/player/ui/textures/additional_weapon_bg.png" id="16_2wypa"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_l5du6"]
 shader = ExtResource("2_bioi4")
@@ -27,6 +28,9 @@ shader_parameter/noise_scale = 0.5
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6sal7"]
 size = Vector2(640, 256)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2wypa"]
+size = Vector2(192, 96)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x4djl"]
 size = Vector2(120, 120)
@@ -313,11 +317,66 @@ grow_horizontal = 0
 grow_vertical = 0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 4
-text = "120/60"
 
 [node name="PositionLoader" type="Node" parent="Controller/CurrentWeapon"]
 script = ExtResource("8_witf6")
 id = "weapon"
+
+[node name="AdditionalWeapon" type="TextureRect" parent="Controller"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -96.0
+offset_top = -176.0
+offset_right = 96.0
+offset_bottom = -80.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+texture = ExtResource("16_2wypa")
+
+[node name="Icon" type="TextureRect" parent="Controller/AdditionalWeapon"]
+material = ExtResource("7_2wypa")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -40.0
+offset_right = 80.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Controller/AdditionalWeapon"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -52.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 4
+horizontal_alignment = 2
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="Controller/AdditionalWeapon"]
+position = Vector2(96, 48)
+shape = SubResource("RectangleShape2D_2wypa")
+
+[node name="PositionLoader" type="Node" parent="Controller/AdditionalWeapon"]
+script = ExtResource("8_witf6")
+id = "spare_weapon"
 
 [node name="Skill" type="TextureProgressBar" parent="Controller"]
 layout_mode = 1
@@ -630,5 +689,6 @@ wait_time = 0.2
 one_shot = true
 
 [connection signal="pressed" from="Controller/TouchControls/Anchor/AdditionalButton" to="." method="additional_button"]
+[connection signal="pressed" from="Controller/AdditionalWeapon/TouchScreenButton" to="." method="select_weapon" binds= [4]]
 [connection signal="pressed" from="Controller/Skill/TouchScreenButton" to="." method="use_skill"]
 [connection signal="timeout" from="SingleShotTimer" to="." method="_on_single_shot_timer_timeout"]
