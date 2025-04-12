@@ -10,13 +10,13 @@
 
 [sub_resource type="Curve" id="Curve_ffep1"]
 _limits = [0.0, 7.0, 0.0, 4.0]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1.10299, 0.622642), 0.0, 0.0, 0, 0, Vector2(1.56811, 2.2783), 3.90448, 3.90448, 0, 0, Vector2(4, 7), -0.504305, 0.0, 0, 0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1.03654, 1.66509), 0.0, 0.0, 0, 0, Vector2(2.55149, 4.36321), 3.90448, 3.90448, 0, 0, Vector2(4, 7), -0.504305, 0.0, 0, 0]
 point_count = 4
 
 [sub_resource type="Curve" id="Curve_kua1l"]
 _limits = [-5.0, 0.0, 0.0, 3.0]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1.05648, -0.394205), -0.850578, -0.850578, 0, 0, Vector2(1.35548, -1.31402), -5.59319, -5.59319, 0, 0, Vector2(3, -5), -4.90799, 0.0, 0, 0]
-point_count = 4
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(3, -5), -3.61611, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="Curve" id="Curve_tm66w"]
 _limits = [-9.0, -1.0, 0.0, 1.0]

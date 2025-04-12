@@ -11,3 +11,8 @@ _TS_return amount
 
 #func _can_deal_damage(entity: Entity) -> bool:
 _TS_#return # Пишите условия здесь
+
+
+# Удалите, если базовый класс не Projectile
+#func _process_hit(where: Vector2, what: Entity) -> void:
+_TS_# Пишите особую логику здесь

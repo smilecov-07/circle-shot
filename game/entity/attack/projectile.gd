@@ -9,14 +9,16 @@ extends Attack
 ## (если, конечно, не хотите перезаписать существующую логику).
 
 ## Издаётся, когда снаряд куда-то попадает.
-signal hit(where: Vector2)
+signal hit(where: Vector2, what: Entity)
+## Издаётся, когда снаряд уничтожается.
+signal destroyed(where: Vector2)
 ## Скорость снаряда.
 @export var speed := 1280.0
 ## Эффект попадания снаряда.
 @export var hit_vfx_scene: PackedScene
 ## Направление движения снаряда. Устанавливается в [method Node._ready] из [member Node2D.rotation].
 var direction: Vector2
-var _was_hit := false
+var _destroyed := false
 
 
 func _ready() -> void:
@@ -29,12 +31,12 @@ func _physics_process(delta: float) -> void:
 
 
 @rpc("unreliable", "call_local", "authority", 5)
-func _hit(where: Vector2) -> void:
-	if _was_hit:
+func _destroy(where: Vector2) -> void:
+	if _destroyed:
 		return
 	
-	_was_hit = true
-	hit.emit(where)
+	_destroyed = true
+	destroyed.emit(where)
 	for rd: RayDetector in ray_detectors:
 		rd.enabled = false
 	for sd: ShapeDetector in shape_detectors:
@@ -53,11 +55,18 @@ func _hit(where: Vector2) -> void:
 	hide()
 
 
-func _on_detector_hit(where: Vector2) -> void:
+## Метод для переопределения. Может использоваться для изменения логики при столкновении снаряда
+## с чем-либо. По умолчанию снаряд просто уничтожается.
+func _process_hit(where: Vector2, _what: Entity) -> void:
 	if multiplayer.is_server():
-		_hit.rpc(where)
+		_destroy.rpc(where)
 	else:
-		_hit(where)
+		_destroy(where)
+
+
+func _on_detector_hit(where: Vector2, what: Entity) -> void:
+	hit.emit(where, what)
+	_process_hit(where, what)
 
 
 func _on_timer_timeout() -> void:

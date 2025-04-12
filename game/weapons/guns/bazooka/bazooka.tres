@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3 uid="uid://co7e50nsbbr5q"]
+
+[ext_resource type="Script" uid="uid://55g8njvkg07g" path="res://game/player/equip/weapon_data.gd" id="1_284hj"]
+
+[resource]
+script = ExtResource("1_284hj")
+name = "Базука"
+rarity = 5
+id = "bazooka"
+stats = Dictionary[String, String]({
+"ammo_total": "10",
+"damage": "60",
+"dps": "30",
+"reload_time": "1.3"
+})
+damage_text = "Урон: {damage}"
+ammo_text = "{ammo_total} ракет"
+description = "Урон/с: [color=red]{dps}[/color]
+Урон/снаряд: [color=red]{damage}[/color]
+
+Боеприпасы: [color=blue]{ammo_total} ракет[/color]
+Перезарядка: [color=blue]{reload_time} с[/color]
+
+Очень мощная ракетная установка, способная нанести огромный урон."
+scene_path = "uid://dn7oblc2lhvef"
+image_path = "uid://iocjsqchyao6"
+spawnable_scenes_paths = Array[String](["uid://cqhttq0m4j1p6"])
+metadata/_custom_type_script = "uid://55g8njvkg07g"
