@@ -5,8 +5,10 @@ const BLUR_SPREAD_MULTIPLIER := 0.2
 @export var aim_slowdown := 0.8
 @export var no_aim_spread := 8.0
 var _aiming := false
+
 @onready var _aim_ray: RayCast2D = $ShootPoint/AimRay
 @onready var _aim_target: Marker2D = $ShootPoint/AimTarget
+@onready var _aim_point: Sprite2D = $AimPoint
 @onready var _end_aim: Marker2D = $ShootPoint/EndAim
 @onready var _aim_texture_material: ShaderMaterial = ($Aim/Base/Aim as CanvasItem).material
 
@@ -14,6 +16,9 @@ var _aiming := false
 func _process(delta: float) -> void:
 	super(delta)
 	if _aiming:
+		_aim_ray.force_raycast_update()
+		_aim_point.visible = _aim_ray.is_colliding()
+		_aim_point.global_position = _aim_ray.get_collision_point()
 		if player.is_local():
 			_aim_target.global_position = _calculate_aim_target_position()
 			_aim_texture_material.set_shader_parameter(&"radius",
@@ -30,6 +35,7 @@ func _exit_tree() -> void:
 func _initialize() -> void:
 	super()
 	($ShootPoint as CanvasItem).hide()
+	($AimPoint as CanvasItem).hide()
 
 
 func _unmake_current() -> void:
@@ -64,6 +70,7 @@ func _calculate_spread() -> float:
 func start_aim() -> void:
 	_aiming = true
 	player.speed_multiplier *= aim_slowdown
+	($AimPoint as CanvasItem).show()
 	if not player.is_local():
 		return
 	
@@ -78,6 +85,7 @@ func start_aim() -> void:
 func end_aim() -> void:
 	_aiming = false
 	player.speed_multiplier /= aim_slowdown
+	($AimPoint as CanvasItem).hide()
 	if not player.is_local():
 		return
 	
@@ -96,7 +104,6 @@ func end_aim() -> void:
 
 
 func _calculate_aim_target_position() -> Vector2:
-	_aim_ray.force_raycast_update()
 	var ratio: float = (_aim_ray.get_collision_point() - _aim_ray.global_position).length() \
 			/ absf(_aim_ray.position.x - _end_aim.position.x) if _aim_ray.is_colliding() else 1.0
 	return _aim_ray.global_position.lerp(_end_aim.global_position,
