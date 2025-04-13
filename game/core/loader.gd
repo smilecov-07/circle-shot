@@ -101,8 +101,9 @@ func load_event(event_id: int, map_id: int) -> Event:
 	print_verbose("Done loading event.")
 	return event
 
+
 ## Предзагружает пушки по указанным в параметрах индексам. Возвращает список [PackedScene],
-## если загрузка прошла удачно, иначе возвращает этот список будет пуст.[br]
+## если загрузка прошла удачно, иначе возвращаемый этот список будет пуст.[br]
 ## [b]Внимание[/b]: этот метод - [b]корутина[/b], так что Вам необходимо подождать его с помощью
 ## [code]await[/code].
 func preload_equip(skins: Array[int], skills: Array[int],
@@ -115,6 +116,8 @@ func preload_equip(skins: Array[int], skills: Array[int],
 	
 	for idx: int in skins:
 		_requested_paths.append(Globals.items_db.skins[idx].scene_path)
+	for idx: int in skills:
+		_requested_paths.append(Globals.items_db.skills[idx].scene_path)
 	for idx: int in light_weapons:
 		_requested_paths.append(Globals.items_db.weapons_light[idx].scene_path)
 	for idx: int in heavy_weapons:
@@ -123,8 +126,6 @@ func preload_equip(skins: Array[int], skills: Array[int],
 		_requested_paths.append(Globals.items_db.weapons_support[idx].scene_path)
 	for idx: int in melee_weapons:
 		_requested_paths.append(Globals.items_db.weapons_melee[idx].scene_path)
-	for idx: int in skills:
-		_requested_paths.append(Globals.items_db.skills[idx].scene_path)
 	
 	for path: String in _requested_paths:
 		print_verbose("Requesting load for equip %s." % path)

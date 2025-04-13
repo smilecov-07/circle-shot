@@ -171,3 +171,21 @@ gizmo_extents = 320.0
 [node name="9" type="Marker2D" parent="AmmoPoints" index="9"]
 position = Vector2(-3076, 164)
 gizmo_extents = 320.0
+
+[node name="WeaponBoxPoints" type="Node2D" parent="." index="3"]
+
+[node name="0" type="Marker2D" parent="WeaponBoxPoints" index="0"]
+position = Vector2(-623, 4489)
+gizmo_extents = 480.0
+
+[node name="1" type="Marker2D" parent="WeaponBoxPoints" index="1"]
+position = Vector2(-1879, 4340)
+gizmo_extents = 480.0
+
+[node name="2" type="Marker2D" parent="WeaponBoxPoints" index="2"]
+position = Vector2(837, 4261)
+gizmo_extents = 480.0
+
+[node name="3" type="Marker2D" parent="WeaponBoxPoints" index="3"]
+position = Vector2(1662, 4777)
+gizmo_extents = 480.0

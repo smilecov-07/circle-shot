@@ -60,7 +60,7 @@ func reload() -> void:
 func _create_projectile() -> void:
 	for i: int in buckshot_in_shot:
 		var projectile: Projectile = projectile_scene.instantiate()
-		projectile.global_position = _shoot_point.global_position
+		projectile.position = _shoot_point.global_position
 		projectile.damage_multiplier = player.damage_multiplier
 		projectile.rotation = player.player_input.aim_direction.angle() \
 				+ deg_to_rad(_calculate_spread() * (-1 + 2.0 / (buckshot_in_shot - 1) * i)) \

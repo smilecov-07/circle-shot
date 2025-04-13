@@ -1,7 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://yfpyfv6boyao"]
+[gd_scene load_steps=13 format=3 uid="uid://yfpyfv6boyao"]
 
 [ext_resource type="PackedScene" uid="uid://d3nsak46hbo2c" path="res://game/events/common/event.tscn" id="1_5uf7s"]
 [ext_resource type="Script" uid="uid://btgre7bv1b6d3" path="res://game/events/royale/royale.gd" id="2_d2r5a"]
+[ext_resource type="PackedScene" uid="uid://dn7oblc2lhvef" path="res://game/weapons/guns/bazooka/bazooka.tscn" id="3_vu7pc"]
+[ext_resource type="Resource" uid="uid://co7e50nsbbr5q" path="res://game/weapons/guns/bazooka/bazooka.tres" id="4_0ce5t"]
 [ext_resource type="Script" uid="uid://x5ehyotfquq8" path="res://game/events/royale/royale_ui.gd" id="6_q5vxn"]
 [ext_resource type="Texture2D" uid="uid://c1rotus1aunmr" path="res://menu/theme/icons/left.png" id="7_oyafe"]
 [ext_resource type="Texture2D" uid="uid://ix82y4qydhql" path="res://menu/theme/icons/right.png" id="8_ub7jk"]
@@ -143,11 +145,15 @@ heal_box_spawn_interval_base = 10.0
 heal_box_spawn_interval_per_player = 1.0
 ammo_box_spawn_interval_base = 15.0
 ammo_box_spawn_interval_per_player = 1.5
+weapon_box_spawn_interval_base = 50.0
+weapon_box_spawn_interval_per_player = 10.0
+weapon_scene = ExtResource("3_vu7pc")
+weapon_data = ExtResource("4_0ce5t")
 spawn_point_randomness = 0.0
 metadata/_edit_horizontal_guides_ = []
 
 [node name="OtherSpawner" parent="." index="6"]
-_spawnable_scenes = PackedStringArray("uid://bysyaaj2r7stt", "uid://bdtqr6mv231py")
+_spawnable_scenes = PackedStringArray("uid://bdtqr6mv231py", "uid://bysyaaj2r7stt", "uid://bbfq36qds2oip")
 
 [node name="HealBoxSpawnTimer" type="Timer" parent="." index="7"]
 wait_time = 15.0
@@ -157,7 +163,11 @@ one_shot = true
 wait_time = 15.0
 one_shot = true
 
-[node name="UI" parent="." index="10"]
+[node name="WeaponBoxSpawnTimer" type="Timer" parent="." index="9"]
+wait_time = 15.0
+one_shot = true
+
+[node name="UI" parent="." index="11"]
 script = ExtResource("6_q5vxn")
 
 [node name="Minimap" parent="UI/Main" index="1"]
@@ -286,5 +296,6 @@ text = "Каждый сам
 [connection signal="local_player_created" from="." to="UI" method="_on_local_player_created"]
 [connection signal="timeout" from="HealBoxSpawnTimer" to="." method="_on_heal_box_spawn_timer_timeout"]
 [connection signal="timeout" from="AmmoBoxSpawnTimer" to="." method="_on_ammo_box_spawn_timer_timeout"]
+[connection signal="timeout" from="WeaponBoxSpawnTimer" to="." method="_on_weapon_spawn_timer_timeout"]
 [connection signal="pressed" from="UI/Main/SpectatorMenu/Previous" to="UI" method="previous_player"]
 [connection signal="pressed" from="UI/Main/SpectatorMenu/Next" to="UI" method="next_player"]
