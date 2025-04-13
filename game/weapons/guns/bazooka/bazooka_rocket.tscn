@@ -34,7 +34,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jrmds"]
-radius = 144.0
+radius = 224.0
 
 [node name="BazookaRocket" instance=ExtResource("1_jgst8")]
 script = ExtResource("2_7dcoq")
