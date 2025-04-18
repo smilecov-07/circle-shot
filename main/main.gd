@@ -416,6 +416,8 @@ func _start_load() -> void:
 	
 	_loading_init()
 	await ($LoadingScreen/AnimationPlayer as AnimationPlayer).animation_finished
+	_loading_post_init()
+	await loading_stage_finished
 	
 	_loading_check_server()
 	var success: bool = await loading_stage_finished
@@ -456,7 +458,6 @@ func _loading_init() -> void:
 	print_verbose("Initializing...")
 	_load_status_label.text = "Инициализация..."
 	_load_progress_bar.value = 0.0
-	await get_tree().process_frame
 	
 	if "--list-args" in OS.get_cmdline_args():
 		print("Game specific arguments:")
@@ -491,6 +492,12 @@ file, otherwise it will NOT function.")
 	setup_controls_settings()
 	apply_controls_settings()
 	
+	await get_tree().process_frame
+	print_verbose("Done initializing.")
+	loading_stage_finished.emit(true)
+
+
+func _loading_post_init() -> void:
 	menu_music = AudioStreamPlayer.new()
 	menu_music.name = &"MenuMusic"
 	menu_music.bus = &"Music"
@@ -509,7 +516,7 @@ file, otherwise it will NOT function.")
 			add_child(console)
 	
 	await get_tree().process_frame
-	print_verbose("Done initializing.")
+	print_verbose("Done post initializing.")
 	loading_stage_finished.emit(true)
 
 

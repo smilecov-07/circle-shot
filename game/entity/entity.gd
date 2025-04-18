@@ -94,6 +94,7 @@ var _numbers_vfx_scene: PackedScene = preload("uid://dxiacndmn0qr7")
 func _ready() -> void:
 	current_health = max_health
 	server_position = position
+	reset_physics_interpolation()
 	
 	print_verbose("%s with team %d created." % [name, team])
 
