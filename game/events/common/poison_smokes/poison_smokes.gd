@@ -63,6 +63,9 @@ func _deal_damage(entity: Entity, amount: int) -> int:
 
 
 func _draw_box() -> void:
+	if not Globals.get_setting_bool("minimap"):
+		return
+	
 	if sides & Side.LEFT:
 		var line: Line2D = $Left/MinimapMarker/Line
 		var current_distance: float = -($Left as Node2D).position.x

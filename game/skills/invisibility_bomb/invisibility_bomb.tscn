@@ -4,6 +4,7 @@
 
 [node name="InvisibilityBomb" type="Node2D"]
 script = ExtResource("1_v0q2m")
+duration = 3.0
 use_cooldown = 60
 metadata/_custom_type_script = "uid://c7xh6wcxwv4d4"
 

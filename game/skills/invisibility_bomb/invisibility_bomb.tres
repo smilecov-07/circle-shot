@@ -10,7 +10,7 @@ id = "invisibility"
 stats = Dictionary[String, String]({
 "cooldown": "60",
 "count": "2",
-"duration": "4"
+"duration": "3"
 })
 brief_description = "Делает невидимым"
 usage_text = "{count} исп./{cooldown} с"
