@@ -591,12 +591,12 @@ func _do_broadcast() -> void:
 	data.append(_players.size())
 	data.append(_game.max_players)
 	data.append(selected_event)
-	data.append_array(Globals.get_string("player_name", "Local Server").to_utf8_buffer()) # Имя
+	data.append_array(Globals.get_string("player_name", "Server").to_utf8_buffer()) # Имя
 	for peer: PacketPeerUDP in _udp_peers:
 		peer.put_packet(data)
 	print_verbose("Broadcast of lobby %d done. Data sent: %s (%d/%d), event: %s (ID: %d)." % [
 		_broadcast_lobby_id,
-		Globals.get_string("player_name", "Local Server"),
+		Globals.get_string("player_name", "Server"),
 		_players.size(),
 		_game.max_players,
 		Globals.items_db.events[selected_event].name,
@@ -611,7 +611,7 @@ func _process_console_command(command: PackedStringArray) -> bool:
 	if command[0] == "list-players" and command.size() == 1:
 		recognized = true
 		if not multiplayer.is_server():
-			push_error("This command only available on server.")
+			printerr("This command only available on server.")
 			return recognized
 		print("Connected players:")
 		for id: int in _players:
@@ -625,7 +625,7 @@ func _process_console_command(command: PackedStringArray) -> bool:
 	elif command[0] == "set-environment" and command.size() < 4:
 		recognized = true
 		if not _admin:
-			push_error("This command only available for admins.")
+			printerr("This command only available for admins.")
 			return recognized
 		if command.size() == 2:
 			_request_set_environment.rpc_id(MultiplayerPeer.TARGET_PEER_SERVER, int(command[1]), 0)
@@ -635,13 +635,13 @@ func _process_console_command(command: PackedStringArray) -> bool:
 	elif command[0] == "start" and command.size() == 1:
 		recognized = true
 		if not _admin:
-			push_error("This command only available for admins.")
+			printerr("This command only available for admins.")
 			return recognized
 		_request_start_event.rpc_id(MultiplayerPeer.TARGET_PEER_SERVER)
 	elif (command[0] == "admin" or command[0] == "admin-id") and command.size() < 3:
 		recognized = true
 		if not _admin and not multiplayer.is_server():
-			push_error("This command only available for admins.")
+			printerr("This command only available for admins.")
 			return recognized
 		if command.size() == 1:
 			_request_admin_action.rpc_id(MultiplayerPeer.TARGET_PEER_SERVER,
@@ -657,7 +657,7 @@ func _process_console_command(command: PackedStringArray) -> bool:
 	elif (command[0] == "kick" or command[0] == "kick-id") and command.size() == 2:
 		recognized = true
 		if not _admin:
-			push_error("This command only available for admins.")
+			printerr("This command only available for admins.")
 			return recognized
 		var id: int
 		if command[0] == "kick":
@@ -669,7 +669,7 @@ func _process_console_command(command: PackedStringArray) -> bool:
 	elif (command[0] == "ban" or command[0] == "ban-id") and command.size() == 2:
 		recognized = true
 		if not _admin:
-			push_error("This command only available for admins.")
+			printerr("This command only available for admins.")
 			return recognized
 		var id: int
 		if command[0] == "ban":
@@ -723,7 +723,7 @@ func _on_game_created() -> void:
 	_players.clear()
 	($UDPTimer as Timer).start()
 	($UpdateIPSTimer as Timer).start()
-	_broadcast_lobby_id = Globals.get_string("player_name", "Local Server").hash() \
+	_broadcast_lobby_id = Globals.get_string("player_name", "Server").hash() \
 			* OS.get_unique_id().hash() + OS.get_process_id()
 	_broadcast_lobby_id %= 256
 	if not Globals.headless:

@@ -49,4 +49,4 @@ Players are specified by starting letters of their names (case-sensitive).")
 			recognized = callable.call(command) or recognized
 		
 		if not recognized:
-			push_error('Command "%s" not recognized. Use "help" to see available.' % command_str)
+			printerr('Command "%s" not recognized. Use "help" to see available.' % command_str)

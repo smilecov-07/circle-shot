@@ -32,14 +32,6 @@ script = ExtResource("1_rxssn")
 heal_vfx_scene = ExtResource("2_xk3vx")
 metadata/_custom_type_script = "uid://rhkygnaclmgq"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-
-[node name="Visual" type="Node2D" parent="."]
-physics_interpolation_mode = 2
-
-[node name="Effects" type="Node2D" parent="."]
-physics_interpolation_mode = 2
-
 [node name="Input" type="MultiplayerSynchronizer" parent="."]
 root_path = NodePath(".")
 replication_interval = 0.03
@@ -50,3 +42,11 @@ metadata/_custom_type_script = "uid://ds8wylyjqvikl"
 [node name="Synchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_interval = 0.05
 replication_config = SubResource("SceneReplicationConfig_uh5p1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="Visual" type="Node2D" parent="."]
+physics_interpolation_mode = 2
+
+[node name="Effects" type="Node2D" parent="."]
+physics_interpolation_mode = 2

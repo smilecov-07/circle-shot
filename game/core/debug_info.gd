@@ -2,15 +2,20 @@ extends CanvasLayer
 
 
 var _sent_ticks_msec: int
+var _last_ping: int
 @onready var _ping_label: Label = $PingLabel
 @onready var _ping_timer: Timer = $PingLabel/PingTimer
 @onready var _fps_label: Label = $FPSLabel
 
 
 func _ready() -> void:
-	if not Globals.get_setting_bool("debug_info"):
+	if not Globals.get_setting_bool("debug_info") and not OS.is_debug_build():
 		hide()
 		process_mode = Node.PROCESS_MODE_DISABLED
+		return
+	
+	if OS.is_debug_build():
+		Performance.add_custom_monitor(&"Network/Ping", get.bind(&"_last_ping"))
 
 
 func _process(_delta: float) -> void:
@@ -25,8 +30,9 @@ func _process_ping() -> void:
 @rpc("reliable", "authority", "call_remote", 10)
 func _ping_response() -> void:
 	var ping_msec: int = Time.get_ticks_msec() - _sent_ticks_msec
+	_last_ping = ping_msec
 	_ping_label.text = "Пинг: %d мс" % ping_msec
-	_ping_timer.start(1.0)
+	_ping_timer.start()
 
 
 func _do_ping() -> void:
@@ -43,6 +49,7 @@ func _on_game_joined() -> void:
 func _on_game_closed() -> void:
 	_ping_timer.stop()
 	_ping_label.hide()
+	_last_ping = 0
 
 
 func _on_ping_timer_timeout() -> void:

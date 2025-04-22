@@ -100,7 +100,7 @@ func _process_command(command: PackedStringArray) -> bool:
 		return false
 	if command[0] == "post" and command.size() > 1:
 		if multiplayer.is_server() and Globals.headless:
-			players_names[1] = Globals.get_string("player_name", "Local Server")
+			players_names[1] = Globals.get_string("player_name", "Server")
 		_request_post_message.rpc_id(MultiplayerPeer.TARGET_PEER_SERVER, ' '.join(command.slice(1)))
 		if multiplayer.is_server() and Globals.headless:
 			players_names.erase(1)
