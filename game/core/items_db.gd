@@ -49,11 +49,15 @@ const RARITY_COLORS: Dictionary[Rarity, Color] = {
 	Rarity.SECRET: Color(0.415, 0.415, 0.415),
 	Rarity.SPECIAL: Color(1, 0.492, 0),
 }
+
 ## Массив событий.
 @export var events: Array[EventData]
+
 @export_group("Equip")
 ## Массив скинов.
 @export var skins: Array[SkinData]
+## Массив навыков.
+@export var skills: Array[SkillData]
 ## Массив лёгких оружий.
 @export var weapons_light: Array[WeaponData]
 ## Массив тяжёлых оружий.
@@ -62,8 +66,13 @@ const RARITY_COLORS: Dictionary[Rarity, Color] = {
 @export var weapons_support: Array[WeaponData]
 ## Массив ближних оружий.
 @export var weapons_melee: Array[WeaponData]
-## Массив навыков.
-@export var skills: Array[SkillData]
+
+@export_group("Other", "other_")
+## Массив навыков, недоступных для выбора, но используемых где-то в игре.
+@export var other_skills: Array[SkillData]
+## Массив оружий, недоступных для выбора, но используемых где-то в игре.
+@export var other_weapons: Array[WeaponData]
+
 ## Массив из путей к сценам, которые должны синхронизироваться при появлении, связанных с оружием. 
 ## Автоматически создаётся из [member WeaponData.spawnable_scenes_paths] у всех оружий.
 var spawnable_projectiles_paths: Array[String]
@@ -77,6 +86,8 @@ func initialize() -> void:
 	spawnable_projectiles_paths.clear()
 	spawnable_other_paths.clear()
 	
+	for skill: SkillData in skills:
+		spawnable_other_paths.append_array(skill.spawnable_scenes_paths)
 	for weapon: WeaponData in weapons_light:
 		spawnable_projectiles_paths.append_array(weapon.spawnable_scenes_paths)
 	for weapon: WeaponData in weapons_heavy:
@@ -86,12 +97,16 @@ func initialize() -> void:
 	for weapon: WeaponData in weapons_melee:
 		spawnable_projectiles_paths.append_array(weapon.spawnable_scenes_paths)
 	
-	for skill: SkillData in skills:
+	for skill: SkillData in other_skills:
 		spawnable_other_paths.append_array(skill.spawnable_scenes_paths)
+	for weapon: WeaponData in other_weapons:
+		spawnable_projectiles_paths.append_array(weapon.spawnable_scenes_paths)
 	
 	# Задавание idx_in_db у предметов.
 	for i: int in skins.size():
 		skins[i].idx_in_db = i
+	for i: int in skills.size():
+		skills[i].idx_in_db = i
 	for i: int in weapons_light.size():
 		weapons_light[i].idx_in_db = i
 	for i: int in weapons_heavy.size():
@@ -100,5 +115,8 @@ func initialize() -> void:
 		weapons_support[i].idx_in_db = i
 	for i: int in weapons_melee.size():
 		weapons_melee[i].idx_in_db = i
-	for i: int in skills.size():
-		skills[i].idx_in_db = i
+	
+	for i: int in other_skills.size():
+		other_skills[i].idx_in_db = i
+	for i: int in other_weapons.size():
+		other_weapons[i].idx_in_db = i

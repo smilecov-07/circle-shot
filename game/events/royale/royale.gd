@@ -43,8 +43,6 @@ func _initialize() -> void:
 	_heal_box_points.shuffle()
 	_ammo_box_points.shuffle()
 	_weapon_box_points.shuffle()
-	for path: String in weapon_data.spawnable_scenes_paths:
-		($ProjectilesSpawner as MultiplayerSpawner).add_spawnable_scene(path)
 
 
 func _finish_start() -> void:

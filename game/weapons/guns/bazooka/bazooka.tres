@@ -8,9 +8,9 @@ name = "Базука"
 rarity = 5
 id = "bazooka"
 stats = Dictionary[String, String]({
-"ammo_total": "10",
-"damage": "60",
-"dps": "30",
+"ammo_total": "5",
+"damage": "55",
+"dps": "28",
 "reload_time": "1.3"
 })
 damage_text = "Урон: {damage}"

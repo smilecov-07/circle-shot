@@ -4,6 +4,10 @@
 extends _BASE_
 
 
+#func get_use_args() -> Array:
+_TS_#return []
+
+
 func _use() -> void:
 _TS_pass
 

@@ -35,11 +35,11 @@ func initialize(to_player: Player, skill_data: SkillData) -> void:
 
 
 ## Использует навык.
-func use() -> void:
+func use(args: Array) -> void:
 	player.skill_vars[0] -= 1
 	player.skill_vars[1] = use_cooldown
 	_cooldown_timer = use_cooldown
-	_use()
+	_use.callv(args)
 
 
 ## Приостанавливает откат навыка.
@@ -63,6 +63,12 @@ func can_use() -> bool:
 			and player.skill_vars[1] <= 0 and _can_use()
 
 
+## Метод для переопределения. При получении запроса на использование навыка сервер вызовет
+## [method use_skill] с аргументами из массива, возвращаемого этим методом.
+func get_use_args() -> Array:
+	return []
+
+
 ## Метод для переопределения. Вызывается при инициализации навыка.
 func _initialize() -> void:
 	pass
@@ -70,6 +76,7 @@ func _initialize() -> void:
 
 ## Метод для переопределения. Поместите логику использования навыка сюда.
 ## Создавайте дополнительные объекты (например, ударную волну) только на сервере.
+## Может принимать аргументы, возвращаемые [method get_use_args].
 func _use() -> void:
 	pass
 

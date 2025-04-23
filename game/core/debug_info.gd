@@ -18,6 +18,11 @@ func _ready() -> void:
 		Performance.add_custom_monitor(&"Network/Ping", get.bind(&"_last_ping"))
 
 
+func _exit_tree() -> void:
+	if OS.is_debug_build():
+		Performance.remove_custom_monitor(&"Network/Ping")
+
+
 func _process(_delta: float) -> void:
 	_fps_label.text = "FPS: %d" % Engine.get_frames_per_second()
 

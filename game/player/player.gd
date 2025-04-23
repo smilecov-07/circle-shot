@@ -135,12 +135,12 @@ func add_ammo_to_weapon(type: Weapon.Type, percent: float) -> void:
 ## Использует навык.[br]
 ## [b]Примечание[/b]: этот метод должен вызываться только сервером и только как RPC.
 @rpc("call_local", "reliable", "authority", 5)
-func use_skill() -> void:
+func use_skill(args: Array) -> void:
 	if multiplayer.get_remote_sender_id() != MultiplayerPeer.TARGET_PEER_SERVER:
 		push_error("This method must be called only by server.")
 		return
 	
-	skill.use()
+	skill.use(args)
 	print_verbose("%s used skill." % name)
 
 
@@ -255,9 +255,8 @@ func _request_change_weapon(to: Weapon.Type) -> void:
 	if id != sender_id:
 		push_warning("RPC Sender ID (%d) doesn't match with player ID (%d)." % [sender_id, id])
 		return
-	if to == current_weapon_type or is_disarmed():
-		return
-	if to == Weapon.Type.ADDITIONAL and equip_data[6] == -1:
+	if is_disarmed() or to == current_weapon_type \
+			or to == Weapon.Type.ADDITIONAL and equip_data[6] == -1 or to < 0:
 		return
 	
 	change_weapon.rpc(to)
@@ -289,11 +288,8 @@ func _request_additional_button() -> void:
 	if id != sender_id:
 		push_warning("RPC Sender ID (%d) doesn't match with player ID (%d)." % [sender_id, id])
 		return
-	if (
-			is_disarmed() or not is_instance_valid(current_weapon)
-			or not current_weapon.has_additional_button()
-			or not current_weapon.can_use_additional_button()
-	):
+	if is_disarmed() or not is_instance_valid(current_weapon) \
+			or not current_weapon.can_use_additional_button():
 		return
 	
 	additional_button_weapon.rpc()
@@ -309,11 +305,10 @@ func _request_use_skill() -> void:
 	if id != sender_id:
 		push_warning("RPC Sender ID (%d) doesn't match with player ID (%d)." % [sender_id, id])
 		return
-	
 	if is_disarmed() or not is_instance_valid(skill) or not skill.can_use():
 		return
 	
-	use_skill.rpc()
+	use_skill.rpc(skill.get_use_args())
 
 
 func _set_current_weapon(to: Weapon.Type) -> void:
