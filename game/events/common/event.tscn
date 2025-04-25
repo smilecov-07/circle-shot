@@ -489,6 +489,7 @@ ok_button_text = "Покинуть"
 cancel_button_text = "Остаться"
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
+volume_db = -2.0
 bus = &"Music"
 
 [node name="VictoryMusic" type="AudioStreamPlayer" parent="."]

@@ -10,8 +10,8 @@ id = "fuck_snipers"
 stats = Dictionary[String, String]({
 "ammo_per_load": "4",
 "ammo_total": "12",
-"damage": "49",
-"dps": "41",
+"damage": "48",
+"dps": "40",
 "reload_time": "2.3"
 })
 damage_text = "Урон: {damage}"

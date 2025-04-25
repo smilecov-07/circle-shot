@@ -33,8 +33,16 @@ func reload() -> void:
 _TS_pass
 
 
+#func get_reload_args() -> Array:
+_TS_#return []
+
+
 #func additional_button() -> void:
 _TS_#pass
+
+
+#func get_additional_button_args() -> Array:
+_TS_#return []
 
 
 #func has_additional_button() -> bool:

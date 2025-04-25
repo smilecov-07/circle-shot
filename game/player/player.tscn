@@ -9,15 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://ctqgs3w1llfuf" path="res://game/player/vfx/blood_death_vfx.tscn" id="4_nsvnj"]
 [ext_resource type="Texture2D" uid="uid://bk76lmnl8rml0" path="res://game/events/common/minimap/marker.png" id="8_05q0u"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_i6vnq"]
-radius = 76.0
-
-[sub_resource type="Gradient" id="Gradient_bfbq1"]
-offsets = PackedFloat32Array(0, 0.125, 0.5, 0.75)
-colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
-metadata/_snap_enabled = true
-metadata/_snap_count = 40
-
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_1t0v5"]
 properties/0/path = NodePath(".:direction")
 properties/0/spawn = false
@@ -52,14 +43,25 @@ properties/6/path = NodePath(".:skill_vars")
 properties/6/spawn = true
 properties/6/replication_mode = 0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_i6vnq"]
+radius = 76.0
+
+[sub_resource type="Gradient" id="Gradient_bfbq1"]
+offsets = PackedFloat32Array(0, 0.125, 0.5, 0.75)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+metadata/_snap_enabled = true
+metadata/_snap_count = 40
+
 [node name="Player" groups=["Player"] instance=ExtResource("1_r625f")]
 script = ExtResource("1_d5iul")
 magic = 200.0
 hurt_vfx_scene = ExtResource("3_tk865")
 death_vfx_scene = ExtResource("4_nsvnj")
 
-[node name="CollisionShape2D" parent="." index="0"]
-shape = SubResource("CircleShape2D_i6vnq")
+[node name="Input" parent="." index="0"]
+replication_interval = 0.02
+replication_config = SubResource("SceneReplicationConfig_1t0v5")
+script = ExtResource("3_knbu5")
 
 [node name="Name" type="Node2D" parent="." index="1"]
 z_index = 6
@@ -82,6 +84,20 @@ theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 24
 text = "Player"
 horizontal_alignment = 1
+
+[node name="Synchronizer" parent="." index="2"]
+replication_config = SubResource("SceneReplicationConfig_r6igu")
+
+[node name="CollisionShape2D" parent="." index="3"]
+shape = SubResource("CircleShape2D_i6vnq")
+
+[node name="ControlIndicator" type="Sprite2D" parent="." index="4"]
+visible = false
+z_index = 10
+position = Vector2(0, 96)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("3_fptox")
+offset = Vector2(0, 32)
 
 [node name="Skin" type="Node2D" parent="Visual" index="0"]
 
@@ -110,21 +126,6 @@ gizmo_extents = 32.0
 [node name="Melee" type="Node" parent="Visual/Weapons" index="3"]
 
 [node name="Additional" type="Node" parent="Visual/Weapons" index="4"]
-
-[node name="ControlIndicator" type="Sprite2D" parent="." index="4"]
-visible = false
-z_index = 10
-position = Vector2(0, 96)
-scale = Vector2(0.75, 0.75)
-texture = ExtResource("3_fptox")
-offset = Vector2(0, 32)
-
-[node name="Input" parent="." index="5"]
-replication_config = SubResource("SceneReplicationConfig_1t0v5")
-script = ExtResource("3_knbu5")
-
-[node name="Synchronizer" parent="." index="6"]
-replication_config = SubResource("SceneReplicationConfig_r6igu")
 
 [node name="AudioListener2D" type="AudioListener2D" parent="." index="7"]
 

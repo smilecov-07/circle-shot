@@ -62,7 +62,8 @@ func _ready() -> void:
 			Globals.items_db.weapons_support[equip_data[4]] if equip_data[4] >= 0 else null)
 	set_weapon(Weapon.Type.MELEE,
 			Globals.items_db.weapons_melee[equip_data[5]] if equip_data[5] >= 0 else null)
-	set_weapon(Weapon.Type.ADDITIONAL, null)
+	set_weapon(Weapon.Type.ADDITIONAL,
+			Globals.items_db.other_weapons[equip_data[6]] if equip_data[6] >= 0 else null)
 	
 	($Minimap/MinimapMarker/Visual as CanvasItem).self_modulate = TEAM_COLORS[team]
 	await get_tree().process_frame # Ждём пока заработает VisibleOnScreenNotifier2D
@@ -72,8 +73,8 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	super(delta)
-	if not is_disarmed():
-		visual.scale.x = -1 if player_input.aim_direction.x < 0 else 1
+	if can_turn():
+		visual.scale.x = -1.0 if player_input.aim_direction.x < 0.0 else 1.0
 
 
 ## Меняет оружие на тип [param to].[br]
@@ -93,24 +94,26 @@ func change_weapon(to: Weapon.Type) -> void:
 ## Перезаряжает оружие.[br]
 ## [b]Примечание[/b]: этот метод должен вызываться только сервером и только как RPC.
 @rpc("call_local", "reliable", "authority", 5)
-func reload_weapon() -> void:
+func reload_weapon(current_ammo: int, current_ammo_in_stock: int, args: Array) -> void:
 	if multiplayer.get_remote_sender_id() != MultiplayerPeer.TARGET_PEER_SERVER:
 		push_error("This method must be called only by server.")
 		return
 	
-	current_weapon.reload()
+	current_weapon.ammo = current_ammo
+	current_weapon.ammo_in_stock = current_ammo_in_stock
+	current_weapon.reload.callv(args)
 	print_verbose("%s started reloading." % name)
 
 
 ## Активирует дополнительную кнопку оружия.[br]
 ## [b]Примечание[/b]: этот метод должен вызываться только сервером и только как RPC.
 @rpc("call_local", "reliable", "authority", 5)
-func additional_button_weapon() -> void:
+func additional_button_weapon(args: Array) -> void:
 	if multiplayer.get_remote_sender_id() != MultiplayerPeer.TARGET_PEER_SERVER:
 		push_error("This method must be called only by server.")
 		return
 	
-	current_weapon.additional_button()
+	current_weapon.additional_button.callv(args)
 	print_verbose("%s used additional button." % name)
 
 
@@ -275,7 +278,7 @@ func _request_reload() -> void:
 	if is_disarmed() or not is_instance_valid(current_weapon) or not current_weapon.can_reload():
 		return
 	
-	reload_weapon.rpc()
+	reload_weapon.rpc(current_weapon.get_reload_args())
 
 
 @rpc("any_peer", "reliable", "call_local", 5)
@@ -292,7 +295,7 @@ func _request_additional_button() -> void:
 			or not current_weapon.can_use_additional_button():
 		return
 	
-	additional_button_weapon.rpc()
+	additional_button_weapon.rpc(current_weapon.get_additional_button_args())
 
 
 @rpc("any_peer", "reliable", "call_local", 5)

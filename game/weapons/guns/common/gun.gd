@@ -74,7 +74,7 @@ func _process(_delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	if multiplayer.is_server() and can_shoot() and player.player_input.shooting \
 			and ammo >= ammo_per_shot and _shoot_timer <= 0.0:
-		shoot.rpc()
+		shoot()
 	_shoot_timer -= delta
 	if player.is_local() and can_reload() and ammo < ammo_per_shot:
 		player.try_reload_weapon()
@@ -92,7 +92,7 @@ func _make_current() -> void:
 	
 	var anim_name: StringName = await _anim.animation_finished
 	if anim_name != &"Equip":
-		unlock_shooting()
+		unblock_shooting()
 		return
 	
 	_anim.play(&"PostEquip")
@@ -100,7 +100,7 @@ func _make_current() -> void:
 	_turn_tween.tween_property(self, ^":rotation", _calculate_aim_angle(), to_aim_time)
 	await _turn_tween.finished
 	
-	unlock_shooting()
+	unblock_shooting()
 
 
 func _unmake_current() -> void:
@@ -168,7 +168,7 @@ func reload() -> void:
 	
 	var anim_name: StringName = await _anim.animation_finished
 	if anim_name != &"Reload":
-		unlock_shooting()
+		unblock_shooting()
 		return
 	
 	_anim.play(&"PostReload")
@@ -181,7 +181,7 @@ func reload() -> void:
 	player.ammo_text_updated.emit(get_ammo_text())
 	
 	await _turn_tween.finished
-	unlock_shooting()
+	unblock_shooting()
 
 
 func _calculate_recoil() -> float:

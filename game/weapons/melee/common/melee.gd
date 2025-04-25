@@ -26,15 +26,18 @@ func _process(_delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	if multiplayer.is_server() and can_shoot() \
 			and player.player_input.shooting and _shoot_timer <= 0.0:
-		shoot.rpc()
+		shoot([player.player_input.aim_direction])
 	_shoot_timer -= delta
 
 
-func _shoot() -> void:
+func _shoot(direction := Vector2.RIGHT) -> void:
 	_shoot_timer = shoot_interval
 	_anim.play(&"Attack")
 	_anim.seek(0.0)
 	block_shooting()
+	player.block_turning()
+	player.visual.scale.x = -1.0 if direction.x < 0.0 else 1.0
+	rotation = _calculate_aim_angle(direction)
 	
 	if multiplayer.is_server():
 		_attack.damage_multiplier = player.damage_multiplier
@@ -43,7 +46,8 @@ func _shoot() -> void:
 		_attack.clear_exceptions()
 	
 	await _anim.animation_finished
-	unlock_shooting()
+	unblock_shooting()
+	player.unblock_turning()
 
 
 func _make_current() -> void:
@@ -54,7 +58,7 @@ func _make_current() -> void:
 	
 	var anim_name: StringName = await _anim.animation_finished
 	if anim_name != &"Equip":
-		unlock_shooting()
+		unblock_shooting()
 		return
 	
 	_anim.play(&"PostEquip")
@@ -62,7 +66,7 @@ func _make_current() -> void:
 	_turn_tween.tween_property(self, ^":rotation", _calculate_aim_angle(), to_aim_time)
 	await _turn_tween.finished
 	
-	unlock_shooting()
+	unblock_shooting()
 
 
 func _unmake_current() -> void:

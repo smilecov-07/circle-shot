@@ -20,7 +20,7 @@ func _physics_process(delta: float) -> void:
 
 
 func get_use_args() -> Array:
-	return [_roll_direction.normalized()]
+	return [Vector2.ZERO if player.is_immobile() else _roll_direction.normalized()]
 
 
 func _initialize() -> void:

@@ -123,6 +123,7 @@ func spawn_player(id: int) -> void:
 	if not was_started:
 		player.make_disarmed()
 		player.make_immobile()
+		player.block_turning()
 
 
 ## Задаёт локального игрока.
@@ -137,6 +138,7 @@ func set_local_player(player: Player) -> void:
 		if not multiplayer.is_server():
 			local_player.make_disarmed()
 			local_player.make_immobile()
+			local_player.block_turning()
 		var offset: float = (Time.get_ticks_msec() - created_ticks_msec) / 1000.0
 		($Camera as SmartCamera).pan_to_target(player, maxf(4.0 - offset, 1.0))
 		_event_ui.seek_intro(offset)
@@ -171,6 +173,20 @@ func cleanup() -> void:
 		other.queue_free()
 
 
+## Останавливает, обезоруживает и делает неуязвимыми всех игроков.[br]
+## [b]Примечание[/b]: этот метод должен вызываться только сервером и только как RPC.
+@rpc("reliable", "call_local", "authority", 3)
+func freeze_players() -> void:
+	if multiplayer.get_remote_sender_id() != MultiplayerPeer.TARGET_PEER_SERVER:
+		push_error("This method must be called only by server.")
+		return
+	
+	get_tree().call_group(&"Player", &"make_disarmed")
+	get_tree().call_group(&"Player", &"make_immobile")
+	get_tree().call_group(&"Player", &"make_immune")
+	get_tree().call_group(&"Player", &"block_turning")
+
+
 ## Заканчивает событие и возвращает в лобби.[br]
 ## [b]Примечание[/b]: этот метод должен вызываться только сервером и только как RPC.
 @rpc("call_local", "reliable", "authority", 3)
@@ -202,9 +218,11 @@ func _start() -> void:
 	if multiplayer.is_server():
 		get_tree().call_group(&"Player", &"unmake_disarmed")
 		get_tree().call_group(&"Player", &"unmake_immobile")
+		get_tree().call_group(&"Player", &"unblock_turning")
 	else:
 		local_player.unmake_disarmed()
 		local_player.unmake_immobile()
+		local_player.unblock_turning()
 	started.emit()
 	was_started = true
 	
@@ -245,7 +263,8 @@ func _setup() -> void:
 		spawn_player(player_id)
 	_finish_setup()
 	
-	await get_tree().create_timer(5.0, false).timeout
+	await get_tree().create_timer(5.0 - (Time.get_ticks_msec() - created_ticks_msec)
+			/ 1000.0, false).timeout
 	_start.rpc()
 
 
@@ -335,6 +354,7 @@ func _on_player_killed(who: int, by: int) -> void:
 func _on_player_tree_exiting(player: Player) -> void:
 	if not player.id in _players_names:
 		return
+	_players.erase(player.id)
 	_players_skill_vars[player.id] = player.skill_vars
 
 

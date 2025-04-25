@@ -53,7 +53,7 @@ func _process(_delta: float) -> void:
 func _physics_process(_delta: float) -> void:
 	if can_shoot() and multiplayer.is_server() and player.player_input.shooting \
 			and ammo_in_stock > 0 and not _reloading:
-		shoot.rpc()
+		shoot([player.player_input.aim_direction])
 
 
 func _make_current() -> void:
@@ -62,7 +62,7 @@ func _make_current() -> void:
 		_anim.play(&"Equip")
 		block_shooting()
 		await _anim.animation_finished
-		unlock_shooting()
+		unblock_shooting()
 	else:
 		hide()
 
@@ -72,13 +72,15 @@ func _unmake_current() -> void:
 	_anim.advance(0.01)
 
 
-func _shoot() -> void:
+func _shoot(throw_direction := Vector2.ZERO) -> void:
 	block_shooting()
+	player.block_turning()
+	player.visual.scale.x = -1.0 if throw_direction.x < 0.0 else 1.0
 	_anim.play(&"Throw")
-	var throw_direction: Vector2 = player.player_input.aim_direction
 	var anim_name: StringName = await _anim.animation_finished
 	if anim_name != &"Throw":
-		unlock_shooting()
+		player.unblock_turning()
+		unblock_shooting()
 		return
 	
 	var animation: Animation = _anim.get_animation(&"PostThrow")
@@ -86,8 +88,9 @@ func _shoot() -> void:
 	animation.track_set_key_value(0, 1, to_local(_throw_point.global_position))
 	_anim.play(&"PostThrow")
 	anim_name = await _anim.animation_finished
+	player.unblock_turning()
 	if anim_name != &"PostThrow":
-		unlock_shooting()
+		unblock_shooting()
 		return
 	
 	ammo_in_stock -= 1
@@ -125,5 +128,5 @@ func _customize_projectile(_projectile: GrenadeProjectile) -> void:
 
 func _on_throw_timer_timeout() -> void:
 	_reloading = false
-	unlock_shooting()
+	unblock_shooting()
 	_make_current()

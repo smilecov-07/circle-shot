@@ -146,6 +146,7 @@ func _check_winner() -> void:
 	var winner_id: int = _alive_players[0]
 	var winner_name: String = _players_names[winner_id]
 	_royale_ui.show_winner.rpc(winner_id, winner_name)
+	freeze_players.rpc()
 	($HealBoxSpawnTimer as Timer).stop()
 	($AmmoBoxSpawnTimer as Timer).stop()
 	($WeaponBoxSpawnTimer as Timer).stop()

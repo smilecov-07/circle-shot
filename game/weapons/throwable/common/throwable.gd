@@ -53,7 +53,7 @@ func _process(_delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	if multiplayer.is_server() and can_shoot() and player.player_input.shooting \
 			and ammo > 0 and _throw_timer <= 0.0:
-		shoot.rpc()
+		shoot()
 	_throw_timer -= delta
 	if player.is_local() and can_reload() and ammo <= 0:
 		player.try_reload_weapon()
@@ -67,6 +67,13 @@ func _initialize() -> void:
 
 
 func _shoot() -> void:
+	# Синхронизуем боеприпасы с сервером
+	if not multiplayer.is_server():
+		var idx: int = 0
+		for child: Node2D in _ammo_parent.get_children():
+			child.visible = idx < ammo
+			idx += 1
+	
 	ammo -= 1
 	_throw_timer = throw_interval
 	
@@ -81,6 +88,7 @@ func _shoot() -> void:
 		ammo += 1
 		return
 	
+	player.block_turning()
 	var angle: float = player.player_input.aim_direction.angle()
 	var post_throw_anim: Animation = current_ammo_anim.get_animation(&"PostThrow")
 	post_throw_anim.track_set_key_value(0, 0, current_ammo.to_local(_throw_pivot.global_position))
@@ -89,6 +97,7 @@ func _shoot() -> void:
 	post_throw_anim.track_set_key_value(1, 1, _calculate_aim_angle() - parent_angle)
 	current_ammo_anim.play(&"PostThrow")
 	anim_name = await current_ammo_anim.animation_finished
+	player.unblock_turning()
 	if anim_name != &"PostThrow":
 		ammo += 1
 		return
@@ -102,7 +111,7 @@ func _make_current() -> void:
 	_anim.play(&"Equip")
 	block_shooting()
 	await _anim.animation_finished
-	unlock_shooting()
+	unblock_shooting()
 
 
 func _unmake_current() -> void:
@@ -138,7 +147,7 @@ func reload() -> void:
 			_reloading = false
 			_interrupt_reload = false
 			current_ammo.hide()
-			unlock_shooting()
+			unblock_shooting()
 			return
 		
 		_turn_tween = create_tween()
@@ -153,7 +162,7 @@ func reload() -> void:
 	
 	_reloading = false
 	_interrupt_reload = false
-	unlock_shooting()
+	unblock_shooting()
 
 
 func _create_projectile(angle: float) -> void:

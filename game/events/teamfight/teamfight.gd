@@ -84,17 +84,6 @@ func _update_time(remained: int) -> void:
 	_teamfight_ui.set_time(remained)
 
 
-@rpc("reliable", "call_local", "authority", 3)
-func _freeze_players() -> void:
-	if multiplayer.get_remote_sender_id() != MultiplayerPeer.TARGET_PEER_SERVER:
-		push_error("This method must be called only by server.")
-		return
-	
-	get_tree().call_group(&"Player", &"make_disarmed")
-	get_tree().call_group(&"Player", &"make_immobile")
-	get_tree().call_group(&"Player", &"make_immune")
-
-
 func _respawn_player(id: int) -> void:
 	await get_tree().create_timer(comeback_time, false).timeout
 	if _time_remained > 0 and id in _players_names:
@@ -112,7 +101,7 @@ func _determine_winner() -> void:
 		_teamfight_ui.show_winner.rpc(1)
 	else:
 		_teamfight_ui.show_winner.rpc(-1)
-	_freeze_players.rpc()
+	freeze_players.rpc()
 	await get_tree().create_timer(6.5).timeout
 	cleanup()
 	await get_tree().create_timer(0.5).timeout

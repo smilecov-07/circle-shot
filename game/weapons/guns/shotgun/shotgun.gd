@@ -21,7 +21,7 @@ func reload() -> void:
 	if anim_name != &"StartReload":
 		_reloading = false
 		_interrupt_reload = false
-		unlock_shooting()
+		unblock_shooting()
 		return
 	
 	while ammo != ammo_per_load and ammo_in_stock > 0:
@@ -30,7 +30,7 @@ func reload() -> void:
 		if anim_name != &"Reload":
 			_reloading = false
 			_interrupt_reload = false
-			unlock_shooting()
+			unblock_shooting()
 			return
 		
 		ammo += 1
@@ -45,7 +45,7 @@ func reload() -> void:
 	_reloading = false
 	_interrupt_reload = false
 	if anim_name != &"EndReload":
-		unlock_shooting()
+		unblock_shooting()
 		return
 	
 	_anim.play(&"PostReload")
@@ -54,7 +54,7 @@ func reload() -> void:
 	_turn_tween.tween_property(self, ^":rotation", _calculate_aim_angle(), to_aim_time)
 	await _turn_tween.finished
 	
-	unlock_shooting()
+	unblock_shooting()
 
 
 func _create_projectile() -> void:

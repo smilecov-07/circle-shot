@@ -81,6 +81,7 @@ var change_health_modifiers: Array[Callable]
 var _immune_counter: int = 0
 var _immobile_counter: int = 0
 var _disarmed_counter: int = 0
+var _blocked_turning_counter: int = 0
 var _numbers_vfx_scene: PackedScene = preload("uid://dxiacndmn0qr7")
 
 ## Узел, содержащий ввод сущности.
@@ -113,8 +114,8 @@ func _physics_process(delta: float) -> void:
 		position = position.lerp(server_position,
 				clampf(position.distance_to(server_position) / magic * delta, 0.0, 1.0))
 	
-	if not is_zero_approx(self_velocity.x):
-		visual.scale.x = -1 if self_velocity.x < 0 else 1
+	if not is_zero_approx(self_velocity.x) and can_turn():
+		visual.scale.x = -1.0 if self_velocity.x < 0.0 else 1.0
 
 
 ## Телепортирует сущность в точку [param destination].
@@ -380,6 +381,21 @@ func unmake_disarmed() -> void:
 ## Возвращает [code]true[/code], если сущность в данный момент обезоружена.
 func is_disarmed() -> bool:
 	return _disarmed_counter > 0
+
+
+## Блокирует поворачивание сущности в направление движения/прицеливания.
+func block_turning() -> void:
+	_blocked_turning_counter += 1
+
+
+## Возвращает сущности возможность поворачиваться.
+func unblock_turning() -> void:
+	_blocked_turning_counter -= 1
+
+
+## Возвращает [code]true[/code], если сущность в данный момент не может поворачиваться.
+func can_turn() -> bool:
+	return _blocked_turning_counter <= 0
 #endregion
 
 

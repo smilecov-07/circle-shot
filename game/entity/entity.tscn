@@ -40,7 +40,7 @@ script = ExtResource("2_1a3pf")
 metadata/_custom_type_script = "uid://ds8wylyjqvikl"
 
 [node name="Synchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_interval = 0.05
+replication_interval = 0.04
 replication_config = SubResource("SceneReplicationConfig_uh5p1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

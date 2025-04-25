@@ -47,15 +47,12 @@ func _ready() -> void:
 
 
 ## Производит выстрел.[br]
-## [b]Примечание[/b]: этот метод должен вызываться только сервером и только как RPC.
-@rpc("call_local", "reliable", "authority", 5)
-func shoot() -> void:
-	if multiplayer.get_remote_sender_id() != MultiplayerPeer.TARGET_PEER_SERVER:
-		push_error("This method must be called only by server.")
+## [b]Примечание[/b]: этот метод должен вызываться только на сервере.
+func shoot(args := []) -> void:
+	if not multiplayer.is_server():
+		push_error("Unexpected call on client.")
 		return
-	@warning_ignore("redundant_await") # кто знает, что написано в дочерних классах
-	await _shoot()
-	player.ammo_text_updated.emit(get_ammo_text())
+	_do_shoot.rpc(ammo, args)
 
 
 ## Инициализирует оружие игроком [param to_player] и данными [param weapon_data].
@@ -78,9 +75,9 @@ func make_current() -> void:
 ## Убирает оружие.
 func unmake_current() -> void:
 	_unmake_current()
-	hide()
-	process_mode = PROCESS_MODE_DISABLED
 	player.speed_multiplier /= speed_multiplier_when_current
+	process_mode = PROCESS_MODE_DISABLED
+	hide()
 
 
 ## Блокирует стрельбу.
@@ -89,7 +86,7 @@ func block_shooting() -> void:
 
 
 ## Разблокирует стрельбу.
-func unlock_shooting() -> void:
+func unblock_shooting() -> void:
 	_blocked_shooting_counter -= 1
 
 
@@ -99,8 +96,15 @@ func can_shoot() -> bool:
 
 
 ## Метод для переопределения. Перезаряжает оружие. Вызывается объектом игрока.
+## Может принимать аргументы, возвращаемые [method get_reload_args].
 func reload() -> void:
 	pass
+
+
+## Метод для переопределения. При получении запроса на перезарядку сервер вызовет
+## [method reload] с аргументами из массива, возвращаемого этим методом.
+func get_reload_args() -> Array:
+	return []
 
 
 ## Возвращает [code]true[/code], если оружие можно перезарядить.
@@ -109,6 +113,7 @@ func can_reload() -> bool:
 
 
 ## Метод для переопределения. Дополнительная кнопка оружия. Вызывается объектом игрока.
+## Может принимать аргументы, возвращаемые [method get_additional_button_args].
 func additional_button() -> void:
 	pass
 
@@ -116,6 +121,12 @@ func additional_button() -> void:
 ## Метод для переопределения. Возвращает [code]true[/code], если оружие имеет дополнительную кнопку.
 func has_additional_button() -> bool:
 	return false
+
+
+## Метод для переопределения. При получении запроса на использование дополнительной кнопки сервер
+## вызовет [method additional_button] с аргументами из массива, возвращаемого этим методом.
+func get_additional_button_args() -> Array:
+	return []
 
 
 ## Возвращает [code]true[/code], если оружие может использовать дополнительную кнопку.
@@ -130,8 +141,17 @@ func get_ammo_text() -> String:
 	return "%d/%d" % [ammo, ammo_in_stock]
 
 
-func _calculate_aim_angle() -> float:
-	var aim_direction: Vector2 = player.player_input.aim_direction
+@rpc("call_local", "reliable", "authority", 5)
+func _do_shoot(current_ammo: int, args := []) -> void:
+	if multiplayer.get_remote_sender_id() != MultiplayerPeer.TARGET_PEER_SERVER:
+		push_error("This method must be called only by server.")
+		return
+	ammo = current_ammo
+	await _shoot.callv(args)
+	player.ammo_text_updated.emit(get_ammo_text())
+
+
+func _calculate_aim_angle(aim_direction: Vector2 = player.player_input.aim_direction) -> float:
 	aim_direction.x = absf(aim_direction.x)
 	return aim_direction.angle()
 

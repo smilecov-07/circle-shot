@@ -112,6 +112,7 @@ func _end_round(win_team: int, winner: int, ends := false) -> void:
 	get_tree().call_group(&"Player", &"make_disarmed")
 	get_tree().call_group(&"Player", &"make_immobile")
 	get_tree().call_group(&"Player", &"make_immune")
+	get_tree().call_group(&"Player", &"block_turning")
 	
 	round_ended.emit(win_team)
 	if not multiplayer.is_server():
