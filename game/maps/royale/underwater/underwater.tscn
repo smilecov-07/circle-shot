@@ -50,7 +50,7 @@ position = Vector2(-5514, 1713)
 position = Vector2(-4761, -1889)
 
 [node name="9" parent="SpawnPoints" index="9"]
-position = Vector2(0, 0)
+position = Vector2(-87, 66)
 
 [node name="0" parent="HealPoints" index="0"]
 position = Vector2(-1815, -1018)

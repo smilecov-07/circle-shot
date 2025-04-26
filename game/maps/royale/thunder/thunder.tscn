@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://butikarflm2dk"]
+
+[ext_resource type="PackedScene" uid="uid://c4157ddj75w7o" path="res://game/events/royale/base_map.tscn" id="1_febxg"]
+[ext_resource type="AudioStream" uid="uid://b65w8s4k3i8wn" path="res://game/maps/royale/thunder/music.ogg" id="2_avvsy"]
+[ext_resource type="TileSet" uid="uid://5df5vr4j0tf" path="res://game/maps/royale/thunder/tile_set.tres" id="2_csrsn"]
+
+[node name="Map" instance=ExtResource("1_febxg")]
+custom_tracks = Array[AudioStream]([ExtResource("2_avvsy")])
+
+[node name="TileMapLayers" type="Node2D" parent="." index="5"]
+
+[node name="Floor" type="TileMapLayer" parent="TileMapLayers" index="0"]
+z_index = -5
+tile_set = ExtResource("2_csrsn")
+
+[node name="Decorations" type="TileMapLayer" parent="TileMapLayers" index="1"]
+z_index = -5
+tile_set = ExtResource("2_csrsn")
+
+[node name="Walls" type="TileMapLayer" parent="TileMapLayers" index="2"]
+tile_set = ExtResource("2_csrsn")
