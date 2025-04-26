@@ -442,7 +442,7 @@ func _start_load() -> void:
 	await loading_stage_finished
 	
 	print_verbose("Loading completed. Game version: %s" % Globals.version)
-	print_verbose("Use --list-args to see game specific arguments.")
+	print_verbose('Run game with "++ --help" to see game specific arguments.')
 	_loading_open_menu()
 	await loading_stage_finished
 	$LoadingScreen.queue_free()
@@ -459,12 +459,15 @@ func _loading_init() -> void:
 	_load_status_label.text = "Инициализация..."
 	_load_progress_bar.value = 0.0
 	
-	if "--list-args" in OS.get_cmdline_args():
+	if "--help" in OS.get_cmdline_user_args():
 		print("Game specific arguments:")
+		print()
 		print("--upnp: Enables UPnP regardless of current settings.")
 		print("--disable-update-check: Disables update check and hides settings related to it.")
 		print("--console: Enables built-in console.")
 		print("--reset-window: Don't restore saved window state.")
+		print()
+		print("These arguments should be written after ++ or -- separator.")
 		print("You always can use engine arguments, such as --headless and --verbose.")
 		if OS.get_name() == "Windows":
 			print("Note: to use --console on Windows, you must launch game from *.console.exe \
@@ -477,7 +480,7 @@ file, otherwise it will NOT function.")
 	
 	_update_window_stretch_aspect()
 	get_window().size_changed.connect(_update_window_stretch_aspect)
-	if not "--reset-window" in OS.get_cmdline_args():
+	if not "--reset-window" in OS.get_cmdline_user_args():
 		get_window().size.x = Globals.get_int("window_size_x", get_window().size.x)
 		get_window().size.y = Globals.get_int("window_size_y", get_window().size.y)
 		get_window().position.x = Globals.get_int("window_pos_x", get_window().position.x)
@@ -506,7 +509,7 @@ func _loading_post_init() -> void:
 	add_child(menu_music)
 	move_child(menu_music, 0)
 	
-	if "--console" in OS.get_cmdline_args():
+	if "--console" in OS.get_cmdline_user_args():
 		if not OS.has_feature("pc"):
 			push_error("Console is only supported on PC platforms.")
 		else:
@@ -746,7 +749,7 @@ func _loading_preload_resources() -> void:
 
 
 func _loading_upnp() -> void:
-	if not Globals.get_setting_bool("upnp") and not "--upnp" in OS.get_cmdline_args():
+	if not Globals.get_setting_bool("upnp") and not "--upnp" in OS.get_cmdline_user_args():
 		print_verbose("UPnP disabled.")
 		loading_stage_finished.emit.call_deferred(false)
 		return

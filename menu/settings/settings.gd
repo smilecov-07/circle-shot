@@ -81,7 +81,7 @@ func _ready() -> void:
 			%LoadedTracks.add_child(label)
 	
 	# Скрытие настроек
-	if "--upnp" in OS.get_cmdline_args():
+	if "--upnp" in OS.get_cmdline_user_args():
 		(%UPNPCheck.get_parent().get_parent() as CanvasItem).hide()
 	if not OS.has_feature("pc"):
 		(%FullscreenCheck.get_parent().get_parent() as CanvasItem).hide()
@@ -90,7 +90,7 @@ func _ready() -> void:
 	if OS.has_feature("editor"):
 		(%PatchesCheck.get_parent().get_parent() as CanvasItem).hide()
 		(%ClearPatches.get_parent() as CanvasItem).hide()
-	if "--disable-update-check" in OS.get_cmdline_args():
+	if "--disable-update-check" in OS.get_cmdline_user_args():
 		(%UpdatesCheck.get_parent().get_parent() as CanvasItem).hide()
 		(%BetasCheck.get_parent().get_parent() as CanvasItem).hide()
 

@@ -70,7 +70,7 @@ func quit(restart := false, args := PackedStringArray()) -> void:
 		for arg: String in all_args:
 			if not arg in user_args:
 				args.append(arg)
-		args.append("--")
+		args.append("++")
 		args.append_array(user_args)
 	if main and main.console:
 		if restart:

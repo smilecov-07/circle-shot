@@ -31,7 +31,7 @@ func check_updates() -> void:
 		if not betas_checked or Globals.get_setting_bool("check_betas"):
 			print_verbose("Updates check interrupted: already checked.")
 			return
-	if "--disable-update-check" in OS.get_cmdline_args() \
+	if "--disable-update-check" in OS.get_cmdline_user_args() \
 			or not Globals.get_setting_bool("check_updates"):
 		print_verbose("Updates check disabled.")
 		return

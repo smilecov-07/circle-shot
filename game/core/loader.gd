@@ -115,17 +115,29 @@ func preload_equip(skins: Array[int], skills: Array[int],
 	var result: Array[PackedScene]
 	
 	for idx: int in skins:
-		_requested_paths.append(Globals.items_db.skins[idx].scene_path)
+		var path: String = Globals.items_db.skins[idx].scene_path
+		if not path in _requested_paths:
+			_requested_paths.append(path)
 	for idx: int in skills:
-		_requested_paths.append(Globals.items_db.skills[idx].scene_path)
+		var path: String = Globals.items_db.skills[idx].scene_path
+		if not path in _requested_paths:
+			_requested_paths.append(path)
 	for idx: int in light_weapons:
-		_requested_paths.append(Globals.items_db.weapons_light[idx].scene_path)
+		var path: String = Globals.items_db.weapons_light[idx].scene_path
+		if not path in _requested_paths:
+			_requested_paths.append(path)
 	for idx: int in heavy_weapons:
-		_requested_paths.append(Globals.items_db.weapons_heavy[idx].scene_path)
+		var path: String = Globals.items_db.weapons_heavy[idx].scene_path
+		if not path in _requested_paths:
+			_requested_paths.append(path)
 	for idx: int in support_weapons:
-		_requested_paths.append(Globals.items_db.weapons_support[idx].scene_path)
+		var path: String = Globals.items_db.weapons_support[idx].scene_path
+		if not path in _requested_paths:
+			_requested_paths.append(path)
 	for idx: int in melee_weapons:
-		_requested_paths.append(Globals.items_db.weapons_melee[idx].scene_path)
+		var path: String = Globals.items_db.weapons_melee[idx].scene_path
+		if not path in _requested_paths:
+			_requested_paths.append(path)
 	
 	for path: String in _requested_paths:
 		print_verbose("Requesting load for equip %s." % path)

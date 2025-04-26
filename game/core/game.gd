@@ -261,6 +261,10 @@ func _send_player_data(player_name: String, equip_data: Array[int]) -> void:
 		return
 	
 	var sender_id: int = multiplayer.get_remote_sender_id()
+	if not sender_id in _players_not_ready:
+		push_warning("Equip data from client %d already received." % sender_id)
+		return
+	
 	player_name = validate_player_name(player_name, sender_id)
 	if equip_data.size() != 6:
 		push_warning("Client %d has invalid equip data size: %d." % [
