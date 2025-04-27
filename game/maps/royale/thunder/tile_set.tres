@@ -1,8 +1,9 @@
-[gd_resource type="TileSet" load_steps=7 format=3 uid="uid://5df5vr4j0tf"]
+[gd_resource type="TileSet" load_steps=9 format=3 uid="uid://5df5vr4j0tf"]
 
 [ext_resource type="Texture2D" uid="uid://bgllp5p4px4rj" path="res://game/maps/royale/thunder/textures/dirt_tiles.png" id="1_j7b2w"]
 [ext_resource type="Texture2D" uid="uid://dg8qryyx7pcxn" path="res://game/maps/royale/thunder/textures/obstacles_tiles.png" id="2_r73i7"]
 [ext_resource type="Texture2D" uid="uid://b1i86lp6nnyv8" path="res://game/maps/royale/thunder/textures/stone_tiles.png" id="3_fs5ih"]
+[ext_resource type="Texture2D" uid="uid://dk74wh4235r2i" path="res://game/maps/royale/thunder/textures/puddles_tiles.png" id="4_r73i7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2d1b2"]
 texture = ExtResource("1_j7b2w")
@@ -144,6 +145,24 @@ texture_region_size = Vector2i(160, 160)
 1:1/0 = 0
 2:1/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fs5ih"]
+texture = ExtResource("4_r73i7")
+texture_region_size = Vector2i(160, 160)
+0:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+0:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+1:0/size_in_atlas = Vector2i(2, 2)
+1:0/0 = 0
+3:0/size_in_atlas = Vector2i(2, 2)
+3:0/0 = 0
+
 [resource]
 tile_size = Vector2i(160, 160)
 physics_layer_0/collision_layer = 1
@@ -160,3 +179,4 @@ terrain_set_0/terrain_1/color = Color(0, 1, 0, 1)
 sources/0 = SubResource("TileSetAtlasSource_2d1b2")
 sources/1 = SubResource("TileSetAtlasSource_28qai")
 sources/2 = SubResource("TileSetAtlasSource_7i01d")
+sources/3 = SubResource("TileSetAtlasSource_fs5ih")
