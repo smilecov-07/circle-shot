@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SkinData" load_steps=2 format=3 uid="uid://cijq7830afnbd"]
+
+[ext_resource type="Script" uid="uid://d6lhqjoo2iuf" path="res://game/player/equip/skin_data.gd" id="1_ogxu7"]
+
+[resource]
+script = ExtResource("1_ogxu7")
+name = "Тралалело тралала"
+brief_description = "Мозг не выдерживает..."
+rarity = 2
+id = "brainrot"
+scene_path = "uid://7qxiioask0vw"
+image_path = "uid://c1ftglonle7ic"
+metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

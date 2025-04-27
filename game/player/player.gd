@@ -278,7 +278,8 @@ func _request_reload() -> void:
 	if is_disarmed() or not is_instance_valid(current_weapon) or not current_weapon.can_reload():
 		return
 	
-	reload_weapon.rpc(current_weapon.get_reload_args())
+	reload_weapon.rpc(current_weapon.ammo, current_weapon.ammo_in_stock,
+			current_weapon.get_reload_args())
 
 
 @rpc("any_peer", "reliable", "call_local", 5)
