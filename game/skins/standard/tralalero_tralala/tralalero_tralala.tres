@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_ogxu7")
-name = "Тралалело тралала"
+name = "Тралалеро тралала"
 brief_description = "Мозг не выдерживает..."
 rarity = 2
 id = "brainrot"

@@ -38,7 +38,7 @@ radius = 200.0
 
 [node name="BazookaRocket" instance=ExtResource("1_jgst8")]
 script = ExtResource("2_7dcoq")
-speed = 3000.0
+speed = 2600.0
 hit_vfx_scene = ExtResource("3_jrmds")
 
 [node name="ShapeDetector" type="ShapeCast2D" parent="." index="0"]

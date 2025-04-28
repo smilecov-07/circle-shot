@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3 uid="uid://b325dgmxvaeo1"]
+
+[ext_resource type="Script" uid="uid://55g8njvkg07g" path="res://game/player/equip/weapon_data.gd" id="1_uyoe6"]
+
+[resource]
+script = ExtResource("1_uyoe6")
+name = "Шампуры"
+rarity = 2
+id = "skewers"
+stats = Dictionary[String, String]({
+"ammo_total": "Не ограничено",
+"damage": "30/25/45",
+"dps": "83"
+})
+damage_text = "Урон/с: {dps}"
+ammo_text = "{ammo_total}"
+description = "Урон/с: [color=red]{dps}[/color]
+Урон/атака: [color=red]{damage}[/color]
+[color=deep_sky_blue]Атакуют комбо-ударами[/color]
+
+Боеприпасы: [color=blue]{ammo_per_load}/{ammo_total}[/color]
+
+Пара шампуров, на которые можно насаживать не только шашлык, но и противников."
+scene_path = "uid://s0jt56dbe0kn"
+image_path = "uid://cn4fb8vl4k33j"
+spawnable_scenes_paths = Array[String]([])
+metadata/_custom_type_script = "uid://55g8njvkg07g"
