@@ -129,8 +129,8 @@ func create(port: int = DEFAULT_PORT) -> void:
 
 ## Пытается подключиться к серверу по [param ip].
 func join(ip: String, port: int = DEFAULT_PORT) -> void:
-	if not ip.is_valid_ip_address():
-		show_error("Введён некорректный IP-адрес!")
+	if not ip.is_valid_ip_address() and ip.count('.') == 0:
+		show_error("Введён некорректный IP или адрес сервера!")
 		return
 	if state != State.CLOSED:
 		push_error("Can't join to server: game isn't closed.")

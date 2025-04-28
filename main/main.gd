@@ -23,7 +23,7 @@ enum EncodedInputEventType {
 	MOUSE_BUTTON = 1,
 }
 ## URL сервера с данными для игры (патчами, предложениями в магазине, ...).
-const SERVER_URL := "https://diamondstudiogames.github.io/circle-shot"
+const SERVER_URL := "https://diamondstudiogames.ru/circle-shot"
 ## Максимальное отношение ширины к высоте, превысив которое содержимое окна начнёт обрезаться.
 const MAX_ASPECT_RATIO := 2.34
 ## Минимальное отношение ширины к высоте, пренизив которое содержимое окна начнёт обрезаться.
