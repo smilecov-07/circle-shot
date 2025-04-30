@@ -80,6 +80,13 @@ AntiFire="Can extinguish fire. Must be Area2D."
 common/default_scroll_deadzone=24
 theme/custom="res://menu/theme/theme.tres"
 
+[importer_defaults]
+
+wav={
+&"edit/normalize": true,
+&"force/mono": true
+}
+
 [input]
 
 move_left={

@@ -15,8 +15,6 @@ extends Event
 @export var weapon_box_spawn_interval_base := 50.0
 ## Увеличение интервала появления подбираемых оружий за каждого живого игрока.
 @export var weapon_box_spawn_interval_per_player := 10.0
-## Сцена подбираемого оружия (для предзагрузки).
-@export var weapon_scene: PackedScene
 ## Данные подбираемого оружия.
 @export var weapon_data: WeaponData
 

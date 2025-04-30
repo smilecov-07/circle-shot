@@ -327,16 +327,22 @@ func _process_keyboard_and_mouse_input_method() -> void:
 
 
 func _update_skill() -> void:
-	if not is_instance_valid(_player) or not is_instance_valid(_player.skill):
+	if not is_instance_valid(_player):
+		return
+	if not is_instance_valid(_player.skill):
+		_skill.modulate = Color.DARK_GRAY
 		return
 	
 	if _player.skill_vars[0] > 0:
 		if _player.skill_vars[1] > 0:
 			_skill.value = 1.0 - _player.skill_vars[1] * 1.0 / _player.skill.use_cooldown
+			_skill.modulate = Color.DARK_GRAY
 		else:
-			_skill.value = 1
+			_skill.value = 1.0
+			_skill.modulate = Color.WHITE
 	else:
-		_skill.value = 0
+		_skill.value = 0.0
+		_skill.modulate = Color.DARK_GRAY
 	_skill_count.text = str(_player.skill_vars[0])
 
 

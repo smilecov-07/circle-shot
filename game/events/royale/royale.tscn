@@ -147,7 +147,6 @@ ammo_box_spawn_interval_base = 15.0
 ammo_box_spawn_interval_per_player = 1.5
 weapon_box_spawn_interval_base = 50.0
 weapon_box_spawn_interval_per_player = 10.0
-weapon_scene = ExtResource("3_vu7pc")
 weapon_data = ExtResource("4_0ce5t")
 spawn_point_randomness = 0.0
 metadata/_edit_horizontal_guides_ = []
@@ -291,6 +290,9 @@ text = "Побеждает последний выживший!"
 [node name="Text" parent="UI/Intro" index="2"]
 text = "Каждый сам
 за себя!"
+
+[node name="ResourcePreloader" type="ResourcePreloader" parent="." index="15"]
+resources = [PackedStringArray("bazooka"), [ExtResource("3_vu7pc")]]
 
 [connection signal="local_player_created" from="." to="." method="_on_local_player_created"]
 [connection signal="local_player_created" from="." to="UI" method="_on_local_player_created"]

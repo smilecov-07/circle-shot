@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://uhjrp3sgu1op"]
+
+[ext_resource type="Texture2D" uid="uid://cm58g8o2ab34g" path="res://game/skins/videogames/om_nom/vfx/candy.png" id="1_kidt6"]
+
+[sub_resource type="Curve" id="Curve_r8f3g"]
+_limits = [-800.0, 400.0, 0.0, 1.0]
+_data = [Vector2(0, -800), 0.0, 0.0, 0, 0, Vector2(0.743333, 125.575), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_kidt6"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.496667, 1), 0.0, 0.0, 0, 0, Vector2(0.766667, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="CandyHealVfx" type="Node2D"]
+
+[node name="Particles" type="CPUParticles2D" parent="."]
+z_index = 1
+emitting = false
+amount = 1
+texture = ExtResource("1_kidt6")
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+emission_shape = 1
+emission_sphere_radius = 128.0
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+radial_accel_min = 1.0
+radial_accel_max = 1.0
+radial_accel_curve = SubResource("Curve_r8f3g")
+scale_amount_curve = SubResource("Curve_kidt6")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.1
+one_shot = true
+autostart = true
+
+[connection signal="ready" from="Particles" to="Particles" method="restart"]
+[connection signal="timeout" from="Timer" to="." method="queue_free"]

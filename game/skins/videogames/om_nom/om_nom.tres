@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SkinData" load_steps=2 format=3 uid="uid://b46i5gov85jd"]
+
+[ext_resource type="Script" uid="uid://d6lhqjoo2iuf" path="res://game/player/equip/skin_data.gd" id="1_8tnoo"]
+
+[resource]
+script = ExtResource("1_8tnoo")
+name = "Ам-Ням"
+brief_description = "Это и есть Ам-Ням"
+rarity = 3
+id = "omnom"
+scene_path = "uid://by25lps52y7b8"
+image_path = "uid://d08238iolyyjq"
+metadata/_custom_type_script = "uid://d6lhqjoo2iuf"
