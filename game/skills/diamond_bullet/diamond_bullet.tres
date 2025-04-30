@@ -6,7 +6,7 @@
 script = ExtResource("1_dv8cp")
 name = "Алмазная пуля"
 rarity = 2
-id = "diamond_penis"
+id = "secondbullet"
 stats = Dictionary[String, String]({
 "cooldown": "15",
 "count": "5",

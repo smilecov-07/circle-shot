@@ -6,7 +6,7 @@
 script = ExtResource("1_23qcc")
 name = "FAMAS"
 rarity = 1
-id = "famasik"
+id = "famas"
 stats = Dictionary[String, String]({
 "ammo_per_load": "30",
 "ammo_total": "90",

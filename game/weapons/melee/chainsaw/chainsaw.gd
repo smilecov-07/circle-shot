@@ -2,7 +2,7 @@ extends Melee
 
 @onready var _attack_sfx: AudioStreamPlayer2D = $AttackSfx
 
-func _shoot() -> void:
+func _shoot(_direction := Vector2.RIGHT) -> void:
 	_shoot_timer = shoot_interval
 	if _anim.current_animation != &"Attack":
 		_anim.play(&"Attack")

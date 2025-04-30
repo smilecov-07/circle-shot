@@ -6,7 +6,7 @@
 script = ExtResource("1_ko1gy")
 name = "Снайперская винтовка"
 rarity = 3
-id = "fuck_snipers"
+id = "sniper"
 stats = Dictionary[String, String]({
 "ammo_per_load": "4",
 "ammo_total": "12",

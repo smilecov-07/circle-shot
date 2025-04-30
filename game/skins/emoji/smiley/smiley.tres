@@ -4,10 +4,10 @@
 
 [resource]
 script = ExtResource("1_av13w")
-name = ":)"
+name = "Улыбка"
 brief_description = "Просто смайлик"
 rarity = 1
-id = ":)"
+id = "smile"
 scene_path = "uid://dppbbkplpjj3o"
 image_path = "uid://cyrr2jvua7aa"
 metadata/_custom_type_script = "uid://d6lhqjoo2iuf"
