@@ -95,6 +95,7 @@ func _ready() -> void:
 			_move_joystick.deadzone_size *= Globals.get_controls_float("move_joystick_scale")
 			_move_joystick.joystick_mode = \
 					Globals.get_controls_int("move_joystick_mode") as VirtualJoystick.JoystickMode
+			_move_joystick.modulate.a = Globals.get_controls_float("joysticks_alpha")
 			
 			_aim_joystick.scale = Vector2.ONE * Globals.get_controls_float("aim_joystick_scale")
 			_aim_joystick.deadzone_size = Globals.get_controls_float("aim_joystick_deadzone")
@@ -102,6 +103,7 @@ func _ready() -> void:
 			_aim_joystick.deadzone_size *= Globals.get_controls_float("aim_joystick_scale")
 			_aim_joystick.joystick_mode = \
 					Globals.get_controls_int("aim_joystick_mode") as VirtualJoystick.JoystickMode
+			_aim_joystick.modulate.a = Globals.get_controls_float("joysticks_alpha")
 			
 			(_shoot_area.shape as RectangleShape2D).size = \
 					Globals.get_controls_vector2("shoot_area")

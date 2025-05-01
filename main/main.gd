@@ -234,6 +234,8 @@ func setup_controls_settings() -> void:
 			Globals.get_controls_float("aim_deadzone", 0.15))
 	Globals.set_controls_float("aim_zone",
 			Globals.get_controls_float("aim_zone", 0.5))
+	Globals.set_controls_float("joysticks_alpha",
+			Globals.get_controls_float("joysticks_alpha", 1.0))
 	
 	InputMap.load_from_project_settings()
 	for action: StringName in InputMap.get_actions():

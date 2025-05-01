@@ -687,6 +687,7 @@ icon = ExtResource("1_xh6xh")
 expand_icon = true
 
 [node name="Sound" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -873,7 +874,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Controls" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -1131,6 +1131,38 @@ layout_mode = 2
 icon = ExtResource("1_xh6xh")
 expand_icon = true
 
+[node name="JoysticksAlpha" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Controls/TouchSettings"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Controls/TouchSettings/JoysticksAlpha"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_type_variation = &"HeaderSmall"
+text = "Непрозрачность джойстиков"
+vertical_alignment = 1
+
+[node name="Setting" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Controls/TouchSettings/JoysticksAlpha"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="JoysticksAlphaSlider" type="HSlider" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Controls/TouchSettings/JoysticksAlpha/Setting"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+mouse_force_pass_scroll_events = false
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="Help" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Controls/TouchSettings/JoysticksAlpha/Setting"]
+visible = false
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+icon = ExtResource("1_xh6xh")
+expand_icon = true
+
 [node name="ConfigureControls" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Controls/TouchSettings"]
 layout_mode = 2
 size_flags_horizontal = 4
@@ -1244,6 +1276,7 @@ visible = false
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Controls/KeyboardSettings/ConfigureActions" to="." method="_on_configure_actions_pressed"]
 [connection signal="item_selected" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Controls/TouchSettings/FireMode/Setting/FireModeOptions" to="." method="_on_fire_mode_options_item_selected"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Controls/TouchSettings/FireMode/Setting/Help" to="." method="show_help" binds= [9]]
+[connection signal="value_changed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Controls/TouchSettings/JoysticksAlpha/Setting/JoysticksAlphaSlider" to="." method="_on_joysticks_alpha_slider_value_changed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Controls/TouchSettings/ConfigureControls" to="." method="_on_configure_controls_pressed"]
 [connection signal="confirmed" from="ResetSettingsDialog" to="." method="_on_reset_settings_dialog_confirmed"]
 [connection signal="confirmed" from="ResetControlsDialog" to="." method="_on_reset_controls_dialog_confirmed"]
