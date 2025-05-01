@@ -20,6 +20,9 @@ var _time_remained: int
 
 
 func _initialize() -> void:
+	_spawn_points_blue.shuffle()
+	_spawn_points_red.shuffle()
+	
 	_teamfight_ui.set_time(match_time)
 	_time_remained = match_time
 	if multiplayer.is_server():
@@ -33,13 +36,12 @@ func _finish_setup() -> void:
 
 func _finish_start() -> void:
 	if multiplayer.is_server():
+		if not (_players_teams.find_key(0) and _players_teams.find_key(1)):
+			_time_remained = 1
 		($MatchTimer as Timer).start()
 
 
 func _make_teams() -> void:
-	_spawn_points_blue.shuffle()
-	_spawn_points_red.shuffle()
-	
 	var next_team: int = -1
 	for player: int in _players_names:
 		if next_team < 0:
