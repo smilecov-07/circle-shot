@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://bc7ffmlfu6nm7" path="res://game/entity/attack/ray_detector.gd" id="3_k173f"]
 
 [node name="KunaiProjectile" instance=ExtResource("1_7rg4a")]
-speed = 2800.0
+speed = 2900.0
 hit_vfx_scene = ExtResource("2_k173f")
 damage = 17
 

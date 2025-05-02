@@ -73,6 +73,7 @@ _data = {
 [node name="SleepingDeathVfx" type="Node2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -2
 texture = ExtResource("1_b4x4h")
 offset = Vector2(0, -12)
 

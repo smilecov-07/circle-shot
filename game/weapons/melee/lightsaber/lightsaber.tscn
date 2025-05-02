@@ -304,7 +304,7 @@ _data = {
 [node name="Lightsaber" instance=ExtResource("1_lf8ps")]
 script = ExtResource("2_1b7xu")
 damage = 45
-shoot_interval = 0.75
+shoot_interval = 0.8
 to_aim_time = 0.2
 speed_multiplier_when_current = 1.09
 shoot_on_joystick_release = true

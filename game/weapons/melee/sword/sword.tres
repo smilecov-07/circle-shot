@@ -10,7 +10,7 @@ id = "svord"
 stats = Dictionary[String, String]({
 "ammo_total": "не ограничено",
 "damage": "65",
-"dps": "62"
+"dps": "59"
 })
 damage_text = "Урон: {damage}"
 ammo_text = "Не ограничено"

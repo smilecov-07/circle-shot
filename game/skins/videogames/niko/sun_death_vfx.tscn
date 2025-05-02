@@ -128,6 +128,7 @@ _data = {
 }
 
 [node name="SunDeathVfx" type="Node2D"]
+z_index = -2
 texture_filter = 1
 
 [node name="Sun" type="Sprite2D" parent="."]
