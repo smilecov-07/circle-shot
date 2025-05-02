@@ -2,9 +2,9 @@
 
 [ext_resource type="PackedScene" uid="uid://c4157ddj75w7o" path="res://game/events/royale/base_map.tscn" id="1_febxg"]
 [ext_resource type="AudioStream" uid="uid://b65w8s4k3i8wn" path="res://game/maps/royale/thunder/music.ogg" id="2_avvsy"]
-[ext_resource type="TileSet" uid="uid://5df5vr4j0tf" path="res://game/maps/royale/thunder/tile_set.tres" id="2_csrsn"]
-[ext_resource type="Shader" uid="uid://bsgnbg6y5scle" path="res://game/maps/royale/thunder/puddle.gdshader" id="4_avvsy"]
-[ext_resource type="Texture2D" uid="uid://bn7ct6fksjhk0" path="res://game/maps/royale/thunder/textures/distortion_noise.tres" id="5_j8xtu"]
+[ext_resource type="TileSet" uid="uid://5df5vr4j0tf" path="res://game/locations/abandoned_city/tile_set.tres" id="2_csrsn"]
+[ext_resource type="Shader" uid="uid://bsgnbg6y5scle" path="res://game/locations/abandoned_city/puddle.gdshader" id="4_avvsy"]
+[ext_resource type="Texture2D" uid="uid://bn7ct6fksjhk0" path="res://game/locations/abandoned_city/textures/distortion_noise.tres" id="5_j8xtu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j8xtu"]
 shader = ExtResource("4_avvsy")
