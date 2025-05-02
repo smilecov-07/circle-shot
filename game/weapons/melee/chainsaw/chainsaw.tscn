@@ -275,6 +275,7 @@ damage = 20
 shoot_interval = 0.2
 to_aim_time = 0.6
 speed_multiplier_when_current = 1.12
+shoot_on_joystick_release = false
 
 [node name="Attack" parent="." index="0"]
 damage_interval = 0.2

@@ -218,7 +218,6 @@ _data = {
 damage = 65
 shoot_interval = 1.1
 speed_multiplier_when_current = 1.06
-shoot_on_joystick_release = true
 
 [node name="AttackPolygon" type="Polygon2D" parent="." index="0"]
 visible = false

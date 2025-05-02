@@ -133,14 +133,14 @@ func set_local_player(player: Player) -> void:
 	set_local_team(player.team)
 	
 	if was_started:
-		($Camera as SmartCamera).pan_to_target(player, 0.3)
+		($Camera as SmartCamera).pan_to_target(player.camera_target, 0.3)
 	else:
 		if not multiplayer.is_server():
 			local_player.make_disarmed()
 			local_player.make_immobile()
 			local_player.block_turning()
 		var offset: float = (Time.get_ticks_msec() - created_ticks_msec) / 1000.0
-		($Camera as SmartCamera).pan_to_target(player, maxf(4.0 - offset, 1.0))
+		($Camera as SmartCamera).pan_to_target(player.camera_target, maxf(4.0 - offset, 1.0))
 		_event_ui.seek_intro(offset)
 
 

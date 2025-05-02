@@ -24,6 +24,8 @@ enum Type {
 @export var ammo_total: int = 100
 ## Множитель скорости игрока, когда это оружие является текущим.
 @export_range(0.5, 2.0, 0.01) var speed_multiplier_when_current := 1.0
+## Дистанция, на которую может максимально отодвинуться от игрока камера при прицеливании.
+@export_range(0.0, 480.0) var aim_camera_distance := 160.0
 ## Если равно [code]true[/code], выстрел будет произведён при отпускании джойстика прицеливания.
 ## Иначе стрельба будет вестись, пока джойстик нажат.
 @export var shoot_on_joystick_release := false

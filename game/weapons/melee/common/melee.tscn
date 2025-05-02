@@ -7,6 +7,8 @@
 script = ExtResource("1_cpujk")
 ammo_per_load = 1
 ammo_total = 0
+aim_camera_distance = 0.0
+shoot_on_joystick_release = true
 metadata/_custom_type_script = "uid://cqxsiki473iro"
 
 [node name="Attack" type="Node2D" parent="."]

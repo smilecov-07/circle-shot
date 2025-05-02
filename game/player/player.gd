@@ -35,6 +35,8 @@ var skill: Skill
 @onready var player_input: PlayerInput = $Input
 ## Узел крови.
 @onready var blood: CPUParticles2D = $Visual/Blood
+## Узел с позицией для камеры.
+@onready var camera_target: Marker2D = $CameraTarget
 @onready var _weapons: Node2D = $Visual/Weapons
 @onready var _event: Event = get_tree().get_first_node_in_group(&"Event")
 
@@ -69,6 +71,17 @@ func _ready() -> void:
 	await get_tree().process_frame # Ждём пока заработает VisibleOnScreenNotifier2D
 	_update_minimap_marker(_event.local_team)
 	_event.local_team_set.connect(_update_minimap_marker)
+
+
+func _process(_delta: float) -> void:
+	if not is_local():
+		return
+	
+	if is_instance_valid(current_weapon) and player_input.showing_aim \
+			and current_weapon.can_shoot():
+		camera_target.position = player_input.aim_direction * current_weapon.aim_camera_distance
+	else:
+		camera_target.position = Vector2.ZERO
 
 
 func _physics_process(delta: float) -> void:

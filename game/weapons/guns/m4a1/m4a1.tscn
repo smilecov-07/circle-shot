@@ -370,6 +370,7 @@ recoil_increasing_time = 0.16
 recoil_reset_time = 0.45
 ammo_per_load = 25
 speed_multiplier_when_current = 0.95
+aim_camera_distance = 320.0
 
 [node name="Magazine" type="Sprite2D" parent="." index="0"]
 visible = false

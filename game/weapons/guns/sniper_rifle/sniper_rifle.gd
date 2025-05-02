@@ -98,7 +98,7 @@ func end_aim() -> void:
 	
 	camera.position_smoothing_enabled = true
 	if camera.target == _aim_target:
-		camera.target = player
+		camera.target = player.camera_target
 		camera.global_position = camera.target.global_position
 		camera.reset_smoothing()
 
