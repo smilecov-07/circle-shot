@@ -107,7 +107,7 @@ custom_heal_vfx_scene = ExtResource("4_26urt")
 metadata/_custom_type_script = "uid://nr21pnmv3b1n"
 
 [node name="Sfx" type="AudioStreamPlayer2D" parent="."]
-max_distance = 1280.0
+max_distance = 1920.0
 bus = &"SFX"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

@@ -71,4 +71,5 @@ libraries = {
 }
 
 [node name="HurtSfx" type="AudioStreamPlayer2D" parent="."]
+max_distance = 1920.0
 bus = &"SFX"

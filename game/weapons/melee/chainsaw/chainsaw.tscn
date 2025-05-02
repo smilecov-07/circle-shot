@@ -307,11 +307,11 @@ offset = Vector2(64, -8)
 
 [node name="AttackSfx" type="AudioStreamPlayer2D" parent="." index="3"]
 stream = ExtResource("7_4nu05")
-max_distance = 1920.0
+max_distance = 2880.0
 bus = &"SFX"
 
 [node name="Sfx" type="AudioStreamPlayer2D" parent="." index="4"]
-max_distance = 1600.0
+max_distance = 2240.0
 bus = &"SFX"
 
 [node name="Aim" type="Node2D" parent="." index="5"]

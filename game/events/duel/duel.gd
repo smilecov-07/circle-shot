@@ -18,9 +18,9 @@ var _poison_smokes_scene: PackedScene = preload("uid://cp5ag64gc1s3k")
 
 func _make_teams() -> void:
 	var prev_team: int = -1
-	var players: Array[int] = players_names.keys()
-	players.shuffle()
-	for player: int in players:
+	var players_ids: Array[int] = players_names.keys()
+	players_ids.shuffle()
+	for player: int in players_ids:
 		if prev_team < 0:
 			players_teams[player] = randi() % 2
 			prev_team = players_teams[player]

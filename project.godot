@@ -29,6 +29,7 @@ boot_splash/minimum_display_time=666
 [audio]
 
 buses/default_bus_layout="uid://dqtgj1jxo3cxn"
+general/2d_panning_strength=0.75
 
 [autoload]
 
