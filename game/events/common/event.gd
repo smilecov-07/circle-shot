@@ -43,14 +43,13 @@ var created_ticks_msec: int
 ## Список кэшированных сцен.
 var cached_scenes: Array[PackedScene]
 ## Словарь формата <ID игрока> - <массив данных об экипировке> (см. [member Player.equip_data]).
-## Доступно только на сервере.
-var _players_equip_data: Dictionary[int, Array]
-## Словарь формата <ID игрока> - <имя игрока>. Доступно только на сервере.
-var _players_names: Dictionary[int, String]
+var players_equip_data: Dictionary[int, Array]
+## Словарь формата <ID игрока> - <имя игрока>.
+var players_names: Dictionary[int, String]
 ## Словарь формата <ID игрока> - <команда игрока>. Доступно только на сервере.
-var _players_teams: Dictionary[int, int]
-## Словарь формата <ID игрока> - <объект игрока>. Доступно только на сервере.
-var _players: Dictionary[int, Player]
+var players_teams: Dictionary[int, int]
+## Словарь формата <ID игрока> - <объект игрока>.
+var players: Dictionary[int, Player]
 var _players_skill_vars: Dictionary[int, Array]
 
 var _vibration_enabled: bool
@@ -91,13 +90,6 @@ func _exit_tree() -> void:
 	Globals.main.menu_music.stream_paused = false
 
 
-## Задаёт данные игроков. Вызывается [Game] при завершении загрузки.
-func set_players_data(players_names: Dictionary[int, String],
-		players_equip_data: Dictionary[int, Array]) -> void:
-	_players_names = players_names
-	_players_equip_data = players_equip_data
-
-
 ## Создаёт игрока с идентификатором [param id]. Если событие ещё не началось, то этот игрок будет
 ## обезоружен и обездвижен.
 func spawn_player(id: int) -> void:
@@ -106,16 +98,16 @@ func spawn_player(id: int) -> void:
 			randf_range(-spawn_point_randomness, spawn_point_randomness),
 			randf_range(-spawn_point_randomness, spawn_point_randomness)
 	)
-	player.team = _players_teams[id]
+	player.team = players_teams[id]
 	player.id = id
-	player.player_name = _players_names[id]
-	player.equip_data = _players_equip_data[id].duplicate()
+	player.player_name = players_names[id]
+	player.equip_data = players_equip_data[id].duplicate()
 	player.equip_data.append(-1)
 	if id in _players_skill_vars:
 		player.skill_vars = _players_skill_vars[id].duplicate()
 	player.name = "Player%d" % id
 	_customize_player(player)
-	_players[id] = player
+	players[id] = player
 	$Entities.add_child(player)
 	player.damaged.connect(_on_player_damaged)
 	player.killed.connect(_on_player_killed)
@@ -257,9 +249,9 @@ func _register_kill(where: Vector2) -> void:
 
 func _setup() -> void:
 	_make_teams()
-	_event_ui.chat.players_names = _players_names
-	_event_ui.chat.players_teams = _players_teams
-	for player_id: int in _players_names:
+	_event_ui.chat.players_names = players_names
+	_event_ui.chat.players_teams = players_teams
+	for player_id: int in players_names:
 		spawn_player(player_id)
 	_finish_setup()
 	
@@ -274,7 +266,7 @@ func _initialize() -> void:
 	pass
 
 
-## Метод для переопределения. В нём требуется заполнить [member _players_teams].
+## Метод для переопределения. В нём требуется заполнить [member players_teams].
 ## Вызывается только на сервере. Обязателен.
 func _make_teams() -> void:
 	pass
@@ -322,8 +314,8 @@ func _player_disconnected(_id: int) -> void:
 
 
 func _on_player_damaged(who: int, by: int) -> void:
-	if by in _players:
-		var target: Player = _players[who]
+	if by in players:
+		var target: Player = players[who]
 		_register_hit.rpc_id(by, target.global_position)
 
 
@@ -331,48 +323,59 @@ func _on_player_killed(who: int, by: int) -> void:
 	var message_text: String
 	if by > 0:
 		message_text = "[color=#%s]%s[/color] убивает игрока [color=#%s]%s[/color]!" % [
-			Entity.TEAM_COLORS[_players_teams[by]].to_html(false),
-			_players_names[by],
-			Entity.TEAM_COLORS[_players_teams[who]].to_html(false),
-			_players_names[who],
+			Entity.TEAM_COLORS[players_teams[by]].to_html(false),
+			players_names[by],
+			Entity.TEAM_COLORS[players_teams[who]].to_html(false),
+			players_names[who],
 		]
 	else:
 		message_text = "[color=#%s]%s[/color] умирает!" % [
-			Entity.TEAM_COLORS[_players_teams[who]].to_html(false),
-			_players_names[who],
+			Entity.TEAM_COLORS[players_teams[who]].to_html(false),
+			players_names[who],
 		]
 	_event_ui.chat.post_message.rpc("> " + message_text)
 	
-	if by in _players:
-		var target: Player = _players[who]
+	if by in players:
+		var target: Player = players[who]
 		_register_kill.rpc_id(by, target.global_position)
 	
 	_player_killed(who, by)
-	_players.erase(who)
+	players.erase(who)
 
 
 func _on_player_tree_exiting(player: Player) -> void:
-	if not player.id in _players_names:
+	if not player.id in players_names:
 		return
-	_players.erase(player.id)
+	players.erase(player.id)
 	_players_skill_vars[player.id] = player.skill_vars
 
 
 func _on_peer_disconnected(id: int) -> void:
 	var message_text: String = "[color=#%s]%s[/color] отключается!" % [
-		Entity.TEAM_COLORS[_players_teams[id]].to_html(false),
-		_players_names[id],
+		Entity.TEAM_COLORS[players_teams[id]].to_html(false),
+		players_names[id],
 	]
 	_event_ui.chat.post_message.rpc("> " + message_text)
-	if id in _players:
-		if is_instance_valid(_players[id]):
-			_players[id].queue_free()
-		_players.erase(id)
-	_players_names.erase(id)
-	_players_equip_data.erase(id)
-	_players_teams.erase(id)
+	if id in players:
+		players[id].queue_free()
+		players.erase(id)
+	players_names.erase(id)
+	players_equip_data.erase(id)
+	players_teams.erase(id)
 	_players_skill_vars.erase(id)
-	if _players_names.is_empty():
+	if players_names.is_empty():
 		end.rpc()
 		return
 	_player_disconnected(id)
+
+
+func _on_entities_spawner_spawned(node: Node) -> void:
+	var player := node as Player
+	if player:
+		players[player.id] = player
+
+
+func _on_entities_spawner_despawned(node: Node) -> void:
+	var player := node as Player
+	if player:
+		players.erase(player.id)

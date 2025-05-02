@@ -18,14 +18,14 @@ var _poison_smokes_scene: PackedScene = preload("uid://cp5ag64gc1s3k")
 
 func _make_teams() -> void:
 	var prev_team: int = -1
-	var players: Array[int] = _players_names.keys()
+	var players: Array[int] = players_names.keys()
 	players.shuffle()
 	for player: int in players:
 		if prev_team < 0:
-			_players_teams[player] = randi() % 2
-			prev_team = _players_teams[player]
+			players_teams[player] = randi() % 2
+			prev_team = players_teams[player]
 		else:
-			_players_teams[player] = 1 - prev_team
+			players_teams[player] = 1 - prev_team
 
 
 func _finish_start() -> void:
@@ -34,7 +34,7 @@ func _finish_start() -> void:
 
 
 func _get_spawn_point(id: int) -> Vector2:
-	if _players_teams[id] == 0:
+	if players_teams[id] == 0:
 		return ($Map/SpawnPoint0 as Node2D).global_position
 	else:
 		return ($Map/SpawnPoint1 as Node2D).global_position
@@ -52,18 +52,18 @@ func _customize_player(player: Player) -> void:
 
 
 func _player_killed(who: int, _by: int) -> void:
-	var team_won: int = 1 - _players_teams[who]
+	var team_won: int = 1 - players_teams[who]
 	if team_won == 1:
 		_blue_rounds_won += 1
 	else:
 		_red_rounds_won += 1
 	if _current_round == 2 or _blue_rounds_won >= 2 or _red_rounds_won >= 2:
 		if _blue_rounds_won > _red_rounds_won:
-			_end_round.rpc(team_won, _players_teams.find_key(1), true)
+			_end_round.rpc(team_won, players_teams.find_key(1), true)
 		else:
-			_end_round.rpc(team_won, _players_teams.find_key(0), true)
+			_end_round.rpc(team_won, players_teams.find_key(0), true)
 	else:
-		_end_round.rpc(team_won, _players_teams.find_key(team_won))
+		_end_round.rpc(team_won, players_teams.find_key(team_won))
 
 
 func _player_disconnected(_id: int) -> void:
@@ -71,7 +71,7 @@ func _player_disconnected(_id: int) -> void:
 		return
 	if not was_started:
 		return
-	_end_round.rpc(_players_teams.values()[0], _players_teams.keys()[0], true)
+	_end_round.rpc(players_teams.values()[0], players_teams.keys()[0], true)
 
 
 @rpc("reliable", "call_local", "authority", 3)
@@ -88,8 +88,8 @@ func _start_round() -> void:
 	round_started.emit()
 	
 	if multiplayer.is_server():
-		if _players.size() == 1:
-			_end_round.rpc(_players_teams.values()[0], _players_teams.keys()[0], true)
+		if players_names.size() == 1:
+			_end_round.rpc(players_teams.values()[0], players_teams.keys()[0], true)
 
 
 @rpc("reliable", "call_local", "authority", 3)
@@ -126,6 +126,6 @@ func _end_round(win_team: int, winner: int, ends := false) -> void:
 	if ends:
 		end.rpc()
 	elif _current_round < 3:
-		for player: int in _players_names:
+		for player: int in players_names:
 			spawn_player(player)
 		_start_round.rpc()

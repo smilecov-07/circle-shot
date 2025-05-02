@@ -36,26 +36,26 @@ func _finish_setup() -> void:
 
 func _finish_start() -> void:
 	if multiplayer.is_server():
-		if not (_players_teams.find_key(0) and _players_teams.find_key(1)):
+		if not (players_teams.find_key(0) and players_teams.find_key(1)):
 			_time_remained = 1
 		($MatchTimer as Timer).start()
 
 
 func _make_teams() -> void:
 	var next_team: int = -1
-	for player: int in _players_names:
+	for player: int in players_names:
 		if next_team < 0:
 			var team: int = randi() % 2
-			_players_teams[player] = team
+			players_teams[player] = team
 			next_team = 1 - team
 		else:
-			_players_teams[player] = next_team
+			players_teams[player] = next_team
 			next_team = -1
 
 
 func _get_spawn_point(id: int) -> Vector2:
 	var pos: Vector2
-	if _players_teams[id] == 0:
+	if players_teams[id] == 0:
 		pos = (_spawn_points_red[_spawn_counter_red % 5] as Node2D).global_position
 		_spawn_counter_red += 1
 	else:
@@ -65,7 +65,7 @@ func _get_spawn_point(id: int) -> Vector2:
 
 
 func _player_killed(who: int, _by: int) -> void:
-	if _players_teams[who] == 0:
+	if players_teams[who] == 0:
 		blue_kills += 1
 	else:
 		red_kills += 1
@@ -77,7 +77,7 @@ func _player_disconnected(_who: int) -> void:
 	if _time_remained <= 0:
 		return
 	# Недостаточно участников команд
-	if not (_players_teams.find_key(0) and _players_teams.find_key(1)):
+	if not (players_teams.find_key(0) and players_teams.find_key(1)):
 		_time_remained = 1
 
 
@@ -88,14 +88,14 @@ func _update_time(remained: int) -> void:
 
 func _respawn_player(id: int) -> void:
 	await get_tree().create_timer(comeback_time, false).timeout
-	if _time_remained > 0 and id in _players_names:
+	if _time_remained > 0 and id in players_names:
 		spawn_player(id)
 
 
 func _determine_winner() -> void:
-	if not _players_teams.find_key(0): # Нет красных больше
+	if not players_teams.find_key(0): # Нет красных больше
 		_teamfight_ui.show_winner.rpc(1)
-	elif not _players_teams.find_key(1): # Нет синих больше
+	elif not players_teams.find_key(1): # Нет синих больше
 		_teamfight_ui.show_winner.rpc(0)
 	elif red_kills > blue_kills:
 		_teamfight_ui.show_winner.rpc(0)

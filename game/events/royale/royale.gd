@@ -49,7 +49,7 @@ func _finish_start() -> void:
 	var tween: Tween = smokes.create_tween()
 	tween.tween_property(smokes, ^":modulate", smokes.modulate, 0.3).from(Color.TRANSPARENT)
 	if multiplayer.is_server():
-		_alive_players = _players_names.keys()
+		_alive_players = players_names.keys()
 		($HealBoxSpawnTimer as Timer).start(heal_box_spawn_interval_base
 				+ heal_box_spawn_interval_per_player * _alive_players.size())
 		($AmmoBoxSpawnTimer as Timer).start(ammo_box_spawn_interval_base
@@ -64,8 +64,8 @@ func _make_teams() -> void:
 	var counter: int = 0
 	var teams: Array = range(0, 10)
 	teams.shuffle()
-	for player: int in _players_names:
-		_players_teams[player] = teams[counter]
+	for player: int in players_names:
+		players_teams[player] = teams[counter]
 		counter += 1
 
 
@@ -142,7 +142,7 @@ func _check_winner() -> void:
 	if _alive_players.size() != 1:
 		return
 	var winner_id: int = _alive_players[0]
-	var winner_name: String = _players_names[winner_id]
+	var winner_name: String = players_names[winner_id]
 	_royale_ui.show_winner.rpc(winner_id, winner_name)
 	freeze_players.rpc()
 	($HealBoxSpawnTimer as Timer).stop()

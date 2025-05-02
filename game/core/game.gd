@@ -342,7 +342,8 @@ func _send_ready() -> void:
 
 
 @rpc("call_local", "reliable", "authority", 1)
-func _start_event() -> void:
+func _start_event(players_names: Dictionary[int, String], \
+		players_equip_data: Dictionary[int, Array]) -> void:
 	if multiplayer.get_remote_sender_id() != MultiplayerPeer.TARGET_PEER_SERVER:
 		push_error("This method must be called only by server.")
 		return
@@ -350,10 +351,8 @@ func _start_event() -> void:
 	print_verbose("Starting event...")
 	event.ended.connect(_on_event_ended)
 	closed.disconnect(_loader.finish_load)
-	if multiplayer.is_server():
-		event.set_players_data(_players_names.duplicate(), _players_equip_data.duplicate())
-		_players_names.clear()
-		_players_equip_data.clear()
+	event.players_names = players_names
+	event.players_equip_data = players_equip_data
 	event.created_ticks_msec = Time.get_ticks_msec()
 	add_child(event)
 	_loader.finish_load(true)
@@ -372,7 +371,9 @@ func _check_players_ready() -> void:
 		if not _players_names.is_empty():
 			if _preloading_equip:
 				($WaitPlayersTimer as Timer).stop()
-				_start_event.rpc()
+				_start_event.rpc(_players_names.duplicate(), _players_equip_data.duplicate())
+				_players_names.clear()
+				_players_equip_data.clear()
 			else:
 				_determine_equip_to_preload()
 		else:

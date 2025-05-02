@@ -500,6 +500,8 @@ stream = ExtResource("12_jddfk")
 bus = &"Music"
 
 [connection signal="local_player_created" from="." to="UI/Main/PlayerUI" method="_on_local_player_created"]
+[connection signal="despawned" from="EntitiesSpawner" to="." method="_on_entities_spawner_despawned"]
+[connection signal="spawned" from="EntitiesSpawner" to="." method="_on_entities_spawner_spawned"]
 [connection signal="pressed" from="UI/Main/Leave" to="UI/QuitDialog" method="popup_centered"]
 [connection signal="toggled" from="UI/Main/Chat" to="UI" method="_on_chat_toggled"]
 [connection signal="toggled" from="UI/Main/Chat" to="UI/Main/ChatPanel" method="_on_chat_toggled"]
