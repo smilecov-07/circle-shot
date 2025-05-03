@@ -1,9 +1,9 @@
 [gd_resource type="TileSet" load_steps=14 format=3 uid="uid://cqtubyifhoudw"]
 
-[ext_resource type="Texture2D" uid="uid://b0tjnwaa51lsv" path="res://game/maps/teamfight/river/floor_tiles.png" id="1_3vy2u"]
-[ext_resource type="Texture2D" uid="uid://dr3gkvc3kct5j" path="res://game/maps/teamfight/river/fence.png" id="1_t3krv"]
-[ext_resource type="Texture2D" uid="uid://b0ppb2f5o052p" path="res://game/maps/teamfight/river/water.png" id="3_db4np"]
-[ext_resource type="Texture2D" uid="uid://omfdhfar6rqn" path="res://game/maps/teamfight/river/wall_tiles.png" id="6_w2u7q"]
+[ext_resource type="Texture2D" uid="uid://dr3gkvc3kct5j" path="res://game/locations/river/fence.png" id="1_sv5dq"]
+[ext_resource type="Texture2D" uid="uid://b0tjnwaa51lsv" path="res://game/locations/river/floor_tiles.png" id="2_jc3us"]
+[ext_resource type="Texture2D" uid="uid://b0ppb2f5o052p" path="res://game/locations/river/water.png" id="3_hoh82"]
+[ext_resource type="Texture2D" uid="uid://omfdhfar6rqn" path="res://game/locations/river/wall_tiles.png" id="4_mbd53"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_dpl6s"]
 tile_data = PackedInt32Array(0, 3, 0, 65536, 3, 1, 1, 65539, 0, 65537, 65539, 1)
@@ -21,7 +21,7 @@ tile_data = PackedInt32Array(0, 196611, 3, 65536, 196611, 4, 1, 262147, 3, 65537
 tile_data = PackedInt32Array(0, 196611, 2, 65536, 262147, 0, 1, 262147, 2, 65537, 262147, 1)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dpl6s"]
-texture = ExtResource("1_t3krv")
+texture = ExtResource("1_sv5dq")
 texture_region_size = Vector2i(160, 160)
 0:0/0 = 0
 0:0/0/terrain_set = 1
@@ -93,7 +93,7 @@ texture_region_size = Vector2i(160, 160)
 3:2/0/terrains_peering_bit/top_side = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_00ucp"]
-texture = ExtResource("1_3vy2u")
+texture = ExtResource("2_jc3us")
 texture_region_size = Vector2i(160, 160)
 0:0/0 = 0
 0:0/0/terrain_set = 0
@@ -304,12 +304,12 @@ texture_region_size = Vector2i(160, 160)
 6:3/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w2u7q"]
-texture = ExtResource("3_db4np")
+texture = ExtResource("3_hoh82")
 texture_region_size = Vector2i(160, 160)
 0:0/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_e64b4"]
-texture = ExtResource("6_w2u7q")
+texture = ExtResource("4_mbd53")
 texture_region_size = Vector2i(160, 160)
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-80, 80, -60, 0, 0, -60, 80, -80, 80, 80)

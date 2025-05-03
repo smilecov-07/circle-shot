@@ -1,11 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://d2iraf4bc27ee"]
+[gd_scene load_steps=10 format=3 uid="uid://biauwlgys7ce4"]
 
-[ext_resource type="PackedScene" uid="uid://d3nsak46hbo2c" path="res://game/events/common/event.tscn" id="1_6uxmc"]
-[ext_resource type="Script" uid="uid://d1wsojr0xd0ip" path="res://game/events/teamfight/teamfight.gd" id="2_btc68"]
-[ext_resource type="PackedScene" uid="uid://0t25gyfsaiqe" path="res://game/events/teamfight/teamfight_player.tscn" id="2_in4jb"]
-[ext_resource type="Script" uid="uid://q5aoyyqn0cby" path="res://game/events/teamfight/teamfight_ui.gd" id="4_m4tqf"]
+[ext_resource type="PackedScene" uid="uid://d3nsak46hbo2c" path="res://game/events/common/event.tscn" id="1_geta0"]
+[ext_resource type="Script" uid="uid://xyoklife3c7x" path="res://game/events/flag_capture/flag_capture.gd" id="2_xtwto"]
+[ext_resource type="PackedScene" uid="uid://ceigdilgx3wae" path="res://game/events/flag_capture/flag_capture_player.tscn" id="3_whopm"]
+[ext_resource type="Script" uid="uid://dixx0hylxdvcp" path="res://game/events/flag_capture/flag_capture_ui.gd" id="3_xkawu"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_somca"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_wnvha"]
 viewport_path = NodePath("UI/MinimapViewport")
 
 [sub_resource type="Animation" id="Animation_7w56i"]
@@ -245,17 +245,17 @@ _data = {
 &"Victory": SubResource("Animation_gvqew")
 }
 
-[node name="Event" instance=ExtResource("1_6uxmc")]
-script = ExtResource("2_btc68")
+[node name="Event" instance=ExtResource("1_geta0")]
+script = ExtResource("2_xtwto")
 match_time = 180
 comeback_time = 3
-player_scenes = Array[PackedScene]([ExtResource("2_in4jb")])
+player_scenes = Array[PackedScene]([ExtResource("3_whopm")])
 
 [node name="UI" parent="." index="8"]
-script = ExtResource("4_m4tqf")
+script = ExtResource("3_xkawu")
 
 [node name="Minimap" parent="UI/Main" index="1"]
-texture = SubResource("ViewportTexture_somca")
+texture = SubResource("ViewportTexture_wnvha")
 
 [node name="Timer" type="Label" parent="UI/Main" index="6"]
 layout_mode = 1
@@ -399,16 +399,19 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Title" parent="UI/Intro" index="1"]
-text = "КОМАНДНЫЙ БОЙ"
+text = "ЗАХВАТ ФЛАГА"
 
 [node name="Description" parent="UI/Intro/Title" index="0"]
-text = "Убивай противников на счёт!"
+text = "Принеси флаг противника на свою базу!"
 
 [node name="Text" parent="UI/Intro" index="2"]
-text = "Побеждает команда
-с наибольшим счётом!"
+text = "Побеждает команда, захватившая
+наибольшее число флагов!"
 
-[node name="MatchTimer" type="Timer" parent="." index="10"]
+[node name="Music" parent="." index="9"]
+volume_db = -3.0
+
+[node name="MatchTimer" type="Timer" parent="." index="12"]
 
 [connection signal="local_player_created" from="." to="." method="_on_local_player_created"]
 [connection signal="timeout" from="MatchTimer" to="." method="_on_match_timer_timeout"]

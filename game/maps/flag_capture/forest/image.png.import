@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b0ppb2f5o052p"
-path="res://.godot/imported/water.png-b177268faaadc3db2029b5611204134c.ctex"
+uid="uid://g3w8qobom0sf"
+path="res://.godot/imported/image.png-3c26fa04d3bf0ab380d2fd41d4ccb8df.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/maps/teamfight/river/water.png"
-dest_files=["res://.godot/imported/water.png-b177268faaadc3db2029b5611204134c.ctex"]
+source_file="res://game/maps/flag_capture/forest/image.png"
+dest_files=["res://.godot/imported/image.png-3c26fa04d3bf0ab380d2fd41d4ccb8df.ctex"]
 
 [params]
 

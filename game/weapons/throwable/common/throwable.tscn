@@ -14,6 +14,7 @@ metadata/_custom_type_script = "uid://bqt2qhk5ev2vc"
 [node name="ThrowPoint" type="Marker2D" parent="ThrowPivot"]
 
 [node name="Aim" type="Line2D" parent="ThrowPivot/ThrowPoint"]
+visible = false
 z_index = 5
 points = PackedVector2Array(0, 0, 6500, 0)
 width = 48.0

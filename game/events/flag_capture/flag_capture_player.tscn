@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://ceigdilgx3wae"]
+
+[ext_resource type="PackedScene" uid="uid://3l0k1cn63ahd" path="res://game/player/player.tscn" id="1_16gox"]
+[ext_resource type="Script" uid="uid://csraivbg36c70" path="res://game/events/flag_capture/flag_capture_player.gd" id="2_jy3s0"]
+
+[node name="Player" instance=ExtResource("1_16gox")]
+script = ExtResource("2_jy3s0")
+max_health = 70
+
+[node name="ImmuneTimer" type="Timer" parent="." index="9"]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="ImmuneTimer" to="." method="_on_immune_timer_timeout"]

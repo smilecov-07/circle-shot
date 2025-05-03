@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="MapData" load_steps=2 format=3 uid="uid://cnpnlnxo5nbl7"]
+
+[ext_resource type="Script" uid="uid://c2mew3f2rwarc" path="res://game/events/common/map_data.gd" id="1_3ao81"]
+
+[resource]
+script = ExtResource("1_3ao81")
+name = "Лес"
+brief_description = "Сражения посреди деревьев."
+scene_path = "uid://2f01wk6dh2vy"
+image_path = "uid://g3w8qobom0sf"
+metadata/_custom_type_script = "uid://c2mew3f2rwarc"

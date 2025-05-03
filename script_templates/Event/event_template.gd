@@ -22,21 +22,21 @@ func _finish_start() -> void:
 _TS_pass
 
 
-#func _get_player_scene(_id: int) -> PackedScene:
-_TS_#return player_scenes[0]
+#func _get_player_scene(id: int) -> PackedScene:
+_TS_#return # пишите логику здесь
 
 
-func _get_spawn_point(_id: int) -> Vector2:
-_TS_return 
+func _get_spawn_point(id: int) -> Vector2:
+_TS_return # пишите логику здесь
 
 
-#func _customize_player(_player: Player) -> void:
+#func _customize_player(player: Player) -> void:
 _TS_#pass
 
 
-#func _player_killed(_who: int, _by: int) -> void:
+#func _player_killed(who: int, by: int) -> void:
 _TS_#pass
 
 
-#func _player_disconnected(_id: int) -> void:
+#func _player_disconnected(id: int) -> void:
 _TS_#pass

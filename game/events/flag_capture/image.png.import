@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://78lvr0qs62gg"
-path="res://.godot/imported/crab.png-3a8e503c0d0924619de46b72a574ca70.ctex"
+uid="uid://dmn8kaiaf67qv"
+path="res://.godot/imported/image.png-f4309d25c689be50c77443542056ee00.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/maps/teamfight/river/crab.png"
-dest_files=["res://.godot/imported/crab.png-3a8e503c0d0924619de46b72a574ca70.ctex"]
+source_file="res://game/events/flag_capture/image.png"
+dest_files=["res://.godot/imported/image.png-f4309d25c689be50c77443542056ee00.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://omfdhfar6rqn"
-path="res://.godot/imported/wall_tiles.png-c3b036f12f65012f5c32593ee518261e.ctex"
+uid="uid://b0ppb2f5o052p"
+path="res://.godot/imported/water.png-1791a174987bf8d15413848c31ccad26.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/maps/teamfight/river/wall_tiles.png"
-dest_files=["res://.godot/imported/wall_tiles.png-c3b036f12f65012f5c32593ee518261e.ctex"]
+source_file="res://game/locations/river/water.png"
+dest_files=["res://.godot/imported/water.png-1791a174987bf8d15413848c31ccad26.ctex"]
 
 [params]
 

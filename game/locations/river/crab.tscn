@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://c0d6rp3f2oyo7"]
 
-[ext_resource type="Texture2D" uid="uid://78lvr0qs62gg" path="res://game/maps/teamfight/river/crab.png" id="1_lypxh"]
+[ext_resource type="Texture2D" uid="uid://78lvr0qs62gg" path="res://game/locations/river/crab.png" id="1_lypxh"]
 
 [sub_resource type="Animation" id="Animation_57va5"]
 resource_name = "Crawl"
