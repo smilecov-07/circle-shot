@@ -402,7 +402,7 @@ vertical_alignment = 1
 text = "КОМАНДНЫЙ БОЙ"
 
 [node name="Description" parent="UI/Intro/Title" index="0"]
-text = "Убивай противников на счёт!"
+text = "Побеждай противников на счёт!"
 
 [node name="Text" parent="UI/Intro" index="2"]
 text = "Побеждает команда

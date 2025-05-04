@@ -244,7 +244,7 @@ libraries = {
 text = "ДУЭЛЬ"
 
 [node name="Description" parent="UI/Intro/Title" index="0"]
-text = "Убей противника 2 раза!"
+text = "Победи противника 2 раза!"
 
 [node name="Text" parent="UI/Intro" index="2"]
 text = "Каждый раунд

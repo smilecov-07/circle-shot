@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://cc2mkoa1fingr"]
+
+[ext_resource type="PackedScene" uid="uid://bidwr44u84ou5" path="res://game/events/flag_capture/flag/flag.tscn" id="1_uwd6v"]
+[ext_resource type="Texture2D" uid="uid://dqbav2p7upk4b" path="res://game/events/flag_capture/flag/red_flag.png" id="2_4m2ke"]
+
+[node name="RedFlag" instance=ExtResource("1_uwd6v")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_4m2ke")
+
+[node name="Visual" parent="Minimap/MinimapMarker" index="0"]
+self_modulate = Color(1, 0, 0, 1)
+
+[node name="ReturnTimerProgress" parent="." index="4"]
+self_modulate = Color(1, 0, 0, 1)
+
+[node name="Marker" parent="ScreenMarker/Visual" index="0"]
+modulate = Color(1, 0, 0, 1)
+
+[editable path="ScreenMarker"]

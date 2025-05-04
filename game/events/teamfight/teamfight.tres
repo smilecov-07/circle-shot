@@ -8,7 +8,7 @@
 [resource]
 script = ExtResource("2_066hq")
 name = "Командный бой"
-brief_description = "Убивай противников на счёт!"
+brief_description = "Побеждай противников на счёт!"
 min_players = 4
 max_players = 10
 players_divider = 2

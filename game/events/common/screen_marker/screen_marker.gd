@@ -3,6 +3,7 @@ extends Node2D
 
 @export var margin := 120.0
 @export var arrow_margin := 16.0
+@export var show_when_on_screen := true
 var _screen_angle: float
 
 @onready var _visual: CanvasLayer = $Visual
@@ -14,15 +15,10 @@ var _screen_angle: float
 
 func _ready() -> void:
 	_screen_angle = (get_viewport_rect().size - get_viewport_rect().size / 2).angle()
-	_update_position()
 
 
 func _process(_delta: float) -> void:
-	_update_position()
-
-
-func _update_position() -> void:
-	_visual.visible = visible
+	_visual.visible = is_visible_in_tree()
 	if not visible:
 		return
 	
@@ -30,7 +26,7 @@ func _update_position() -> void:
 	var screen_rect: Rect2 = get_viewport_rect()
 	if screen_rect.grow(-margin).has_point(screen_pos):
 		_arrow.hide()
-		_icon.show()
+		_icon.visible = show_when_on_screen
 		_marker.position = screen_pos
 	else:
 		_arrow.show()
