@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dk74wh4235r2i"
-path="res://.godot/imported/puddles_tiles.png-773f5ec19922e084952d336b130dc764.ctex"
+uid="uid://bpusm36bhmnwk"
+path="res://.godot/imported/objects_tiles.png-c30334f17c4afb3798f85268c9dd7da3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/locations/abandoned_city/textures/puddles_tiles.png"
-dest_files=["res://.godot/imported/puddles_tiles.png-773f5ec19922e084952d336b130dc764.ctex"]
+source_file="res://game/locations/town/textures/objects_tiles.png"
+dest_files=["res://.godot/imported/objects_tiles.png-c30334f17c4afb3798f85268c9dd7da3.ctex"]
 
 [params]
 
