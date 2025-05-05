@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bvobau1ynrbgp"
-path="res://.godot/imported/decorations_tiles.png-483844ab7a3d79bbec979c6f2547d1d2.ctex"
+uid="uid://bpusm36bhmnwk"
+path="res://.godot/imported/objects_tiles.png-bb83e02064db0bfd87adb6cdce9b0ff2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/locations/town/textures/decorations_tiles.png"
-dest_files=["res://.godot/imported/decorations_tiles.png-483844ab7a3d79bbec979c6f2547d1d2.ctex"]
+source_file="res://game/locations/town/objects_tiles.png"
+dest_files=["res://.godot/imported/objects_tiles.png-bb83e02064db0bfd87adb6cdce9b0ff2.ctex"]
 
 [params]
 
