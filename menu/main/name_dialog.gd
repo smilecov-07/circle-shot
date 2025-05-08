@@ -30,7 +30,7 @@ func _on_line_edit_text_changed(new_text: String) -> void:
 		_label.text = "DIEEEEEEEEE"
 		($CanvasModulate as CanvasItem).show()
 	elif new_text in ["блять", "сука"] or new_text.contains("хуй") or new_text.contains("пизд") \
-			or new_text.begins_with("еба") or new_text.contains("хуё") or new_text.contains("хуе"):
+			or new_text.begins_with("еб") or new_text.contains("хуё") or new_text.contains("хуе"):
 		_label.text = "Нехорошо материться!"
 	elif new_text == "разраб клоун":
 		(%LineEdit as LineEdit).text = "Сам такой!"
@@ -40,5 +40,12 @@ func _on_line_edit_text_changed(new_text: String) -> void:
 		_label.text = easter_eggs[new_text]
 	else:
 		_label.text = ""
+		_label.remove_theme_color_override(&"font_color")
 		($AnimationPlayer as AnimationPlayer).play(&"RESET")
 		($CanvasModulate as CanvasItem).hide()
+
+
+func _on_about_to_popup() -> void:
+	if not DisplayServer.has_hardware_keyboard():
+		await get_tree().process_frame
+		position.y = 80

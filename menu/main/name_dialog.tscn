@@ -126,7 +126,7 @@ libraries = {
 visible = false
 color = Color(0.574219, 0, 0, 1)
 
-[connection signal="close_requested" from="." to="." method="hide"]
+[connection signal="about_to_popup" from="." to="." method="_on_about_to_popup"]
 [connection signal="text_changed" from="MarginContainer/VBoxContainer/LineEdit" to="." method="_on_line_edit_text_changed"]
 [connection signal="text_submitted" from="MarginContainer/VBoxContainer/LineEdit" to="." method="_on_confirm_pressed" unbinds=1]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Confirm" to="." method="_on_confirm_pressed"]

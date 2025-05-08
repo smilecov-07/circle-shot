@@ -90,7 +90,7 @@ func _update_time(remained: int) -> void:
 
 
 @rpc("reliable", "call_local", "authority", 3)
-func _update_results(red: int, blue: int, blue_captured: bool) -> void:
+func _update_score(red: int, blue: int, blue_captured: bool) -> void:
 	if multiplayer.get_remote_sender_id() != MultiplayerPeer.TARGET_PEER_SERVER:
 		push_error("This method must be called only by server.")
 		return
@@ -98,6 +98,8 @@ func _update_results(red: int, blue: int, blue_captured: bool) -> void:
 	blue_flags_captured = blue
 	_flag_capture_ui.set_flags(red_flags_captured, blue_flags_captured)
 	_flag_capture_ui.show_flag_captured(blue_captured)
+	print_verbose("Team %d captured flag." % int(blue_captured))
+	print_verbose("Current score: %d - %d." % [red_flags_captured, blue_flags_captured])
 
 
 @rpc("reliable", "call_local", "authority", 3)
@@ -107,6 +109,7 @@ func _show_winner(team: int) -> void:
 		return
 	end_event(team == local_team)
 	_flag_capture_ui.show_winner(team)
+	print_verbose("Team won: %d." % team)
 
 
 func _respawn_player(id: int) -> void:
@@ -154,11 +157,11 @@ func _on_match_timer_timeout() -> void:
 
 func _on_flag_zone_red_flag_captured() -> void:
 	red_flags_captured += 1
-	_update_results.rpc(red_flags_captured, blue_flags_captured, false)
+	_update_score.rpc(red_flags_captured, blue_flags_captured, false)
 	_spawn_flag.call_deferred(true)
 
 
 func _on_flag_zone_blue_flag_captured() -> void:
 	blue_flags_captured += 1
-	_update_results.rpc(red_flags_captured, blue_flags_captured, true)
+	_update_score.rpc(red_flags_captured, blue_flags_captured, true)
 	_spawn_flag.call_deferred(false)

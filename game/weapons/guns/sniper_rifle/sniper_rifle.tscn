@@ -483,7 +483,7 @@ position = Vector2(296, -22)
 modulate = Color(1, 1, 1, 0)
 
 [node name="AimLine" type="Line2D" parent="ShootPoint" index="1"]
-z_index = 5
+z_index = 10
 points = PackedVector2Array(0, 0, 3200, 0)
 width = 8.0
 default_color = Color(0, 0, 0, 0.25098)

@@ -11,8 +11,8 @@ stats = Dictionary[String, String]({
 "cooldown": "40",
 "count": "2",
 "damage": "10",
-"slow_duration": "6",
-"stun_duration": "3"
+"slow_duration": "4.5",
+"stun_duration": "2"
 })
 brief_description = "Урон: {damage}, оглушает"
 usage_text = "{count} исп./{cooldown} с"

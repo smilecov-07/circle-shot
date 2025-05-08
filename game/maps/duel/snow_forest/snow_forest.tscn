@@ -39,5 +39,4 @@ texture_repeat = 2
 scale = Vector2(2, 2)
 texture = ExtResource("3_23vgq")
 centered = false
-region_enabled = true
 region_rect = Rect2(0, 0, 1280, 720)

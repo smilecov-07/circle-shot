@@ -62,13 +62,13 @@ func _ready() -> void:
 	get_window().size_changed.connect(_update_aim_visual_size)
 	
 	# UPnP
-	var upnp_status := "Отключено"
+	var upnp_status := "Отключён"
 	if Globals.main.upnp:
 		match Globals.main.upnp.status:
 			UPNPManager.Status.INACTIVE:
-				upnp_status = "Неактивно"
+				upnp_status = "Неактивен"
 			_:
-				upnp_status = "Активно"
+				upnp_status = "Активен"
 	(%UPNPStatus as Label).text = upnp_status
 	
 	# Кастомные треки

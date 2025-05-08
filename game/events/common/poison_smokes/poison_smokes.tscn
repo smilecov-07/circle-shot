@@ -120,6 +120,7 @@ _data = {
 
 [node name="PoisonSmokes" type="Node2D"]
 physics_interpolation_mode = 1
+z_index = 4
 script = ExtResource("1_a2moi")
 damage = 20
 damage_interval = 1.0
@@ -137,7 +138,6 @@ metadata/_custom_type_script = "uid://ccr5t8s5ui45t"
 shape = SubResource("WorldBoundaryShape2D_k7uj4")
 
 [node name="Top" type="Sprite2D" parent="Bottom"]
-z_index = 4
 texture_repeat = 2
 position = Vector2(-6144, 132)
 texture = ExtResource("3_jp17w")
@@ -145,7 +145,6 @@ region_enabled = true
 region_rect = Rect2(0, 2, 4096, 510)
 
 [node name="Top2" type="Sprite2D" parent="Bottom"]
-z_index = 4
 texture_repeat = 2
 position = Vector2(-2048, 132)
 texture = ExtResource("3_jp17w")
@@ -153,7 +152,6 @@ region_enabled = true
 region_rect = Rect2(0, 2, 4096, 510)
 
 [node name="Top3" type="Sprite2D" parent="Bottom"]
-z_index = 4
 texture_repeat = 2
 position = Vector2(2048, 132)
 texture = ExtResource("3_jp17w")
@@ -161,7 +159,6 @@ region_enabled = true
 region_rect = Rect2(0, 2, 4096, 510)
 
 [node name="Top4" type="Sprite2D" parent="Bottom"]
-z_index = 4
 texture_repeat = 2
 position = Vector2(6144, 132)
 texture = ExtResource("3_jp17w")
@@ -169,7 +166,6 @@ region_enabled = true
 region_rect = Rect2(0, 2, 4096, 510)
 
 [node name="Base" type="Sprite2D" parent="Bottom"]
-z_index = 4
 position = Vector2(-6144, 4482)
 scale = Vector2(4, 4)
 texture = ExtResource("4_d8b6i")
@@ -177,7 +173,6 @@ region_enabled = true
 region_rect = Rect2(0, 0, 1024, 2048)
 
 [node name="Base2" type="Sprite2D" parent="Bottom"]
-z_index = 4
 position = Vector2(-2048, 4482)
 scale = Vector2(4, 4)
 texture = ExtResource("4_d8b6i")
@@ -185,7 +180,6 @@ region_enabled = true
 region_rect = Rect2(0, 0, 1024, 2048)
 
 [node name="Base3" type="Sprite2D" parent="Bottom"]
-z_index = 4
 position = Vector2(2048, 4482)
 scale = Vector2(4, 4)
 texture = ExtResource("4_d8b6i")
@@ -193,7 +187,6 @@ region_enabled = true
 region_rect = Rect2(0, 0, 1024, 2048)
 
 [node name="Base4" type="Sprite2D" parent="Bottom"]
-z_index = 4
 position = Vector2(6144, 4482)
 scale = Vector2(4, 4)
 texture = ExtResource("4_d8b6i")
@@ -230,7 +223,6 @@ metadata/_custom_type_script = "uid://ccr5t8s5ui45t"
 shape = SubResource("WorldBoundaryShape2D_k7uj4")
 
 [node name="Top" type="Sprite2D" parent="Top"]
-z_index = 4
 texture_repeat = 2
 position = Vector2(-6144, 132)
 texture = ExtResource("3_jp17w")
@@ -238,7 +230,6 @@ region_enabled = true
 region_rect = Rect2(0, 2, 4096, 510)
 
 [node name="Top2" type="Sprite2D" parent="Top"]
-z_index = 4
 texture_repeat = 2
 position = Vector2(-2048, 132)
 texture = ExtResource("3_jp17w")
@@ -246,7 +237,6 @@ region_enabled = true
 region_rect = Rect2(0, 2, 4096, 510)
 
 [node name="Top3" type="Sprite2D" parent="Top"]
-z_index = 4
 texture_repeat = 2
 position = Vector2(2048, 132)
 texture = ExtResource("3_jp17w")
@@ -254,7 +244,6 @@ region_enabled = true
 region_rect = Rect2(0, 2, 4096, 510)
 
 [node name="Top4" type="Sprite2D" parent="Top"]
-z_index = 4
 texture_repeat = 2
 position = Vector2(6144, 132)
 texture = ExtResource("3_jp17w")
@@ -262,7 +251,6 @@ region_enabled = true
 region_rect = Rect2(0, 2, 4096, 510)
 
 [node name="Base" type="Sprite2D" parent="Top"]
-z_index = 4
 position = Vector2(-6144, 4482)
 scale = Vector2(4, 4)
 texture = ExtResource("4_d8b6i")
@@ -270,7 +258,6 @@ region_enabled = true
 region_rect = Rect2(0, 0, 1024, 2048)
 
 [node name="Base2" type="Sprite2D" parent="Top"]
-z_index = 4
 position = Vector2(-2048, 4482)
 scale = Vector2(4, 4)
 texture = ExtResource("4_d8b6i")
@@ -278,7 +265,6 @@ region_enabled = true
 region_rect = Rect2(0, 0, 1024, 2048)
 
 [node name="Base3" type="Sprite2D" parent="Top"]
-z_index = 4
 position = Vector2(2048, 4482)
 scale = Vector2(4, 4)
 texture = ExtResource("4_d8b6i")
@@ -286,7 +272,6 @@ region_enabled = true
 region_rect = Rect2(0, 0, 1024, 2048)
 
 [node name="Base4" type="Sprite2D" parent="Top"]
-z_index = 4
 position = Vector2(6144, 4482)
 scale = Vector2(4, 4)
 texture = ExtResource("4_d8b6i")
@@ -324,7 +309,6 @@ metadata/_custom_type_script = "uid://ccr5t8s5ui45t"
 shape = SubResource("WorldBoundaryShape2D_k7uj4")
 
 [node name="Top" type="Sprite2D" parent="Left"]
-z_index = 4
 texture_repeat = 2
 position = Vector2(-6144, 132)
 texture = ExtResource("3_jp17w")
@@ -332,7 +316,6 @@ region_enabled = true
 region_rect = Rect2(0, 2, 4096, 510)
 
 [node name="Top2" type="Sprite2D" parent="Left"]
-z_index = 4
 texture_repeat = 2
 position = Vector2(-2048, 132)
 texture = ExtResource("3_jp17w")
@@ -340,7 +323,6 @@ region_enabled = true
 region_rect = Rect2(0, 2, 4096, 510)
 
 [node name="Top3" type="Sprite2D" parent="Left"]
-z_index = 4
 texture_repeat = 2
 position = Vector2(2048, 132)
 texture = ExtResource("3_jp17w")
@@ -348,7 +330,6 @@ region_enabled = true
 region_rect = Rect2(0, 2, 4096, 510)
 
 [node name="Top4" type="Sprite2D" parent="Left"]
-z_index = 4
 texture_repeat = 2
 position = Vector2(6144, 132)
 texture = ExtResource("3_jp17w")
@@ -356,7 +337,6 @@ region_enabled = true
 region_rect = Rect2(0, 2, 4096, 510)
 
 [node name="Base" type="Sprite2D" parent="Left"]
-z_index = 4
 position = Vector2(-6144, 4482)
 scale = Vector2(4, 4)
 texture = ExtResource("4_d8b6i")
@@ -364,7 +344,6 @@ region_enabled = true
 region_rect = Rect2(0, 0, 1024, 2048)
 
 [node name="Base2" type="Sprite2D" parent="Left"]
-z_index = 4
 position = Vector2(-2048, 4482)
 scale = Vector2(4, 4)
 texture = ExtResource("4_d8b6i")
@@ -372,7 +351,6 @@ region_enabled = true
 region_rect = Rect2(0, 0, 1024, 2048)
 
 [node name="Base3" type="Sprite2D" parent="Left"]
-z_index = 4
 position = Vector2(2048, 4482)
 scale = Vector2(4, 4)
 texture = ExtResource("4_d8b6i")
@@ -380,7 +358,6 @@ region_enabled = true
 region_rect = Rect2(0, 0, 1024, 2048)
 
 [node name="Base4" type="Sprite2D" parent="Left"]
-z_index = 4
 position = Vector2(6144, 4482)
 scale = Vector2(4, 4)
 texture = ExtResource("4_d8b6i")
@@ -418,7 +395,6 @@ metadata/_custom_type_script = "uid://ccr5t8s5ui45t"
 shape = SubResource("WorldBoundaryShape2D_k7uj4")
 
 [node name="Top" type="Sprite2D" parent="Right"]
-z_index = 4
 texture_repeat = 2
 position = Vector2(-6144, 132)
 texture = ExtResource("3_jp17w")
@@ -426,7 +402,6 @@ region_enabled = true
 region_rect = Rect2(0, 2, 4096, 510)
 
 [node name="Top2" type="Sprite2D" parent="Right"]
-z_index = 4
 texture_repeat = 2
 position = Vector2(-2048, 132)
 texture = ExtResource("3_jp17w")
@@ -434,7 +409,6 @@ region_enabled = true
 region_rect = Rect2(0, 2, 4096, 510)
 
 [node name="Top3" type="Sprite2D" parent="Right"]
-z_index = 4
 texture_repeat = 2
 position = Vector2(2048, 132)
 texture = ExtResource("3_jp17w")
@@ -442,7 +416,6 @@ region_enabled = true
 region_rect = Rect2(0, 2, 4096, 510)
 
 [node name="Top4" type="Sprite2D" parent="Right"]
-z_index = 4
 texture_repeat = 2
 position = Vector2(6144, 132)
 texture = ExtResource("3_jp17w")
@@ -450,7 +423,6 @@ region_enabled = true
 region_rect = Rect2(0, 2, 4096, 510)
 
 [node name="Base" type="Sprite2D" parent="Right"]
-z_index = 4
 position = Vector2(-6144, 4482)
 scale = Vector2(4, 4)
 texture = ExtResource("4_d8b6i")
@@ -458,7 +430,6 @@ region_enabled = true
 region_rect = Rect2(0, 0, 1024, 2048)
 
 [node name="Base2" type="Sprite2D" parent="Right"]
-z_index = 4
 position = Vector2(-2048, 4482)
 scale = Vector2(4, 4)
 texture = ExtResource("4_d8b6i")
@@ -466,7 +437,6 @@ region_enabled = true
 region_rect = Rect2(0, 0, 1024, 2048)
 
 [node name="Base3" type="Sprite2D" parent="Right"]
-z_index = 4
 position = Vector2(2048, 4482)
 scale = Vector2(4, 4)
 texture = ExtResource("4_d8b6i")
@@ -474,7 +444,6 @@ region_enabled = true
 region_rect = Rect2(0, 0, 1024, 2048)
 
 [node name="Base4" type="Sprite2D" parent="Right"]
-z_index = 4
 position = Vector2(6144, 4482)
 scale = Vector2(4, 4)
 texture = ExtResource("4_d8b6i")

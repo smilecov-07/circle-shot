@@ -11,6 +11,7 @@ enum Side {
 @export var duration := 400.0
 @export var start_distance := 4800.0
 @export_flags("Left:1", "Right:2", "Top:4", "Bottom:8") var sides: int = 15
+@export var damage_increase: int = 10
 
 var _damage_increase_for_entity: Dictionary[StringName, int]
 var _damage_increase_timers: Dictionary[StringName, float]
@@ -57,7 +58,7 @@ func _physics_process(delta: float) -> void:
 
 func _deal_damage(entity: Entity, amount: int) -> int:
 	var old_damage: int = _damage_increase_for_entity.get_or_add(entity.name, 0)
-	_damage_increase_for_entity[entity.name] += 10
+	_damage_increase_for_entity[entity.name] += damage_increase
 	_damage_increase_timers[entity.name] = damage_interval + 0.1
 	return amount + old_damage
 

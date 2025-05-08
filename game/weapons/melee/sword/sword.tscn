@@ -231,7 +231,7 @@ texture = ExtResource("2_qjpw5")
 offset = Vector2(108, 0)
 
 [node name="Aim" type="Line2D" parent="." index="2"]
-z_index = 5
+z_index = 10
 position = Vector2(128, 0)
 points = PackedVector2Array(-41, 0, -72, -72, -16, -216, 72, -216, 152, -64, 152, 64, 72, 216, -16, 216, -72, 72)
 closed = true

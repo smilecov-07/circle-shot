@@ -67,7 +67,7 @@ script = ExtResource("3_knbu5")
 replication_config = SubResource("SceneReplicationConfig_r6igu")
 
 [node name="Name" type="Node2D" parent="." index="2"]
-z_index = 6
+z_index = 14
 position = Vector2(0, -120)
 
 [node name="Label" type="Label" parent="Name" index="0"]
@@ -93,7 +93,7 @@ shape = SubResource("CircleShape2D_i6vnq")
 
 [node name="ControlIndicator" type="Sprite2D" parent="." index="4"]
 visible = false
-z_index = 10
+z_index = 15
 position = Vector2(0, 96)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("3_fptox")

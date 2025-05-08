@@ -15,7 +15,7 @@ metadata/_custom_type_script = "uid://bqt2qhk5ev2vc"
 
 [node name="Aim" type="Line2D" parent="ThrowPivot/ThrowPoint"]
 visible = false
-z_index = 5
+z_index = 10
 points = PackedVector2Array(0, 0, 6500, 0)
 width = 48.0
 default_color = Color(0, 0, 0, 0.25098)

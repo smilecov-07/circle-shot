@@ -1,10 +1,9 @@
 class_name Menu
 extends Control
+
 ## Меню игры.
 ##
 ## Класс главного меню игры.
-
-var _name_accepted := false
 
 func _ready() -> void:
 	($About as Window).title = "Об игре (версия: %s)" % Globals.version
@@ -29,7 +28,7 @@ func check_updates() -> void:
 	if Globals.data_file.has_section_key("versions", "checked"):
 		var betas_checked: bool = Globals.data_file.get_value("versions", "checked")
 		if not betas_checked or Globals.get_setting_bool("check_betas"):
-			print_verbose("Updates check interrupted: already checked.")
+			print_verbose("Updates already checked.")
 			return
 	if "--disable-update-check" in OS.get_cmdline_user_args() \
 			or not Globals.get_setting_bool("check_updates"):
@@ -75,11 +74,6 @@ func _is_version_newer_than(first: String, second: String) -> bool:
 	return first_splits.size() < second_splits.size()
 
 
-func _on_name_dialog_visibility_changed() -> void:
-	if not ($NameDialog as Window).visible and not _name_accepted:
-		($NameDialog as Window).popup_centered.call_deferred()
-
-
 func _on_play_network_pressed() -> void:
 	Globals.main.open_local_game()
 
@@ -89,7 +83,6 @@ func _on_settings_pressed() -> void:
 
 
 func _on_name_dialog_name_accepted() -> void:
-	_name_accepted = true
 	check_updates.call_deferred() # избегаем exclusive child moment
 
 

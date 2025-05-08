@@ -6,7 +6,7 @@ extends Node
 signal status_changed
 ## Статус UPnP.
 enum Status {
-	## Отключено в настройках.
+	## Отключён либо попытка открытия портов не удалась.
 	INACTIVE = 0,
 	## Поиск UPnP устройств.
 	DISCOVERING = 1,
