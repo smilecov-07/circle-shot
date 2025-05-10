@@ -71,9 +71,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -212.0
+offset_left = -224.0
 offset_top = -200.0
-offset_right = 212.0
+offset_right = 224.0
 offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -162,26 +162,27 @@ libraries = {
 }
 autoplay = "Searching"
 
-[node name="ConnectIP" type="HBoxContainer" parent="Base/Margin/VBox"]
+[node name="ConnectAddress" type="HBoxContainer" parent="Base/Margin/VBox"]
 layout_mode = 2
 alignment = 1
 
-[node name="IPEdit" type="LineEdit" parent="Base/Margin/VBox/ConnectIP"]
+[node name="AddressEdit" type="LineEdit" parent="Base/Margin/VBox/ConnectAddress"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = "Введи IP сервера..."
+placeholder_text = "Введи адрес сервера..."
 alignment = 1
 max_length = 49
 expand_to_text_length = true
+virtual_keyboard_type = 7
 clear_button_enabled = true
 
-[node name="Join" type="Button" parent="Base/Margin/VBox/ConnectIP"]
+[node name="Join" type="Button" parent="Base/Margin/VBox/ConnectAddress"]
 layout_mode = 2
 text = "Подключиться"
 icon = ExtResource("3_ug3n1")
 
 [connection signal="pressed" from="Base/Margin/VBox/Title/Quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="Base/Margin/VBox/Create" to="." method="_on_create_pressed"]
-[connection signal="text_submitted" from="Base/Margin/VBox/ConnectIP/IPEdit" to="." method="_on_join_pressed" unbinds=1]
-[connection signal="pressed" from="Base/Margin/VBox/ConnectIP/Join" to="." method="_on_join_pressed"]
+[connection signal="text_submitted" from="Base/Margin/VBox/ConnectAddress/AddressEdit" to="." method="_on_join_pressed" unbinds=1]
+[connection signal="pressed" from="Base/Margin/VBox/ConnectAddress/Join" to="." method="_on_join_pressed"]

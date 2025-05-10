@@ -559,7 +559,7 @@ size_flags_vertical = 4
 text = "Подключён к "
 underline = 1
 
-[node name="ViewIPs" type="Button" parent="Panels/Lobby/VBoxContainer/ControlButtons"]
+[node name="ViewIP" type="Button" parent="Panels/Lobby/VBoxContainer/ControlButtons"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 6
@@ -603,7 +603,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Сообщение..."
 max_length = 80
-keep_editing_on_text_submit = true
 context_menu_enabled = false
 
 [node name="Send" type="TextureButton" parent="Panels/Chat/VBoxContainer/HBoxContainer"]
@@ -614,7 +613,6 @@ ignore_texture_size = true
 stretch_mode = 4
 
 [node name="ItemSelector" type="Window" parent="."]
-initial_position = 2
 size = Vector2i(408, 440)
 visible = false
 transient = true
@@ -653,7 +651,6 @@ metadata/_custom_type_script = "uid://cq43botg0qg0m"
 
 [node name="ViewIPDialog" type="AcceptDialog" parent="."]
 title = "Твои IP-адреса"
-initial_position = 2
 size = Vector2i(640, 160)
 exclusive = false
 unresizable = true
@@ -664,9 +661,9 @@ script = ExtResource("5_jyb4t")
 [node name="HTTPRequest" type="HTTPRequest" parent="ViewIPDialog"]
 timeout = 5.0
 
-[node name="UDPTimer" type="Timer" parent="."]
+[node name="BroadcastTimer" type="Timer" parent="."]
 
-[node name="UpdateIPSTimer" type="Timer" parent="."]
+[node name="UpdateBroadcastTimer" type="Timer" parent="."]
 wait_time = 10.0
 
 [node name="CountdownTimer" type="Timer" parent="."]
@@ -684,7 +681,7 @@ one_shot = true
 [connection signal="pressed" from="Panels/Lobby/VBoxContainer/AdminPanel/ChangeMap" to="." method="_on_change_map_pressed"]
 [connection signal="toggled" from="Panels/Lobby/VBoxContainer/ControlButtons/Chat" to="Panels/Chat" method="_on_chat_toggled"]
 [connection signal="pressed" from="Panels/Lobby/VBoxContainer/ControlButtons/ConnectedToIP" to="." method="_on_connected_to_ip_pressed"]
-[connection signal="pressed" from="Panels/Lobby/VBoxContainer/ControlButtons/ViewIPs" to="ViewIPDialog" method="popup_centered"]
+[connection signal="pressed" from="Panels/Lobby/VBoxContainer/ControlButtons/ViewIP" to="ViewIPDialog" method="popup_centered"]
 [connection signal="pressed" from="Panels/Lobby/VBoxContainer/ControlButtons/Leave" to="." method="_on_leave_pressed"]
 [connection signal="text_submitted" from="Panels/Chat/VBoxContainer/HBoxContainer/LineEdit" to="Panels/Chat" method="send_message" unbinds=1]
 [connection signal="pressed" from="Panels/Chat/VBoxContainer/HBoxContainer/Send" to="Panels/Chat" method="send_message"]
@@ -693,6 +690,6 @@ one_shot = true
 [connection signal="about_to_popup" from="ViewIPDialog" to="ViewIPDialog" method="_on_about_to_popup"]
 [connection signal="custom_action" from="ViewIPDialog" to="ViewIPDialog" method="_on_custom_action"]
 [connection signal="request_completed" from="ViewIPDialog/HTTPRequest" to="ViewIPDialog" method="_on_request_completed"]
-[connection signal="timeout" from="UDPTimer" to="." method="_do_broadcast"]
-[connection signal="timeout" from="UpdateIPSTimer" to="." method="_find_ips_for_broadcast"]
+[connection signal="timeout" from="BroadcastTimer" to="." method="_do_broadcast"]
+[connection signal="timeout" from="UpdateBroadcastTimer" to="." method="_find_ips_for_broadcast"]
 [connection signal="timeout" from="CountdownTimer" to="." method="_on_countdown_timer_timeout"]

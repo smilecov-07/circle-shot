@@ -4,7 +4,7 @@ extends Control
 var _udp := UDPServer.new()
 var _local_lobby_entry_scene: PackedScene = preload("uid://bs4vk7wdu27eo")
 @onready var _game: Game = get_parent()
-@onready var _ip_edit: LineEdit = %IPEdit
+@onready var _address_edit: LineEdit = %AddressEdit
 @onready var _lobbies_container: VBoxContainer = %LobbiesContainer
 @onready var _no_lobbies_label: Label = %NoLobbiesLabel
 
@@ -15,9 +15,10 @@ func _ready() -> void:
 	_game.closed.connect(_on_game_closed)
 	
 	if DisplayServer.has_feature(DisplayServer.FEATURE_CLIPBOARD):
-		var clipboard_text: String = _cleanup_ip(DisplayServer.clipboard_get().get_slice('\n', 0))
-		if clipboard_text.is_valid_ip_address():
-			_ip_edit.text = clipboard_text
+		var clipboard_text: String = \
+				_cleanup_address(DisplayServer.clipboard_get().get_slice('\n', 0))
+		if clipboard_text.is_valid_ip_address() or clipboard_text.count('.') > 0:
+			_address_edit.text = clipboard_text
 	
 	_udp.listen(Game.LISTEN_PORT)
 	print_verbose("Started listening.")
@@ -76,30 +77,30 @@ func _notification(what: int) -> void:
 			_on_quit_pressed.call_deferred() # Избегаем мгновенное закрытие
 
 
-func _cleanup_ip(ip: String) -> String:
-	ip = ip.strip_edges().strip_escapes()
-	if ip.contains(' '):
-		ip = ip.get_slice(' ', 0)
-	ip = ip.strip_edges().strip_escapes()
+func _cleanup_address(address: String) -> String:
+	address = address.strip_edges().strip_escapes()
+	if address.contains(' '):
+		address = address.get_slice(' ', 0)
+	address = address.strip_edges().strip_escapes()
 	
-	if ip.begins_with("https://"):
-		ip = ip.right(-8) # длина https://
-	if ip.begins_with("http://"):
-		ip = ip.right(-7) # аналогично
+	if address.begins_with("https://"):
+		address = address.right(-8) # Длина https://
+	if address.begins_with("http://"):
+		address = address.right(-7) # Аналогично
 	
-	# проверка на указания порта
-	if ':' in ip:
-		var last_colon_idx: int = ip.rfind(':')
-		var last_bracket_idx: int = ip.rfind(']')
-		if '.' in ip:
-			ip = ip.left(last_colon_idx)
+	# Проверка на указания порта
+	if ':' in address:
+		var last_colon_idx: int = address.rfind(':')
+		var last_bracket_idx: int = address.rfind(']')
+		if '.' in address:
+			address = address.left(last_colon_idx)
 		elif last_bracket_idx > -1 and last_bracket_idx < last_colon_idx:
-			ip = ip.left(last_colon_idx)
+			address = address.left(last_colon_idx)
 	
-	# на случай если IPv6
-	ip = ip.lstrip('[')
-	ip = ip.rstrip(']')
-	return ip
+	# На случай если IPv6
+	address = address.lstrip('[')
+	address = address.rstrip(']')
+	return address
 
 
 func _on_game_created() -> void:
@@ -125,8 +126,8 @@ func _on_create_pressed() -> void:
 
 
 func _on_join_pressed() -> void:
-	_ip_edit.text = _cleanup_ip(_ip_edit.text)
-	_game.join(_ip_edit.text)
+	_address_edit.text = _cleanup_address(_address_edit.text)
+	_game.join(_address_edit.text)
 
 
 func _on_quit_pressed() -> void:

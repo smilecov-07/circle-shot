@@ -9,8 +9,8 @@
 [sub_resource type="ViewportTexture" id="ViewportTexture_wnvha"]
 viewport_path = NodePath("UI/MinimapViewport")
 
-[sub_resource type="Animation" id="Animation_gvqew"]
-resource_name = "Victory"
+[sub_resource type="Animation" id="Animation_7w56i"]
+resource_name = "Draw"
 length = 7.0
 step = 0.1
 tracks/0/type = "value"
@@ -47,7 +47,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [true]
+"values": [false]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -59,7 +59,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
+"values": [false]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -71,7 +71,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
+"values": [false]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -83,7 +83,7 @@ tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false]
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_0668s"]
@@ -162,8 +162,8 @@ tracks/5/keys = {
 "values": [true]
 }
 
-[sub_resource type="Animation" id="Animation_7w56i"]
-resource_name = "Draw"
+[sub_resource type="Animation" id="Animation_gvqew"]
+resource_name = "Victory"
 length = 7.0
 step = 0.1
 tracks/0/type = "value"
@@ -200,7 +200,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [false]
+"values": [true]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -212,7 +212,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false]
+"values": [true]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -224,7 +224,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false]
+"values": [true]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -236,7 +236,7 @@ tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
+"values": [false]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fraxw"]
@@ -313,7 +313,7 @@ radius = 320.0
 
 [node name="Event" instance=ExtResource("1_geta0")]
 script = ExtResource("2_xtwto")
-match_time = 180
+match_time = 240
 comeback_time = 5
 player_scenes = Array[PackedScene]([ExtResource("3_whopm")])
 

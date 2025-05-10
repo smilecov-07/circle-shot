@@ -110,8 +110,12 @@ func _determine_winner() -> void:
 	end.rpc()
 
 
+func _on_local_player_died() -> void:
+	_teamfight_ui.show_comeback(comeback_time)
+
+
 func _on_local_player_created(player: Player) -> void:
-	player.died.connect(_teamfight_ui.show_comeback.unbind(1).bind(comeback_time))
+	player.died.connect(_on_local_player_died.unbind(1))
 
 
 func _on_match_timer_timeout() -> void:

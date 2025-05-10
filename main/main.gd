@@ -532,7 +532,7 @@ func _loading_check_server() -> void:
 	await get_tree().process_frame
 	
 	var http := HTTPRequest.new()
-	http.timeout = 3.0
+	http.timeout = 5.0
 	http.request_completed.connect(_on_check_http_request_completed.bind(http))
 	add_child(http)
 	

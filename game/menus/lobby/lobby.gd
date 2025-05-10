@@ -80,7 +80,8 @@ func _ready() -> void:
 	_update_equip()
 	_update_environment()
 	
-	_find_ips_for_broadcast()
+	if Globals.get_setting_bool("broadcast"):
+		_find_ips_for_broadcast()
 	
 	if Globals.main.console:
 		Globals.main.console.command_processors.append(_process_console_command)
@@ -404,10 +405,10 @@ func _start_event(event_id: int, map_id: int) -> void:
 		return
 	
 	_chat.clear_chat()
-	if not ($UDPTimer as Timer).is_stopped():
-		($UDPTimer as Timer).stop()
-	if not ($UpdateIPSTimer as Timer).is_stopped():
-		($UpdateIPSTimer as Timer).stop()
+	if not ($BroadcastTimer as Timer).is_stopped():
+		($BroadcastTimer as Timer).stop()
+	if not ($UpdateBroadcastTimer as Timer).is_stopped():
+		($UpdateBroadcastTimer as Timer).stop()
 	if multiplayer.is_server():
 		($ViewIPDialog as Window).hide()
 		for id: int in multiplayer.get_peers():
@@ -562,9 +563,6 @@ func _get_start_reject_reason() -> StartRejectReason:
 
 func _find_ips_for_broadcast() -> void:
 	_udp_peers.clear()
-	if not Globals.get_setting_bool("broadcast"):
-		print_verbose("Not finding IPs for broadcast: disabled.")
-		return
 	print_verbose("Finding IPs for broadcast...")
 	# Отсылаем пакеты по всем локальным адресам
 	for ip: String in IP.get_local_addresses():
@@ -572,7 +570,7 @@ func _find_ips_for_broadcast() -> void:
 			if ip.begins_with(prefix):
 				var udp := PacketPeerUDP.new()
 				udp.set_broadcast_enabled(true)
-				# Меняем конец IP на 255
+				# Меняем конец IP на 255 для получения широковещательного адреса
 				var broadcast_ip: String = ip.rsplit('.', true, 1)[0] + ".255"
 				udp.set_dest_address(broadcast_ip, Game.LISTEN_PORT)
 				print_verbose("Found IP to broadcast: %s." % broadcast_ip)
@@ -719,17 +717,18 @@ func _on_client_timer_timeout(id: int) -> void:
 func _on_game_created() -> void:
 	show()
 	(%ControlButtons/ConnectedToIP as CanvasItem).hide()
-	(%ControlButtons/ViewIPs as CanvasItem).show()
+	(%ControlButtons/ViewIP as CanvasItem).show()
 	_players.clear()
-	($UDPTimer as Timer).start()
-	($UpdateIPSTimer as Timer).start()
-	_broadcast_lobby_id = Globals.get_string("player_name", "Server").hash() \
-			* OS.get_unique_id().hash() + OS.get_process_id()
-	_broadcast_lobby_id %= 256
+	if Globals.get_setting_bool("broadcast"):
+		($BroadcastTimer as Timer).start()
+		($UpdateBroadcastTimer as Timer).start()
+		_broadcast_lobby_id = Globals.get_string("player_name", "Server").hash() \
+				* OS.get_unique_id().hash() + OS.get_process_id()
+		_broadcast_lobby_id %= 256
+		_do_broadcast()
 	if not Globals.headless:
 		_register_new_player.rpc_id(MultiplayerPeer.TARGET_PEER_SERVER,
 				Globals.get_string("player_name"))
-	_do_broadcast()
 
 
 func _on_game_joined() -> void:
@@ -740,7 +739,7 @@ func _on_game_joined() -> void:
 	(%ControlButtons/ConnectedToIP as LinkButton).text = "Подключено к %s" % \
 			(multiplayer.multiplayer_peer as ENetMultiplayerPeer).get_peer(
 			MultiplayerPeer.TARGET_PEER_SERVER).get_remote_address()
-	(%ControlButtons/ViewIPs as CanvasItem).hide()
+	(%ControlButtons/ViewIP as CanvasItem).hide()
 	(%ClientHint as Label).text = "Ожидание сервера..."
 	_register_new_player.rpc_id(MultiplayerPeer.TARGET_PEER_SERVER,
 			Globals.get_string("player_name"))
@@ -750,10 +749,10 @@ func _on_game_closed() -> void:
 	hide()
 	_item_selector.hide()
 	
-	if not ($UDPTimer as Timer).is_stopped():
-		($UDPTimer as Timer).stop()
-	if not ($UpdateIPSTimer as Timer).is_stopped():
-		($UpdateIPSTimer as Timer).stop()
+	if not ($BroadcastTimer as Timer).is_stopped():
+		($BroadcastTimer as Timer).stop()
+	if not ($UpdateBroadcastTimer as Timer).is_stopped():
+		($UpdateBroadcastTimer as Timer).stop()
 	if not _countdown_timer.is_stopped():
 		_countdown_timer.stop()
 	_hide_countdown()
@@ -773,8 +772,8 @@ func _on_game_started() -> void:
 func _on_game_ended() -> void:
 	show()
 	if multiplayer.is_server():
-		($UDPTimer as Timer).start()
-		($UpdateIPSTimer as Timer).start()
+		($BroadcastTimer as Timer).start()
+		($UpdateBroadcastTimer as Timer).start()
 
 
 func _on_peer_connected(id: int) -> void:

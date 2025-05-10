@@ -127,16 +127,20 @@ func create(port: int = DEFAULT_PORT) -> void:
 	print_verbose("Created server at port %d." % port)
 
 
-## Пытается подключиться к серверу по [param ip].
-func join(ip: String, port: int = DEFAULT_PORT) -> void:
-	if not ip.is_valid_ip_address() and ip.count('.') == 0:
-		show_error("Введён некорректный IP или адрес сервера!")
-		return
+## Пытается подключиться к серверу по [param address].
+func join(address: String, port: int = DEFAULT_PORT) -> void:
 	if state != State.CLOSED:
 		push_error("Can't join to server: game isn't closed.")
 		return
+	# Если адрес не IP, выполняется попытка разрешить домен для более понятной ошибки,
+	# если он введён неверно.
+	if not address.is_valid_ip_address() and \
+			(address.count('.') == 0 or IP.resolve_hostname(address).is_empty()):
+		show_error("Введён некорректный адрес сервера!")
+		return
+	
 	var peer := ENetMultiplayerPeer.new()
-	var error: Error = peer.create_client(ip, port)
+	var error: Error = peer.create_client(address, port)
 	if error != OK:
 		show_error("Невозможно начать подключение! Ошибка: %s" % error_string(error))
 		push_warning("Can't initiate connection with error: %s." % error_string(error))
@@ -145,6 +149,7 @@ func join(ip: String, port: int = DEFAULT_PORT) -> void:
 		show_error("Невозможно начать подключение!")
 		push_warning("Can't initiate connection.")
 		return
+	
 	# Уменьшаем время тайм-аута
 	peer.get_peer(MultiplayerPeer.TARGET_PEER_SERVER).set_timeout(
 			BASE_TIMEOUT, BASE_TIMEOUT * 2, BASE_TIMEOUT * 3)
@@ -154,9 +159,10 @@ func join(ip: String, port: int = DEFAULT_PORT) -> void:
 	_scene_multiplayer.peer_authentication_failed.connect(_on_peer_authentication_failed)
 	multiplayer.multiplayer_peer = peer
 	state = State.CONNECTING
-	($ConnectingDialog as Window).show()
-	($ConnectingDialog as AcceptDialog).dialog_text = "Подключение к %s..." % ip
-	print_verbose("Connecting to %s..." % ip)
+	
+	($ConnectingDialog as AcceptDialog).dialog_text = "Подключение к %s..." % address
+	($ConnectingDialog as Window).popup_centered(Vector2i.ONE)
+	print_verbose("Connecting to %s..." % address)
 
 
 ## Закрывает игру.
@@ -224,7 +230,7 @@ func load_event(event_id: int, map_id: int, player_name := "", equip_data: Array
 ## Показывает диалог с ошибкой.
 func show_error(error_text: String) -> void:
 	($ErrorDialog as AcceptDialog).dialog_text = error_text
-	($ErrorDialog as AcceptDialog).popup_centered()
+	($ErrorDialog as AcceptDialog).popup_centered(Vector2i.ONE)
 
 
 ## Проверяет имя игрока и исправляет при необходимости. Если [param id] равен 0, не печатает
@@ -441,7 +447,7 @@ func _process_console_command(command: PackedStringArray) -> bool:
 
 func _print_help() -> void:
 	print("close - Closes server or client.")
-	print("join <ip> [port] - Joins server by IP and port.")
+	print("join <address> [port] - Joins server by address and port.")
 	print("create [port] - Creates server at specified port.")
 
 
