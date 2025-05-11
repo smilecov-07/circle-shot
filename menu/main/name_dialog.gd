@@ -8,7 +8,7 @@ signal name_accepted
 
 func _on_confirm_pressed() -> void:
 	var result: Array[bool]
-	var player_name: String = Game.validate_player_name((%LineEdit as LineEdit).text, 0, result)
+	var player_name: String = Utils.validate_player_name((%LineEdit as LineEdit).text, 0, result)
 	(%LineEdit as LineEdit).clear()
 	if not result[0]:
 		(%LineEdit as LineEdit).placeholder_text = "Недопустимое имя!"

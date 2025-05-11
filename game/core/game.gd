@@ -82,15 +82,15 @@ var _players_not_ready: Array[int]
 func _ready() -> void:
 	_scene_multiplayer = multiplayer
 	_scene_multiplayer.auth_callback = _authenticate_callback
-	if Globals.main.console:
-		Globals.main.console.command_processors.append(_process_console_command)
-		Globals.main.console.help_processors.append(_print_help)
+	if Globals.console:
+		Globals.console.command_processors.append(_process_console_command)
+		Globals.console.help_processors.append(_print_help)
 
 
 func _exit_tree() -> void:
-	if Globals.main.console:
-		Globals.main.console.command_processors.erase(_process_console_command)
-		Globals.main.console.help_processors.erase(_print_help)
+	if Globals.console:
+		Globals.console.command_processors.erase(_process_console_command)
+		Globals.console.help_processors.erase(_print_help)
 	# Очистка на всякий случай
 	if multiplayer.has_multiplayer_peer():
 		close()
@@ -132,10 +132,7 @@ func join(address: String, port: int = DEFAULT_PORT) -> void:
 	if state != State.CLOSED:
 		push_error("Can't join to server: game isn't closed.")
 		return
-	# Если адрес не IP, выполняется попытка разрешить домен для более понятной ошибки,
-	# если он введён неверно.
-	if not address.is_valid_ip_address() and \
-			(address.count('.') == 0 or IP.resolve_hostname(address).is_empty()):
+	if not Utils.is_valid_address(address, true):
 		show_error("Введён некорректный адрес сервера!")
 		return
 	
@@ -233,33 +230,6 @@ func show_error(error_text: String) -> void:
 	($ErrorDialog as AcceptDialog).popup_centered(Vector2i.ONE)
 
 
-## Проверяет имя игрока и исправляет при необходимости. Если [param id] равен 0, не печатает
-## никаких предупреждений. В [param valid] можно передать массив, который после выполнения
-## функции будет содержать [code]true[/code], если имя игрока допустимо.[br]
-## Недопустимое имя заменяется на "Игрок[[param id], если указан]".
-static func validate_player_name(player_name: String, id: int = 0, valid: Array = []) -> String:
-	# Там, где якобы пусто, стоит пустой символ
-	player_name = player_name.strip_edges().strip_escapes().lstrip('⁣')
-	valid.append(not player_name.is_empty())
-	if player_name.is_empty():
-		var new_name: String = "Игрок%d" % id if id != 0 else "Игрок"
-		if id != 0:
-			push_warning("Client's %d player name length is invalid. Falling back to %s." % [
-				id,
-				new_name,
-			])
-		return new_name
-	elif player_name.length() > MAX_PLAYER_NAME_LENGTH:
-		if id != 0:
-			push_warning("Client's %d player name length (%d) is more than allowed (%d)." % [
-				id,
-				player_name.length(),
-				MAX_PLAYER_NAME_LENGTH,
-			])
-		return player_name.left(MAX_PLAYER_NAME_LENGTH)
-	return player_name
-
-
 @rpc("any_peer", "reliable", "call_local", 1)
 func _send_player_data(player_name: String, equip_data: Array[int]) -> void:
 	if not multiplayer.is_server():
@@ -271,7 +241,7 @@ func _send_player_data(player_name: String, equip_data: Array[int]) -> void:
 		push_warning("Equip data from client %d already received." % sender_id)
 		return
 	
-	player_name = validate_player_name(player_name, sender_id)
+	player_name = Utils.validate_player_name(player_name, sender_id)
 	if equip_data.size() != 6:
 		push_warning("Client %d has invalid equip data size: %d." % [
 			sender_id,

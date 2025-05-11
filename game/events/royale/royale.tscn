@@ -291,7 +291,7 @@ text = "Побеждает последний выживший!"
 text = "Каждый сам
 за себя!"
 
-[node name="ResourcePreloader" type="ResourcePreloader" parent="." index="15"]
+[node name="ResourcePreloaderRoyale" type="ResourcePreloader" parent="." index="16"]
 resources = [PackedStringArray("bazooka"), [ExtResource("3_vu7pc")]]
 
 [connection signal="local_player_created" from="." to="." method="_on_local_player_created"]

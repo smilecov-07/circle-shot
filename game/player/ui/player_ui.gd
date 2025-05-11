@@ -12,7 +12,7 @@ const MIN_VIBRATION_AMPLITUDE := 0.05
 const MAX_VIBRATION_AMPLITUDE := 0.2
 
 # Настройки
-var input_method: Main.InputMethod
+var input_method: Globals.InputMethod
 
 var _vibration_enabled: bool
 var _aim_deadzone: float
@@ -68,11 +68,11 @@ var _health_bar_tween: Tween
 
 
 func _ready() -> void:
-	input_method = Globals.get_controls_int("input_method") as Main.InputMethod
+	input_method = Globals.get_controls_int("input_method") as Globals.InputMethod
 	_vibration_enabled = Globals.get_setting_bool("vibration")
 	
 	match input_method:
-		Main.InputMethod.KEYBOARD_AND_MOUSE:
+		Globals.InputMethod.KEYBOARD_AND_MOUSE:
 			($Controller/TouchControls as CanvasItem).hide()
 			($Controller/Skill/TouchScreenButton as CanvasItem).hide()
 			($Controller/AdditionalWeapon/TouchScreenButton as CanvasItem).hide()
@@ -84,7 +84,7 @@ func _ready() -> void:
 			_aim_deadzone = Globals.get_controls_float("aim_deadzone") * smallest_side / 2
 			_aim_max_zone = Globals.get_controls_float("aim_zone") * smallest_side / 2
 			_aim_zone = _aim_max_zone - _aim_deadzone
-		Main.InputMethod.TOUCH:
+		Globals.InputMethod.TOUCH:
 			_joystick_fire = Globals.get_controls_bool("joystick_fire")
 			if _joystick_fire:
 				_aim_joystick.released.connect(_on_aim_joystick_released)
@@ -116,21 +116,21 @@ func _process(delta: float) -> void:
 	
 	_update_skill()
 	match input_method:
-		Main.InputMethod.TOUCH:
+		Globals.InputMethod.TOUCH:
 			_process_touch_input_method(delta)
-		Main.InputMethod.KEYBOARD_AND_MOUSE:
+		Globals.InputMethod.KEYBOARD_AND_MOUSE:
 			_process_keyboard_and_mouse_input_method()
 
 
 func _input(event: InputEvent) -> void:
 	match input_method:
-		Main.InputMethod.TOUCH:
+		Globals.InputMethod.TOUCH:
 			_touch_input(event)
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	match input_method:
-		Main.InputMethod.KEYBOARD_AND_MOUSE:
+		Globals.InputMethod.KEYBOARD_AND_MOUSE:
 			_unhandled_keyboard_and_mouse_input(event)
 
 

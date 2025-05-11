@@ -59,7 +59,8 @@ func load_event(event_id: int, map_id: int) -> Event:
 	
 	var event_path: String = Globals.items_db.events[event_id].scene_path
 	print_verbose("Requesting load for event %s." % event_path)
-	var err: Error = ResourceLoader.load_threaded_request(event_path)
+	var err: Error = ResourceLoader.load_threaded_request(
+			event_path, "", false, ResourceLoader.CACHE_MODE_REPLACE_DEEP)
 	if err != OK:
 		push_error("Load request for event %s failed with error: %s." % [
 			event_path,
@@ -71,7 +72,8 @@ func load_event(event_id: int, map_id: int) -> Event:
 	
 	var map_path: String = Globals.items_db.events[event_id].maps[map_id].scene_path
 	print_verbose("Requesting load for map %s." % map_path)
-	err = ResourceLoader.load_threaded_request(map_path)
+	err = ResourceLoader.load_threaded_request(
+			map_path, "", false, ResourceLoader.CACHE_MODE_IGNORE_DEEP)
 	if err != OK:
 		push_error("Load request for map %s failed with error: %s." % [
 			map_path,
@@ -141,7 +143,8 @@ func preload_equip(skins: Array[int], skills: Array[int],
 	
 	for path: String in _requested_paths:
 		print_verbose("Requesting load for equip %s." % path)
-		var err: Error = ResourceLoader.load_threaded_request(path)
+		var err: Error = ResourceLoader.load_threaded_request(
+				path, "", false, ResourceLoader.CACHE_MODE_REPLACE_DEEP)
 		if err != OK:
 			push_error("Load request for equip %s failed with error: %s." % [
 				path,

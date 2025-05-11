@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dtvo18gjrm7my"]
+[gd_scene load_steps=7 format=3 uid="uid://dtvo18gjrm7my"]
 
 [ext_resource type="Script" uid="uid://rhkygnaclmgq" path="res://game/entity/entity.gd" id="1_rxssn"]
 [ext_resource type="Script" uid="uid://ds8wylyjqvikl" path="res://game/entity/entity_input.gd" id="2_1a3pf"]
 [ext_resource type="PackedScene" uid="uid://cct2g1r8bubi8" path="res://game/entity/vfx/heal_pluses_vfx.tscn" id="2_xk3vx"]
+[ext_resource type="PackedScene" uid="uid://dxiacndmn0qr7" path="res://game/entity/vfx/numbers_vfx.tscn" id="3_pwmfy"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_c2pj3"]
 properties/0/path = NodePath(".:direction")
@@ -30,6 +31,7 @@ motion_mode = 1
 platform_on_leave = 2
 script = ExtResource("1_rxssn")
 heal_vfx_scene = ExtResource("2_xk3vx")
+numbers_vfx_scene = ExtResource("3_pwmfy")
 metadata/_custom_type_script = "uid://rhkygnaclmgq"
 
 [node name="Input" type="MultiplayerSynchronizer" parent="."]

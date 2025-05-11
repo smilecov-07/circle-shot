@@ -74,11 +74,11 @@ func _load_keys_from_map() -> void:
 			encoded_event.idx = idx
 			var mb := event as InputEventMouseButton
 			if mb:
-				encoded_event.type = Main.EncodedInputEventType.MOUSE_BUTTON
+				encoded_event.type = Globals.EncodedInputEventType.MOUSE_BUTTON
 				encoded_event.value = mb.button_index
 			var key := event as InputEventKey
 			if key:
-				encoded_event.type = Main.EncodedInputEventType.KEY
+				encoded_event.type = Globals.EncodedInputEventType.KEY
 				encoded_event.value = key.keycode
 			
 			if action in _action_events:
@@ -111,30 +111,7 @@ func _create_action_event(action: StringName, parent: Node,
 
 
 func _encoded_input_event_as_text(encoded_input_event: EncodedInputEvent) -> String:
-	match encoded_input_event.type:
-		Main.EncodedInputEventType.KEY:
-			return OS.get_keycode_string(encoded_input_event.value)
-		Main.EncodedInputEventType.MOUSE_BUTTON:
-			match encoded_input_event.value:
-				MOUSE_BUTTON_LEFT:
-					return "ЛКМ"
-				MOUSE_BUTTON_MIDDLE:
-					return "СКМ"
-				MOUSE_BUTTON_RIGHT:
-					return "ПКМ"
-				MOUSE_BUTTON_XBUTTON1:
-					return "X1"
-				MOUSE_BUTTON_XBUTTON2:
-					return "X2"
-				MOUSE_BUTTON_WHEEL_DOWN:
-					return "Колесо вниз"
-				MOUSE_BUTTON_WHEEL_LEFT:
-					return "Колесо влево"
-				MOUSE_BUTTON_WHEEL_RIGHT:
-					return "Колесо вправо"
-				MOUSE_BUTTON_WHEEL_UP:
-					return "Колесо вверх"
-	return "НЕИЗВЕСТНО"
+	return Utils.encoded_input_event_as_text(encoded_input_event.type, encoded_input_event.value)
 
 
 func _on_event_selector_window_input(event: InputEvent) -> void:
@@ -148,13 +125,13 @@ func _on_event_selector_window_input(event: InputEvent) -> void:
 	var mb := event as InputEventMouseButton
 	if mb and mb.button_index != MOUSE_BUTTON_NONE:
 		recognized = true
-		new_event.type = Main.EncodedInputEventType.MOUSE_BUTTON
+		new_event.type = Globals.EncodedInputEventType.MOUSE_BUTTON
 		new_event.value = mb.button_index
 	
 	var key := event as InputEventKey
 	if key:
 		recognized = true
-		new_event.type = Main.EncodedInputEventType.KEY
+		new_event.type = Globals.EncodedInputEventType.KEY
 		new_event.value = key.keycode
 	
 	if not recognized:
@@ -177,7 +154,7 @@ func _on_event_selector_window_input(event: InputEvent) -> void:
 
 func _on_save_pressed() -> void:
 	for action: StringName in _pending_actions:
-		var encoded_input_event_types: Array[Main.EncodedInputEventType]
+		var encoded_input_event_types: Array[Globals.EncodedInputEventType]
 		var encoded_input_event_values: Array[int]
 		
 		for encoded_input_event: EncodedInputEvent in _action_events[action]:
@@ -189,7 +166,7 @@ func _on_save_pressed() -> void:
 		Globals.set_controls_variant("action_%s_event_values" % action,
 				encoded_input_event_values)
 	
-	Globals.main.apply_controls_settings()
+	Globals.apply_controls_settings()
 	_pending_actions.clear()
 	_load_keys_from_map()
 	($VBoxContainer/Buttons/Save as BaseButton).disabled = true
@@ -228,6 +205,6 @@ func _on_event_selector_canceled() -> void:
 
 
 class EncodedInputEvent:
-	var type: Main.EncodedInputEventType
+	var type: Globals.EncodedInputEventType
 	var value: int
 	var idx: int

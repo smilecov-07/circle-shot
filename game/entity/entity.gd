@@ -48,6 +48,9 @@ const TEAM_COLORS: Array[Color] = [
 @export var death_vfx_scene: PackedScene
 ## Визуальный эффект получения лечения. Не прикрепляется к сущности и должен самоуничтожаться.
 @export var heal_vfx_scene: PackedScene
+## Визуальный эффект с числами урона и лечения. Не прикрепляется к сущности и должен
+## самоуничтожаться. Текст задаётся узлу [code]Label[/code] в этой сцене.
+@export var numbers_vfx_scene: PackedScene
 
 ## ID сущности. Автоматически вызывает [method Node.set_multiplayer_authority] с этим ID
 ## на узле типа [EntityInput].
@@ -82,7 +85,6 @@ var _immune_counter: int = 0
 var _immobile_counter: int = 0
 var _disarmed_counter: int = 0
 var _blocked_turning_counter: int = 0
-var _numbers_vfx_scene: PackedScene = preload("uid://dxiacndmn0qr7")
 
 ## Узел, содержащий ввод сущности.
 @onready var entity_input: EntityInput = $Input
@@ -247,13 +249,14 @@ func set_health(health: int) -> void:
 			var death_vfx: Node2D = death_vfx_scene.instantiate()
 			death_vfx.position = position
 			_vfx_parent.add_child(death_vfx)
-		var numbers_vfx: Node2D = _numbers_vfx_scene.instantiate()
-		numbers_vfx.position = position
-		(numbers_vfx.get_node(^"Label") as Label).text = str(current_health)
-		if is_local():
-			(numbers_vfx.get_node(^"Label") as Label).add_theme_color_override(
-					&"font_color", Color.RED)
-		_vfx_parent.add_child(numbers_vfx)
+		if numbers_vfx_scene:
+			var numbers_vfx: Node2D = numbers_vfx_scene.instantiate()
+			numbers_vfx.position = position
+			(numbers_vfx.get_node(^"Label") as Label).text = str(current_health)
+			if is_local():
+				(numbers_vfx.get_node(^"Label") as Label).add_theme_color_override(
+						&"font_color", Color.RED)
+			_vfx_parent.add_child(numbers_vfx)
 		
 		died.emit(id)
 		current_health = 0
@@ -268,24 +271,26 @@ func set_health(health: int) -> void:
 			var hurt_vfx: Node2D = hurt_vfx_scene.instantiate()
 			hurt_vfx.position = position
 			_vfx_parent.add_child(hurt_vfx)
-		var numbers_vfx: Node2D = _numbers_vfx_scene.instantiate()
-		numbers_vfx.position = position
-		(numbers_vfx.get_node(^"Label") as Label).text = str(current_health - health)
-		if is_local():
-			(numbers_vfx.get_node(^"Label") as Label).add_theme_color_override(
-					&"font_color", Color.RED)
-		_vfx_parent.add_child(numbers_vfx)
+		if numbers_vfx_scene:
+			var numbers_vfx: Node2D = numbers_vfx_scene.instantiate()
+			numbers_vfx.position = position
+			(numbers_vfx.get_node(^"Label") as Label).text = str(current_health - health)
+			if is_local():
+				(numbers_vfx.get_node(^"Label") as Label).add_theme_color_override(
+						&"font_color", Color.RED)
+			_vfx_parent.add_child(numbers_vfx)
 	else: 
 		if heal_vfx_scene:
 			var heal_vfx: Node2D = heal_vfx_scene.instantiate()
 			heal_vfx.position = position
 			_vfx_parent.add_child(heal_vfx)
-		var numbers_vfx: Node2D = _numbers_vfx_scene.instantiate()
-		numbers_vfx.position = position
-		(numbers_vfx.get_node(^"Label") as Label).text = str(health - current_health)
-		(numbers_vfx.get_node(^"Label") as Label).add_theme_color_override(
-				&"font_color", Color.GREEN)
-		_vfx_parent.add_child(numbers_vfx)
+		if numbers_vfx_scene:
+			var numbers_vfx: Node2D = numbers_vfx_scene.instantiate()
+			numbers_vfx.position = position
+			(numbers_vfx.get_node(^"Label") as Label).text = str(health - current_health)
+			(numbers_vfx.get_node(^"Label") as Label).add_theme_color_override(
+					&"font_color", Color.GREEN)
+			_vfx_parent.add_child(numbers_vfx)
 	
 	current_health = health
 	if current_health > max_health:

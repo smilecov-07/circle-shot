@@ -62,13 +62,13 @@ func _find_ips() -> void:
 			first = false
 		dialog_text += '\n'
 	
-	if Globals.main.upnp:
-		if Globals.main.upnp.status == UPNPManager.Status.INACTIVE:
+	if Globals.upnp:
+		if Globals.upnp.status == UPNPManager.Status.INACTIVE:
 			dialog_text += "Статус UPnP: Неактивно."
 		else:
 			dialog_text += "Статус UPnP: Активно."
 			dialog_text += '\n'
-			dialog_text += "Глобальный IP-адрес UPnP: %s" % Globals.main.upnp.get_external_ip()
+			dialog_text += "Глобальный IP-адрес UPnP: %s" % Globals.upnp.get_external_ip()
 		dialog_text += '\n'
 	
 	var error: Error = _http_request.request("https://ipv4.icanhazip.com/")

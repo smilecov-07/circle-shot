@@ -7,21 +7,6 @@ extends Node
 
 ## Внутренний сигнал, используемый при загрузке.
 signal loading_stage_finished(success: bool)
-## Перечисление с возможными методами ввода.
-enum InputMethod {
-	## Клавиатура и мышь.
-	KEYBOARD_AND_MOUSE = 0,
-	## Касаниями.
-	TOUCH = 1,
-}
-## Перечисление с допустимыми типами событий для действия при использовании
-## [enum Main.InputMethod.KEYBOARD_AND_MOUSE].
-enum EncodedInputEventType {
-	## События типа [InputEventKey].
-	KEY = 0,
-	## События типа [InputEventMouseButton].
-	MOUSE_BUTTON = 1,
-}
 ## URL сервера с данными для игры (патчами, предложениями в магазине, ...).
 const SERVER_URL := "https://diamondstudiogames.ru/circle-shot"
 ## Максимальное отношение ширины к высоте, превысив которое содержимое окна начнёт обрезаться.
@@ -49,10 +34,6 @@ var menu: Menu
 var screens: Array[Control]
 ## Ссылка на узел воспроизведения музыки меню.
 var menu_music: AudioStreamPlayer
-## Ссылка на [UPNPManager]. Отсутствует, если UPnP отключён.
-var upnp: UPNPManager
-## Ссылка на [Console]. Отсутствует, если консоль отключена.
-var console: Console
 ## Словарь загруженных пользовательских треков в формате "<имя файла> - <ресурс трека>".
 var custom_tracks: Dictionary[String, AudioStream]
 var _preloaded_resources: Array[Resource]
@@ -83,7 +64,7 @@ func _input(event: InputEvent) -> void:
 	if OS.has_feature("pc") and event.is_action(&"fullscreen") \
 			and event.is_pressed() and Globals.save_file:
 		Globals.set_setting_bool("fullscreen", not Globals.get_setting_bool("fullscreen"))
-		apply_settings()
+		Globals.apply_settings()
 
 
 ## Открывает меню. Закрывает все остальное.
@@ -160,239 +141,6 @@ func show_critical_error(info := "", log_error := "") -> void:
 	dialog.popup_centered()
 
 
-## Устанавливает настройки по умолчанию, если их ещё нет.
-func setup_settings() -> void:
-	var override_file := ConfigFile.new()
-	override_file.load("user://engine_settings.cfg")
-	var shader_cache: bool = ProjectSettings.get_setting_with_override(
-			&"rendering/shader_compiler/shader_cache/enabled")
-	override_file.set_value("rendering",
-			"shader_compiler/shader_cache/enabled", shader_cache)
-	override_file.set_value("rendering",
-			"shader_compiler/shader_cache/enabled.mobile", shader_cache)
-	override_file.save("user://engine_settings.cfg")
-	
-	# Основное
-	Globals.set_setting_bool("check_updates",
-			Globals.get_setting_bool("check_updates", true))
-	Globals.set_setting_bool("check_betas",
-			Globals.get_setting_bool("check_betas", Globals.version.count('.') == 3))
-	Globals.set_setting_bool("check_patches",
-			Globals.get_setting_bool("check_patches", true))
-	# Сеть
-	Globals.set_setting_bool("upnp",
-			Globals.get_setting_bool("upnp", false))
-	Globals.set_setting_bool("broadcast",
-			Globals.get_setting_bool("broadcast", true))
-	# Игра
-	Globals.set_setting_bool("minimap",
-			Globals.get_setting_bool("minimap", true))
-	Globals.set_setting_bool("debug_info",
-			Globals.get_setting_bool("debug_info", false))
-	Globals.set_setting_bool("chat_in_game",
-			Globals.get_setting_bool("chat_in_game", true))
-	Globals.set_setting_bool("vibration",
-			Globals.get_setting_bool("vibration", false))
-	Globals.set_setting_bool("aim_dodge",
-			Globals.get_setting_bool("aim_dodge", false))
-	# Графика
-	Globals.set_setting_bool("fullscreen",
-			Globals.get_setting_bool("fullscreen", not OS.has_feature("pc")))
-	Globals.set_setting_int("max_fps",
-			Globals.get_setting_int("max_fps", 130))
-	Globals.set_setting_bool("low_graphics",
-			Globals.get_setting_bool("low_graphics", false))
-	# Звук
-	Globals.set_setting_float("master_volume",
-			Globals.get_setting_float("master_volume", 1.0))
-	Globals.set_setting_float("music_volume",
-			Globals.get_setting_float("music_volume", 0.7))
-	Globals.set_setting_float("sfx_volume",
-			Globals.get_setting_float("sfx_volume", 1.0))
-	Globals.set_setting_bool("custom_tracks",
-			Globals.get_setting_bool("custom_tracks", OS.has_feature("pc")))
-	Globals.set_setting_bool("official_tracks",
-			Globals.get_setting_bool("official_tracks", true))
-
-
-## Устанавливает настройки управления по умолчанию, если их ещё нет.
-func setup_controls_settings() -> void:
-	var default_input_method: InputMethod = InputMethod.KEYBOARD_AND_MOUSE
-	if DisplayServer.is_touchscreen_available():
-		default_input_method = InputMethod.TOUCH
-	Globals.set_controls_int("input_method",
-			Globals.get_controls_int("input_method", default_input_method))
-	Globals.set_controls_bool("follow_mouse",
-			Globals.get_controls_bool("follow_mouse", true))
-	Globals.set_controls_bool("always_show_aim",
-			Globals.get_controls_bool("always_show_aim", false))
-	Globals.set_controls_bool("joystick_fire",
-			Globals.get_controls_bool("joystick_fire", false))
-	Globals.set_controls_float("sneak_multiplier",
-			Globals.get_controls_float("sneak_multiplier", 0.5))
-	Globals.set_controls_float("aim_deadzone",
-			Globals.get_controls_float("aim_deadzone", 0.15))
-	Globals.set_controls_float("aim_zone",
-			Globals.get_controls_float("aim_zone", 0.5))
-	Globals.set_controls_float("joysticks_alpha",
-			Globals.get_controls_float("joysticks_alpha", 1.0))
-	
-	InputMap.load_from_project_settings()
-	for action: StringName in InputMap.get_actions():
-		if action.begins_with("ui_"):
-			continue
-		
-		var encoded_input_event_types: Array[EncodedInputEventType]
-		var encoded_input_event_values: Array[int]
-		for event: InputEvent in InputMap.action_get_events(action):
-			var encoded_input_event_type: EncodedInputEventType
-			var encoded_input_event_value: int
-			
-			var mb := event as InputEventMouseButton
-			if mb:
-				encoded_input_event_type = EncodedInputEventType.MOUSE_BUTTON
-				encoded_input_event_value = mb.button_index
-			var key := event as InputEventKey
-			if key:
-				encoded_input_event_type = EncodedInputEventType.KEY
-				encoded_input_event_value = key.keycode
-			
-			encoded_input_event_types.append(encoded_input_event_type)
-			encoded_input_event_values.append(encoded_input_event_value)
-		
-		Globals.set_controls_variant("action_%s_event_types" % action,
-				Globals.get_controls_variant("action_%s_event_types" % action,
-				encoded_input_event_types))
-		Globals.set_controls_variant("action_%s_event_values" % action,
-				Globals.get_controls_variant("action_%s_event_values" % action,
-				encoded_input_event_values))
-	
-	#region Настройки управления на телефоне
-	Globals.set_controls_int("anchors_preset_health_bar",
-			Globals.get_controls_int("anchors_preset_health_bar", Control.PRESET_CENTER_BOTTOM))
-	Globals.set_controls_vector2("offsets_lt_health_bar",
-			Globals.get_controls_vector2("offsets_lt_health_bar", Vector2(-240.0, -64.0)))
-	Globals.set_controls_vector2("offsets_rb_health_bar",
-			Globals.get_controls_vector2("offsets_rb_health_bar", Vector2(240.0, -16.0)))
-	
-	Globals.set_controls_int("anchors_preset_additional",
-			Globals.get_controls_int("anchors_preset_additional", Control.PRESET_BOTTOM_RIGHT))
-	Globals.set_controls_vector2("offsets_lt_additional",
-			Globals.get_controls_vector2("offsets_lt_additional", Vector2(-128.0, -128.0)))
-	Globals.set_controls_vector2("offsets_rb_additional",
-			Globals.get_controls_vector2("offsets_rb_additional", Vector2(-8.0, -8.0)))
-	
-	Globals.set_controls_int("anchors_preset_move_js",
-			Globals.get_controls_int("anchors_preset_move_js", Control.PRESET_BOTTOM_LEFT))
-	Globals.set_controls_vector2("offsets_lt_move_js",
-			Globals.get_controls_vector2("offsets_lt_move_js", Vector2(128.0, -328.0)))
-	Globals.set_controls_vector2("offsets_rb_move_js",
-			Globals.get_controls_vector2("offsets_rb_move_js", Vector2(328.0, -128.0)))
-	
-	Globals.set_controls_int("anchors_preset_aim_js",
-			Globals.get_controls_int("anchors_preset_aim_js", Control.PRESET_BOTTOM_RIGHT))
-	Globals.set_controls_vector2("offsets_lt_aim_js",
-			Globals.get_controls_vector2("offsets_lt_aim_js", Vector2(-328.0, -328.0)))
-	Globals.set_controls_vector2("offsets_rb_aim_js",
-			Globals.get_controls_vector2("offsets_rb_aim_js", Vector2(-128.0, -128.0)))
-	
-	Globals.set_controls_int("anchors_preset_weapon",
-			Globals.get_controls_int("anchors_preset_weapon", Control.PRESET_CENTER_RIGHT))
-	Globals.set_controls_vector2("offsets_lt_weapon",
-			Globals.get_controls_vector2("offsets_lt_weapon", Vector2(-288.0, -232.0)))
-	Globals.set_controls_vector2("offsets_rb_weapon",
-			Globals.get_controls_vector2("offsets_rb_weapon", Vector2(0.0, -88.0)))
-	
-	Globals.set_controls_int("anchors_preset_spare_weapon",
-			Globals.get_controls_int("anchors_preset_spare_weapon", Control.PRESET_CENTER_BOTTOM))
-	Globals.set_controls_vector2("offsets_lt_spare_weapon",
-			Globals.get_controls_vector2("offsets_lt_spare_weapon", Vector2(-96.0, -176.0)))
-	Globals.set_controls_vector2("offsets_rb_spare_weapon",
-			Globals.get_controls_vector2("offsets_rb_spare_weapon", Vector2(96.0, -80.0)))
-	
-	Globals.set_controls_int("anchors_preset_skill",
-			Globals.get_controls_int("anchors_preset_skill", Control.PRESET_CENTER_RIGHT))
-	Globals.set_controls_vector2("offsets_lt_skill",
-			Globals.get_controls_vector2("offsets_lt_skill", Vector2(-128.0, -80.0)))
-	Globals.set_controls_vector2("offsets_rb_skill",
-			Globals.get_controls_vector2("offsets_rb_skill", Vector2(-8.0, 40.0)))
-	
-	Globals.set_controls_float("move_joystick_scale",
-			Globals.get_controls_float("move_joystick_scale", 1.0))
-	Globals.set_controls_float("move_joystick_deadzone",
-			Globals.get_controls_float("move_joystick_deadzone", 20.0))
-	Globals.set_controls_int("move_joystick_mode",
-			Globals.get_controls_int("move_joystick_mode", VirtualJoystick.JoystickMode.DYNAMIC))
-	
-	Globals.set_controls_float("aim_joystick_scale",
-			Globals.get_controls_float("aim_joystick_scale", 1.0))
-	Globals.set_controls_float("aim_joystick_deadzone",
-			Globals.get_controls_float("aim_joystick_deadzone", 20.0))
-	Globals.set_controls_int("aim_joystick_mode",
-			Globals.get_controls_int("aim_joystick_type", VirtualJoystick.JoystickMode.DYNAMIC))
-	
-	Globals.set_controls_vector2("shoot_area",
-			Globals.get_controls_vector2("shoot_area", Vector2(640.0, 256.0)))
-	#endregion
-
-
-## Применяет общие настройки.
-func apply_settings() -> void:
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(&"Master"),
-			linear_to_db(Globals.get_setting_float("master_volume")))
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(&"Music"),
-			linear_to_db(Globals.get_setting_float("music_volume")))
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(&"SFX"),
-			linear_to_db(Globals.get_setting_float("sfx_volume")))
-	if Globals.get_setting_bool("fullscreen"):
-		if not get_window().mode in [Window.MODE_EXCLUSIVE_FULLSCREEN, Window.MODE_FULLSCREEN]:
-			get_window().mode = Window.MODE_EXCLUSIVE_FULLSCREEN
-	else:
-		if not get_window().mode in [
-			Window.MODE_WINDOWED,
-			Window.MODE_MINIMIZED,
-			Window.MODE_MAXIMIZED,
-		]:
-			get_window().mode = Window.MODE_WINDOWED
-	if Globals.get_setting_bool("custom_tracks"):
-		DirAccess.make_dir_recursive_absolute(music_path)
-	var max_fps: int = Globals.get_setting_int("max_fps")
-	Engine.max_fps = max_fps if max_fps < 125 else 0
-	get_viewport().set_canvas_cull_mask_bit(2, not Globals.get_setting_bool("low_graphics"))
-	get_viewport().set_canvas_cull_mask_bit(3, Globals.get_setting_bool("low_graphics"))
-
-
-## Применяет настройки управления.
-func apply_controls_settings() -> void:
-	Input.emulate_touch_from_mouse = Globals.get_controls_int("input_method") == InputMethod.TOUCH
-	
-	if Globals.get_controls_int("input_method") != InputMethod.KEYBOARD_AND_MOUSE:
-		return
-	for action: StringName in InputMap.get_actions():
-		if action.begins_with("ui_"):
-			continue
-		InputMap.action_erase_events(action)
-		
-		var encoded_input_event_types: Array[EncodedInputEventType] = \
-				Globals.get_controls_variant("action_%s_event_types" % action, [] as Array[int])
-		var encoded_input_event_values: Array[int] = \
-				Globals.get_controls_variant("action_%s_event_values" % action, [] as Array[int])
-		
-		for i: int in encoded_input_event_types.size():
-			var event: InputEvent
-			match encoded_input_event_types[i]:
-				EncodedInputEventType.KEY:
-					var key := InputEventKey.new()
-					key.keycode = encoded_input_event_values[i] as Key
-					event = key
-				EncodedInputEventType.MOUSE_BUTTON:
-					var mb := InputEventMouseButton.new()
-					mb.button_index = encoded_input_event_values[i] as MouseButton
-					event = mb
-			
-			InputMap.action_add_event(action, event)
-
-
 func _update_window_stretch_aspect() -> void:
 	if get_window().size.aspect() > MAX_ASPECT_RATIO:
 		get_window().content_scale_size = Vector2i(
@@ -418,19 +166,18 @@ func _start_load() -> void:
 	
 	_loading_init()
 	await ($LoadingScreen/AnimationPlayer as AnimationPlayer).animation_finished
-	_loading_post_init()
-	await loading_stage_finished
 	
 	_loading_check_server()
-	var success: bool = await loading_stage_finished
-	if success:
+	if await loading_stage_finished:
 		_loading_download_data()
-		success = await loading_stage_finished
-		if success:
+		if await loading_stage_finished:
 			_loading_check_patches()
 			await loading_stage_finished
 	
 	_loading_apply_patch()
+	await loading_stage_finished
+	
+	_loading_init_systems()
 	await loading_stage_finished
 	
 	if not Globals.headless:
@@ -475,7 +222,7 @@ func _loading_init() -> void:
 			print("Note: to use --console on Windows, you must launch game from *.console.exe \
 file, otherwise it will NOT function.")
 	
-	Globals.initialize(self)
+	Globals.initialize()
 	if DisplayServer.get_name() == "headless":
 		print("Running in headless mode.")
 		Globals.headless = true
@@ -492,36 +239,8 @@ file, otherwise it will NOT function.")
 	get_viewport().set_canvas_cull_mask_bit(1, false)
 	get_tree().root.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF
 	
-	setup_settings()
-	apply_settings()
-	setup_controls_settings()
-	apply_controls_settings()
-	
 	await get_tree().process_frame
 	print_verbose("Done initializing.")
-	loading_stage_finished.emit(true)
-
-
-func _loading_post_init() -> void:
-	menu_music = AudioStreamPlayer.new()
-	menu_music.name = &"MenuMusic"
-	menu_music.bus = &"Music"
-	menu_music.autoplay = true
-	menu_music.stream = load("uid://dbrfe66ser7ub")
-	add_child(menu_music)
-	move_child(menu_music, 0)
-	
-	if "--console" in OS.get_cmdline_user_args():
-		if not OS.has_feature("pc"):
-			push_error("Console is only supported on PC platforms.")
-		else:
-			print_verbose("Starting console.")
-			console = Console.new()
-			console.name = &"Console"
-			add_child(console)
-	
-	await get_tree().process_frame
-	print_verbose("Done post initializing.")
 	loading_stage_finished.emit(true)
 
 
@@ -633,6 +352,26 @@ func _loading_apply_patch() -> void:
 	loading_stage_finished.emit(true)
 
 
+func _loading_init_systems() -> void:
+	print_verbose("Initializing systems...")
+	_load_status_label.text = "Инициализация систем..."
+	_load_progress_bar.value = 0.0
+	await get_tree().process_frame
+	
+	Globals.initialize_systems()
+	
+	menu_music = AudioStreamPlayer.new()
+	menu_music.name = &"MenuMusic"
+	menu_music.bus = &"Music"
+	menu_music.autoplay = true
+	menu_music.stream = load("uid://dbrfe66ser7ub")
+	add_child(menu_music)
+	move_child(menu_music, 0)
+	
+	print_verbose("Done initializing systems.")
+	loading_stage_finished.emit(true)
+
+
 func _loading_custom_tracks() -> void:
 	if not Globals.get_setting_bool("custom_tracks"):
 		print_verbose("Not loading custom tracks: disabled.")
@@ -735,7 +474,8 @@ func _loading_preload_resources() -> void:
 	
 	var last_ticks: int = Time.get_ticks_msec()
 	for path: String in to_preload:
-		var resource: Resource = load(path)
+		var resource: Resource = \
+				ResourceLoader.load(path, "", ResourceLoader.CACHE_MODE_REPLACE_DEEP)
 		_preloaded_resources.append(resource)
 		_load_progress_bar.value = 100.0 * counter / to_preload_count
 		counter += 1
@@ -760,9 +500,11 @@ func _loading_upnp() -> void:
 	_load_progress_bar.value = 0.0
 	await get_tree().process_frame
 	
-	upnp = UPNPManager.new()
+	var upnp := UPNPManager.new()
 	upnp.name = &"UPNPManager"
 	add_child(upnp)
+	
+	Globals.upnp = upnp
 	
 	upnp.discover()
 	await upnp.status_changed

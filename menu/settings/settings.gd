@@ -63,8 +63,8 @@ func _ready() -> void:
 	
 	# UPnP
 	var upnp_status := "Отключён"
-	if Globals.main.upnp:
-		match Globals.main.upnp.status:
+	if Globals.upnp:
+		match Globals.upnp.status:
 			UPNPManager.Status.INACTIVE:
 				upnp_status = "Неактивен"
 			_:
@@ -133,13 +133,13 @@ func remove_recursive(path: String) -> void:
 		dir_access.remove(dir_access.get_current_dir())
 
 
-func _toggle_input_method_settings_visibility(method: Main.InputMethod) -> void:
+func _toggle_input_method_settings_visibility(method: Globals.InputMethod) -> void:
 	(%KeyboardSettings as CanvasItem).hide()
 	(%TouchSettings as CanvasItem).hide()
 	match method:
-		Main.InputMethod.KEYBOARD_AND_MOUSE:
+		Globals.InputMethod.KEYBOARD_AND_MOUSE:
 			(%KeyboardSettings as CanvasItem).show()
-		Main.InputMethod.TOUCH:
+		Globals.InputMethod.TOUCH:
 			(%TouchSettings as CanvasItem).show()
 
 
@@ -199,8 +199,8 @@ func _on_reset_data_dialog_confirmed() -> void:
 
 func _on_reset_controls_dialog_confirmed() -> void:
 	Globals.save_file.erase_section(Globals.CONTROLS_SAVE_FILE_SECTION)
-	Globals.main.setup_controls_settings()
-	Globals.main.apply_controls_settings()
+	Globals.setup_controls_settings()
+	Globals.apply_controls_settings()
 	
 	name = &"OldSettings"
 	queue_free()
@@ -211,10 +211,10 @@ func _on_reset_settings_dialog_confirmed() -> void:
 	Globals.save_file.erase_section(Globals.SETTINGS_SAVE_FILE_SECTION)
 	Globals.save_file.erase_section(Globals.CONTROLS_SAVE_FILE_SECTION)
 	DirAccess.remove_absolute("user://engine_settings.cfg")
-	Globals.main.setup_settings()
-	Globals.main.apply_settings()
-	Globals.main.setup_controls_settings()
-	Globals.main.apply_controls_settings()
+	Globals.setup_settings()
+	Globals.apply_settings()
+	Globals.setup_controls_settings()
+	Globals.apply_controls_settings()
 	
 	name = &"OldSettings"
 	queue_free()
@@ -262,7 +262,7 @@ func _on_vibration_check_toggled(toggled_on: bool) -> void:
 #region Графика
 func _on_fullscreen_check_toggled(toggled_on: bool) -> void:
 	Globals.set_setting_bool("fullscreen", toggled_on)
-	Globals.main.apply_settings()
+	Globals.apply_settings()
 
 
 func _on_fps_slider_value_changed(value: float) -> void:
@@ -271,12 +271,12 @@ func _on_fps_slider_value_changed(value: float) -> void:
 		(%FPSValue as Label).text = "Нет"
 	else:
 		(%FPSValue as Label).text = "%d" % value
-	Globals.main.apply_settings()
+	Globals.apply_settings()
 
 
 func _on_low_graphics_check_toggled(toggled_on: bool) -> void:
 	Globals.set_setting_bool("low_graphics", toggled_on)
-	Globals.main.apply_settings()
+	Globals.apply_settings()
 
 
 func _on_shader_cache_check_toggled(toggled_on: bool) -> void:
@@ -298,17 +298,17 @@ func _on_clear_shader_cache_pressed() -> void:
 #region Звук
 func _on_master_volume_slider_value_changed(value: float) -> void:
 	Globals.set_setting_float("master_volume", value)
-	Globals.main.apply_settings()
+	Globals.apply_settings()
 
 
 func _on_music_volume_slider_value_changed(value: float) -> void:
 	Globals.set_setting_float("music_volume", value)
-	Globals.main.apply_settings()
+	Globals.apply_settings()
 
 
 func _on_sfx_volume_slider_value_changed(value: float) -> void:
 	Globals.set_setting_float("sfx_volume", value)
-	Globals.main.apply_settings()
+	Globals.apply_settings()
 
 
 func _on_custom_tracks_check_toggled(toggled_on: bool) -> void:
@@ -326,7 +326,7 @@ func _on_custom_tracks_check_toggled(toggled_on: bool) -> void:
 			toggled_on = false
 	(%CustomTracksSettings as CanvasItem).visible = toggled_on
 	Globals.set_setting_bool("custom_tracks", toggled_on)
-	Globals.main.apply_settings()
+	Globals.apply_settings()
 
 
 func _on_official_tracks_check_toggled(toggled_on: bool) -> void:
@@ -347,7 +347,7 @@ func _on_configure_actions_pressed() -> void:
 
 func _on_input_options_item_selected(index: int) -> void:
 	Globals.set_controls_int("input_method", index)
-	Globals.main.apply_controls_settings()
+	Globals.apply_controls_settings()
 	_toggle_input_method_settings_visibility(index)
 
 

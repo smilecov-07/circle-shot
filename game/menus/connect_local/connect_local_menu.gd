@@ -17,7 +17,7 @@ func _ready() -> void:
 	if DisplayServer.has_feature(DisplayServer.FEATURE_CLIPBOARD):
 		var clipboard_text: String = \
 				_cleanup_address(DisplayServer.clipboard_get().get_slice('\n', 0))
-		if clipboard_text.is_valid_ip_address() or clipboard_text.count('.') > 0:
+		if Utils.is_valid_address(clipboard_text, false):
 			_address_edit.text = clipboard_text
 	
 	_udp.listen(Game.LISTEN_PORT)
@@ -36,7 +36,7 @@ func _process(_delta: float) -> void:
 			print_verbose("Found invalid lobby packet.")
 			return
 		var id_nodepath := NodePath("Lobby%d" % data[0])
-		var player_name: String = Game.validate_player_name(data.slice(4).get_string_from_utf8())
+		var player_name: String = Utils.validate_player_name(data.slice(4).get_string_from_utf8())
 		var players: int = data[1]
 		var max_players: int = data[2]
 		if data[3] < 0 or data[3] >= Globals.items_db.events.size():

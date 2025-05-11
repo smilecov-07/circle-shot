@@ -22,13 +22,13 @@ var players_teams: Dictionary[int, int]
 
 
 func _ready() -> void:
-	if Globals.main.console:
-		Globals.main.console.command_processors.append(_process_command)
+	if Globals.console:
+		Globals.console.command_processors.append(_process_command)
 
 
 func _exit_tree() -> void:
-	if Globals.main.console:
-		Globals.main.console.command_processors.erase(_process_command)
+	if Globals.console:
+		Globals.console.command_processors.erase(_process_command)
 
 
 ## Постит сообщение. Должно вызываться только сервером.

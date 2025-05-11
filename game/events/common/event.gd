@@ -53,8 +53,8 @@ var players: Dictionary[int, Player]
 var _players_skill_vars: Dictionary[int, Array]
 
 var _vibration_enabled: bool
-var _hit_marker_scene: PackedScene = preload("uid://c2f0n1b5sfpdh")
-var _kill_marker_scene: PackedScene = preload("uid://blhm6uka1p287")
+var _hit_marker_scene: PackedScene = load("uid://c2f0n1b5sfpdh")
+var _kill_marker_scene: PackedScene = load("uid://blhm6uka1p287")
 
 ## Ссылка на [EventUI].
 @onready var _event_ui: EventUI = $UI

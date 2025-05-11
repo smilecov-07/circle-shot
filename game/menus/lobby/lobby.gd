@@ -83,9 +83,9 @@ func _ready() -> void:
 	if Globals.get_setting_bool("broadcast"):
 		_find_ips_for_broadcast()
 	
-	if Globals.main.console:
-		Globals.main.console.command_processors.append(_process_console_command)
-		Globals.main.console.help_processors.append(_print_help)
+	if Globals.console:
+		Globals.console.command_processors.append(_process_console_command)
+		Globals.console.help_processors.append(_print_help)
 
 
 func _notification(what: int) -> void:
@@ -95,9 +95,9 @@ func _notification(what: int) -> void:
 
 
 func _exit_tree() -> void:
-	if Globals.main.console:
-		Globals.main.console.command_processors.erase(_process_console_command)
-		Globals.main.console.help_processors.erase(_print_help)
+	if Globals.console:
+		Globals.console.command_processors.erase(_process_console_command)
+		Globals.console.help_processors.erase(_print_help)
 
 
 @rpc("reliable", "call_local", "authority", 1)
@@ -154,7 +154,7 @@ func _register_new_player(player_name: String) -> void:
 	for id: int in _players:
 		_add_player_entry.rpc_id(sender_id, id, _players[id])
 	_set_environment.rpc_id(sender_id, selected_event, selected_map)
-	player_name = Game.validate_player_name(player_name, sender_id)
+	player_name = Utils.validate_player_name(player_name, sender_id)
 	_players[sender_id] = player_name
 	_add_player_entry.rpc(sender_id, player_name)
 	
