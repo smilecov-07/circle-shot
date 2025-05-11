@@ -53,6 +53,7 @@ var players: Dictionary[int, Player]
 var _players_skill_vars: Dictionary[int, Array]
 
 var _vibration_enabled: bool
+var _queued_hits: Array[Hit]
 var _hit_marker_scene: PackedScene = load("uid://c2f0n1b5sfpdh")
 var _kill_marker_scene: PackedScene = load("uid://blhm6uka1p287")
 
@@ -64,6 +65,7 @@ func _ready() -> void:
 	Globals.main.menu_music.stream_paused = true
 	if multiplayer.is_server():
 		multiplayer.peer_disconnected.connect(_on_peer_disconnected)
+		get_tree().process_frame.connect(_on_process_frame)
 	
 	_vibration_enabled = Globals.get_setting_bool("vibration")
 	if not Globals.get_setting_bool("chat_in_game"):
@@ -315,8 +317,10 @@ func _player_disconnected(_id: int) -> void:
 
 func _on_player_damaged(who: int, by: int) -> void:
 	if by in players:
-		var target: Player = players[who]
-		_register_hit.rpc_id(by, target.global_position)
+		var hit_position: Vector2 = players[who].global_position
+		if not _queued_hits.any(func(hit: Hit) -> bool:
+				return hit.by == by and hit.where.is_equal_approx(hit_position)):
+			_queued_hits.append(Hit.new(by, hit_position, false))
 
 
 func _on_player_killed(who: int, by: int) -> void:
@@ -336,8 +340,15 @@ func _on_player_killed(who: int, by: int) -> void:
 	_event_ui.chat.post_message.rpc("> " + message_text)
 	
 	if by in players:
-		var target: Player = players[who]
-		_register_kill.rpc_id(by, target.global_position)
+		var kill_position: Vector2 = players[who].global_position
+		var should_add := true
+		for hit: Hit in _queued_hits:
+			if hit.by == by and hit.where.is_equal_approx(kill_position):
+				hit.fatal = true
+				should_add = false
+				break
+		if should_add:
+			_queued_hits.append(Hit.new(by, kill_position, true))
 	
 	_player_killed(who, by)
 	players.erase(who)
@@ -369,6 +380,15 @@ func _on_peer_disconnected(id: int) -> void:
 	_player_disconnected(id)
 
 
+func _on_process_frame() -> void:
+	for hit: Hit in _queued_hits:
+		if hit.fatal:
+			_register_kill.rpc_id(hit.by, hit.where)
+		else:
+			_register_hit.rpc_id(hit.by, hit.where)
+	_queued_hits.clear()
+
+
 func _on_entities_spawner_spawned(node: Node) -> void:
 	var player := node as Player
 	if player:
@@ -379,3 +399,14 @@ func _on_entities_spawner_despawned(node: Node) -> void:
 	var player := node as Player
 	if player:
 		players.erase(player.id)
+
+
+class Hit:
+	var by: int
+	var where: Vector2
+	var fatal: bool
+	
+	func _init(by_value: int, where_value: Vector2, fatal_value: bool) -> void:
+		by = by_value
+		where = where_value
+		fatal = fatal_value
