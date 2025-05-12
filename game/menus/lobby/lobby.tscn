@@ -59,6 +59,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_jtfrr")
+metadata/_custom_type_script = "uid://ce7fr2qft005n"
 
 [node name="Image" type="TextureRect" parent="."]
 layout_mode = 1

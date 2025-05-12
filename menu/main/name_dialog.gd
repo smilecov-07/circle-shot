@@ -21,7 +21,7 @@ func _on_confirm_pressed() -> void:
 
 func _on_line_edit_text_changed(new_text: String) -> void:
 	new_text = new_text.to_lower()
-	if new_text.is_valid_ip_address():
+	if new_text.is_valid_ip_address() and new_text != ":":
 		_label.text = "Что я тебе сделал?("
 	elif new_text == "i'm blue":
 		_label.add_theme_color_override(&"font_color", Color.BLUE)
@@ -30,10 +30,12 @@ func _on_line_edit_text_changed(new_text: String) -> void:
 		_label.text = "DIEEEEEEEEE"
 		($CanvasModulate as CanvasItem).show()
 	elif new_text in ["блять", "сука"] or new_text.contains("хуй") or new_text.contains("пизд") \
-			or new_text.begins_with("еб") or new_text.contains("хуё") or new_text.contains("хуе"):
+			or new_text.begins_with("еб") or new_text.contains("хуё") or new_text.contains("хуе") \
+			or new_text.contains("пидр") or new_text.contains("пидор"):
 		_label.text = "Нехорошо материться!"
 	elif new_text == "разраб клоун":
 		(%LineEdit as LineEdit).text = "Сам такой!"
+		($AnimationPlayer as AnimationPlayer).play(&"RESET")
 	elif new_text.begins_with("разраб"):
 		($AnimationPlayer as AnimationPlayer).play(&"Developer")
 	elif new_text in easter_eggs:
@@ -49,3 +51,4 @@ func _on_about_to_popup() -> void:
 	if not DisplayServer.has_hardware_keyboard():
 		await get_tree().process_frame
 		position.y = 80
+	(%LineEdit as Control).grab_focus.call_deferred()

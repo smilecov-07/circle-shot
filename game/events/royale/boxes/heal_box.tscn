@@ -191,6 +191,7 @@ heal_amount = 15
 shape = SubResource("RectangleShape2D_or1bh")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -3
 texture = ExtResource("2_ltmr7")
 
 [node name="DespawnTimer" type="Timer" parent="."]
