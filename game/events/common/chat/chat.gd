@@ -54,7 +54,7 @@ func clear_chat() -> void:
 
 ## Отправляет набранное сообщение. Автоматически очищает от лишних пробелов и прочих знаков.
 func send_message() -> void:
-	var message: String = _chat_edit.text.strip_edges().strip_escapes()
+	var message: String = Utils.strip_string(_chat_edit.text)
 	_chat_edit.clear()
 	_chat_edit.edit.call_deferred()
 	
@@ -75,7 +75,7 @@ func _request_post_message(message: String) -> void:
 		push_warning("Received post message request from unknown peer (%d)." % sender_id)
 		return
 	
-	message = message.strip_edges().strip_escapes().replace("[", "[lb]")
+	message = Utils.strip_string(message).replace("[", "[lb]")
 	if message.is_empty():
 		return
 	if message.length() > MAX_MESSAGE_LENGTH:

@@ -78,10 +78,10 @@ func _notification(what: int) -> void:
 
 
 func _cleanup_address(address: String) -> String:
-	address = address.strip_edges().strip_escapes()
+	address = Utils.strip_string(address)
 	if address.contains(' '):
 		address = address.get_slice(' ', 0)
-	address = address.strip_edges().strip_escapes()
+	address = Utils.strip_string(address)
 	
 	if address.begins_with("https://"):
 		address = address.right(-8) # Длина https://

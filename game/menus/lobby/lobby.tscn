@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cmwb81du1kbtm"]
+[gd_scene load_steps=18 format=3 uid="uid://cmwb81du1kbtm"]
 
 [ext_resource type="Script" uid="uid://ce7fr2qft005n" path="res://game/menus/lobby/lobby.gd" id="1_jtfrr"]
 [ext_resource type="Texture2D" uid="uid://cp68q5xemqd01" path="res://game/menus/lobby/icons/play.png" id="2_6xr3g"]
@@ -10,8 +10,10 @@
 [ext_resource type="Texture2D" uid="uid://eyfsi3j0o04s" path="res://game/menus/lobby/icons/change_map.png" id="4_4kry5"]
 [ext_resource type="Texture2D" uid="uid://dwtddg0cmagg1" path="res://game/events/common/chat/chat_send.png" id="4_6keib"]
 [ext_resource type="Script" uid="uid://lf4v4xbu425r" path="res://game/menus/lobby/view_ip_dialog.gd" id="5_jyb4t"]
+[ext_resource type="Texture2D" uid="uid://cdlm17je2ol0u" path="res://game/menus/lobby/icons/presets.png" id="7_8ughs"]
 [ext_resource type="Texture2D" uid="uid://c3r13t5eig25e" path="res://game/menus/lobby/icons/view_ips.png" id="7_f0cv5"]
 [ext_resource type="Script" uid="uid://cq43botg0qg0m" path="res://menu/items_grid/items_grid.gd" id="11_ncktp"]
+[ext_resource type="PackedScene" uid="uid://y56j4fgei867" path="res://game/menus/lobby/presets/preset_manager.tscn" id="13_jqaxo"]
 
 [sub_resource type="Animation" id="Animation_dja87"]
 resource_name = "Countdown"
@@ -553,6 +555,11 @@ size_flags_horizontal = 0
 toggle_mode = true
 icon = ExtResource("2_wjeu5")
 
+[node name="Presets" type="Button" parent="Panels/Lobby/VBoxContainer/ControlButtons"]
+layout_mode = 2
+size_flags_horizontal = 0
+icon = ExtResource("7_8ughs")
+
 [node name="ConnectedToIP" type="LinkButton" parent="Panels/Lobby/VBoxContainer/ControlButtons"]
 layout_mode = 2
 size_flags_horizontal = 6
@@ -650,6 +657,9 @@ columns = 3
 script = ExtResource("11_ncktp")
 metadata/_custom_type_script = "uid://cq43botg0qg0m"
 
+[node name="PresetManager" parent="." instance=ExtResource("13_jqaxo")]
+visible = false
+
 [node name="ViewIPDialog" type="AcceptDialog" parent="."]
 title = "Твои IP-адреса"
 size = Vector2i(640, 160)
@@ -681,6 +691,7 @@ one_shot = true
 [connection signal="pressed" from="Panels/Lobby/VBoxContainer/AdminPanel/ChangeEvent" to="." method="_on_change_event_pressed"]
 [connection signal="pressed" from="Panels/Lobby/VBoxContainer/AdminPanel/ChangeMap" to="." method="_on_change_map_pressed"]
 [connection signal="toggled" from="Panels/Lobby/VBoxContainer/ControlButtons/Chat" to="Panels/Chat" method="_on_chat_toggled"]
+[connection signal="pressed" from="Panels/Lobby/VBoxContainer/ControlButtons/Presets" to="PresetManager" method="popup_centered"]
 [connection signal="pressed" from="Panels/Lobby/VBoxContainer/ControlButtons/ConnectedToIP" to="." method="_on_connected_to_ip_pressed"]
 [connection signal="pressed" from="Panels/Lobby/VBoxContainer/ControlButtons/ViewIP" to="ViewIPDialog" method="popup_centered"]
 [connection signal="pressed" from="Panels/Lobby/VBoxContainer/ControlButtons/Leave" to="." method="_on_leave_pressed"]

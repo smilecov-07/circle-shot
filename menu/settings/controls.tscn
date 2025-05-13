@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://5wx4yqp027gq"]
+[gd_scene load_steps=11 format=3 uid="uid://5wx4yqp027gq"]
 
 [ext_resource type="Script" uid="uid://ctrkbviiei746" path="res://menu/settings/controls.gd" id="1_eiwbe"]
 [ext_resource type="PackedScene" uid="uid://0wc72b0o2o11" path="res://game/player/ui/player_ui.tscn" id="2_mu25c"]
@@ -7,6 +7,8 @@
 [ext_resource type="Script" uid="uid://bno2phak6wpyr" path="res://menu/settings/joystick_editor.gd" id="4_f7qr5"]
 [ext_resource type="Script" uid="uid://m3oouj1lspki" path="res://game/player/ui/position_loader.gd" id="5_50mix"]
 [ext_resource type="Texture2D" uid="uid://ndobp7p586tx" path="res://menu/theme/icons/edit.png" id="5_hg74u"]
+[ext_resource type="Texture2D" uid="uid://bs0jb0hstf3sl" path="res://menu/theme/icons/save.png" id="8_gk1xf"]
+[ext_resource type="Texture2D" uid="uid://brcaom8n83yf2" path="res://menu/settings/icons/reset.png" id="9_p6t4g"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mu25c"]
 bg_color = Color(0.464844, 0, 0, 0.215686)
@@ -414,24 +416,26 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -207.0
+offset_left = -228.0
 offset_top = 16.0
-offset_right = -79.0
+offset_right = -80.0
 offset_bottom = 72.0
 grow_horizontal = 0
 text = "Сохранить"
+icon = ExtResource("8_gk1xf")
 
 [node name="Discard" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -343.0
+offset_left = -373.0
 offset_top = 16.0
-offset_right = -215.0
+offset_right = -236.0
 offset_bottom = 72.0
 grow_horizontal = 0
 text = "Сбросить"
+icon = ExtResource("9_p6t4g")
 
 [connection signal="save_requested" from="." to="." method="_on_save_requested"]
 [connection signal="save_requested" from="." to="PlayerUI/Controller/HealthBar/PositionEditor" method="_on_controls_save_requested"]

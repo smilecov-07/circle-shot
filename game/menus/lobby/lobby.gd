@@ -439,6 +439,7 @@ func _start_event(event_id: int, map_id: int) -> void:
 			_game.load_event(event_id, map_id)
 			return
 	_item_selector.hide()
+	($PresetManager as Window).hide()
 	
 	_game.load_event(event_id, map_id, Globals.get_string("player_name"), [
 		selected_skin,
@@ -734,7 +735,9 @@ Note: you can always set admin to yourself if you are server.")
 
 
 func _is_admin() -> bool:
-	return admin_id == multiplayer.get_unique_id()
+	return multiplayer.has_multiplayer_peer() \
+			and multiplayer.multiplayer_peer.get_connection_status() \
+			== MultiplayerPeer.CONNECTION_CONNECTED and admin_id == multiplayer.get_unique_id()
 
 
 func _get_player_id(player: String) -> int:

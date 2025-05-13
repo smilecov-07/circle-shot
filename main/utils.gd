@@ -9,7 +9,7 @@ class_name Utils
 static func validate_player_name(player_name: String, id: int = 0,
 		valid: Array[bool] = []) -> String:
 	# Там, где якобы пусто, стоит пустой символ
-	player_name = player_name.strip_edges().strip_escapes().lstrip('⁣')
+	player_name = strip_string(player_name)
 	valid.append(not player_name.is_empty())
 	if player_name.is_empty():
 		var new_name: String = "Игрок%d" % id if id != 0 else "Игрок"
@@ -68,3 +68,8 @@ static func is_valid_address(address: String, check_domain: bool) -> bool:
 			and address.rfind('.') < address.length() - 1)
 			and not (check_domain and IP.resolve_hostname(address).is_empty())
 	)
+
+
+## Избавляет строку от различных вспомогательных символов (пробелы, ...).
+static func strip_string(string: String) -> String:
+	return string.strip_edges().strip_escapes().lstrip('⁣').rstrip('⁣')
