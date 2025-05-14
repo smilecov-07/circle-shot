@@ -371,9 +371,9 @@ func _show_countdown() -> void:
 
 @rpc("call_local", "reliable", "authority", 1)
 func _hide_countdown() -> void:
-	if _is_admin():
+	if _game.state == Game.State.CLOSED or _is_admin():
 		(%AdminPanel as CanvasItem).show()
-	else:
+	if _game.state == Game.State.CLOSED or not _is_admin():
 		(%ClientHint as CanvasItem).show()
 	(%Countdown as CanvasItem).hide()
 	(%Countdown/AnimationPlayer as AnimationPlayer).stop()
@@ -735,9 +735,7 @@ Note: you can always set admin to yourself if you are server.")
 
 
 func _is_admin() -> bool:
-	return multiplayer.has_multiplayer_peer() \
-			and multiplayer.multiplayer_peer.get_connection_status() \
-			== MultiplayerPeer.CONNECTION_CONNECTED and admin_id == multiplayer.get_unique_id()
+	return admin_id == multiplayer.get_unique_id()
 
 
 func _get_player_id(player: String) -> int:

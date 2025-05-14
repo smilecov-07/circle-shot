@@ -190,10 +190,9 @@ func close() -> void:
 		event.queue_free()
 		print_verbose("Event deleted.")
 	
-	if state != State.CONNECTING: # Комната ещё не создана, нечего закрывать
-		state = State.CLOSED
-		closed.emit()
 	state = State.CLOSED
+	if state != State.CONNECTING: # Комната ещё не создана, нечего закрывать
+		closed.emit()
 	print_verbose("Closed.")
 
 

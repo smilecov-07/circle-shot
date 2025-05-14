@@ -122,7 +122,7 @@ func _physics_process(delta: float) -> void:
 
 ## Телепортирует сущность в точку [param destination].
 ## [b]Примечание[/b]: этот метод может быть вызван только сервером и только как RPC.
-@rpc("call_local", "authority", "reliable", 4)
+@rpc("call_local", "authority", "unreliable_ordered", 4)
 func teleport_to(destination: Vector2) -> void:
 	position = destination
 	server_position = destination
