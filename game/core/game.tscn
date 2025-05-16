@@ -102,7 +102,7 @@ script = ExtResource("1_j8au2")
 metadata/_custom_type_script = "uid://iq1642q07wum"
 
 [node name="Loader" type="CanvasLayer" parent="."]
-layer = 5
+layer = 10
 visible = false
 script = ExtResource("2_p5b8s")
 metadata/_custom_type_script = "uid://cv3kjc76k7c58"
@@ -174,7 +174,7 @@ libraries = {
 }
 
 [node name="DebugInfo" type="CanvasLayer" parent="."]
-layer = 6
+layer = 20
 script = ExtResource("3_0xkxq")
 
 [node name="FPSLabel" type="Label" parent="DebugInfo"]

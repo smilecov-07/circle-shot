@@ -5,7 +5,7 @@
 
 [node name="Player" instance=ExtResource("1_16gox")]
 script = ExtResource("2_jy3s0")
-max_health = 70
+max_health = 75
 
 [node name="ImmuneTimer" type="Timer" parent="." index="9"]
 wait_time = 3.0

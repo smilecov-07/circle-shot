@@ -6,7 +6,19 @@
 metadata/_edit_horizontal_guides_ = [-6400.0, 6400.0]
 metadata/_edit_vertical_guides_ = [-6400.0, 6400.0]
 
-[node name="SpawnPoints" type="Node2D" parent="." index="0"]
+[node name="Left" parent="Borders" index="0"]
+position = Vector2(-6400, 0)
+
+[node name="Right" parent="Borders" index="1"]
+position = Vector2(6400, 0)
+
+[node name="Up" parent="Borders" index="2"]
+position = Vector2(0, -6400)
+
+[node name="Down" parent="Borders" index="3"]
+position = Vector2(0, 6400)
+
+[node name="SpawnPoints" type="Node2D" parent="." index="2"]
 
 [node name="0" type="Marker2D" parent="SpawnPoints" index="0"]
 position = Vector2(254, 144)
@@ -48,7 +60,7 @@ gizmo_extents = 76.0
 position = Vector2(187, 318)
 gizmo_extents = 76.0
 
-[node name="HealPoints" type="Node2D" parent="." index="1"]
+[node name="HealPoints" type="Node2D" parent="." index="3"]
 
 [node name="0" type="Marker2D" parent="HealPoints" index="0"]
 position = Vector2(-266, -205)
@@ -130,7 +142,7 @@ gizmo_extents = 160.0
 position = Vector2(-794, 248)
 gizmo_extents = 160.0
 
-[node name="AmmoPoints" type="Node2D" parent="." index="2"]
+[node name="AmmoPoints" type="Node2D" parent="." index="4"]
 
 [node name="0" type="Marker2D" parent="AmmoPoints" index="0"]
 position = Vector2(-1568, -1821)
@@ -172,7 +184,7 @@ gizmo_extents = 320.0
 position = Vector2(-3076, 164)
 gizmo_extents = 320.0
 
-[node name="WeaponBoxPoints" type="Node2D" parent="." index="3"]
+[node name="WeaponBoxPoints" type="Node2D" parent="." index="5"]
 
 [node name="0" type="Marker2D" parent="WeaponBoxPoints" index="0"]
 position = Vector2(-623, 4489)

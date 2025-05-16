@@ -18,6 +18,7 @@ properties/0/replication_mode = 0
 collision_layer = 32
 collision_mask = 2
 script = ExtResource("1_nr771")
+return_time = 10.0
 metadata/_custom_type_script = "uid://bdupyqf5qxbsn"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

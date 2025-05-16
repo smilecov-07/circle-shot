@@ -34,8 +34,6 @@ func _process(_delta: float) -> void:
 	_aim.hide()
 	
 	if can_shoot():
-		if not visible and ammo_in_stock > 0:
-			_make_current()
 		_aim.visible = player.player_input.showing_aim
 		_throw_pivot.rotation = _calculate_aim_angle()
 		
@@ -129,4 +127,5 @@ func _customize_projectile(_projectile: GrenadeProjectile) -> void:
 func _on_throw_timer_timeout() -> void:
 	_reloading = false
 	unblock_shooting()
-	_make_current()
+	if player.current_weapon == self:
+		_make_current()

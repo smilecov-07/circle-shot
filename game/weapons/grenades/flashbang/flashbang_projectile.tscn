@@ -334,7 +334,7 @@ texture = ExtResource("2_nfc8c")
 replication_config = SubResource("SceneReplicationConfig_3qk41")
 
 [node name="Stun" type="CanvasLayer" parent="." index="6"]
-layer = 10
+layer = 4
 visible = false
 
 [node name="Effect" type="Control" parent="Stun" index="0"]

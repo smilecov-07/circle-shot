@@ -6,7 +6,19 @@
 metadata/_edit_vertical_guides_ = [-4000.0, 4000.0]
 metadata/_edit_horizontal_guides_ = [-4000.0, 4000.0]
 
-[node name="SpawnPoints0" type="Node2D" parent="." index="1"]
+[node name="Left" parent="Borders" index="0"]
+position = Vector2(-4000, 0)
+
+[node name="Right" parent="Borders" index="1"]
+position = Vector2(4000, 0)
+
+[node name="Up" parent="Borders" index="2"]
+position = Vector2(0, -4000)
+
+[node name="Down" parent="Borders" index="3"]
+position = Vector2(0, 4000)
+
+[node name="SpawnPoints0" type="Node2D" parent="." index="2"]
 
 [node name="0" type="Marker2D" parent="SpawnPoints0" index="0"]
 position = Vector2(-330, 148)
@@ -28,7 +40,7 @@ gizmo_extents = 76.0
 position = Vector2(-475, 191)
 gizmo_extents = 76.0
 
-[node name="SpawnPoints1" type="Node2D" parent="." index="2"]
+[node name="SpawnPoints1" type="Node2D" parent="." index="3"]
 
 [node name="0" type="Marker2D" parent="SpawnPoints1" index="0"]
 position = Vector2(504, 175)
