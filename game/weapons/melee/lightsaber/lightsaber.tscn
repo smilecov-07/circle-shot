@@ -303,27 +303,28 @@ _data = {
 
 [node name="Lightsaber" instance=ExtResource("1_lf8ps")]
 script = ExtResource("2_1b7xu")
-damage = 45
+damage = 42
 shoot_interval = 0.8
 to_aim_time = 0.2
-speed_multiplier_when_current = 1.09
+speed_multiplier_when_current = 1.08
 
 [node name="AttackPolygon" type="Polygon2D" parent="." index="0"]
 visible = false
+position = Vector2(-20, 0)
 polygon = PackedVector2Array(113, -219, 118, -162, 86, -148, 110, -117, 74, -99, 61, -65, 84, -8, 259, -90, 264, -144, 238, -168, 189, -210)
 
 [node name="Base" type="Sprite2D" parent="." index="1"]
 position = Vector2(0, 24)
 rotation = -0.261799
 texture = ExtResource("2_xa745")
-offset = Vector2(128, 0)
+offset = Vector2(120, 0)
 
 [node name="Light" type="Sprite2D" parent="Base" index="0"]
 self_modulate = Color(1, 0, 0, 1)
 show_behind_parent = true
 position = Vector2(-72, 0)
 texture = ExtResource("3_1b7xu")
-offset = Vector2(128, 0)
+offset = Vector2(120, 0)
 region_enabled = true
 region_rect = Rect2(400, 0, 0, 128)
 
@@ -331,20 +332,20 @@ region_rect = Rect2(400, 0, 0, 128)
 show_behind_parent = true
 position = Vector2(-72, 0)
 texture = ExtResource("4_4txxk")
-offset = Vector2(128, 0)
+offset = Vector2(120, 0)
 region_enabled = true
 region_rect = Rect2(400, 0, 0, 128)
 
 [node name="Aim" type="Line2D" parent="." index="2"]
 z_index = 10
-position = Vector2(128, 0)
+position = Vector2(108, 0)
 points = PackedVector2Array(-41, 0, -72, -72, -8, -248, 72, -248, 192, -48, 192, 48, 72, 248, -8, 248, -72, 72)
 closed = true
 width = 8.0
 default_color = Color(0, 0, 0, 0.25098)
 
 [node name="ShapeDetector" type="ShapeCast2D" parent="Attack" index="0"]
-position = Vector2(144, -144)
+position = Vector2(124, -144)
 enabled = false
 shape = SubResource("CircleShape2D_5vqjv")
 target_position = Vector2(72, 144)
@@ -354,7 +355,7 @@ script = ExtResource("5_0d2ml")
 metadata/_custom_type_script = "uid://dfhhd4es3t3i"
 
 [node name="ShapeDetector2" type="ShapeCast2D" parent="Attack" index="1"]
-position = Vector2(144, 144)
+position = Vector2(124, 144)
 enabled = false
 shape = SubResource("CircleShape2D_5vqjv")
 target_position = Vector2(72, -144)

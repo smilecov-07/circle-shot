@@ -9,8 +9,8 @@ rarity = 1
 id = "light_sword"
 stats = Dictionary[String, String]({
 "ammo_total": "не ограничено",
-"damage": "45",
-"dps": "56"
+"damage": "42",
+"dps": "53"
 })
 damage_text = "Урон: {damage}"
 ammo_text = "Не ограничено"

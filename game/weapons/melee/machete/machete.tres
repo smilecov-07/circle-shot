@@ -9,8 +9,8 @@ rarity = 1
 id = "machete"
 stats = Dictionary[String, String]({
 "ammo_total": "Не ограничено",
-"damage": "35 x 2",
-"dps": "64"
+"damage": "33 x 2",
+"dps": "60"
 })
 damage_text = "Урон: {damage}"
 ammo_text = "{ammo_total}"

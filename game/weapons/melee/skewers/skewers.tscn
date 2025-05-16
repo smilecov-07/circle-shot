@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://s0jt56dbe0kn"]
+[gd_scene load_steps=18 format=3 uid="uid://s0jt56dbe0kn"]
 
 [ext_resource type="PackedScene" uid="uid://bydh8wq8j224r" path="res://game/weapons/melee/common/melee.tscn" id="1_q7ou4"]
 [ext_resource type="Script" uid="uid://t2r6ib02lu28" path="res://game/weapons/melee/skewers/skewers.gd" id="2_1lgvu"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dcei15hn601wa" path="res://game/weapons/melee/skewers/skewer.png" id="4_pnlpd"]
 [ext_resource type="Texture2D" uid="uid://di262r2a0v0l4" path="res://game/weapons/melee/skewers/skewer2.png" id="5_0mdr0"]
 [ext_resource type="Script" uid="uid://bc7ffmlfu6nm7" path="res://game/entity/attack/ray_detector.gd" id="5_erost"]
+[ext_resource type="Texture2D" uid="uid://b2ky8874eajh0" path="res://game/weapons/melee/skewers/spark.png" id="7_pnlpd"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s4qhw"]
 radius = 20.0
@@ -24,7 +25,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.075, 0.3),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(72, 0), Vector2(0, 0)]
+"values": [Vector2(0, 0), Vector2(80, 0), Vector2(0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -65,7 +66,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.075, 0.175, 0.35),
 "transitions": PackedFloat32Array(1, 1, 0.840896, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(88, -8), Vector2(88, -8), Vector2(0, 0)]
+"values": [Vector2(0, 0), Vector2(96, -8), Vector2(96, -8), Vector2(0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -77,7 +78,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.075, 0.175, 0.35),
 "transitions": PackedFloat32Array(1, 1, 0.840896, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(88, 8), Vector2(88, 8), Vector2(0, 0)]
+"values": [Vector2(0, 0), Vector2(96, 8), Vector2(96, 8), Vector2(0, 0)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -127,6 +128,32 @@ tracks/5/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("SparksPivot/Sparks")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.05),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [false],
+"method": &"restart"
+}]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Attack/SparksRayDetector:enabled")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
 
 [sub_resource type="Animation" id="Animation_0mdr0"]
 resource_name = "AttackSecond"
@@ -142,7 +169,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.075, 0.3),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(72, 0), Vector2(0, 0)]
+"values": [Vector2(0, 0), Vector2(80, 0), Vector2(0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -372,6 +399,18 @@ tracks/6/keys = {
 "update": 0,
 "values": [PackedVector2Array()]
 }
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Attack/SparksRayDetector:enabled")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_obws4"]
 _data = {
@@ -383,11 +422,19 @@ _data = {
 &"RESET": SubResource("Animation_obws4")
 }
 
+[sub_resource type="Curve" id="Curve_0mdr0"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.83, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.454668), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_erost"]
+offsets = PackedFloat32Array(0.605839, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
 [node name="Skewers" instance=ExtResource("1_q7ou4")]
 script = ExtResource("2_1lgvu")
-damage_second = 25
-damage_both = 45
-damage = 30
+damage_second = 30
+damage_both = 50
+damage = 35
 shoot_interval = 0.4
 to_aim_time = 0.2
 speed_multiplier_when_current = 1.11
@@ -398,7 +445,7 @@ color = Color(0.597656, 0.597656, 0.597656, 1)
 [node name="ShapeDetector" type="ShapeCast2D" parent="Attack" index="0"]
 enabled = false
 shape = SubResource("CircleShape2D_s4qhw")
-target_position = Vector2(232, 0)
+target_position = Vector2(240, 0)
 max_results = 1
 collision_mask = 3
 script = ExtResource("3_s4qhw")
@@ -407,7 +454,7 @@ metadata/_custom_type_script = "uid://dfhhd4es3t3i"
 [node name="RayDetector" type="RayCast2D" parent="Attack" index="1"]
 position = Vector2(-16, 16)
 enabled = false
-target_position = Vector2(224, 0)
+target_position = Vector2(232, 0)
 collision_mask = 3
 hit_from_inside = true
 script = ExtResource("5_erost")
@@ -416,7 +463,15 @@ metadata/_custom_type_script = "uid://bc7ffmlfu6nm7"
 [node name="RayDetector2" type="RayCast2D" parent="Attack" index="2"]
 position = Vector2(16, -16)
 enabled = false
-target_position = Vector2(224, 0)
+target_position = Vector2(232, 0)
+collision_mask = 3
+hit_from_inside = true
+script = ExtResource("5_erost")
+metadata/_custom_type_script = "uid://bc7ffmlfu6nm7"
+
+[node name="SparksRayDetector" type="RayCast2D" parent="Attack" index="3"]
+enabled = false
+target_position = Vector2(288, 0)
 collision_mask = 3
 hit_from_inside = true
 script = ExtResource("5_erost")
@@ -462,5 +517,37 @@ libraries = {
 [node name="Timer" type="Timer" parent="." index="6"]
 process_mode = 3
 one_shot = true
+
+[node name="SparksPivot" type="Node2D" parent="." index="7"]
+z_index = -1
+
+[node name="Sparks" type="CPUParticles2D" parent="SparksPivot" index="0"]
+position = Vector2(200, 0)
+emitting = false
+amount = 4
+texture = ExtResource("7_pnlpd")
+lifetime = 0.4
+one_shot = true
+explosiveness = 0.9
+local_coords = true
+emission_shape = 3
+emission_rect_extents = Vector2(0, 8)
+spread = 10.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 100.0
+initial_velocity_max = 400.0
+angular_velocity_min = -180.0
+angular_velocity_max = 180.0
+damping_min = 100.0
+damping_max = 100.0
+angle_min = -180.0
+angle_max = 180.0
+scale_amount_curve = SubResource("Curve_0mdr0")
+color_ramp = SubResource("Gradient_erost")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="SparksPivot" index="1"]
+remote_path = NodePath("../../Attack/SparksRayDetector")
+update_position = false
+update_scale = false
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
