@@ -8,6 +8,7 @@ extends GridContainer
 ## Этот сигнал издаётся, когда один из отображённых предметов нажат. Сигнал содержит
 ## тип предмета в [param type] и ID предмета в [param id].
 signal item_selected(type: ItemsDB.Item, id: int)
+
 var _item_environment_scene: PackedScene = preload("uid://ck5uq0aa1ov56")
 var _item_equip_scene: PackedScene = preload("uid://c07pym82q5utt")
 

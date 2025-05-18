@@ -98,6 +98,7 @@ _data = {
 }
 
 [node name="Game" type="Node"]
+process_physics_priority = -50
 script = ExtResource("1_j8au2")
 metadata/_custom_type_script = "uid://iq1642q07wum"
 

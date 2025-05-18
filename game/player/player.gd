@@ -7,12 +7,14 @@ extends Entity
 
 ## Издаётся, когда игрок меняет оружие.
 signal weapon_changed(type: Weapon.Type)
+## Издаётся, когда игрок экипирует новый навык.
+signal skin_equipped(data: SkinData)
+## Издаётся, когда игрок экипирует новый навык.
+signal skill_equipped(data: SkillData)
 ## Издаётся, когда игрок экипирует новое оружие.
 signal weapon_equipped(type: Weapon.Type, data: WeaponData)
 ## Издаётся, когда текст с информацией о боеприпасах текущего оружия был обновлён.
 signal ammo_text_updated(text: String)
-## Издаётся, когда игрок экипирует новый навык.
-signal skill_equipped(data: SkillData)
 
 ## Имя игрока.
 var player_name: String
@@ -37,6 +39,7 @@ var skill: Skill
 @onready var blood: CPUParticles2D = $Visual/Blood
 ## Узел с позицией для камеры.
 @onready var camera_target: Marker2D = $CameraTarget
+
 @onready var _weapons: Node2D = $Visual/Weapons
 @onready var _event: Event = get_tree().get_first_node_in_group(&"Event")
 
@@ -192,6 +195,7 @@ func set_skin(data: SkinData) -> void:
 	$Visual/Skin.add_child(skin)
 	skin.initialize(self, data)
 	equip_data[0] = data.idx_in_db
+	skin_equipped.emit(data)
 	print_verbose("Skin %s with ID %d on %s set." % [data.id, equip_data[0], name])
 
 

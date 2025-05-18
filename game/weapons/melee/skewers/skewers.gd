@@ -27,10 +27,10 @@ func _notification(what: int) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	_shoot_timer -= delta
 	if multiplayer.is_server() and can_shoot() \
 			and player.player_input.shooting and _shoot_timer <= 0.0:
 		shoot([player.player_input.aim_direction, _current_combo])
-	_shoot_timer -= delta
 
 
 func _initialize() -> void:

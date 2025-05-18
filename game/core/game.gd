@@ -87,6 +87,10 @@ func _ready() -> void:
 		Globals.console.help_processors.append(_print_help)
 
 
+func _physics_process(_delta: float) -> void:
+	multiplayer.poll()
+
+
 func _exit_tree() -> void:
 	if Globals.console:
 		Globals.console.command_processors.erase(_process_console_command)

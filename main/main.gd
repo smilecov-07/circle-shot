@@ -238,6 +238,7 @@ file, otherwise it will NOT function.")
 	multiplayer.multiplayer_peer = null # Чтобы убрать OfflineMultiplayerPeer
 	get_viewport().set_canvas_cull_mask_bit(1, false)
 	get_tree().root.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF
+	get_tree().multiplayer_poll = false
 	
 	await get_tree().process_frame
 	print_verbose("Done initializing.")

@@ -54,6 +54,6 @@ func has_additional_button() -> bool:
 
 func _create_projectile() -> void:
 	if _in_single_mode:
-		_shooting_timer.start(0.15)
+		_shooting_timer.start(0.05)
 		await _shooting_timer.timeout
 	super()
