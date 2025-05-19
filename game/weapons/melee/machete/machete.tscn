@@ -317,12 +317,20 @@ texture = ExtResource("2_5owoa")
 offset = Vector2(112, 0)
 
 [node name="Aim" type="Line2D" parent="." index="2"]
+visible = false
 z_index = 10
 position = Vector2(128, 0)
 points = PackedVector2Array(-41, 0, -72, -72, -16, -216, 72, -216, 152, -64, 152, 64, 72, 216, -16, 216, -72, 72)
 closed = true
 width = 8.0
-default_color = Color(0, 0, 0, 0.25098)
+default_color = Color(1, 1, 1, 0.376471)
+
+[node name="Outline" type="Line2D" parent="Aim" index="0"]
+show_behind_parent = true
+points = PackedVector2Array(-41, 0, -72, -72, -16, -216, 72, -216, 152, -64, 152, 64, 72, 216, -16, 216, -72, 72)
+closed = true
+width = 12.0
+default_color = Color(0, 0, 0, 0.188235)
 
 [node name="Attack" parent="." index="3"]
 visible = false

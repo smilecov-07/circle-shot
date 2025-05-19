@@ -366,6 +366,7 @@ region_rect = Rect2(208, 8, 80, 48)
 position = Vector2(109, -26)
 
 [node name="Aim" parent="ShootPoint" index="0"]
+visible = true
 width = 32.0
 
 [node name="SpreadLeft" parent="ShootPoint/Aim" index="0"]
@@ -373,6 +374,9 @@ position = Vector2(0, -16)
 
 [node name="SpreadRight" parent="ShootPoint/Aim" index="1"]
 position = Vector2(0, 16)
+
+[node name="Outline" parent="ShootPoint/Aim" index="2"]
+width = 36.0
 
 [node name="AnimationPlayer" parent="." index="3"]
 libraries = {

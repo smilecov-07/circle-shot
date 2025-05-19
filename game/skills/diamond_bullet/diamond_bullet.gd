@@ -38,9 +38,12 @@ func _calculate_spread() -> float:
 
 
 func _on_player_shooting_started() -> void:
+	if player.is_disarmed():
+		return
+	
 	unblock_cooldown()
 	($ActiveMarker/AnimationPlayer as AnimationPlayer).play(&"RESET")
-	if multiplayer.is_server() and not player.is_disarmed():
+	if multiplayer.is_server():
 		var projectile: Projectile = projectile_scene.instantiate()
 		projectile.position = player.position + 64 * Vector2.from_angle(
 				player.player_input.aim_direction.angle())

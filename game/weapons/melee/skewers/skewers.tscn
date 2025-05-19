@@ -507,7 +507,13 @@ visible = false
 z_index = 10
 points = PackedVector2Array(40, 0, 192, 0)
 width = 40.0
-default_color = Color(0, 0, 0, 0.25098)
+default_color = Color(1, 1, 1, 0.376471)
+
+[node name="Outline" type="Line2D" parent="Aim" index="0"]
+z_index = 10
+points = PackedVector2Array(40, 0, 192, 0)
+width = 44.0
+default_color = Color(0, 0, 0, 0.188235)
 
 [node name="AnimationPlayer" parent="." index="5"]
 libraries = {

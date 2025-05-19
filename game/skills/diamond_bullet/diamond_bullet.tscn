@@ -91,16 +91,34 @@ visible = false
 z_index = 10
 points = PackedVector2Array(64, 0, 4000, 0)
 width = 32.0
-default_color = Color(0, 0.623529, 1, 0.25098)
+default_color = Color(0, 0.623529, 1, 0.376471)
 
 [node name="SpreadLeft" type="Line2D" parent="Aim"]
 position = Vector2(64, -16)
 points = PackedVector2Array(64, 0, 128, 0)
 width = 4.0
-default_color = Color(0, 0.623529, 1, 0.25098)
+default_color = Color(0, 0.623529, 1, 0.313726)
+
+[node name="Outline" type="Line2D" parent="Aim/SpreadLeft"]
+show_behind_parent = true
+points = PackedVector2Array(64, 0, 128, 0)
+width = 8.0
+default_color = Color(0, 0, 1, 0.156863)
 
 [node name="SpreadRight" type="Line2D" parent="Aim"]
 position = Vector2(64, 16)
 points = PackedVector2Array(64, 0, 128, 0)
 width = 4.0
-default_color = Color(0, 0.623529, 1, 0.25098)
+default_color = Color(0, 0.623529, 1, 0.313726)
+
+[node name="Outline" type="Line2D" parent="Aim/SpreadRight"]
+show_behind_parent = true
+points = PackedVector2Array(64, 0, 128, 0)
+width = 8.0
+default_color = Color(0, 0, 1, 0.156863)
+
+[node name="Outline" type="Line2D" parent="Aim"]
+show_behind_parent = true
+points = PackedVector2Array(64, 0, 4000, 0)
+width = 36.0
+default_color = Color(0, 0, 1, 0.25098)

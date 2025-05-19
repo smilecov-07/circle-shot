@@ -109,6 +109,7 @@ position = Vector2(-32, -32)
 position = Vector2(96, 0)
 
 [node name="Aim" parent="ThrowPivot/ThrowPoint" index="0"]
+visible = true
 width = 8.0
 
 [node name="SpreadLeft" parent="ThrowPivot/ThrowPoint/Aim" index="0"]
@@ -116,6 +117,9 @@ position = Vector2(0, 0)
 
 [node name="SpreadRight" parent="ThrowPivot/ThrowPoint/Aim" index="1"]
 position = Vector2(0, 0)
+
+[node name="Outline" parent="ThrowPivot/ThrowPoint/Aim" index="2"]
+width = 12.0
 
 [node name="AnimationPlayer" parent="." index="2"]
 libraries = {
