@@ -55,8 +55,7 @@ func _ready() -> void:
 	(%AimZoneSlider as Range).set_value_no_signal(Globals.get_controls_float("aim_zone"))
 	(%AlwaysAimCheck as BaseButton).set_pressed_no_signal(
 			Globals.get_controls_bool("always_show_aim"))
-	(%JoysticksAlphaSlider as Range).set_value_no_signal(
-			Globals.get_controls_float("joysticks_alpha"))
+	(%JoysticksAlphaSlider as Range).value = Globals.get_controls_float("joysticks_alpha")
 	
 	_update_aim_visual_size()
 	get_window().size_changed.connect(_update_aim_visual_size)
@@ -381,6 +380,7 @@ func _on_always_aim_check_toggled(toggled_on: bool) -> void:
 
 func _on_joysticks_alpha_slider_value_changed(value: float) -> void:
 	Globals.set_controls_float("joysticks_alpha", value)
+	(%AlphaValue as Label).text = "%d%%" % roundi(value * 100)
 
 
 func _on_aim_visual_draw() -> void:

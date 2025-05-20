@@ -63,12 +63,13 @@ func _process(_delta: float) -> void:
 	_aim.hide()
 	
 	if can_shoot():
-		_aim.visible = player.player_input.showing_aim
 		rotation = _calculate_aim_angle() + deg_to_rad(_calculate_recoil())
+		_aim.visible = player.player_input.showing_aim
 		
-		var spread: float = _calculate_spread()
-		_aim_spread_left.rotation_degrees = -spread
-		_aim_spread_right.rotation_degrees = spread
+		if _aim.visible:
+			var spread: float = _calculate_spread()
+			_aim_spread_left.rotation_degrees = -spread
+			_aim_spread_right.rotation_degrees = spread
 
 
 func _physics_process(delta: float) -> void:

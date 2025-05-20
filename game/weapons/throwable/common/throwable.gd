@@ -40,11 +40,13 @@ func _process(_delta: float) -> void:
 	_aim.hide()
 	
 	if can_shoot():
-		_aim.visible = player.player_input.showing_aim
 		_throw_pivot.rotation = _calculate_aim_angle()
+		_aim.visible = player.player_input.showing_aim
 		
-		_aim_spread_left.rotation_degrees = -_calculate_spread()
-		_aim_spread_right.rotation_degrees = _calculate_spread()
+		if _aim.visible:
+			var spread: float = _calculate_spread()
+			_aim_spread_left.rotation_degrees = -spread
+			_aim_spread_right.rotation_degrees = spread
 	
 	if _reloading and (player.player_input.shooting or player.is_disarmed()):
 		_interrupt_reload = true

@@ -49,6 +49,5 @@ func _on_line_edit_text_changed(new_text: String) -> void:
 
 func _on_about_to_popup() -> void:
 	if not DisplayServer.has_hardware_keyboard():
-		await get_tree().process_frame
-		position.y = 80
+		set_indexed.call_deferred(^"position:y", 80)
 	(%LineEdit as Control).grab_focus.call_deferred()
