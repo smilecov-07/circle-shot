@@ -13,20 +13,6 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_6joc0"]
 radius = 40.0
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_adfdp"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/replication_mode = 0
-properties/1/path = NodePath(".:speed")
-properties/1/spawn = true
-properties/1/replication_mode = 0
-properties/2/path = NodePath(".:direction")
-properties/2/spawn = true
-properties/2/replication_mode = 0
-properties/3/path = NodePath("Attack:team")
-properties/3/spawn = true
-properties/3/replication_mode = 0
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_vji31"]
 resource_local_to_scene = true
 radius = 32.0
@@ -730,9 +716,6 @@ shape = SubResource("CircleShape2D_6joc0")
 
 [node name="ExplosionTimer" parent="." index="2"]
 wait_time = 1.5
-
-[node name="MultiplayerSynchronizer" parent="." index="3"]
-replication_config = SubResource("SceneReplicationConfig_adfdp")
 
 [node name="Attack" type="Node2D" parent="." index="4"]
 script = ExtResource("5_l5qjx")

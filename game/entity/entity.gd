@@ -301,7 +301,7 @@ func set_health(health: int) -> void:
 ## Понижает здоровье на [param amount] с учётом [member defense_multiplier].
 ## [param by] должен содержать ID сущности, нанёсшей урон.[br]
 ## [b]Примечание[/b]: этот метод должен вызываться только на сервере.
-func damage(amount: int, by: int) -> void:
+func damage(amount: int, by: int = -1) -> void:
 	if not multiplayer.is_server():
 		push_error("Unexpected call on client.")
 		return

@@ -557,12 +557,7 @@ texture = ExtResource("3_qcdsd")
 [node name="Smoke" type="Sprite2D" parent="Explosion" index="1"]
 modulate = Color(1, 1, 1, 0)
 z_index = 2
-scale = Vector2(3, 3)
-texture = ExtResource("5_xbloa")
-
-[node name="Smoke2" type="Sprite2D" parent="Explosion/Smoke" index="0"]
-self_modulate = Color(1, 1, 1, 0.435294)
-rotation = 0.869235
+scale = Vector2(4, 4)
 texture = ExtResource("5_xbloa")
 
 [node name="InvisibilityArea" type="Area2D" parent="Explosion" index="2"]

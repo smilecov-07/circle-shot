@@ -26,6 +26,7 @@ var _reloading := false
 @onready var _throw_pivot: Marker2D = $ThrowPivot
 
 @onready var _aim: Line2D = $ThrowPivot/ThrowPoint/Aim
+@onready var _aim_outline: Line2D = $ThrowPivot/ThrowPoint/Aim/Outline
 @onready var _aim_spread_left: Line2D = $ThrowPivot/ThrowPoint/Aim/SpreadLeft
 @onready var _aim_spread_right: Line2D = $ThrowPivot/ThrowPoint/Aim/SpreadRight
 
@@ -37,15 +38,18 @@ func _process(_delta: float) -> void:
 		_aim.visible = player.player_input.showing_aim
 		_throw_pivot.rotation = _calculate_aim_angle()
 		
-		_aim_spread_left.rotation_degrees = -_calculate_spread()
-		_aim_spread_right.rotation_degrees = _calculate_spread()
+		var spread: float = _calculate_spread()
+		_aim_spread_left.rotation_degrees = -spread
+		_aim_spread_right.rotation_degrees = spread
 		
 		# Вычисление длины пути гранаты через формулу по физике xD
 		var speed_multiplier: float = player.player_input.aim_direction.length()
 		var time: float = minf(projectile_speed * speed_multiplier / projectile_damping,
 				projectile_explosion_time)
-		_aim.points[1].x = projectile_speed * time * speed_multiplier \
+		var distance: float = projectile_speed * time * speed_multiplier \
 				- projectile_damping / 2 * time * time
+		_aim.points[1].x = distance
+		_aim_outline.points[1].x = distance
 
 
 func _physics_process(_delta: float) -> void:
@@ -56,13 +60,10 @@ func _physics_process(_delta: float) -> void:
 
 func _make_current() -> void:
 	if ammo_in_stock > 0 and not _reloading:
-		show()
 		_anim.play(&"Equip")
 		block_shooting()
 		await _anim.animation_finished
 		unblock_shooting()
-	else:
-		hide()
 
 
 func _unmake_current() -> void:
@@ -104,6 +105,8 @@ func _shoot(throw_direction := Vector2.ZERO) -> void:
 		_customize_projectile(projectile)
 		projectile.name += str(randi())
 		_projectiles_parent.add_child(projectile)
+	
+	_unmake_current()
 
 
 func _can_reload() -> bool:

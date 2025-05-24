@@ -10,7 +10,7 @@ id = "he_grenade"
 stats = Dictionary[String, String]({
 "ammo_total": "3",
 "damage": "20-75",
-"diameter": "11.2",
+"diameter": "11",
 "reload_time": "9"
 })
 damage_text = "Урон: {damage}"

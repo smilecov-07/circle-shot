@@ -36,7 +36,7 @@ func _physics_process(delta: float) -> void:
 		direction = direction.bounce(collision.get_normal())
 
 
-## То же, что и [method Node.queue_free], но может вызывается только на сервере.
+## Выполняет [method Node.queue_free] только когда вызван на сервере.
 func safe_free() -> void:
 	if multiplayer.is_server():
 		queue_free()

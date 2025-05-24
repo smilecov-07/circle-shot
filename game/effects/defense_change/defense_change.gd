@@ -2,9 +2,6 @@ extends Effect
 
 
 func _start_effect() -> void:
-	if data.size() != 1:
-		queue_free()
-		return
 	var multiplier: float = data[0]
 	if is_zero_approx(multiplier):
 		entity.make_immune()

@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3 uid="uid://bkwyuf70hj344"]
+
+[ext_resource type="Script" uid="uid://55g8njvkg07g" path="res://game/player/equip/weapon_data.gd" id="1_tehgf"]
+
+[resource]
+script = ExtResource("1_tehgf")
+name = "Граната с ядом"
+rarity = 1
+id = "poison_grenade"
+stats = Dictionary[String, String]({
+"ammo_total": "2",
+"damage": "10",
+"diameter": "12",
+"duration": "2.8",
+"poison_damage": "20",
+"poison_duration": "2",
+"reload_time": "11"
+})
+damage_text = "Урон: ({damage} + {poison_damage}) x 1-3"
+ammo_text = "{ammo_total} шт."
+description = "Урон/c облака яда: [color=red]{damage}[/color]
+Урон за отравление: [color=red]{poison_damage}[/color]
+Длительность отравления: [color=red]{poison_duration}[/color]
+Длительность облака яда: [color=red]{duration}[/color]
+Диаметр облака яда: [color=red]{diameter} бл.[/color]
+[color=deep_sky_blue]Отравляет[/color]
+
+Боеприпасы: [color=blue]{ammo_total} шт.[/color]
+Перезарядка: [color=blue]{reload_time} с[/color]
+
+Эта граната позволяет нанести большой, но продолжительный урон. Чем дольше цель находится в облаке яда, тем больше она отравится."
+scene_path = "uid://beadmcds20emq"
+image_path = "uid://pmonx1vv3lyh"
+spawnable_scenes_paths = Array[String](["uid://dqo7kuss0a7js"])
+metadata/_custom_type_script = "uid://55g8njvkg07g"

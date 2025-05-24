@@ -2,9 +2,6 @@ extends Effect
 
 
 func _start_effect() -> void:
-	if data.size() != 1:
-		queue_free()
-		return
 	var multiplier: float = data[0]
 	entity.speed_multiplier *= multiplier
 	if multiplier > 1.0:
