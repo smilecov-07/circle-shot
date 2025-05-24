@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemsDB" load_steps=72 format=3 uid="uid://pwq1e7l2ckos"]
+[gd_resource type="Resource" script_class="ItemsDB" load_steps=73 format=3 uid="uid://pwq1e7l2ckos"]
 
 [ext_resource type="Script" uid="uid://df3h1g4gqr0xh" path="res://game/events/common/event_data.gd" id="1_yrpvj"]
 [ext_resource type="Resource" uid="uid://i4s2m4jgbyvc" path="res://game/events/royale/royale.tres" id="2_8tgde"]
@@ -62,8 +62,9 @@
 [ext_resource type="Resource" uid="uid://dkwuu52e308sv" path="res://game/weapons/throwable/snowballs/snowballs.tres" id="42_2b02j"]
 [ext_resource type="Resource" uid="uid://cnb11eku2le8l" path="res://game/skins/videogames/mettaton/mettaton.tres" id="42_fle7o"]
 [ext_resource type="Resource" uid="uid://bmkwy1nu03e0n" path="res://game/weapons/grenades/molotov/molotov.tres" id="44_kifgh"]
-[ext_resource type="Resource" uid="uid://cijq7830afnbd" path="res://game/skins/standard/tralalero_tralala/tralalero_tralala.tres" id="45_lg4h3"]
+[ext_resource type="Resource" uid="uid://cijq7830afnbd" path="res://game/skins/other/tralalero_tralala/tralalero_tralala.tres" id="45_lg4h3"]
 [ext_resource type="Resource" uid="uid://b46i5gov85jd" path="res://game/skins/videogames/om_nom/om_nom.tres" id="46_foawl"]
+[ext_resource type="Resource" uid="uid://b8wgrs3t1ct6k" path="res://game/skins/standard/capitalist/capitalist.tres" id="48_dw7xr"]
 [ext_resource type="Resource" uid="uid://ddfxj31klycw7" path="res://game/weapons/throwable/kunai/kunai.tres" id="49_0uki1"]
 [ext_resource type="Resource" uid="uid://bf04l6ql12cgu" path="res://game/weapons/melee/chainsaw/chainsaw.tres" id="51_puq8a"]
 [ext_resource type="Resource" uid="uid://bup65dc37kog2" path="res://game/weapons/guns/tec_9/tec_9.tres" id="55_dkk74"]
@@ -75,7 +76,7 @@
 [resource]
 script = ExtResource("2_y7sof")
 events = Array[ExtResource("1_yrpvj")]([ExtResource("2_8tgde"), ExtResource("3_2oage"), ExtResource("4_8506t"), ExtResource("5_nkeqj")])
-skins = Array[ExtResource("3_c4k52")]([ExtResource("4_kr1x8"), ExtResource("5_3l44y"), ExtResource("6_etdf3"), ExtResource("7_7vr63"), ExtResource("8_yhh8f"), ExtResource("9_jevbu"), ExtResource("10_2k6xx"), ExtResource("11_bvpy1"), ExtResource("12_oy32e"), ExtResource("13_o4wj6"), ExtResource("14_rknbs"), ExtResource("15_c1d01"), ExtResource("19_bkemq"), ExtResource("20_nbhfx"), ExtResource("22_tu5xb"), ExtResource("23_wv8kv"), ExtResource("24_tbr3x"), ExtResource("26_g26gg"), ExtResource("30_8506t"), ExtResource("29_hy3nc"), ExtResource("31_dyje7"), ExtResource("32_j2sk8"), ExtResource("33_l3v78"), ExtResource("34_vyn0d"), ExtResource("35_puq8a"), ExtResource("36_vyn0d"), ExtResource("39_yuyk6"), ExtResource("41_gc8li"), ExtResource("42_fle7o"), ExtResource("45_lg4h3"), ExtResource("46_foawl")])
+skins = Array[ExtResource("3_c4k52")]([ExtResource("4_kr1x8"), ExtResource("5_3l44y"), ExtResource("6_etdf3"), ExtResource("7_7vr63"), ExtResource("8_yhh8f"), ExtResource("9_jevbu"), ExtResource("10_2k6xx"), ExtResource("11_bvpy1"), ExtResource("12_oy32e"), ExtResource("13_o4wj6"), ExtResource("14_rknbs"), ExtResource("15_c1d01"), ExtResource("19_bkemq"), ExtResource("20_nbhfx"), ExtResource("22_tu5xb"), ExtResource("23_wv8kv"), ExtResource("24_tbr3x"), ExtResource("26_g26gg"), ExtResource("30_8506t"), ExtResource("29_hy3nc"), ExtResource("31_dyje7"), ExtResource("32_j2sk8"), ExtResource("33_l3v78"), ExtResource("34_vyn0d"), ExtResource("35_puq8a"), ExtResource("36_vyn0d"), ExtResource("39_yuyk6"), ExtResource("41_gc8li"), ExtResource("42_fle7o"), ExtResource("45_lg4h3"), ExtResource("46_foawl"), ExtResource("48_dw7xr")])
 skills = Array[ExtResource("3_x8mha")]([ExtResource("4_hfvvw"), ExtResource("6_2wp4d"), ExtResource("8_6c1k5"), ExtResource("10_fvueb"), ExtResource("11_85cop"), ExtResource("12_qhkdj")])
 weapons_light = Array[ExtResource("16_uslwp")]([ExtResource("20_wegr4"), ExtResource("21_43s3b"), ExtResource("42_2b02j"), ExtResource("49_0uki1"), ExtResource("55_dkk74")])
 weapons_heavy = Array[ExtResource("16_uslwp")]([ExtResource("17_7vx3p"), ExtResource("21_qy8k3"), ExtResource("18_hjrvg"), ExtResource("19_5dl73"), ExtResource("33_wgeog"), ExtResource("37_oq0s5"), ExtResource("39_p8lge")])

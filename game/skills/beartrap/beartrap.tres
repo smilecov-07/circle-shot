@@ -11,14 +11,14 @@ stats = Dictionary[String, String]({
 "cooldown": "40",
 "count": "2",
 "damage": "10",
-"slow_duration": "4.5",
-"stun_duration": "2"
+"immobility_duration": "3",
+"slow_duration": "5"
 })
-brief_description = "Урон: {damage}, оглушает"
+brief_description = "Урон: {damage}, обездвиживает"
 usage_text = "{count} исп./{cooldown} с"
-description = "[color=deep_blue_sky]Устанавливает невидимую ловушку, оглушающую и замедляющую противника при контакте.[/color]
+description = "[color=deep_blue_sky]Устанавливает невидимую ловушку, обездвиживающую и замедляющую противника при контакте.[/color]
 Урон: [color=red]{damage}[/color]
-Длительность оглушения: [color=red]{stun_duration} с[/color]
+Длительность обездвиживания: [color=red]{immobility_duration} с[/color]
 Длительность замедления: [color=red]{slow_duration} с[/color]
 
 Количество использований: [color=blue]{count}[/color]

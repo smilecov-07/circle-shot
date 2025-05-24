@@ -1,6 +1,6 @@
 extends Attack
 
-@export var stun_duration := 1.5
+@export var immobility_duration := 1.5
 @export var slowdown_duration := 4.0
 @export var slowdown_multiplier := 0.7
 
@@ -12,7 +12,7 @@ func _ready() -> void:
 
 
 func _deal_damage(entity: Entity, amount: int) -> int:
-	entity.add_effect.rpc(Effect.STUN, stun_duration)
+	entity.add_effect.rpc(Effect.IMMOBILITY, immobility_duration)
 	entity.add_effect.rpc(Effect.SPEED_CHANGE, slowdown_duration, [slowdown_multiplier])
 	($AreaDetector/CollisionShape2D as CollisionShape2D).disabled = true
 	_show_trapped.rpc(entity.position + Vector2.DOWN * 40)

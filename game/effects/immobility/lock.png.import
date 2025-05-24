@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c1ftglonle7ic"
-path="res://.godot/imported/image.png-ace0d248a9984a24eae65309a9b22ffe.ctex"
+uid="uid://jitjn6q3h08n"
+path="res://.godot/imported/lock.png-c0c074132584f273494bf46045c810f5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/skins/standard/tralalero_tralala/image.png"
-dest_files=["res://.godot/imported/image.png-ace0d248a9984a24eae65309a9b22ffe.ctex"]
+source_file="res://game/effects/immobility/lock.png"
+dest_files=["res://.godot/imported/lock.png-c0c074132584f273494bf46045c810f5.ctex"]
 
 [params]
 

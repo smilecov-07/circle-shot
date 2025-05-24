@@ -12,6 +12,8 @@ const SPEED_CHANGE := "uid://dkyu57ilvneen"
 const INVISIBILITY := "uid://66w5ixijgn51"
 ## Оглушение. Не требует ничего в [code]data[/code].
 const STUN := "uid://of54uwtr1ice"
+## Обездвиживание. Не требует ничего в [code]data[/code].
+const IMMOBILITY := "uid://dvb6a8p7615dy"
 ## Изменение исходящего урона. В [code]data[/code] требует один [float] - новый множитель урона.
 const DAMAGE_CHANGE := "uid://bxgpbuysxjefr"
 ## Изменение входящего урона. В [code]data[/code] требует один [float] - новый множитель урона.

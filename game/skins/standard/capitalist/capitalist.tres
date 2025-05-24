@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SkinData" load_steps=2 format=3 uid="uid://b8wgrs3t1ct6k"]
+
+[ext_resource type="Script" uid="uid://d6lhqjoo2iuf" path="res://game/player/equip/skin_data.gd" id="1_xvuk2"]
+
+[resource]
+script = ExtResource("1_xvuk2")
+name = "Капиталист"
+brief_description = "Возможно, у него еврейские корни"
+rarity = 0
+id = "jew"
+scene_path = "uid://cp4pujbxltqog"
+image_path = "uid://c4d8e6t4v48qq"
+metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

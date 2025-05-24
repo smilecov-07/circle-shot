@@ -50,7 +50,6 @@ func carry(id: int) -> void:
 	_return_timer = 0.0
 	_return_timer_progress.hide()
 	_player = _event.players[id]
-	_player.make_disarmed()
 	if multiplayer.is_server():
 		_player.tree_exiting.connect(_drop)
 		_player.player_input.shooting_started.connect(_drop)
@@ -77,7 +76,6 @@ func drop(where: Vector2 = position) -> void:
 	if multiplayer.is_server():
 		_player.tree_exiting.disconnect(_drop)
 		_player.player_input.shooting_started.disconnect(_drop)
-	_player.unmake_disarmed()
 	(_player.get_node(^"FlagRemote") as RemoteTransform2D).remote_path = ^""
 	_player.get_node(^"FlagRemote").queue_free()
 	_player = null

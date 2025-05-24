@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dsn2daaomo7ub"
-path="res://.godot/imported/leg_left.png-5a5eb8ef482e3ca316ab0b735cc70808.ctex"
+uid="uid://b3l2yoog3jjcj"
+path="res://.godot/imported/capitalist.png-37caa052b4eebb42927d67acbe492ec6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/skins/standard/tralalero_tralala/leg_left.png"
-dest_files=["res://.godot/imported/leg_left.png-5a5eb8ef482e3ca316ab0b735cc70808.ctex"]
+source_file="res://game/skins/standard/capitalist/capitalist.png"
+dest_files=["res://.godot/imported/capitalist.png-37caa052b4eebb42927d67acbe492ec6.ctex"]
 
 [params]
 

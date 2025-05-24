@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://coe11gdiu3s8m"
-path="res://.godot/imported/leg_right.png-4ec8dd2aeea78a6ee4f97e06778509ca.ctex"
+path="res://.godot/imported/leg_right.png-1e59b839abfa8e796e76a4833bfdc64f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/skins/standard/tralalero_tralala/leg_right.png"
-dest_files=["res://.godot/imported/leg_right.png-4ec8dd2aeea78a6ee4f97e06778509ca.ctex"]
+source_file="res://game/skins/other/tralalero_tralala/leg_right.png"
+dest_files=["res://.godot/imported/leg_right.png-1e59b839abfa8e796e76a4833bfdc64f.ctex"]
 
 [params]
 
