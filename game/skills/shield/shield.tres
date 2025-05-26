@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="SkillData" load_steps=2 format=3 uid="uid://cotg7mp7w8n4w"]
+
+[ext_resource type="Script" uid="uid://iwsanxyoxs5s" path="res://game/player/equip/skill_data.gd" id="1_62yme"]
+
+[resource]
+script = ExtResource("1_62yme")
+name = "Щит"
+rarity = 1
+id = "shield"
+stats = Dictionary[String, String]({
+"cooldown": "20",
+"count": "3",
+"duration": "3.5",
+"protection": "50",
+"slowdown": "30"
+})
+brief_description = "Защищает и замедляет"
+usage_text = "{count} исп./{cooldown} с"
+description = "[color=deep_blue_sky]Защищает и замедляет[/color]
+Снижение урона: [color=red]{protection}%[/color]
+Замедление: [color=red]{slowdown}%[/color]
+Длительность: [color=red]{duration} с[/color]
+
+Количество использований: [color=blue]{count}[/color]
+Перезарядка: [color=blue]{cooldown} с[/color]
+
+Простой навык, защищающий и замедляющий владельца на некоторое время."
+scene_path = "uid://6sr74a0jyc1d"
+image_path = "uid://cmd21ogr3yfxb"
+spawnable_scenes_paths = Array[String]([])
+metadata/_custom_type_script = "uid://iwsanxyoxs5s"
