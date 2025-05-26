@@ -9,6 +9,8 @@ extends Camera2D
 signal shake_finished
 ## Издаётся, когда панорамирование камеры окончено.
 signal pan_finished
+## Издаётся, когда цель камеры меняется.
+signal target_changed(new_target: Node2D)
 
 ## Цель, за которой следует камера.
 var target: Node2D:
@@ -19,6 +21,8 @@ var target: Node2D:
 		if is_instance_valid(value) and value.is_physics_interpolated_and_enabled():
 			_physics_interpolation_previous_position = value.global_position
 		target = value
+		target_changed.emit(target)
+
 var _shake_tween: Tween
 var _pan_tween: Tween
 var _physics_interpolation_previous_position: Vector2
@@ -40,17 +44,25 @@ func _physics_process(_delta: float) -> void:
 
 ## Панорамирует камеру из текущей позиции (если не указан [param from]) в позицию [param to]
 ## в течении [param duration] секунд.
+## Если [param keep_target] равен [code]true[/code], текущая цель будет установлена вновь
+## после окончания панорамирования.
 ## Можно указать [param trans_type] и [param ease_type] для более тонкой настройки.
-func pan(to: Vector2, duration: float, ease_type := Tween.EASE_OUT,
+func pan(to: Vector2, duration: float, keep_target := false, ease_type := Tween.EASE_OUT,
 		trans_type := Tween.TRANS_QUAD, from: Vector2 = global_position) -> void:
 	if is_instance_valid(_pan_tween):
 		_pan_tween.finished.emit()
 		_pan_tween.kill()
 	
+	var prev_target: Node2D = target
+	target = null
+	
 	_pan_tween = create_tween()
 	_pan_tween.set_trans(trans_type).set_ease(ease_type)
-	_pan_tween.tween_property(self, ^":position", to, duration).from(from)
+	_pan_tween.tween_property(self, ^":global_position", to, duration).from(from)
 	await _pan_tween.finished
+	
+	if keep_target:
+		target = prev_target
 	pan_finished.emit()
 
 
@@ -58,7 +70,7 @@ func pan(to: Vector2, duration: float, ease_type := Tween.EASE_OUT,
 ## [param to] в течении [param duration] секунд. После чего задаёт [member target] на [param to].
 ## Можно указать [param trans_type] и [param ease_type] для более тонкой настройки.
 func pan_to_target(to: Node2D, duration: float, ease_type := Tween.EASE_OUT,
-		trans_type := Tween.TRANS_QUAD, from: Vector2 = position) -> void:
+		trans_type := Tween.TRANS_QUAD, from: Vector2 = global_position) -> void:
 	if is_instance_valid(_pan_tween):
 		_pan_tween.finished.emit()
 		_pan_tween.kill()
@@ -95,4 +107,4 @@ func shake(amplitude: float, duration: float, should_decay := true, shake_step :
 
 
 func _lerp_to(weight: float, from: Vector2, to: Node2D) -> void:
-	position = from.lerp(to.global_position, weight)
+	global_position = from.lerp(to.global_position, weight)

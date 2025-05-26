@@ -2,9 +2,14 @@ extends Gun
 
 
 const BLUR_SPREAD_MULTIPLIER := 0.2
+
 @export var aim_slowdown := 0.8
 @export var no_aim_spread := 8.0
+@export var aim_camera_time := 0.7
+@export var unaim_camera_time := 0.4
+
 var _aiming := false
+var _owns_camera := false
 
 @onready var _aim_ray: RayCast2D = $ShootPoint/AimRay
 @onready var _aim_target: Marker2D = $ShootPoint/AimTarget
@@ -76,10 +81,13 @@ func start_aim() -> void:
 	
 	($Aim as CanvasLayer).show()
 	($ShootPoint as CanvasItem).show()
+	
 	var camera: SmartCamera = get_viewport().get_camera_2d()
-	camera.target = _aim_target
+	camera.pan_to_target(_aim_target, aim_camera_time)
 	camera.position_smoothing_enabled = false
 	camera.global_position = _calculate_aim_target_position()
+	camera.target_changed.connect(_on_camera_target_changed.bind(camera))
+	_owns_camera = true
 
 
 func end_aim() -> void:
@@ -96,11 +104,9 @@ func end_aim() -> void:
 	if not is_instance_valid(camera):
 		return
 	
-	camera.position_smoothing_enabled = true
-	if camera.target == _aim_target:
-		camera.target = player.camera_target
-		camera.global_position = camera.target.global_position
-		camera.reset_smoothing()
+	if _owns_camera:
+		camera.position_smoothing_enabled = true
+		camera.pan_to_target(player.camera_target, unaim_camera_time)
 
 
 func _calculate_aim_target_position() -> Vector2:
@@ -108,3 +114,11 @@ func _calculate_aim_target_position() -> Vector2:
 			/ absf(_aim_ray.position.x - _end_aim.position.x) if _aim_ray.is_colliding() else 1.0
 	return _aim_ray.global_position.lerp(_end_aim.global_position,
 			minf(player.player_input.aim_direction.length(), ratio))
+
+
+func _on_camera_target_changed(new_target: Node2D, camera: SmartCamera) -> void:
+	if _aim_target == new_target:
+		return
+	camera.position_smoothing_enabled = true
+	camera.target_changed.disconnect(_on_camera_target_changed)
+	_owns_camera = false
