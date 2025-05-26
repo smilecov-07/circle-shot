@@ -379,7 +379,7 @@ _data = {
 }
 
 [node name="Tec9" instance=ExtResource("1_mrfpm")]
-shoot_interval = 0.31
+shoot_interval = 0.33
 to_aim_time = 0.2
 projectile_scene = ExtResource("2_ffep1")
 spread_base = 2.2

@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3 uid="uid://c33uv2gf6nw4x"]
+
+[ext_resource type="Script" uid="uid://55g8njvkg07g" path="res://game/player/equip/weapon_data.gd" id="1_3j13a"]
+
+[resource]
+script = ExtResource("1_3j13a")
+name = "Картофельная пушка"
+rarity = 2
+id = "potatoes"
+stats = Dictionary[String, String]({
+"ammo_per_load": "10",
+"ammo_total": "40",
+"damage": "17",
+"dps": "37",
+"reload_time": ""
+})
+damage_text = "Урон/с: {dps}"
+ammo_text = "{ammo_per_load}/{ammo_total}"
+description = "Урон/с: [color=red]{dps}[/color]
+Урон/снаряд: [color=red]{damage}[/color]
+[color=deep_sky_blue]Снаряды отскакивают от стен[/color]
+
+Боеприпасы: [color=blue]{ammo_per_load}/{ammo_total}[/color]
+Перезарядка: [color=blue]{reload_time} с[/color]
+
+Эта сделанная руками пушка стреляет \"резиновыми\" картошками, отскакивающими от стен, позволяя владельцу доминировать в закрытых местностях."
+scene_path = "uid://qgpvrtvjg4dp"
+image_path = "uid://ys0ya1sn7yba"
+spawnable_scenes_paths = Array[String](["uid://di4m7kkgyhvic"])
+metadata/_custom_type_script = "uid://55g8njvkg07g"
