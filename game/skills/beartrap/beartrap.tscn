@@ -10,6 +10,7 @@ use_cooldown = 40
 metadata/_custom_type_script = "uid://c7xh6wcxwv4d4"
 
 [node name="PlaceTimer" type="Timer" parent="."]
+process_callback = 0
 wait_time = 0.7
 one_shot = true
 

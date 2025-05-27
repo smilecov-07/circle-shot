@@ -436,6 +436,7 @@ max_distance = 3040.0
 bus = &"SFX"
 
 [node name="ShootingTimer" type="Timer" parent="." index="8"]
+process_callback = 0
 one_shot = true
 
 [connection signal="timeout" from="ShootingTimer" to="ShootingSfx" method="stop"]

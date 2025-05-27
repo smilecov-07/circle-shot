@@ -522,6 +522,7 @@ libraries = {
 
 [node name="Timer" type="Timer" parent="." index="6"]
 process_mode = 3
+process_callback = 0
 one_shot = true
 
 [node name="SparksPivot" type="Node2D" parent="." index="7"]

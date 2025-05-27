@@ -8,6 +8,7 @@ script = ExtResource("2_jy3s0")
 max_health = 75
 
 [node name="ImmuneTimer" type="Timer" parent="." index="9"]
+process_callback = 0
 wait_time = 3.0
 one_shot = true
 autostart = true

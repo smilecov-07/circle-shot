@@ -201,6 +201,7 @@ tile_map_data = PackedByteArray("AADp/wUAAQAEAAIAAADq/wUAAQAEAAIAAADr/wUAAQAEAAI
 tile_set = ExtResource("2_csrsn")
 
 [node name="LightningBoltTimer" type="Timer" parent="." index="7"]
+process_callback = 0
 wait_time = 5.0
 
 [node name="RainParallax" type="Parallax2D" parent="." index="8"]

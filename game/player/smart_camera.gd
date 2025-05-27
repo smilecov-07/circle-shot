@@ -61,7 +61,7 @@ func pan(to: Vector2, duration: float, keep_target := false, ease_type := Tween.
 	_pan_tween.tween_property(self, ^":global_position", to, duration).from(from)
 	await _pan_tween.finished
 	
-	if keep_target:
+	if keep_target and is_instance_valid(prev_target):
 		target = prev_target
 	pan_finished.emit()
 
@@ -81,7 +81,8 @@ func pan_to_target(to: Node2D, duration: float, ease_type := Tween.EASE_OUT,
 	_pan_tween.tween_method(_lerp_to.bind(from, to), 0.0, 1.0, duration)
 	await _pan_tween.finished
 	pan_finished.emit()
-	target = to
+	if is_instance_valid(to):
+		target = to
 
 
 ## Встряхивает камеру в течении [param duration] секунд с амплитудой колебаний [param amplitude].
@@ -107,4 +108,5 @@ func shake(amplitude: float, duration: float, should_decay := true, shake_step :
 
 
 func _lerp_to(weight: float, from: Vector2, to: Node2D) -> void:
-	global_position = from.lerp(to.global_position, weight)
+	if is_instance_valid(to):
+		global_position = from.lerp(to.global_position, weight)

@@ -79,6 +79,7 @@ shape = SubResource("CircleShape2D_jrmds")
 disabled = true
 
 [node name="Timer" type="Timer" parent="Explosion" index="1"]
+process_callback = 0
 wait_time = 0.3
 one_shot = true
 

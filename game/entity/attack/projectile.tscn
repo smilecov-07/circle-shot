@@ -21,6 +21,7 @@ script = ExtResource("1_iq3wl")
 metadata/_custom_type_script = "uid://b87glapu60urx"
 
 [node name="Timer" type="Timer" parent="."]
+process_callback = 0
 wait_time = 2.5
 one_shot = true
 autostart = true

@@ -9,4 +9,5 @@ use_cooldown = 50
 metadata/_custom_type_script = "uid://c7xh6wcxwv4d4"
 
 [node name="Timer" type="Timer" parent="."]
+process_callback = 0
 one_shot = true
