@@ -48,7 +48,7 @@ func _process(_delta: float) -> void:
 			_aim_spread_left.rotation_degrees = -spread
 			_aim_spread_right.rotation_degrees = spread
 	
-	if _reloading and (player.player_input.shooting or player.is_disarmed()):
+	if _reloading and player.player_input.shooting:
 		_interrupt_reload = true
 
 
@@ -130,6 +130,11 @@ func _unmake_current() -> void:
 
 func _can_reload() -> bool:
 	return _throw_timer <= 0.0
+
+
+func _player_disarmed() -> void:
+	for ammo_node: Node in _ammo_parent.get_children():
+		(ammo_node.get_node(^"AnimationPlayer") as AnimationPlayer).play(&"RESET")
 
 
 func reload() -> void:

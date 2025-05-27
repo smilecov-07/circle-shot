@@ -161,6 +161,11 @@ func _can_reload() -> bool:
 	return _shoot_timer <= 0.0
 
 
+func _player_disarmed() -> void:
+	if _anim.is_playing() and _anim.current_animation != &"Equip": # нет смысла пропускать
+		_anim.play(&"RESET")
+
+
 func reload() -> void:
 	_turn_tween = create_tween()
 	_turn_tween.tween_property(self, ^":rotation", 0.0, to_aim_time)

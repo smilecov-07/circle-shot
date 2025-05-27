@@ -29,6 +29,7 @@ enum Type {
 ## Если равно [code]true[/code], выстрел будет произведён при отпускании джойстика прицеливания.
 ## Иначе стрельба будет вестись, пока джойстик нажат.
 @export var shoot_on_joystick_release := false
+
 ## Количество боеприпасов в текущем магазине.
 var ammo: int
 ## Количество боеприпасов в запасе.
@@ -71,12 +72,16 @@ func make_current() -> void:
 	show()
 	process_mode = PROCESS_MODE_INHERIT
 	player.speed_multiplier *= speed_multiplier_when_current
+	player.disarmed.connect(_player_disarmed)
+	player.armed.connect(_player_armed)
 	_make_current()
 
 
 ## Убирает оружие.
 func unmake_current() -> void:
 	_unmake_current()
+	player.disarmed.disconnect(_player_disarmed)
+	player.armed.disconnect(_player_armed)
 	player.speed_multiplier /= speed_multiplier_when_current
 	process_mode = PROCESS_MODE_DISABLED
 	hide()
@@ -94,7 +99,7 @@ func unblock_shooting() -> void:
 
 ## Возвращает [code]true[/code], если оружие может стрелять.
 func can_shoot() -> bool:
-	return _blocked_shooting_counter <= 0 and not player.is_disarmed()
+	return _blocked_shooting_counter <= 0 and player.can_use_weapon()
 
 
 ## Метод для переопределения. Перезаряжает оружие. Вызывается объектом игрока.
@@ -189,3 +194,15 @@ func _can_reload() -> bool:
 ## дополнительную кнопку оружия. Сюда можно добавлять условия для этого.
 func _can_use_additional_button() -> bool:
 	return true
+
+
+## Метод для переопределения. Вызывается, когда игрок оказывается безоружен. Здесь оружие должно
+## прекратить любые анимации, фактически сброситься.
+func _player_disarmed() -> void:
+	pass
+
+
+## Метод для переопределения. Вызывается, когда игрок обратно получает возможность атаковать.
+## Здесь можно возобновить то, что было приостановлено в [method _player_disarmed].
+func _player_armed() -> void:
+	pass

@@ -88,6 +88,13 @@ func _ready() -> void:
 
 
 func _physics_process(_delta: float) -> void:
+	# Проверка на неожиданные отключения
+	if multiplayer.has_multiplayer_peer() \
+			and multiplayer.multiplayer_peer.get_connection_status() \
+			!= MultiplayerPeer.CONNECTION_CONNECTED \
+			and not state in [State.CONNECTING, State.CLOSED]:
+		close()
+	
 	multiplayer.poll()
 
 

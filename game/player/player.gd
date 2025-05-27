@@ -33,6 +33,8 @@ var current_weapon_type := Weapon.Type.LIGHT
 ## Ссылка на экипированный навык. Может быть равной [code]null[/code].
 var skill: Skill
 
+var _blocked_weapon_usage_counter: int = 0
+
 ## Узел, содержащий ввод игрока.
 @onready var player_input: PlayerInput = $Input
 ## Узел крови.
@@ -265,6 +267,21 @@ func set_skill(data: SkillData, reset_skill_vars := false) -> void:
 	print_verbose("Set skill %s with ID %d on %s." % [data.id, equip_data[5], name])
 
 
+## Блокирует использование любой экипировки и переключение между оружиями.
+func block_weapon_usage() -> void:
+	_blocked_weapon_usage_counter += 1
+
+
+## Возвращает возможность использовать любую экипировки и переключаться между оружиями.
+func unblock_weapon_usage() -> void:
+	_blocked_weapon_usage_counter -= 1
+
+
+## Возвращает [code]true[/code], если экипировку можно использовать.
+func can_use_weapon() -> bool:
+	return _blocked_weapon_usage_counter <= 0
+
+
 @rpc("any_peer", "reliable", "call_local", 5)
 func _request_change_weapon(to: Weapon.Type) -> void:
 	if not multiplayer.is_server():
@@ -275,7 +292,7 @@ func _request_change_weapon(to: Weapon.Type) -> void:
 	if id != sender_id:
 		push_warning("RPC Sender ID (%d) doesn't match with player ID (%d)." % [sender_id, id])
 		return
-	if is_disarmed() or to == current_weapon_type \
+	if not can_use_weapon() or to == current_weapon_type \
 			or to == Weapon.Type.ADDITIONAL and equip_data[6] == -1 or to < 0:
 		return
 	
@@ -292,7 +309,8 @@ func _request_reload() -> void:
 	if id != sender_id:
 		push_warning("RPC Sender ID (%d) doesn't match with player ID (%d)." % [sender_id, id])
 		return
-	if is_disarmed() or not is_instance_valid(current_weapon) or not current_weapon.can_reload():
+	if not can_use_weapon() or not is_instance_valid(current_weapon) \
+			or not current_weapon.can_reload():
 		return
 	
 	reload_weapon.rpc(current_weapon.ammo, current_weapon.ammo_in_stock,
@@ -309,7 +327,7 @@ func _request_additional_button() -> void:
 	if id != sender_id:
 		push_warning("RPC Sender ID (%d) doesn't match with player ID (%d)." % [sender_id, id])
 		return
-	if is_disarmed() or not is_instance_valid(current_weapon) \
+	if not can_use_weapon() or not is_instance_valid(current_weapon) \
 			or not current_weapon.can_use_additional_button():
 		return
 	
@@ -326,7 +344,7 @@ func _request_use_skill() -> void:
 	if id != sender_id:
 		push_warning("RPC Sender ID (%d) doesn't match with player ID (%d)." % [sender_id, id])
 		return
-	if is_disarmed() or not is_instance_valid(skill) or not skill.can_use():
+	if not can_use_weapon() or not is_instance_valid(skill) or not skill.can_use():
 		return
 	
 	use_skill.rpc(skill.get_use_args())
@@ -354,3 +372,11 @@ func _update_minimap_marker(local_team: int) -> void:
 
 func _on_health_changed(_old_value: int, new_value: int) -> void:
 	blood.emitting = new_value < max_health / 3.0
+
+
+func _on_disarmed() -> void:
+	block_weapon_usage()
+
+
+func _on_armed() -> void:
+	unblock_weapon_usage()

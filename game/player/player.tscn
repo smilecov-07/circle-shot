@@ -151,6 +151,8 @@ texture = ExtResource("8_05q0u")
 [node name="CameraTarget" type="Marker2D" parent="." index="9"]
 gizmo_extents = 48.0
 
+[connection signal="armed" from="." to="." method="_on_armed"]
+[connection signal="disarmed" from="." to="." method="_on_disarmed"]
 [connection signal="health_changed" from="." to="." method="_on_health_changed"]
 [connection signal="screen_entered" from="Minimap/MinimapNotifier" to="Minimap/MinimapMarker/Visual" method="show"]
 [connection signal="screen_exited" from="Minimap/MinimapNotifier" to="Minimap/MinimapMarker/Visual" method="hide"]

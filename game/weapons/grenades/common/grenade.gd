@@ -113,6 +113,16 @@ func _can_reload() -> bool:
 	return false
 
 
+func _player_disarmed() -> void:
+	if _anim.is_playing() and _anim.current_animation != &"Equip": # нет смысла пропускать
+		_anim.pause()
+
+
+func _player_armed() -> void:
+	if _anim.current_animation != &"Equip":
+		_anim.play()
+
+
 func get_ammo_text() -> String:
 	return "Осталось: %d" % ammo_in_stock
 

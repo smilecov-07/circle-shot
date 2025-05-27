@@ -21,3 +21,15 @@ func _on_place_timer_timeout() -> void:
 	trap.who = player.id
 	trap.damage_multiplier = player.damage_multiplier
 	_other_parent.add_child(trap, true)
+
+
+func _player_disarmed() -> void:
+	if player.visual.has_node(^"UseEffect"):
+		player.visual.get_node(^"UseEffect").process_mode = Node.PROCESS_MODE_DISABLED
+	($PlaceTimer as Timer).paused = true
+
+
+func _player_armed() -> void:
+	if player.visual.has_node(^"UseEffect"):
+		player.visual.get_node(^"UseEffect").process_mode = Node.PROCESS_MODE_INHERIT
+	($PlaceTimer as Timer).paused = false

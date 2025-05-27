@@ -31,7 +31,7 @@ func _initialize() -> void:
 
 func _use(direction := Vector2.RIGHT) -> void:
 	block_cooldown()
-	player.make_disarmed()
+	player.block_weapon_usage()
 	player.make_immobile()
 	player.knockback = direction * roll_speed
 	var previous_collision_layer: int = player.collision_layer
@@ -44,7 +44,7 @@ func _use(direction := Vector2.RIGHT) -> void:
 	_roll_timer.start(roll_duration)
 	await _roll_timer.timeout
 	
-	player.unmake_disarmed()
+	player.unblock_weapon_usage()
 	player.unmake_immobile()
 	player.knockback = Vector2.ZERO
 	

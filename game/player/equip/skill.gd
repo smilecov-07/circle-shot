@@ -31,6 +31,9 @@ func initialize(to_player: Player, skill_data: SkillData) -> void:
 	if player.skill_vars.is_empty():
 		player.skill_vars = [use_times, 0]
 	_cooldown_timer = player.skill_vars[1]
+	player.disarmed.connect(_player_disarmed)
+	player.armed.connect(_player_armed)
+	physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF
 	_initialize()
 
 
@@ -59,7 +62,7 @@ func is_cooldown_blocked() -> bool:
 
 ## Возвращает [code]true[/code], если навык можно использовать.
 func can_use() -> bool:
-	return not player.is_disarmed() and player.skill_vars[0] > 0 \
+	return player.can_use_weapon() and player.skill_vars[0] > 0 \
 			and player.skill_vars[1] <= 0 and _can_use()
 
 
@@ -85,3 +88,15 @@ func _use() -> void:
 ## использовать. Сюда можно добавлять условия для этого.
 func _can_use() -> bool:
 	return true
+
+
+## Метод для переопределения. Вызывается, когда игрок оказывается безоружен.
+## Полезно, чтобы приостановить анимацию навыка (например, анимацию выпивания зелья).
+func _player_disarmed() -> void:
+	pass
+
+
+## Метод для переопределения. Вызывается, когда игрок обратно получает возможность атаковать.
+## Здесь можно возобновить то, что было приостановлено в [method _player_disarmed].
+func _player_armed() -> void:
+	pass

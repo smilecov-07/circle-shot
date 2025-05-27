@@ -11,7 +11,7 @@ func _use() -> void:
 		(use_effect.get_node(^"Tint/AnimationPlayer") as AnimationPlayer).play(&"Tint")
 	
 	block_cooldown()
-	player.make_disarmed()
+	player.block_weapon_usage()
 	if multiplayer.is_server():
 		_timer.start(1.25)
 		await _timer.timeout
@@ -27,9 +27,21 @@ func _use() -> void:
 	else:
 		_timer.start(2.5)
 		await _timer.timeout
-	player.unmake_disarmed()
+	player.unblock_weapon_usage()
 	unblock_cooldown()
 
 
 func _can_use() -> bool:
 	return player.current_health != player.max_health
+
+
+func _player_disarmed() -> void:
+	if player.visual.has_node(^"UseEffect"):
+		player.visual.get_node(^"UseEffect").process_mode = Node.PROCESS_MODE_DISABLED
+	_timer.paused = true
+
+
+func _player_armed() -> void:
+	if player.visual.has_node(^"UseEffect"):
+		player.visual.get_node(^"UseEffect").process_mode = Node.PROCESS_MODE_INHERIT
+	_timer.paused = false

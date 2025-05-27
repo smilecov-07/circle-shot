@@ -15,3 +15,17 @@ func _use() -> void:
 	_timer.start(duration)
 	await _timer.timeout
 	unblock_cooldown()
+
+
+func _player_disarmed() -> void:
+	if player.visual.has_node(^"UseEffect"):
+		player.visual.get_node(^"UseEffect").process_mode = Node.PROCESS_MODE_DISABLED
+	if not is_equal_approx(_timer.wait_time, duration): # эффект ещё не наложен
+		_timer.paused = true
+
+
+func _player_armed() -> void:
+	if player.visual.has_node(^"UseEffect"):
+		player.visual.get_node(^"UseEffect").process_mode = Node.PROCESS_MODE_INHERIT
+	if not is_equal_approx(_timer.wait_time, duration):
+		_timer.paused = false

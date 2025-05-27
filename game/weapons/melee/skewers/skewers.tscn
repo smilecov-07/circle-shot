@@ -471,7 +471,7 @@ metadata/_custom_type_script = "uid://bc7ffmlfu6nm7"
 
 [node name="SparksRayDetector" type="RayCast2D" parent="Attack" index="3"]
 enabled = false
-target_position = Vector2(296, 0)
+target_position = Vector2(304, 0)
 collision_mask = 3
 hit_from_inside = true
 script = ExtResource("5_erost")

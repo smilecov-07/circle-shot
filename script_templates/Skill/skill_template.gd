@@ -14,3 +14,11 @@ _TS_pass
 
 #func _can_use() -> bool:
 _TS_#return # Пишите условия здесь
+
+
+#func _player_disarmed() -> void:
+_TS_#pass
+
+
+#func _player_armed() -> void:
+_TS_#pass

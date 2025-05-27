@@ -79,6 +79,11 @@ func _unmake_current() -> void:
 	_anim.advance(0.01)
 
 
+func _player_disarmed() -> void:
+	if _anim.is_playing() and _anim.current_animation != &"Equip": # нет смысла пропускать
+		_anim.play(&"RESET")
+
+
 func _can_reload() -> bool:
 	return false
 

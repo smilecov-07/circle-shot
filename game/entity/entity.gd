@@ -18,6 +18,10 @@ signal damaged(who: int, by: int)
 signal killed(who: int, by: int)
 ## Издаётся при смерти. [param who] содержит ID умершей сущности (то есть этой).
 signal died(who: int)
+## Издаётся, когда сущность оказывается безоружна.
+signal disarmed
+## Издаётся, когда сущность вновь может пользоваться оружием.
+signal armed
 
 ## Цвета команд.
 const TEAM_COLORS: Array[Color] = [
@@ -376,11 +380,15 @@ func is_immobile() -> bool:
 ## Обезоруживает сущность.
 func make_disarmed() -> void:
 	_disarmed_counter += 1
+	if _disarmed_counter == 1:
+		disarmed.emit()
 
 
 ## Возвращает сущности возможность пользоваться оружием.
 func unmake_disarmed() -> void:
 	_disarmed_counter -= 1
+	if _disarmed_counter == 0:
+		armed.emit()
 
 
 ## Возвращает [code]true[/code], если сущность в данный момент обезоружена.

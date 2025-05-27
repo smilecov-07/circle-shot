@@ -38,7 +38,7 @@ func _calculate_spread() -> float:
 
 
 func _on_player_shooting_started() -> void:
-	if player.is_disarmed():
+	if not player.can_use_weapon():
 		return
 	
 	unblock_cooldown()

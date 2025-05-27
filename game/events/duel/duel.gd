@@ -109,7 +109,7 @@ func _end_round(win_team: int, winner: int, ends := false) -> void:
 		tween.tween_property($PoisonSmokes, ^":modulate", Color.TRANSPARENT, 0.3)
 		tween.tween_callback($PoisonSmokes.queue_free)
 	
-	get_tree().call_group(&"Player", &"make_disarmed")
+	get_tree().call_group(&"Player", &"block_weapon_usage")
 	get_tree().call_group(&"Player", &"make_immobile")
 	get_tree().call_group(&"Player", &"make_immune")
 	get_tree().call_group(&"Player", &"block_turning")

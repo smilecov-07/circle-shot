@@ -115,7 +115,7 @@ func spawn_player(id: int) -> void:
 	player.killed.connect(_on_player_killed)
 	player.tree_exiting.connect(_on_player_tree_exiting.bind(player))
 	if not was_started:
-		player.make_disarmed()
+		player.block_weapon_usage()
 		player.make_immobile()
 		player.block_turning()
 
@@ -130,7 +130,7 @@ func set_local_player(player: Player) -> void:
 		($Camera as SmartCamera).pan_to_target(player.camera_target, 0.3)
 	else:
 		if not multiplayer.is_server():
-			local_player.make_disarmed()
+			local_player.block_weapon_usage()
 			local_player.make_immobile()
 			local_player.block_turning()
 		var offset: float = (Time.get_ticks_msec() - created_ticks_msec) / 1000.0
@@ -175,7 +175,7 @@ func freeze_players() -> void:
 		push_error("This method must be called only by server.")
 		return
 	
-	get_tree().call_group(&"Player", &"make_disarmed")
+	get_tree().call_group(&"Player", &"block_weapon_usage")
 	get_tree().call_group(&"Player", &"make_immobile")
 	get_tree().call_group(&"Player", &"make_immune")
 	get_tree().call_group(&"Player", &"block_turning")
@@ -210,11 +210,11 @@ func _start() -> void:
 	
 	_finish_start()
 	if multiplayer.is_server():
-		get_tree().call_group(&"Player", &"unmake_disarmed")
+		get_tree().call_group(&"Player", &"unblock_weapon_usage")
 		get_tree().call_group(&"Player", &"unmake_immobile")
 		get_tree().call_group(&"Player", &"unblock_turning")
 	else:
-		local_player.unmake_disarmed()
+		local_player.unblock_weapon_usage()
 		local_player.unmake_immobile()
 		local_player.unblock_turning()
 	started.emit()

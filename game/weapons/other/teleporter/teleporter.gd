@@ -58,7 +58,7 @@ func _shoot(success := false) -> void:
 		player.teleport_to.rpc(destination)
 		_show_teleport_vfx.rpc(destination)
 	
-	player.make_disarmed()
+	player.block_weapon_usage()
 	_anim.play(&"PostUse")
 	
 	_buttons.modulate = Color.WEB_GRAY
@@ -67,7 +67,7 @@ func _shoot(success := false) -> void:
 	($CooldownTimer as Timer).start()
 	
 	await _anim.animation_finished
-	player.unmake_disarmed()
+	player.unblock_weapon_usage()
 
 
 func _make_current() -> void:
@@ -85,6 +85,12 @@ func _unmake_current() -> void:
 
 func _can_reload() -> bool:
 	return false
+
+
+func _player_disarmed() -> void:
+	# нет смысла пропускать
+	if _anim.is_playing() and not _anim.current_animation in [&"Equip", &"PostUse"]:
+		_anim.play(&"RESET")
 
 
 func get_ammo_text() -> String:

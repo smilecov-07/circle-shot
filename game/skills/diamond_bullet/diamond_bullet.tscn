@@ -67,7 +67,6 @@ _data = {
 }
 
 [node name="DiamondBullet" type="Node2D"]
-physics_interpolation_mode = 2
 script = ExtResource("1_vjdej")
 projectile_scene = ExtResource("2_i4kng")
 spread_walk = 4.0

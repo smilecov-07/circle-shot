@@ -28,7 +28,7 @@ func _process(delta: float) -> void:
 			_aim_target.global_position = _calculate_aim_target_position()
 			_aim_texture_material.set_shader_parameter(&"radius",
 					_calculate_spread() * BLUR_SPREAD_MULTIPLIER)
-		if player.is_disarmed():
+		if not player.can_use_weapon():
 			end_aim()
 
 
