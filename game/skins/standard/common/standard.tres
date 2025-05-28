@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="SkinsLineData" load_steps=9 format=3 uid="uid://cpp2je41cqxeo"]
+
+[ext_resource type="Script" uid="uid://d3vgfmq2fcba3" path="res://game/player/equip/skins_line_data.gd" id="1_w24x6"]
+[ext_resource type="Script" uid="uid://d6lhqjoo2iuf" path="res://game/player/equip/skin_data.gd" id="2_or2ub"]
+[ext_resource type="Resource" uid="uid://dbtrtohutlbyt" path="res://game/skins/standard/default/default.tres" id="3_6http"]
+[ext_resource type="Resource" uid="uid://bsorviu43e0b1" path="res://game/skins/standard/classic/classic.tres" id="4_anbbx"]
+[ext_resource type="Resource" uid="uid://dsw7rll4x5yvn" path="res://game/skins/standard/war/war.tres" id="5_ygs5d"]
+[ext_resource type="Resource" uid="uid://7if1k7f67oki" path="res://game/skins/standard/clown/clown.tres" id="6_e7pmt"]
+[ext_resource type="Resource" uid="uid://7am0dwjhfd8n" path="res://game/skins/standard/astronaut/astronaut.tres" id="7_qc7m1"]
+[ext_resource type="Resource" uid="uid://b8wgrs3t1ct6k" path="res://game/skins/standard/capitalist/capitalist.tres" id="8_0fhvd"]
+
+[resource]
+script = ExtResource("1_w24x6")
+name = "Стандартные"
+brief_description = "Обычные скины."
+image_path = "uid://dwsvwasp6148s"
+skins = Array[ExtResource("2_or2ub")]([ExtResource("3_6http"), ExtResource("4_anbbx"), ExtResource("5_ygs5d"), ExtResource("6_e7pmt"), ExtResource("7_qc7m1"), ExtResource("8_0fhvd")])
+metadata/_custom_type_script = "uid://d3vgfmq2fcba3"

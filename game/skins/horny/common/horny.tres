@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SkinsLineData" load_steps=7 format=3 uid="uid://dlty0fo2ogum4"]
+
+[ext_resource type="Script" uid="uid://d3vgfmq2fcba3" path="res://game/player/equip/skins_line_data.gd" id="1_hp03w"]
+[ext_resource type="Script" uid="uid://d6lhqjoo2iuf" path="res://game/player/equip/skin_data.gd" id="2_xxasq"]
+[ext_resource type="Resource" uid="uid://civajcyxxjsc4" path="res://game/skins/horny/sunflower/sunflower.tres" id="3_mxfgk"]
+[ext_resource type="Resource" uid="uid://sgi4ij07qfbi" path="res://game/skins/horny/piper/piper.tres" id="4_ipefe"]
+[ext_resource type="Resource" uid="uid://d3i1eoyd4e1n2" path="res://game/skins/horny/sinep/sinep.tres" id="5_18ucn"]
+[ext_resource type="Resource" uid="uid://q5725b0xhqyh" path="res://game/skins/horny/boykisser/boykisser.tres" id="6_8bcwk"]
+
+[resource]
+script = ExtResource("1_hp03w")
+name = "Горячие"
+brief_description = "Очень \"интересные\" скины."
+image_path = "uid://40ur37eedika"
+skins = Array[ExtResource("2_xxasq")]([ExtResource("3_mxfgk"), ExtResource("4_ipefe"), ExtResource("5_18ucn"), ExtResource("6_8bcwk")])
+metadata/_custom_type_script = "uid://d3vgfmq2fcba3"

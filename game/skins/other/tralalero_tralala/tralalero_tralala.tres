@@ -5,9 +5,14 @@
 [resource]
 script = ExtResource("1_ogxu7")
 name = "Тралалеро тралала"
-brief_description = "Мозг не выдерживает..."
 rarity = 2
 id = "brainrot"
+brief_description = "Мозг не выдерживает..."
+custom_hurt_vfx = false
+custom_death_vfx = false
+custom_heal_vfx = false
+custom_blood_vfx = false
+custom_animations = true
 scene_path = "uid://7qxiioask0vw"
 image_path = "uid://c1ftglonle7ic"
 metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

@@ -5,9 +5,14 @@
 [resource]
 script = ExtResource("1_newbi")
 name = "Telegram"
-brief_description = "А вы знали, что в нём можно общаться?"
 rarity = 1
 id = "tg"
+brief_description = "А вы знали, что в нём можно общаться?"
+custom_hurt_vfx = false
+custom_death_vfx = false
+custom_heal_vfx = false
+custom_blood_vfx = false
+custom_animations = false
 scene_path = "uid://x2oithhak41y"
 image_path = "uid://fdxvuiki554m"
 metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

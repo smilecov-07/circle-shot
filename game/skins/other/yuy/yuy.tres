@@ -5,9 +5,14 @@
 [resource]
 script = ExtResource("1_m2qkt")
 name = "ЪУЪ"
-brief_description = "Попробуй это сказать!"
 rarity = 1
 id = "yuy"
+brief_description = "Попробуй это сказать!"
+custom_hurt_vfx = false
+custom_death_vfx = false
+custom_heal_vfx = false
+custom_blood_vfx = false
+custom_animations = false
 scene_path = "uid://bjm6eb2572drg"
 image_path = "uid://bcwosvm2fxdib"
 metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

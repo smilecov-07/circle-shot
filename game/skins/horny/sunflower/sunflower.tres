@@ -5,9 +5,14 @@
 [resource]
 script = ExtResource("1_bngjp")
 name = "Подсолнух"
-brief_description = "Тяжело играть одной рукой?"
 rarity = 2
 id = "sunflower34"
+brief_description = "Тяжело играть одной рукой?"
+custom_hurt_vfx = true
+custom_death_vfx = true
+custom_heal_vfx = false
+custom_blood_vfx = true
+custom_animations = false
 scene_path = "uid://bpjnm762i7c78"
 image_path = "uid://cxdjfl5oaqnli"
 metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

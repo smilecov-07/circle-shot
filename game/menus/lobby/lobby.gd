@@ -37,17 +37,17 @@ var selected_map: int
 var selected_maps: Array[int]
 
 ## Выбранный скин.
-var selected_skin: int
+var selected_skin: String
 ## Выбранный навык.
-var selected_skill: int
+var selected_skill: String
 ## Выбранное лёгкое оружие.
-var selected_light_weapon: int
+var selected_light_weapon: String
 ## Выбранное тяжёлое оружие.
-var selected_heavy_weapon: int
+var selected_heavy_weapon: String
 ## Выбранное оружие поддержки.
-var selected_support_weapon: int
+var selected_support_weapon: String
 ## Выбранное ближнее оружие.
-var selected_melee_weapon: int
+var selected_melee_weapon: String
 
 ## Словарь с подключёнными игроками в формате <ID игрока> - <имя игрока>.
 ## Доступно только на сервере.
@@ -83,12 +83,16 @@ func _ready() -> void:
 	if selected_maps.size() < Globals.items_db.events.size():
 		selected_maps.resize(Globals.items_db.events.size())
 	
-	selected_skin = Globals.get_int("selected_skin")
-	selected_skill = Globals.get_int("selected_skill")
-	selected_light_weapon = Globals.get_int("selected_light_weapon")
-	selected_heavy_weapon = Globals.get_int("selected_heavy_weapon")
-	selected_support_weapon = Globals.get_int("selected_support_weapon")
-	selected_melee_weapon = Globals.get_int("selected_melee_weapon")
+	selected_skin = Globals.get_string("selected_skin", Globals.items_db.default_skin)
+	selected_skill = Globals.get_string("selected_skill", Globals.items_db.default_skill)
+	selected_light_weapon = Globals.get_string("selected_light_weapon",
+			Globals.items_db.default_light_weapon)
+	selected_heavy_weapon = Globals.get_string("selected_heavy_weapon",
+			Globals.items_db.default_heavy_weapon)
+	selected_support_weapon = Globals.get_string("selected_support_weapon",
+			Globals.items_db.default_support_weapon)
+	selected_melee_weapon = Globals.get_string("selected_melee_weapon",
+			Globals.items_db.default_melee_weapon)
 	
 	_validate_selected_items()
 	_update_equip()
@@ -114,12 +118,12 @@ func _exit_tree() -> void:
 		Globals.console.help_processors.erase(_print_help)
 
 
-## Запрашивает сервер сменить окружение на событие с идентификатором [param event_id] и на карту
-## с идентификатором [param map_id].[br]
+## Запрашивает сервер сменить окружение на событие с идентификатором [param event_idx] и на карту
+## с идентификатором [param map_idx].[br]
 ## [b]Примечание[/b]: этот метод должен вызываться только как RPC к серверу
 ## ([constant MultiplayerPeer.TARGET_PEER_SERVER]).
 @rpc("any_peer", "reliable", "call_local", 1)
-func request_set_environment(event_id: int, map_id: int) -> void:
+func request_set_environment(event_idx: int, map_idx: int) -> void:
 	if not multiplayer.is_server():
 		push_error("Unexpected call on client.")
 		return
@@ -133,25 +137,25 @@ func request_set_environment(event_id: int, map_id: int) -> void:
 		push_warning("Set environment request rejected: counting down.")
 		return
 	
-	if event_id < 0 or event_id >= Globals.items_db.events.size():
+	if event_idx < 0 or event_idx >= Globals.items_db.events.size():
 		push_warning("Rejected set environment request from %d. Incorrect event ID: %d." % [
 			sender_id,
-			event_id,
+			event_idx,
 		])
 		return
-	if map_id < 0 or map_id >= Globals.items_db.events[event_id].maps.size():
+	if map_idx < 0 or map_idx >= Globals.items_db.events[event_idx].maps.size():
 		push_warning("Rejected set environment request from %d. Incorrect map ID: %d." % [
 			sender_id,
-			map_id,
+			map_idx,
 		])
 		return
 	
-	_game.max_players = Globals.items_db.events[event_id].max_players
+	_game.max_players = Globals.items_db.events[event_idx].max_players
 	print_verbose("Accepted set environment request. Event ID: %d, Map ID: %d." % [
-		event_id,
-		map_id,
+		event_idx,
+		map_idx,
 	])
-	_set_environment.rpc(event_id, map_id)
+	_set_environment.rpc(event_idx, map_idx)
 
 
 ## Запрашивает сервер выполнить действие админа [param action] по отношению к игроку с
@@ -341,17 +345,17 @@ func _set_admin(admin: int) -> void:
 
 
 @rpc("call_local", "reliable", "authority", 1)
-func _set_environment(event_id: int, map_id: int) -> void:
+func _set_environment(event_idx: int, map_idx: int) -> void:
 	if multiplayer.get_remote_sender_id() != MultiplayerPeer.TARGET_PEER_SERVER:
 		push_error("This method must be called only by server.")
 		return
 	
-	selected_event = event_id
-	selected_map = map_id
+	selected_event = event_idx
+	selected_map = map_idx
 	if _is_admin():
-		selected_maps[event_id] = map_id
+		selected_maps[event_idx] = map_idx
 		_save_selected_items(true)
-	print_verbose("Environment set: Event ID - %d, Map ID - %d." % [event_id, map_id])
+	print_verbose("Environment set: event index - %d, map index - %d." % [event_idx, map_idx])
 	_update_environment()
 
 
@@ -416,7 +420,7 @@ func _reject_start_event(reason: StartRejectReason, players_count: int) -> void:
 
 
 @rpc("call_local", "reliable", "authority", 1)
-func _start_event(event_id: int, map_id: int) -> void:
+func _start_event(event_idx: int, map_idx: int) -> void:
 	if multiplayer.get_remote_sender_id() != MultiplayerPeer.TARGET_PEER_SERVER:
 		push_error("This method must be called only by server.")
 		return
@@ -436,18 +440,18 @@ func _start_event(event_id: int, map_id: int) -> void:
 					_client_timers.erase(id)
 				push_warning("Start event: peer %d kicked as not registered." % id)
 		if Globals.headless:
-			_game.load_event(event_id, map_id)
+			_game.load_event(event_idx, map_idx)
 			return
 	_item_selector.hide()
 	($PresetManager as Window).hide()
 	
-	_game.load_event(event_id, map_id, Globals.get_string("player_name"), [
-		selected_skin,
-		selected_skill,
-		selected_light_weapon,
-		selected_heavy_weapon,
-		selected_support_weapon,
-		selected_melee_weapon,
+	_game.load_event(event_idx, map_idx, Globals.get_string("player_name"), [
+		Globals.items_db.skins_by_id[selected_skin].idx_in_db,
+		Globals.items_db.skills_by_id[selected_skill].idx_in_db,
+		Globals.items_db.weapons_by_id[selected_light_weapon].idx_in_db,
+		Globals.items_db.weapons_by_id[selected_heavy_weapon].idx_in_db,
+		Globals.items_db.weapons_by_id[selected_support_weapon].idx_in_db,
+		Globals.items_db.weapons_by_id[selected_melee_weapon].idx_in_db,
 	])
 
 
@@ -550,32 +554,39 @@ func _validate_selected_items() -> void:
 			])
 			selected_maps[event_idx] = 0
 	
-	if selected_skin < 0 or selected_skin >= Globals.items_db.skins.size():
-		push_warning("Incorrect selected skin: %d. Reverting to default." % selected_skin)
-		selected_skin = 0
-	if selected_skill < 0 or selected_skill >= Globals.items_db.skills.size():
-		push_warning("Incorrect selected skill: %d. Reverting to default." % selected_skill)
-		selected_skill = 0
-	if selected_light_weapon < 0 \
-			or selected_light_weapon >= Globals.items_db.weapons_light.size():
-		push_warning("Incorrect selected light weapon: %d. Reverting to default."
+	if not selected_skin in Globals.items_db.skins_by_id \
+			or Globals.items_db.skins_by_id[selected_skin] in Globals.items_db.other_skins:
+		push_warning("Incorrect selected skin: %s. Reverting to default." % selected_skin)
+		selected_skin = Globals.items_db.default_skin
+	if not selected_skill in Globals.items_db.skills_by_id \
+			or Globals.items_db.skills_by_id[selected_skill] in Globals.items_db.other_skills:
+		push_warning("Incorrect selected skin: %s. Reverting to default." % selected_skin)
+		selected_skin = Globals.items_db.default_skill
+	
+	if not selected_light_weapon in Globals.items_db.weapons_by_id \
+			or not Globals.items_db.weapons_by_id[selected_light_weapon] \
+			in Globals.items_db.weapons_light:
+		push_warning("Incorrect selected light weapon: %s. Reverting to default."
 				% selected_light_weapon)
-		selected_light_weapon = 0
-	if selected_heavy_weapon < 0 \
-			or selected_heavy_weapon >= Globals.items_db.weapons_heavy.size():
-		push_warning("Incorrect selected heavy weapon: %d. Reverting to default."
+		selected_light_weapon = Globals.items_db.default_light_weapon
+	if not selected_heavy_weapon in Globals.items_db.weapons_by_id \
+			or not Globals.items_db.weapons_by_id[selected_heavy_weapon] \
+			in Globals.items_db.weapons_heavy:
+		push_warning("Incorrect selected heavy weapon: %s. Reverting to default."
 				% selected_heavy_weapon)
-		selected_heavy_weapon = 0
-	if selected_support_weapon < 0 \
-			or selected_support_weapon >= Globals.items_db.weapons_support.size():
-		push_warning("Incorrect selected support weapon: %d. Reverting to default."
+		selected_heavy_weapon = Globals.items_db.default_heavy_weapon
+	if not selected_support_weapon in Globals.items_db.weapons_by_id \
+			or not Globals.items_db.weapons_by_id[selected_support_weapon] \
+			in Globals.items_db.weapons_support:
+		push_warning("Incorrect selected support weapon: %s. Reverting to default."
 				% selected_support_weapon)
-		selected_support_weapon = 0
-	if selected_melee_weapon < 0 \
-			or selected_melee_weapon >= Globals.items_db.weapons_melee.size():
-		push_warning("Incorrect selected melee weapon: %d. Reverting to default."
+		selected_support_weapon = Globals.items_db.default_support_weapon
+	if not selected_melee_weapon in Globals.items_db.weapons_by_id \
+			or not Globals.items_db.weapons_by_id[selected_melee_weapon] \
+			in Globals.items_db.weapons_melee:
+		push_warning("Incorrect selected melee weapon: %s. Reverting to default."
 				% selected_melee_weapon)
-		selected_melee_weapon = 0
+		selected_melee_weapon = Globals.items_db.default_melee_weapon
 	
 	_save_selected_items(true)
 
@@ -584,12 +595,12 @@ func _save_selected_items(save_environment := false) -> void:
 	if save_environment:
 		Globals.set_int("selected_event", selected_event)
 		Globals.set_variant("selected_maps", selected_maps)
-	Globals.set_int("selected_skin", selected_skin)
-	Globals.set_int("selected_skill", selected_skill)
-	Globals.set_int("selected_light_weapon", selected_light_weapon)
-	Globals.set_int("selected_heavy_weapon", selected_heavy_weapon)
-	Globals.set_int("selected_support_weapon", selected_support_weapon)
-	Globals.set_int("selected_melee_weapon", selected_melee_weapon)
+	Globals.set_string("selected_skin", selected_skin)
+	Globals.set_string("selected_skill", selected_skill)
+	Globals.set_string("selected_light_weapon", selected_light_weapon)
+	Globals.set_string("selected_heavy_weapon", selected_heavy_weapon)
+	Globals.set_string("selected_support_weapon", selected_support_weapon)
+	Globals.set_string("selected_melee_weapon", selected_melee_weapon)
 
 
 func _update_environment() -> void:
@@ -605,32 +616,32 @@ func _update_environment() -> void:
 
 
 func _update_equip() -> void:
-	var skin: SkinData = Globals.items_db.skins[selected_skin]
+	var skin: SkinData = Globals.items_db.skins_by_id[selected_skin]
 	(%Skin/Name as Label).text = skin.name
 	(%Skin/RarityFill as ColorRect).color = ItemsDB.RARITY_COLORS[skin.rarity]
 	(%Skin as TextureRect).texture = load(skin.image_path)
 	
-	var skill: SkillData = Globals.items_db.skills[selected_skill]
+	var skill: SkillData = Globals.items_db.skills_by_id[selected_skill]
 	(%Skill/Name as Label).text = skill.name
 	(%Skill/RarityFill as ColorRect).color = ItemsDB.RARITY_COLORS[skill.rarity]
 	(%Skill as TextureRect).texture = load(skill.image_path)
 	
-	var light_weapon: WeaponData = Globals.items_db.weapons_light[selected_light_weapon]
+	var light_weapon: WeaponData = Globals.items_db.weapons_by_id[selected_light_weapon]
 	(%LightWeapon/Name as Label).text = light_weapon.name
 	(%LightWeapon/RarityFill as ColorRect).color = ItemsDB.RARITY_COLORS[light_weapon.rarity]
 	(%LightWeapon as TextureRect).texture = load(light_weapon.image_path)
 	
-	var heavy_weapon: WeaponData = Globals.items_db.weapons_heavy[selected_heavy_weapon]
+	var heavy_weapon: WeaponData = Globals.items_db.weapons_by_id[selected_heavy_weapon]
 	(%HeavyWeapon/Name as Label).text = heavy_weapon.name
 	(%HeavyWeapon/RarityFill as ColorRect).color = ItemsDB.RARITY_COLORS[heavy_weapon.rarity]
 	(%HeavyWeapon as TextureRect).texture = load(heavy_weapon.image_path)
 	
-	var support_weapon: WeaponData = Globals.items_db.weapons_support[selected_support_weapon]
+	var support_weapon: WeaponData = Globals.items_db.weapons_by_id[selected_support_weapon]
 	(%SupportWeapon/Name as Label).text = support_weapon.name
 	(%SupportWeapon/RarityFill as ColorRect).color = ItemsDB.RARITY_COLORS[support_weapon.rarity]
 	(%SupportWeapon as TextureRect).texture = load(support_weapon.image_path)
 	
-	var melee_weapon: WeaponData = Globals.items_db.weapons_melee[selected_melee_weapon]
+	var melee_weapon: WeaponData = Globals.items_db.weapons_by_id[selected_melee_weapon]
 	(%MeleeWeapon/Name as Label).text = melee_weapon.name
 	(%MeleeWeapon/RarityFill as ColorRect).color = ItemsDB.RARITY_COLORS[melee_weapon.rarity]
 	(%MeleeWeapon as TextureRect).texture = load(melee_weapon.image_path)
@@ -869,68 +880,81 @@ func _on_change_event_pressed() -> void:
 
 
 func _on_change_map_pressed() -> void:
-	_items_grid.list_items(ItemsDB.Item.MAP, selected_map, selected_event)
+	_items_grid.list_maps_of_event(selected_event, selected_map)
 	_item_selector.title = "Выбор карты"
 	_item_selector.popup_centered()
 
 
 func _on_change_skin_pressed() -> void:
-	_items_grid.list_items(ItemsDB.Item.SKIN, selected_skin)
+	_items_grid.list_items(ItemsDB.Item.SKINS_LINE, Globals.items_db.skins_lines.find_custom(
+			func(skins_line: SkinsLineData) -> bool:
+				return Globals.items_db.skins_by_id[selected_skin] in skins_line.skins
+	))
 	_item_selector.title = "Выбор скина"
 	_item_selector.popup_centered()
 
 
 func _on_change_skill_pressed() -> void:
-	_items_grid.list_items(ItemsDB.Item.SKILL, selected_skill)
+	_items_grid.list_items(ItemsDB.Item.SKILL,
+			Globals.items_db.skills_by_id[selected_skill].idx_in_db)
 	_item_selector.title = "Выбор навыка"
 	_item_selector.popup_centered()
 
 
 func _on_change_light_weapon_pressed() -> void:
-	_items_grid.list_items(ItemsDB.Item.WEAPON_LIGHT, selected_light_weapon)
+	_items_grid.list_weapons_by_type(Weapon.Type.LIGHT,
+			Globals.items_db.weapons_by_id[selected_light_weapon].idx_in_db)
 	_item_selector.title = "Выбор лёгкого оружия"
 	_item_selector.popup_centered()
 
 
 func _on_change_heavy_weapon_pressed() -> void:
-	_items_grid.list_items(ItemsDB.Item.WEAPON_HEAVY, selected_heavy_weapon)
+	_items_grid.list_weapons_by_type(Weapon.Type.HEAVY,
+			Globals.items_db.weapons_by_id[selected_heavy_weapon].idx_in_db)
 	_item_selector.title = "Выбор тяжёлого оружия"
 	_item_selector.popup_centered()
 
 
 func _on_change_support_weapon_pressed() -> void:
-	_items_grid.list_items(ItemsDB.Item.WEAPON_SUPPORT, selected_support_weapon)
+	_items_grid.list_weapons_by_type(Weapon.Type.SUPPORT,
+			Globals.items_db.weapons_by_id[selected_support_weapon].idx_in_db)
 	_item_selector.title = "Выбор оружия поддержки"
 	_item_selector.popup_centered()
 
 
 func _on_change_melee_weapon_pressed() -> void:
-	_items_grid.list_items(ItemsDB.Item.WEAPON_MELEE, selected_melee_weapon)
+	_items_grid.list_weapons_by_type(Weapon.Type.MELEE,
+			Globals.items_db.weapons_by_id[selected_melee_weapon].idx_in_db)
 	_item_selector.title = "Выбор ближнего оружия"
 	_item_selector.popup_centered()
 
 
-func _on_item_selected(type: ItemsDB.Item, id: int) -> void:
+func _on_item_selected(type: ItemsDB.Item, idx: int) -> void:
 	_item_selector.hide()
 	match type:
 		ItemsDB.Item.EVENT:
 			request_set_environment.rpc_id(MultiplayerPeer.TARGET_PEER_SERVER,
-					id, selected_maps[id])
+					idx, selected_maps[idx])
 			return
 		ItemsDB.Item.MAP:
-			request_set_environment.rpc_id(MultiplayerPeer.TARGET_PEER_SERVER, selected_event, id)
+			request_set_environment.rpc_id(MultiplayerPeer.TARGET_PEER_SERVER, selected_event, idx)
 			return
+		ItemsDB.Item.SKINS_LINE:
+			_item_selector.show()
+			_items_grid.list_skins_line(idx, Globals.items_db.skins_by_id[selected_skin].idx_in_db)
 		ItemsDB.Item.SKIN:
-			selected_skin = id
+			selected_skin = Globals.items_db.skins[idx].id
 		ItemsDB.Item.SKILL:
-			selected_skill = id
-		ItemsDB.Item.WEAPON_LIGHT:
-			selected_light_weapon = id
-		ItemsDB.Item.WEAPON_HEAVY:
-			selected_heavy_weapon = id
-		ItemsDB.Item.WEAPON_SUPPORT:
-			selected_support_weapon = id
-		ItemsDB.Item.WEAPON_MELEE:
-			selected_melee_weapon = id
+			selected_skill = Globals.items_db.skills[idx].id
+		ItemsDB.Item.WEAPON:
+			var selected_weapon: WeaponData = Globals.items_db.weapons[idx]
+			if selected_weapon in Globals.items_db.weapons_light:
+				selected_light_weapon = selected_weapon.id
+			elif selected_weapon in Globals.items_db.weapons_heavy:
+				selected_heavy_weapon = selected_weapon.id
+			elif selected_weapon in Globals.items_db.weapons_support:
+				selected_support_weapon = selected_weapon.id
+			elif selected_weapon in Globals.items_db.weapons_melee:
+				selected_melee_weapon = selected_weapon.id
 	_save_selected_items()
 	_update_equip()

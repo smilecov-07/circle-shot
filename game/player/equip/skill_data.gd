@@ -11,6 +11,7 @@ extends Resource
 @export var rarity := ItemsDB.Rarity.COMMON
 ## ID навыка. Должно быть уникальным.
 @export var id: String
+
 @export_group("About")
 ## Словарь с различными статистиками навыка (урон, кол-во использований, ...).
 ## В [member usage_text], [member brief_description] и [member description] можно подставлять
@@ -34,6 +35,7 @@ extends Resource
 Перезарядка: [color=blue]{cooldown} с[/color]
 
 Описание"""
+
 @export_group("Paths")
 ## Путь до сцены с навыком.
 @export_file("PackedScene") var scene_path: String
@@ -42,6 +44,6 @@ extends Resource
 ## Массив путей к сценам, относящихся конкретно к этому навыка, которые должны синхронизироваться
 ## при появлении. Например, сцена удара об землю.
 @export_file("PackedScene") var spawnable_scenes_paths: Array[String]
-## Индекс навыка в массиве [ItemsDB]. Равен -2 если его там нет.
-## Задаётся при инициализации [ItemsDB].
-var idx_in_db: int = -2
+
+## Индекс навыка в массиве [ItemsDB]. Задаётся при инициализации [ItemsDB].
+var idx_in_db: int = -1

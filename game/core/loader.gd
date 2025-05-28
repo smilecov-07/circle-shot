@@ -47,17 +47,17 @@ func _process(_delta: float) -> void:
 		loaded.emit(true)
 
 
-## Загружает события и карту по [param event_id] и [param map_id] соответственно. Возвращает
+## Загружает события и карту по [param event_idx] и [param map_idx] соответственно. Возвращает
 ## [Event], если загрузка прошла удачно, иначе возвращает [code]null[/code].[br]
 ## [b]Внимание[/b]: этот метод - [b]корутина[/b], так что Вам необходимо подождать его с помощью
 ## [code]await[/code].
-func load_event(event_id: int, map_id: int) -> Event:
+func load_event(event_idx: int, map_idx: int) -> Event:
 	_anim.play(&"StartLoad")
 	_status_text.text = "Загрузка события и карты..."
 	_requested_paths.clear()
 	_loaded_paths.clear()
 	
-	var event_path: String = Globals.items_db.events[event_id].scene_path
+	var event_path: String = Globals.items_db.events[event_idx].scene_path
 	print_verbose("Requesting load for event %s." % event_path)
 	var err: Error = ResourceLoader.load_threaded_request(
 			event_path, "", false, ResourceLoader.CACHE_MODE_REPLACE_DEEP)
@@ -70,7 +70,7 @@ func load_event(event_id: int, map_id: int) -> Event:
 		return null
 	_requested_paths.append(event_path)
 	
-	var map_path: String = Globals.items_db.events[event_id].maps[map_id].scene_path
+	var map_path: String = Globals.items_db.events[event_idx].maps[map_idx].scene_path
 	print_verbose("Requesting load for map %s." % map_path)
 	err = ResourceLoader.load_threaded_request(
 			map_path, "", false, ResourceLoader.CACHE_MODE_IGNORE_DEEP)
@@ -109,8 +109,7 @@ func load_event(event_id: int, map_id: int) -> Event:
 ## [b]Внимание[/b]: этот метод - [b]корутина[/b], так что Вам необходимо подождать его с помощью
 ## [code]await[/code].
 func preload_equip(skins: Array[int], skills: Array[int],
-		light_weapons: Array[int], heavy_weapons: Array[int],
-		support_weapons: Array[int], melee_weapons: Array[int]) -> Array[PackedScene]:
+		weapons: Array[int]) -> Array[PackedScene]:
 	_status_text.text = "Предзагрузка экипировки..."
 	_requested_paths.clear()
 	_loaded_paths.clear()
@@ -124,20 +123,8 @@ func preload_equip(skins: Array[int], skills: Array[int],
 		var path: String = Globals.items_db.skills[idx].scene_path
 		if not path in _requested_paths:
 			_requested_paths.append(path)
-	for idx: int in light_weapons:
-		var path: String = Globals.items_db.weapons_light[idx].scene_path
-		if not path in _requested_paths:
-			_requested_paths.append(path)
-	for idx: int in heavy_weapons:
-		var path: String = Globals.items_db.weapons_heavy[idx].scene_path
-		if not path in _requested_paths:
-			_requested_paths.append(path)
-	for idx: int in support_weapons:
-		var path: String = Globals.items_db.weapons_support[idx].scene_path
-		if not path in _requested_paths:
-			_requested_paths.append(path)
-	for idx: int in melee_weapons:
-		var path: String = Globals.items_db.weapons_melee[idx].scene_path
+	for idx: int in weapons:
+		var path: String = Globals.items_db.weapons[idx].scene_path
 		if not path in _requested_paths:
 			_requested_paths.append(path)
 	

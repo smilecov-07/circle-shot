@@ -62,15 +62,15 @@ func _ready() -> void:
 	set_skill(Globals.items_db.skills[equip_data[1]] if equip_data[1] >= 0 else null)
 	
 	set_weapon(Weapon.Type.LIGHT,
-			Globals.items_db.weapons_light[equip_data[2]] if equip_data[2] >= 0 else null)
+			Globals.items_db.weapons[equip_data[2]] if equip_data[2] >= 0 else null)
 	set_weapon(Weapon.Type.HEAVY,
-			Globals.items_db.weapons_heavy[equip_data[3]] if equip_data[3] >= 0 else null)
+			Globals.items_db.weapons[equip_data[3]] if equip_data[3] >= 0 else null)
 	set_weapon(Weapon.Type.SUPPORT,
-			Globals.items_db.weapons_support[equip_data[4]] if equip_data[4] >= 0 else null)
+			Globals.items_db.weapons[equip_data[4]] if equip_data[4] >= 0 else null)
 	set_weapon(Weapon.Type.MELEE,
-			Globals.items_db.weapons_melee[equip_data[5]] if equip_data[5] >= 0 else null)
+			Globals.items_db.weapons[equip_data[5]] if equip_data[5] >= 0 else null)
 	set_weapon(Weapon.Type.ADDITIONAL,
-			Globals.items_db.other_weapons[equip_data[6]] if equip_data[6] >= 0 else null)
+			Globals.items_db.weapons[equip_data[6]] if equip_data[6] >= 0 else null)
 	
 	($Minimap/MinimapMarker/Visual as CanvasItem).self_modulate = TEAM_COLORS[team]
 	await get_tree().process_frame # Ждём пока заработает VisibleOnScreenNotifier2D
@@ -196,7 +196,7 @@ func set_skin(data: SkinData) -> void:
 	skin = skin_scene.instantiate()
 	$Visual/Skin.add_child(skin)
 	skin.initialize(self, data)
-	equip_data[0] = data.idx_in_db
+	equip_data[0] = data.idx_in_db if data.idx_in_db >= 0 else -2 # если нет в БД
 	skin_equipped.emit(data)
 	print_verbose("Skin %s with ID %d on %s set." % [data.id, equip_data[0], name])
 
@@ -228,7 +228,7 @@ func set_weapon(type: Weapon.Type, data: WeaponData) -> void:
 	_weapons.add_child(weapon)
 	_weapons.move_child(weapon, type)
 	weapon.initialize(self, data)
-	equip_data[2 + type] = data.idx_in_db
+	equip_data[2 + type] = data.idx_in_db if data.idx_in_db >= 0 else -2 # если нет в БД
 	
 	weapon_equipped.emit(type, data)
 	print_verbose("Set weapon %s with ID %d with type %d on %s." % [
@@ -262,7 +262,7 @@ func set_skill(data: SkillData, reset_skill_vars := false) -> void:
 	skill = skill_scene.instantiate()
 	add_child(skill)
 	skill.initialize(self, data)
-	equip_data[1] = data.idx_in_db
+	equip_data[1] = data.idx_in_db if data.idx_in_db >= 0 else -2 # если нет в БД
 	skill_equipped.emit(data)
 	print_verbose("Set skill %s with ID %d on %s." % [data.id, equip_data[5], name])
 

@@ -5,9 +5,14 @@
 [resource]
 script = ExtResource("1_d400q")
 name = "C-like"
-brief_description = "Да не знаю я никаких С..."
 rarity = 3
 id = "clike"
+brief_description = "Да не знаю я никаких С..."
+custom_hurt_vfx = true
+custom_death_vfx = true
+custom_heal_vfx = true
+custom_blood_vfx = true
+custom_animations = true
 scene_path = "uid://cw5ms0gp35p0b"
 image_path = "uid://cs36377l4a14b"
 metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

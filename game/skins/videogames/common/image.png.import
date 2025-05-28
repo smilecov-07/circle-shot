@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dxl26e8pf4tp3"
-path="res://.godot/imported/smiley.png-aff17c1c2832ac3adcc134b1d39b3fa5.ctex"
+uid="uid://e8nuwb28ixow"
+path="res://.godot/imported/image.png-c26745379b20cc6e3009d75d32e2a47f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/skins/emoji/smiley/smiley.png"
-dest_files=["res://.godot/imported/smiley.png-aff17c1c2832ac3adcc134b1d39b3fa5.ctex"]
+source_file="res://game/skins/videogames/common/image.png"
+dest_files=["res://.godot/imported/image.png-c26745379b20cc6e3009d75d32e2a47f.ctex"]
 
 [params]
 

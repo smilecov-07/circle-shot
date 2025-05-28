@@ -5,9 +5,14 @@
 [resource]
 script = ExtResource("1_82x72")
 name = "Пиксельный"
-brief_description = "Сохраняй решимость!"
 rarity = 2
 id = "undertale"
+brief_description = "Сохраняй решимость!"
+custom_hurt_vfx = false
+custom_death_vfx = true
+custom_heal_vfx = false
+custom_blood_vfx = false
+custom_animations = true
 scene_path = "uid://bwh60wyedvw8h"
 image_path = "uid://bkr22i0bltnrm"
 metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

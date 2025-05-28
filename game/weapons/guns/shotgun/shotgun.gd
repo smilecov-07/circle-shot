@@ -4,7 +4,7 @@ extends Gun
 var _reloading := false
 var _interrupt_reload := false
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	super(delta)
 	if _reloading and player.player_input.shooting:
 		_interrupt_reload = true

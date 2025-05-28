@@ -5,9 +5,14 @@
 [resource]
 script = ExtResource("1_el00n")
 name = "Apple"
-brief_description = "Гнилое яблоко"
 rarity = 1
 id = "ios"
+brief_description = "Гнилое яблоко"
+custom_hurt_vfx = false
+custom_death_vfx = false
+custom_heal_vfx = false
+custom_blood_vfx = false
+custom_animations = false
 scene_path = "uid://hu5r8bfwm35u"
 image_path = "uid://b5ibpshl6nqmu"
 metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

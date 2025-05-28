@@ -5,9 +5,14 @@
 [resource]
 script = ExtResource("1_og4gd")
 name = "РКН"
-brief_description = "РосКомПозорище"
 rarity = 2
 id = "rkn"
+brief_description = "РосКомПозорище"
+custom_hurt_vfx = false
+custom_death_vfx = true
+custom_heal_vfx = false
+custom_blood_vfx = false
+custom_animations = true
 scene_path = "uid://chpvrgitya08l"
 image_path = "uid://dm2mvxjrepf3c"
 metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

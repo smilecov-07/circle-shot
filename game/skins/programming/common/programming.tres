@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="SkinsLineData" load_steps=9 format=3 uid="uid://cnjlxvnshdka0"]
+
+[ext_resource type="Script" uid="uid://d3vgfmq2fcba3" path="res://game/player/equip/skins_line_data.gd" id="1_0jix5"]
+[ext_resource type="Script" uid="uid://d6lhqjoo2iuf" path="res://game/player/equip/skin_data.gd" id="2_d6car"]
+[ext_resource type="Resource" uid="uid://cpd762mfrmmoc" path="res://game/skins/programming/android/android.tres" id="3_qsay7"]
+[ext_resource type="Resource" uid="uid://dvnh4idsj61sj" path="res://game/skins/programming/apple/apple.tres" id="4_ftjdo"]
+[ext_resource type="Resource" uid="uid://c5avhdvv4xovn" path="res://game/skins/programming/godot/godot.tres" id="5_e78xk"]
+[ext_resource type="Resource" uid="uid://caehyd61mjpwo" path="res://game/skins/programming/c_like/c_like.tres" id="6_bv1co"]
+[ext_resource type="Resource" uid="uid://c5fk7qvfajug7" path="res://game/skins/programming/kabakova/kabakova.tres" id="7_od7rt"]
+[ext_resource type="Resource" uid="uid://c3r86qgxy0nrq" path="res://game/skins/programming/arch/arch.tres" id="8_txl78"]
+
+[resource]
+script = ExtResource("1_0jix5")
+name = "Программирование"
+brief_description = "Скины, связанные с миром IT."
+image_path = "uid://b67i7vynmixhf"
+skins = Array[ExtResource("2_d6car")]([ExtResource("3_qsay7"), ExtResource("4_ftjdo"), ExtResource("5_e78xk"), ExtResource("6_bv1co"), ExtResource("7_od7rt"), ExtResource("8_txl78")])
+metadata/_custom_type_script = "uid://d3vgfmq2fcba3"

@@ -22,7 +22,7 @@ enum EncodedInputEventType {
 ## Путь к файлу сохранения.
 const SAVE_FILE_PATH := "user://save.cfg"
 ## Пароль файла сохранения.
-const SAVE_FILE_PASSWORD := "circle-shot"
+const SAVE_FILE_PASSWORD := "circleshot"
 ## Стандартная секция файла сохранения.
 const DEFAULT_SAVE_FILE_SECTION := "save"
 ## Секция файла сохранения для настроек.

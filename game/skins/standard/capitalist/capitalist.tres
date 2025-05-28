@@ -5,9 +5,14 @@
 [resource]
 script = ExtResource("1_xvuk2")
 name = "Капиталист"
-brief_description = "Возможно, у него еврейские корни"
 rarity = 0
 id = "jew"
+brief_description = "Возможно, у него еврейские корни"
+custom_hurt_vfx = false
+custom_death_vfx = false
+custom_heal_vfx = false
+custom_blood_vfx = false
+custom_animations = false
 scene_path = "uid://cp4pujbxltqog"
 image_path = "uid://c4d8e6t4v48qq"
 metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

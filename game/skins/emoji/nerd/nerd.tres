@@ -5,9 +5,14 @@
 [resource]
 script = ExtResource("1_63i54")
 name = "NERD"
-brief_description = "Эмодзи в очках"
 rarity = 1
 id = "nerd"
+brief_description = "Эмодзи в очках"
+custom_hurt_vfx = false
+custom_death_vfx = false
+custom_heal_vfx = false
+custom_blood_vfx = false
+custom_animations = false
 scene_path = "uid://dggscprffe03c"
 image_path = "uid://c48mukegdbi8m"
 metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

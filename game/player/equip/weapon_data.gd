@@ -11,6 +11,7 @@ extends Resource
 @export var rarity := ItemsDB.Rarity.COMMON
 ## ID оружия. Должно быть уникальным.
 @export var id: String
+
 @export_group("About")
 ## Словарь с различными статистиками оружия (урон, боезапас, ...).
 ## В [member damage_text], [member ammo_text] и [member description] можно подставлять значения
@@ -35,6 +36,7 @@ extends Resource
 Перезарядка: [color=blue]{reload_time} с[/color]
 
 Описание"""
+
 @export_group("Paths")
 ## Путь к сцене оружия.
 @export_file("PackedScene") var scene_path: String
@@ -43,6 +45,6 @@ extends Resource
 ## Массив путей к сценам, относящихся конкретно к этому оружию, которые должны синхронизироваться
 ## при появлении. Например, сцена пули или гранаты.
 @export_file("PackedScene") var spawnable_scenes_paths: Array[String]
-## Индекс оружия в массиве [ItemsDB]. Равен -2 если его там нет.
-## Задаётся при инициализации [ItemsDB].
-var idx_in_db: int = -2
+
+## Индекс оружия в массиве [ItemsDB]. Задаётся при инициализации [ItemsDB].
+var idx_in_db: int = -1

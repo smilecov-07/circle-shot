@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c07pym82q5utt"]
 
-[node name="ItemEquip" type="TextureRect"]
+[node name="ItemSmall" type="TextureRect"]
 custom_minimum_size = Vector2(128, 128)
 expand_mode = 1
 stretch_mode = 5

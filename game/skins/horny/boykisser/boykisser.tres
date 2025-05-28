@@ -5,9 +5,14 @@
 [resource]
 script = ExtResource("1_oageq")
 name = "Бойкиссер"
-brief_description = "OwO"
 rarity = 1
 id = "gaycat"
+brief_description = "OwO"
+custom_hurt_vfx = false
+custom_death_vfx = false
+custom_heal_vfx = false
+custom_blood_vfx = false
+custom_animations = false
 scene_path = "uid://dagskw28ang0p"
 image_path = "uid://blkvcndqkr10h"
 metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

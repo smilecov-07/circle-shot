@@ -5,9 +5,14 @@
 [resource]
 script = ExtResource("1_uymnl")
 name = "COVID-19"
-brief_description = "Вот зараза"
 rarity = 1
 id = "covid"
+brief_description = "Вот зараза"
+custom_hurt_vfx = false
+custom_death_vfx = false
+custom_heal_vfx = false
+custom_blood_vfx = false
+custom_animations = false
 scene_path = "uid://bxeqejyos1t0e"
 image_path = "uid://b4o8r1kb6pdvi"
 metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

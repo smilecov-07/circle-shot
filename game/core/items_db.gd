@@ -15,14 +15,10 @@ enum Item {
 	SKIN = 2,
 	## Навык.
 	SKILL = 3,
-	## Лёгкое оружие.
-	WEAPON_LIGHT = 4,
-	## Тяжёлое оружие.
-	WEAPON_HEAVY = 5,
-	## Оружие поддержки.
-	WEAPON_SUPPORT = 6,
-	## Ближнее оружие.
-	WEAPON_MELEE = 7,
+	## Оружие.
+	WEAPON = 4,
+	## Линейка скинов.
+	SKINS_LINE = 5,
 }
 ## Редкость некоторых предметов.
 enum Rarity {
@@ -54,10 +50,10 @@ const RARITY_COLORS: Dictionary[Rarity, Color] = {
 @export var events: Array[EventData]
 
 @export_group("Equip")
-## Массив скинов.
-@export var skins: Array[SkinData]
-## Массив навыков.
-@export var skills: Array[SkillData]
+## Массив линеек скинов.
+@export var skins_lines: Array[SkinsLineData]
+## Массив навыков, доступных для выбора.
+@export var skills_normal: Array[SkillData]
 ## Массив лёгких оружий.
 @export var weapons_light: Array[WeaponData]
 ## Массив тяжёлых оружий.
@@ -68,10 +64,43 @@ const RARITY_COLORS: Dictionary[Rarity, Color] = {
 @export var weapons_melee: Array[WeaponData]
 
 @export_group("Other", "other_")
-## Массив навыков, недоступных для выбора, но используемых где-то в игре.
+## Массив скинов, не доступных для выбора, но используемых где-то в игре.
+@export var other_skins: Array[SkinData]
+## Массив навыков, не доступных для выбора, но используемых где-то в игре.
 @export var other_skills: Array[SkillData]
-## Массив оружий, недоступных для выбора, но используемых где-то в игре.
+## Массив оружий, не доступных для выбора, но используемых где-то в игре.
 @export var other_weapons: Array[WeaponData]
+
+@export_group("Defaults", "default_")
+## ID скина по умолчанию.
+@export var default_skin: String
+## ID навыка по умолчанию.
+@export var default_skill: String
+## ID лёгкого оружия по умолчанию.
+@export var default_light_weapon: String
+## ID тяжёлого оружия по умолчанию.
+@export var default_heavy_weapon: String
+## ID оружия поддержки по умолчанию.
+@export var default_support_weapon: String
+## ID ближнего оружия по умолчанию.
+@export var default_melee_weapon: String
+
+## Массив всех скинов. Собирается из скинов всех линеек при инициализации [ItemsDB].
+var skins: Array[SkinData]
+## Массив всех навыков. Собирается из [member skills_normal] и [member other_skills]
+## при инициализации [ItemsDB].
+var skills: Array[SkillData]
+## Массив всех оружий. Собирается из [member weapons_light], [member weapons_heavy],
+## [member weapons_support], [member weapons_melee] и [member other_weapons]
+## при инициализации [ItemsDB].
+var weapons: Array[WeaponData]
+
+## Словарь скинов вида <ID скина> - <скин>.
+var skins_by_id: Dictionary[String, SkinData]
+## Словарь навыков вида <ID навыка> - <навык>.
+var skills_by_id: Dictionary[String, SkillData]
+## Словарь оружий вида <ID оружия> - <оружие>.
+var weapons_by_id: Dictionary[String, WeaponData]
 
 ## Массив из путей к сценам, которые должны синхронизироваться при появлении, связанных с оружием. 
 ## Автоматически создаётся из [member WeaponData.spawnable_scenes_paths] у всех оружий.
@@ -83,40 +112,89 @@ var spawnable_other_paths: Array[String]
 
 ## Инициализирует базу данных предметов.
 func initialize() -> void:
+	skins.clear()
+	skills.clear()
+	weapons.clear()
+	skins_by_id.clear()
+	skills_by_id.clear()
+	
 	spawnable_projectiles_paths.clear()
 	spawnable_other_paths.clear()
 	
+	for skins_line: SkinsLineData in skins_lines:
+		skins_line.skins.sort_custom(_sort_rarity_skin)
+		skins.append_array(skins_line.skins)
+	skins.sort_custom(_sort_rarity_skin)
+	skins.append_array(other_skins)
+	
+	skills_normal.sort_custom(_sort_rarity_skill)
+	skills.append_array(skills_normal)
+	other_skills.sort_custom(_sort_rarity_skill)
+	skills.append_array(other_skills)
+	
+	weapons_light.sort_custom(_sort_rarity_weapon)
+	weapons.append_array(weapons_light)
+	weapons_heavy.sort_custom(_sort_rarity_weapon)
+	weapons.append_array(weapons_heavy)
+	weapons_support.sort_custom(_sort_rarity_weapon)
+	weapons.append_array(weapons_support)
+	weapons_melee.sort_custom(_sort_rarity_weapon)
+	weapons.append_array(weapons_melee)
+	other_weapons.sort_custom(_sort_rarity_weapon)
+	weapons.append_array(other_weapons)
+	
+	for skin: SkinData in skins:
+		skins_by_id[skin.id] = skin
+	for skill: SkillData in skills:
+		skills_by_id[skill.id] = skill
+	for weapon: WeaponData in weapons:
+		weapons_by_id[weapon.id] = weapon
+	
 	for skill: SkillData in skills:
 		spawnable_other_paths.append_array(skill.spawnable_scenes_paths)
-	for weapon: WeaponData in weapons_light:
-		spawnable_projectiles_paths.append_array(weapon.spawnable_scenes_paths)
-	for weapon: WeaponData in weapons_heavy:
-		spawnable_projectiles_paths.append_array(weapon.spawnable_scenes_paths)
-	for weapon: WeaponData in weapons_support:
-		spawnable_projectiles_paths.append_array(weapon.spawnable_scenes_paths)
-	for weapon: WeaponData in weapons_melee:
+	for weapon: WeaponData in weapons:
 		spawnable_projectiles_paths.append_array(weapon.spawnable_scenes_paths)
 	
-	for skill: SkillData in other_skills:
-		spawnable_other_paths.append_array(skill.spawnable_scenes_paths)
-	for weapon: WeaponData in other_weapons:
-		spawnable_projectiles_paths.append_array(weapon.spawnable_scenes_paths)
-	
-	# Задавание idx_in_db у предметов.
 	for i: int in skins.size():
 		skins[i].idx_in_db = i
 	for i: int in skills.size():
 		skills[i].idx_in_db = i
-	for i: int in weapons_light.size():
-		weapons_light[i].idx_in_db = i
-	for i: int in weapons_heavy.size():
-		weapons_heavy[i].idx_in_db = i
-	for i: int in weapons_support.size():
-		weapons_support[i].idx_in_db = i
-	for i: int in weapons_melee.size():
-		weapons_melee[i].idx_in_db = i
-	
-	for i: int in other_skills.size():
-		other_skills[i].idx_in_db = i
-	for i: int in other_weapons.size():
-		other_weapons[i].idx_in_db = i
+	for i: int in weapons.size():
+		weapons[i].idx_in_db = i
+
+
+func has_equip_item(id: String, type: Item) -> bool:
+	match type:
+		Item.SKIN:
+			var skin: SkinData = skins_by_id[id]
+			return skin.rarity == Rarity.COMMON or true
+			# TODO: добавить проверку на наличие предмета, 3.0 контент
+		Item.SKILL:
+			var skill: SkillData = skills_by_id[id]
+			return skill.rarity == Rarity.COMMON or true
+			# TODO: добавить проверку на наличие предмета, 3.0 контент
+		Item.WEAPON:
+			var weapon: WeaponData = weapons_by_id[id]
+			return weapon.rarity == Rarity.COMMON or true
+			# TODO: добавить проверку на наличие предмета, 3.0 контент
+		_:
+			push_error("Callend with invalid item type: %d." % type)
+	return false
+
+
+func _sort_rarity_weapon(first: WeaponData, second: WeaponData) -> bool:
+	if first.rarity != second.rarity:
+		return first.rarity < second.rarity
+	return first.idx_in_db < second.idx_in_db
+
+
+func _sort_rarity_skin(first: SkinData, second: SkinData) -> bool:
+	if first.rarity != second.rarity:
+		return first.rarity < second.rarity
+	return first.idx_in_db < second.idx_in_db
+
+
+func _sort_rarity_skill(first: SkillData, second: SkillData) -> bool:
+	if first.rarity != second.rarity:
+		return first.rarity < second.rarity
+	return first.idx_in_db < second.idx_in_db

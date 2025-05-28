@@ -5,9 +5,14 @@
 [resource]
 script = ExtResource("1_uupf4")
 name = "Нико"
-brief_description = "Hello Niko from OneShot"
 rarity = 2
 id = "im_not_a_cat"
+brief_description = "Hello Niko from OneShot"
+custom_hurt_vfx = false
+custom_death_vfx = true
+custom_heal_vfx = false
+custom_blood_vfx = false
+custom_animations = true
 scene_path = "uid://dh3n3un5i122b"
 image_path = "uid://cp55rvnqppfi"
 metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

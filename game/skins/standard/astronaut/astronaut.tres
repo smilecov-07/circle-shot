@@ -5,9 +5,14 @@
 [resource]
 script = ExtResource("1_g2rw8")
 name = "Космонавт"
-brief_description = "Модный шлем!"
 rarity = 0
 id = "astronaut"
+brief_description = "Модный шлем!"
+custom_hurt_vfx = false
+custom_death_vfx = false
+custom_heal_vfx = false
+custom_blood_vfx = false
+custom_animations = false
 scene_path = "uid://x8k2crtj28bk"
 image_path = "uid://dliuj2cfxncau"
 metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

@@ -5,9 +5,14 @@
 [resource]
 script = ExtResource("1_ca7qy")
 name = "Колобок"
-brief_description = "Обычный колобок"
 rarity = 0
 id = "default"
+brief_description = "Обычный колобок"
+custom_hurt_vfx = false
+custom_death_vfx = false
+custom_heal_vfx = false
+custom_blood_vfx = false
+custom_animations = false
 scene_path = "uid://c4mcmkcefammv"
 image_path = "uid://cmc3f4aj7e52q"
 metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

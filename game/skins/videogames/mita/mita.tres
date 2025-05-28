@@ -5,9 +5,14 @@
 [resource]
 script = ExtResource("1_iiyws")
 name = "Мита"
-brief_description = "Мита из MiSide теперь в CS! Бегите, ЖеноФобы!!!"
 rarity = 1
 id = "chibimita"
+brief_description = "Женщина?.."
+custom_hurt_vfx = false
+custom_death_vfx = false
+custom_heal_vfx = false
+custom_blood_vfx = false
+custom_animations = false
 scene_path = "uid://c7vnr4k6hi7cm"
 image_path = "uid://ijen7jsgkmxw"
 metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

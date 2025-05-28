@@ -5,9 +5,14 @@
 [resource]
 script = ExtResource("1_6ulw4")
 name = "Дилер"
-brief_description = "Я вставлю патроны в неизвестном порядке..."
 rarity = 2
 id = "dealer"
+brief_description = "Я вставлю патроны в неизвестном порядке..."
+custom_hurt_vfx = false
+custom_death_vfx = false
+custom_heal_vfx = false
+custom_blood_vfx = false
+custom_animations = true
 scene_path = "uid://lvofe70e7tx7"
 image_path = "uid://cbt1jl708r5td"
 metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

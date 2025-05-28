@@ -5,9 +5,14 @@
 [resource]
 script = ExtResource("1_51011")
 name = "Кот"
-brief_description = "Что за кошатина?!"
 rarity = 1
 id = "bacat"
+brief_description = "Что за кошатина?!"
+custom_hurt_vfx = false
+custom_death_vfx = false
+custom_heal_vfx = false
+custom_blood_vfx = false
+custom_animations = false
 scene_path = "uid://c4n2pkxv1n3or"
 image_path = "uid://cmugf7intv1pv"
 metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

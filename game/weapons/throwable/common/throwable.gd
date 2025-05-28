@@ -47,9 +47,6 @@ func _process(_delta: float) -> void:
 			var spread: float = _calculate_spread()
 			_aim_spread_left.rotation_degrees = -spread
 			_aim_spread_right.rotation_degrees = spread
-	
-	if _reloading and player.player_input.shooting:
-		_interrupt_reload = true
 
 
 func _physics_process(delta: float) -> void:
@@ -59,6 +56,9 @@ func _physics_process(delta: float) -> void:
 	_throw_timer -= delta
 	if player.is_local() and can_reload() and ammo <= 0:
 		player.try_reload_weapon()
+	
+	if _reloading and player.player_input.shooting:
+		_interrupt_reload = true
 
 
 func _initialize() -> void:

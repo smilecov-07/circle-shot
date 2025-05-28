@@ -5,9 +5,14 @@
 [resource]
 script = ExtResource("1_iq21s")
 name = "Меттатон"
-brief_description = "Кумир человечества"
 rarity = 2
 id = "mettaton"
+brief_description = "Кумир человечества"
+custom_hurt_vfx = false
+custom_death_vfx = false
+custom_heal_vfx = false
+custom_blood_vfx = false
+custom_animations = true
 scene_path = "uid://cg27rk21dp4m8"
 image_path = "uid://jysolhexc2ex"
 metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

@@ -5,9 +5,14 @@
 [resource]
 script = ExtResource("1_b2yxg")
 name = "Рубль"
-brief_description = "Главное не упади"
 rarity = 2
 id = "ruble"
+brief_description = "Главное не упади"
+custom_hurt_vfx = true
+custom_death_vfx = false
+custom_heal_vfx = true
+custom_blood_vfx = false
+custom_animations = true
 scene_path = "uid://f0idrttogl6j"
 image_path = "uid://b8rx6cmi21ll5"
 metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

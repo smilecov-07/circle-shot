@@ -5,9 +5,14 @@
 [resource]
 script = ExtResource("1_3fmcj")
 name = "Arch Linux"
-brief_description = "I use Arch btw"
 rarity = 1
 id = "arch"
+brief_description = "I use Arch btw"
+custom_hurt_vfx = false
+custom_death_vfx = false
+custom_heal_vfx = false
+custom_blood_vfx = false
+custom_animations = false
 scene_path = "uid://bbmeo164q20gn"
 image_path = "uid://bkj0kfmbuvyag"
 metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

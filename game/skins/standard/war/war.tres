@@ -5,9 +5,14 @@
 [resource]
 script = ExtResource("1_c4pxv")
 name = "Военный"
-brief_description = "Я не знаю, что такое \"отступать\"!"
 rarity = 1
 id = "war"
+brief_description = "Я не знаю, что такое \"отступать\"!"
+custom_hurt_vfx = false
+custom_death_vfx = false
+custom_heal_vfx = false
+custom_blood_vfx = false
+custom_animations = false
 scene_path = "uid://yb112418c25u"
 image_path = "uid://dhkvdjwfv3f3c"
 metadata/_custom_type_script = "uid://d6lhqjoo2iuf"

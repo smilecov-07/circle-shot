@@ -5,9 +5,14 @@
 [resource]
 script = ExtResource("1_g7hoi")
 name = "Клоун"
-brief_description = "Это НЕ разработчик"
 rarity = 1
 id = "clown"
+brief_description = "Это НЕ разработчик"
+custom_hurt_vfx = false
+custom_death_vfx = false
+custom_heal_vfx = false
+custom_blood_vfx = false
+custom_animations = false
 scene_path = "uid://dd74gwm1uh6tt"
 image_path = "uid://b5fmv0njhelm"
 metadata/_custom_type_script = "uid://d6lhqjoo2iuf"
