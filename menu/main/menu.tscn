@@ -208,7 +208,7 @@ LohDebil228, ATINY, YanniKss
 [font_size=20][center]Другое[/center][/font_size]
 Скины эмоджи взяты с [url]https://openmoji.org/[/url].
 Музыка карты Гроза - [url=https://www.newgrounds.com/audio/listen/638150]Waterflame - Thunderzone v2[/url].
-Фиксим баги движка..."
+Почти лето!.."
 autowrap_mode = 2
 
 [node name="Close" type="Button" parent="About/MarginContainer/VBoxContainer"]
