@@ -40,10 +40,10 @@ func _process(_delta: float) -> void:
 		var players: int = data[1]
 		var max_players: int = data[2]
 		if data[3] < 0 or data[3] >= Globals.items_db.events.size():
-			print_verbose("Found lobby packet with invalid event ID.")
+			print_verbose("Found lobby packet with invalid event index.")
 			return
 		var event: String = Globals.items_db.events[data[3]].name
-		print_verbose("Found lobby: %s (%d/%d) with ID %d with event %s (ID: %d) at IP: %s." % [
+		print_verbose("Found lobby: %s (%d/%d) with ID %d with event %s (index: %d) at IP: %s." % [
 			player_name,
 			players,
 			max_players,

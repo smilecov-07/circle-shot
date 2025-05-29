@@ -9,17 +9,15 @@ rarity = 1
 id = "poison_grenade"
 stats = Dictionary[String, String]({
 "ammo_total": "2",
-"damage": "10",
+"damage": "30",
 "diameter": "12",
 "duration": "2.8",
-"poison_damage": "20",
 "poison_duration": "2",
 "reload_time": "11"
 })
-damage_text = "Урон: ({damage} + {poison_damage}) x 1-3"
+damage_text = "Урон: {damage} x 1-3"
 ammo_text = "{ammo_total} шт."
-description = "Урон/c облака яда: [color=red]{damage}[/color]
-Урон за отравление: [color=red]{poison_damage}[/color]
+description = "Урон за отравление: [color=red]{damage}[/color]
 Длительность отравления: [color=red]{poison_duration}[/color]
 Длительность облака яда: [color=red]{duration}[/color]
 Диаметр облака яда: [color=red]{diameter} бл.[/color]

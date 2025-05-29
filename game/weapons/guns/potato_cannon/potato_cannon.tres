@@ -10,9 +10,9 @@ id = "potatoes"
 stats = Dictionary[String, String]({
 "ammo_per_load": "10",
 "ammo_total": "40",
-"damage": "17",
-"dps": "37",
-"reload_time": ""
+"damage": "16",
+"dps": "32",
+"reload_time": "2.8"
 })
 damage_text = "Урон/с: {dps}"
 ammo_text = "{ammo_per_load}/{ammo_total}"

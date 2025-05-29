@@ -120,8 +120,8 @@ func list_items(type: ItemsDB.Item, selected_idx: int = -1) -> void:
 			push_error("Invalid type specified: %d." % type)
 
 
-## Очищает существующие предметы и отображает карты события, ID которого указан в [param event_idx].
-## Опционально можно предоставить индекс в базе данных в [param selected_idx],
+## Очищает существующие предметы и отображает карты события, индекс которого указан
+## в [param event_idx]. Опционально можно предоставить индекс в базе данных в [param selected_idx],
 ## чтобы выделить зелёным выбранную карту.
 func list_maps_of_event(event_idx: int, selected_idx: int = -1) -> void:
 	for child: Node in get_children():
@@ -183,8 +183,8 @@ func list_weapons_by_type(type: Weapon.Type, selected_idx: int = -1) -> void:
 		add_child(item)
 
 
-## Очищает существующие предметы и отображает скины из линейки, ID которой указан в [param line_id].
-## Опционально можно предоставить индекс в базе данных в [param selected_idx],
+## Очищает существующие предметы и отображает скины из линейки, индекс которой указан
+## в [param line_idx]. Опционально можно предоставить индекс в базе данных в [param selected_idx],
 ## чтобы выделить зелёным выбранный скин.
 func list_skins_line(line_idx: int, selected_idx: int = -1) -> void:
 	for child: Node in get_children():

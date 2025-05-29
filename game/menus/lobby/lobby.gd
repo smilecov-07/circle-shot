@@ -138,20 +138,20 @@ func request_set_environment(event_idx: int, map_idx: int) -> void:
 		return
 	
 	if event_idx < 0 or event_idx >= Globals.items_db.events.size():
-		push_warning("Rejected set environment request from %d. Incorrect event ID: %d." % [
+		push_warning("Rejected set environment request from %d. Incorrect event index: %d." % [
 			sender_id,
 			event_idx,
 		])
 		return
 	if map_idx < 0 or map_idx >= Globals.items_db.events[event_idx].maps.size():
-		push_warning("Rejected set environment request from %d. Incorrect map ID: %d." % [
+		push_warning("Rejected set environment request from %d. Incorrect map index: %d." % [
 			sender_id,
 			map_idx,
 		])
 		return
 	
 	_game.max_players = Globals.items_db.events[event_idx].max_players
-	print_verbose("Accepted set environment request. Event ID: %d, Map ID: %d." % [
+	print_verbose("Accepted set environment request. Event index: %d, map index: %d." % [
 		event_idx,
 		map_idx,
 	])
@@ -525,7 +525,7 @@ func _do_broadcast() -> void:
 	data.append_array(Globals.get_string("player_name", "Server").to_utf8_buffer()) # Имя
 	for peer: PacketPeerUDP in _udp_peers:
 		peer.put_packet(data)
-	print_verbose("Broadcast of lobby %d done. Data sent: %s (%d/%d), event: %s (ID: %d)." % [
+	print_verbose("Broadcast of lobby %d done. Data sent: %s (%d/%d), event: %s (index: %d)." % [
 		_broadcast_lobby_id,
 		Globals.get_string("player_name", "Server"),
 		players.size(),
@@ -808,6 +808,7 @@ func _on_game_closed() -> void:
 	
 	for entry: Node in _players_container.get_children():
 		entry.queue_free()
+	admin_id = -1
 	
 	_chat.clear_chat()
 	(%ControlButtons/Chat as BaseButton).button_pressed = false

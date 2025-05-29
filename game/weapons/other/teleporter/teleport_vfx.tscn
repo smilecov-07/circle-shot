@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://2p44r4a1hf7"]
 
-[ext_resource type="Texture2D" uid="uid://cd1twnymlmjj3" path="res://game/weapons/other/teleporter/spark.png" id="1_wx1d4"]
+[ext_resource type="AudioStream" uid="uid://b2ynpfbj32tyc" path="res://game/weapons/other/teleporter/teleport.wav" id="1_wx1d4"]
 
 [sub_resource type="Curve" id="Curve_0hlmb"]
 _data = [Vector2(0, 1), 0.0, -2.52642, 0, 1, Vector2(0.156667, 0.604195), -2.52642, 0.0, 1, 0, Vector2(0.976667, 0.0148849), -1.29905, 0.0, 0, 0]
@@ -18,7 +18,6 @@ colors = PackedColorArray(1, 1, 1, 1, 0.682434, 1, 0.664062, 1)
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 emitting = false
 amount = 80
-texture = ExtResource("1_wx1d4")
 one_shot = true
 explosiveness = 1.0
 emission_shape = 4
@@ -30,8 +29,8 @@ gravity = Vector2(0, 0)
 initial_velocity_min = 80.0
 initial_velocity_max = 160.0
 angle_max = 360.0
-scale_amount_min = 2.0
-scale_amount_max = 2.0
+scale_amount_min = 36.0
+scale_amount_max = 36.0
 scale_amount_curve = SubResource("Curve_0hlmb")
 color_ramp = SubResource("Gradient_2b80s")
 color_initial_ramp = SubResource("Gradient_3ex3y")
@@ -40,6 +39,12 @@ color_initial_ramp = SubResource("Gradient_3ex3y")
 wait_time = 1.5
 one_shot = true
 autostart = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("1_wx1d4")
+autoplay = true
+max_distance = 2400.0
+bus = &"SFX"
 
 [connection signal="ready" from="CPUParticles2D" to="CPUParticles2D" method="restart"]
 [connection signal="timeout" from="Timer" to="." method="queue_free"]

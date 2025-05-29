@@ -142,14 +142,22 @@ func select_weapon(type: Weapon.Type) -> void:
 func select_next_weapon() -> void:
 	if not is_instance_valid(_player):
 		return
-	var new_type := (_player.current_weapon_type + 1) % 4 as Weapon.Type
+	var new_type: Weapon.Type
+	if _player.equip_data[6] != -1:
+		new_type = (_player.current_weapon_type + 1) % 5 as Weapon.Type
+	else:
+		new_type = (_player.current_weapon_type + 1) % 4 as Weapon.Type
 	select_weapon(new_type)
 
 
 func select_previous_weapon() -> void:
 	if not is_instance_valid(_player):
 		return
-	var new_type := (_player.current_weapon_type + 3) % 4 as Weapon.Type
+	var new_type: Weapon.Type
+	if _player.equip_data[6] != -1:
+		new_type = (_player.current_weapon_type + 4) % 5 as Weapon.Type
+	else:
+		new_type = (_player.current_weapon_type + 3) % 4 as Weapon.Type
 	select_weapon(new_type)
 
 

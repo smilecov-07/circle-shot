@@ -58,16 +58,12 @@ func _shoot(success := false) -> void:
 		player.teleport_to.rpc(destination)
 		_show_teleport_vfx.rpc(destination)
 	
-	player.block_weapon_usage()
 	_anim.play(&"PostUse")
 	
 	_buttons.modulate = Color.WEB_GRAY
 	ammo_in_stock -= 1
 	_reloading = true
 	($CooldownTimer as Timer).start()
-	
-	await _anim.animation_finished
-	player.unblock_weapon_usage()
 
 
 func _make_current() -> void:

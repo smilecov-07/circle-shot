@@ -198,7 +198,7 @@ func set_skin(data: SkinData) -> void:
 	skin.initialize(self, data)
 	equip_data[0] = data.idx_in_db if data.idx_in_db >= 0 else -2 # если нет в БД
 	skin_equipped.emit(data)
-	print_verbose("Skin %s with ID %d on %s set." % [data.id, equip_data[0], name])
+	print_verbose("Skin %s with index %d on %s set." % [data.id, data.idx_in_db, name])
 
 
 ## Устанавливает оружие из [param data] типа [param type].
@@ -231,7 +231,7 @@ func set_weapon(type: Weapon.Type, data: WeaponData) -> void:
 	equip_data[2 + type] = data.idx_in_db if data.idx_in_db >= 0 else -2 # если нет в БД
 	
 	weapon_equipped.emit(type, data)
-	print_verbose("Set weapon %s with ID %d with type %d on %s." % [
+	print_verbose("Set weapon %s with index %d with type %d on %s." % [
 		data.id,
 		data.idx_in_db,
 		type,
@@ -264,7 +264,7 @@ func set_skill(data: SkillData, reset_skill_vars := false) -> void:
 	skill.initialize(self, data)
 	equip_data[1] = data.idx_in_db if data.idx_in_db >= 0 else -2 # если нет в БД
 	skill_equipped.emit(data)
-	print_verbose("Set skill %s with ID %d on %s." % [data.id, equip_data[5], name])
+	print_verbose("Set skill %s with index %d on %s." % [data.id, data.idx_in_db, name])
 
 
 ## Блокирует использование любой экипировки и переключение между оружиями.

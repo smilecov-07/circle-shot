@@ -634,25 +634,21 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="ItemSelector"]
+[node name="MarginContainer" type="MarginContainer" parent="ItemSelector"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-horizontal_scroll_mode = 0
-vertical_scroll_mode = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="ItemSelector/ScrollContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="ItemSelector/MarginContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 8
+horizontal_scroll_mode = 0
 
-[node name="ItemsGrid" type="GridContainer" parent="ItemSelector/ScrollContainer/MarginContainer"]
+[node name="ItemsGrid" type="GridContainer" parent="ItemSelector/MarginContainer/ScrollContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 6
 columns = 3
 script = ExtResource("11_ncktp")
 metadata/_custom_type_script = "uid://cq43botg0qg0m"
@@ -698,7 +694,7 @@ one_shot = true
 [connection signal="text_submitted" from="Panels/Chat/VBoxContainer/HBoxContainer/LineEdit" to="Panels/Chat" method="send_message" unbinds=1]
 [connection signal="pressed" from="Panels/Chat/VBoxContainer/HBoxContainer/Send" to="Panels/Chat" method="send_message"]
 [connection signal="close_requested" from="ItemSelector" to="ItemSelector" method="hide"]
-[connection signal="item_selected" from="ItemSelector/ScrollContainer/MarginContainer/ItemsGrid" to="." method="_on_item_selected"]
+[connection signal="item_selected" from="ItemSelector/MarginContainer/ScrollContainer/ItemsGrid" to="." method="_on_item_selected"]
 [connection signal="about_to_popup" from="ViewIPDialog" to="ViewIPDialog" method="_on_about_to_popup"]
 [connection signal="custom_action" from="ViewIPDialog" to="ViewIPDialog" method="_on_custom_action"]
 [connection signal="request_completed" from="ViewIPDialog/HTTPRequest" to="ViewIPDialog" method="_on_request_completed"]
