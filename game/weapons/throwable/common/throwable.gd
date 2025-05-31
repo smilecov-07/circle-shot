@@ -23,7 +23,7 @@ extends Weapon
 
 var _throw_timer := 0.0
 var _reloading := false
-var _interrupt_reload := false
+var _interrupting_reload := false
 var _turn_tween: Tween
 
 @onready var _anim: AnimationPlayer = $AnimationPlayer
@@ -56,9 +56,9 @@ func _physics_process(delta: float) -> void:
 	_throw_timer -= delta
 	if player.is_local() and can_reload() and ammo <= 0:
 		player.try_reload_weapon()
-	
-	if _reloading and player.player_input.shooting:
-		_interrupt_reload = true
+	if multiplayer.is_server() and _reloading \
+			and player.player_input.shooting and not _interrupting_reload:
+		_interrupt_reload.rpc(ammo)
 
 
 func _initialize() -> void:
@@ -69,17 +69,9 @@ func _initialize() -> void:
 
 
 func _shoot() -> void:
-	# Синхронизуем боеприпасы с сервером
-	if not multiplayer.is_server():
-		var idx: int = 0
-		for child: Node2D in _ammo_parent.get_children():
-			child.visible = idx < ammo
-			idx += 1
-	
-	ammo -= 1
 	_throw_timer = throw_interval
 	
-	var current_ammo: Node2D = _ammo_parent.get_child(ammo)
+	var current_ammo: Node2D = _ammo_parent.get_child(ammo - 1)
 	var current_ammo_anim: AnimationPlayer = current_ammo.get_node(^"AnimationPlayer")
 	
 	var throw_anim: Animation = current_ammo_anim.get_animation(&"Throw")
@@ -87,7 +79,6 @@ func _shoot() -> void:
 	current_ammo_anim.play(&"Throw")
 	var anim_name: StringName = await current_ammo_anim.animation_finished
 	if anim_name != &"Throw":
-		ammo += 1
 		return
 	
 	player.block_turning()
@@ -101,9 +92,9 @@ func _shoot() -> void:
 	anim_name = await current_ammo_anim.animation_finished
 	player.unblock_turning()
 	if anim_name != &"PostThrow":
-		ammo += 1
 		return
 	
+	ammo -= 1
 	current_ammo.hide()
 	if multiplayer.is_server():
 		_create_projectile(angle)
@@ -137,6 +128,15 @@ func _player_disarmed() -> void:
 		(ammo_node.get_node(^"AnimationPlayer") as AnimationPlayer).play(&"RESET")
 
 
+func _ammo_changed(in_stock: bool) -> void:
+	if in_stock:
+		return
+	var idx: int = 0
+	for child: Node2D in _ammo_parent.get_children():
+		child.visible = idx < ammo
+		idx += 1
+
+
 func reload() -> void:
 	_reloading = true
 	block_shooting()
@@ -152,7 +152,7 @@ func reload() -> void:
 		var anim_name: StringName = await current_ammo_anim.animation_finished
 		if anim_name != &"Reload":
 			_reloading = false
-			_interrupt_reload = false
+			_interrupting_reload = false
 			current_ammo.hide()
 			unblock_shooting()
 			return
@@ -162,14 +162,21 @@ func reload() -> void:
 				angle_between_ammo * (-ammo + (ammo_per_load - 1) / 2.0), to_aim_time)
 		ammo += 1
 		ammo_in_stock -= 1
-		player.ammo_text_updated.emit(get_ammo_text())
 		
-		if _interrupt_reload:
+		if _interrupting_reload:
 			break
 	
+	_interrupting_reload = false
 	_reloading = false
-	_interrupt_reload = false
 	unblock_shooting()
+
+
+@rpc("call_local", "authority", "reliable", 5)
+func _interrupt_reload(current_ammo: int) -> void:
+	_interrupting_reload = true
+	set_block_signals(true) # скроет перезаряжаемый иначе
+	ammo = current_ammo
+	set_block_signals(false)
 
 
 func _create_projectile(angle: float) -> void:

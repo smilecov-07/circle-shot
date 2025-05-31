@@ -104,6 +104,7 @@ func change_weapon(to: Weapon.Type) -> void:
 		return
 	
 	if is_instance_valid(current_weapon):
+		current_weapon.ammo_changed.disconnect(_on_current_weapon_ammo_changed)
 		current_weapon.unmake_current()
 	
 	_set_current_weapon(to)
@@ -149,7 +150,6 @@ func add_ammo_to_weapon(type: Weapon.Type, percent: float) -> void:
 			target_weapon.ammo_in_stock + ceili(target_weapon.ammo_total * percent),
 			target_weapon.ammo_total - target_weapon.ammo_per_load
 	)
-	ammo_text_updated.emit(current_weapon.get_ammo_text())
 	print_verbose("Added %f percent of ammo to weapon of type %d of %s." % [percent, type, name])
 
 
@@ -354,7 +354,10 @@ func _set_current_weapon(to: Weapon.Type) -> void:
 	current_weapon = _weapons.get_child(to) as Weapon
 	if current_weapon:
 		current_weapon.make_current()
-	ammo_text_updated.emit(current_weapon.get_ammo_text() if current_weapon else "Нет оружия")
+		current_weapon.ammo_changed.connect(_on_current_weapon_ammo_changed)
+		ammo_text_updated.emit(current_weapon.get_ammo_text())
+	else:
+		ammo_text_updated.emit("Нет оружия")
 	current_weapon_type = to
 	weapon_changed.emit(to)
 	print_verbose("%s changed current weapon to type %d." % [name, to])
@@ -368,6 +371,10 @@ func _update_minimap_marker(local_team: int) -> void:
 		$Minimap/MinimapNotifier.set_block_signals(false)
 		($Minimap/MinimapMarker/Visual as CanvasItem).visible = \
 				($Minimap/MinimapNotifier as VisibleOnScreenNotifier2D).is_on_screen()
+
+
+func _on_current_weapon_ammo_changed(_in_stock: bool) -> void:
+	ammo_text_updated.emit(current_weapon.get_ammo_text())
 
 
 func _on_health_changed(_old_value: int, new_value: int) -> void:

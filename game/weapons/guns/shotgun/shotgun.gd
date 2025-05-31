@@ -1,13 +1,14 @@
 extends Gun
 
 @export var buckshot_in_shot: int = 6
+var _interrupting_reload := false
 var _reloading := false
-var _interrupt_reload := false
 
 func _physics_process(delta: float) -> void:
 	super(delta)
-	if _reloading and player.player_input.shooting:
-		_interrupt_reload = true
+	if multiplayer.is_server() and _reloading \
+			and player.player_input.shooting and not _interrupting_reload:
+		_interrupt_reload.rpc(ammo)
 
 
 func reload() -> void:
@@ -20,7 +21,7 @@ func reload() -> void:
 	var anim_name: StringName = await _anim.animation_finished
 	if anim_name != &"StartReload":
 		_reloading = false
-		_interrupt_reload = false
+		_interrupting_reload = false
 		unblock_shooting()
 		return
 	
@@ -29,21 +30,20 @@ func reload() -> void:
 		anim_name = await _anim.animation_finished
 		if anim_name != &"Reload":
 			_reloading = false
-			_interrupt_reload = false
+			_interrupting_reload = false
 			unblock_shooting()
 			return
 		
 		ammo += 1
 		ammo_in_stock -= 1
-		player.ammo_text_updated.emit(get_ammo_text())
 		
-		if _interrupt_reload:
+		if _interrupting_reload:
 			break
 	
 	_anim.play(&"EndReload")
 	anim_name = await _anim.animation_finished
 	_reloading = false
-	_interrupt_reload = false
+	_interrupting_reload = false
 	if anim_name != &"EndReload":
 		unblock_shooting()
 		return
@@ -55,6 +55,12 @@ func reload() -> void:
 	await _turn_tween.finished
 	
 	unblock_shooting()
+
+
+@rpc("call_local", "authority", "reliable", 5)
+func _interrupt_reload(current_ammo: int) -> void:
+	_interrupting_reload = true
+	ammo = current_ammo
 
 
 func _create_projectile() -> void:

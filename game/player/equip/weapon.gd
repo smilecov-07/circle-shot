@@ -3,6 +3,9 @@ extends Node2D
 
 ## Родительский класс всех оружий в игре.
 
+## Издаётся, когда [member ammo] или [member ammo_in_stock] меняются. Если [param in_stock]
+## равняется [code]true[/code], то изменился [member ammo_in_stock], иначе изменился [member ammo].
+signal ammo_changed(in_stock: bool)
 ## Тип оружия. Игрок может носить только 1 оружие каждого типа.
 enum Type {
 	## Лёгкое оружие, чаще всего пистолеты. Мобильные и быстро перезаряжаются.
@@ -18,6 +21,7 @@ enum Type {
 	## Неверный тип оружия.
 	INVALID = -1,
 }
+
 ## Количество боеприпасов в одном магазине.
 @export var ammo_per_load: int = 10
 ## Общее количество боеприпасов.
@@ -31,9 +35,21 @@ enum Type {
 @export var shoot_on_joystick_release := false
 
 ## Количество боеприпасов в текущем магазине.
-var ammo: int
+var ammo: int:
+	set(value):
+		if ammo == value:
+			return
+		ammo = value
+		_ammo_changed(false)
+		ammo_changed.emit(false)
 ## Количество боеприпасов в запасе.
-var ammo_in_stock: int
+var ammo_in_stock: int:
+	set(value):
+		if ammo_in_stock == value:
+			return
+		ammo_in_stock = value
+		_ammo_changed(true)
+		ammo_changed.emit(true)
 ## Данные оружия.
 var data: WeaponData
 ## Ссылка на игрока.
@@ -45,8 +61,10 @@ var _blocked_shooting_counter: int = 0
 
 
 func _ready() -> void:
+	set_block_signals(true) # смысл при инициализации
 	ammo = ammo_per_load
 	ammo_in_stock = ammo_total - ammo_per_load
+	set_block_signals(false)
 
 
 ## Производит выстрел.[br]
@@ -155,7 +173,6 @@ func _do_shoot(current_ammo: int, args := []) -> void:
 		return
 	ammo = current_ammo
 	await _shoot.callv(args)
-	player.ammo_text_updated.emit(get_ammo_text())
 
 
 func _calculate_aim_angle(aim_direction: Vector2 = player.player_input.aim_direction) -> float:
@@ -205,4 +222,9 @@ func _player_disarmed() -> void:
 ## Метод для переопределения. Вызывается, когда игрок обратно получает возможность атаковать.
 ## Здесь можно возобновить то, что было приостановлено в [method _player_disarmed].
 func _player_armed() -> void:
+	pass
+
+
+## Метод для переопределения. Для подробностей смотрите [signal ammo_changed].
+func _ammo_changed(_in_stock: bool) -> void:
 	pass

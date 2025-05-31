@@ -4,6 +4,7 @@ extends Weapon
 @export var teleport_distance := 800.0
 
 var _reloading := false
+var _no_ammo := false
 var _teleport_vfx_scene: PackedScene = preload("uid://2p44r4a1hf7")
 
 @onready var _buttons: Node2D = $Base/Buttons
@@ -11,6 +12,7 @@ var _teleport_vfx_scene: PackedScene = preload("uid://2p44r4a1hf7")
 @onready var _aim: Sprite2D = $Aim
 @onready var _collision_check: ShapeCast2D = $CollisionCheck
 @onready var _border_check: RayCast2D = $BorderCheck
+@onready var _reload_timer: Timer = $ReloadTimer
 
 
 func _process(_delta: float) -> void:
@@ -63,7 +65,7 @@ func _shoot(success := false) -> void:
 	_buttons.modulate = Color.WEB_GRAY
 	ammo_in_stock -= 1
 	_reloading = true
-	($CooldownTimer as Timer).start()
+	_reload_timer.start()
 
 
 func _make_current() -> void:
@@ -87,6 +89,20 @@ func _player_disarmed() -> void:
 	# нет смысла пропускать
 	if _anim.is_playing() and not _anim.current_animation in [&"Equip", &"PostUse"]:
 		_anim.play(&"RESET")
+	_reload_timer.paused = true
+
+
+func _player_armed() -> void:
+	_reload_timer.paused = false
+
+
+func _ammo_changed(in_stock: bool) -> void:
+	if not in_stock:
+		return
+	if _no_ammo and ammo_in_stock > 0:
+		_no_ammo = false
+		unblock_shooting()
+		_buttons.modulate = Color.WHITE
 
 
 func get_ammo_text() -> String:
@@ -112,5 +128,8 @@ func _update_casts() -> void:
 
 func _on_cooldown_timer_timeout() -> void:
 	_reloading = false
-	unblock_shooting()
-	_buttons.modulate = Color.WHITE
+	if ammo_in_stock > 0:
+		unblock_shooting()
+		_buttons.modulate = Color.WHITE
+	else:
+		_no_ammo = true

@@ -36,6 +36,10 @@ _TS_#pass
 _TS_#pass
 
 
+#func _ammo_changed(in_stock: bool) -> void:
+_TS_#pass
+
+
 # Удалите, если оружие не должно перезаряжаться
 func reload() -> void:
 _TS_pass

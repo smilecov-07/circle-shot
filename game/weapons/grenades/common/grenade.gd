@@ -20,10 +20,12 @@ extends Weapon
 @export var projectile_explosion_time := 2.5
 
 var _reloading := false
+var _no_ammo := false
 
 @onready var _anim: AnimationPlayer = $AnimationPlayer
 @onready var _throw_point: Marker2D = $ThrowPivot/ThrowPoint
 @onready var _throw_pivot: Marker2D = $ThrowPivot
+@onready var _reload_timer: Timer = $ThrowTimer
 
 @onready var _aim: Line2D = $ThrowPivot/ThrowPoint/Aim
 @onready var _aim_outline: Line2D = $ThrowPivot/ThrowPoint/Aim/Outline
@@ -32,10 +34,9 @@ var _reloading := false
 
 
 func _process(_delta: float) -> void:
-	_aim.hide()
+	_aim.visible = player.player_input.showing_aim and can_shoot()
 	
-	if can_shoot():
-		_aim.visible = player.player_input.showing_aim
+	if _aim.visible:
 		_throw_pivot.rotation = _calculate_aim_angle()
 		
 		var spread: float = _calculate_spread()
@@ -75,6 +76,7 @@ func _shoot(throw_direction := Vector2.ZERO) -> void:
 	block_shooting()
 	player.block_turning()
 	player.visual.scale.x = -1.0 if throw_direction.x < 0.0 else 1.0
+	_throw_pivot.rotation = _calculate_aim_angle(throw_direction)
 	_anim.play(&"Throw")
 	var anim_name: StringName = await _anim.animation_finished
 	if anim_name != &"Throw":
@@ -94,7 +96,7 @@ func _shoot(throw_direction := Vector2.ZERO) -> void:
 	
 	ammo_in_stock -= 1
 	_reloading = true
-	($ThrowTimer as Timer).start()
+	_reload_timer.start()
 	
 	if multiplayer.is_server():
 		var projectile: GrenadeProjectile = projectile_scene.instantiate()
@@ -116,11 +118,23 @@ func _can_reload() -> bool:
 func _player_disarmed() -> void:
 	if _anim.is_playing() and _anim.current_animation != &"Equip": # нет смысла пропускать
 		_anim.pause()
+	_reload_timer.paused = true
 
 
 func _player_armed() -> void:
 	if _anim.current_animation != &"Equip":
 		_anim.play()
+	_reload_timer.paused = false
+
+
+func _ammo_changed(in_stock: bool) -> void:
+	if not in_stock:
+		return
+	if _no_ammo and ammo_in_stock > 0:
+		_no_ammo = false
+		unblock_shooting()
+		if player.current_weapon == self:
+			_make_current()
 
 
 func get_ammo_text() -> String:
@@ -139,6 +153,9 @@ func _customize_projectile(_projectile: GrenadeProjectile) -> void:
 
 func _on_throw_timer_timeout() -> void:
 	_reloading = false
-	unblock_shooting()
-	if player.current_weapon == self:
-		_make_current()
+	if ammo_in_stock > 0:
+		unblock_shooting()
+		if player.current_weapon == self:
+			_make_current()
+	else:
+		_no_ammo = true

@@ -184,7 +184,6 @@ func reload() -> void:
 	var difference: int = min(ammo_per_load - ammo, ammo_in_stock)
 	ammo += difference
 	ammo_in_stock -= difference
-	player.ammo_text_updated.emit(get_ammo_text())
 	
 	await _turn_tween.finished
 	unblock_shooting()
