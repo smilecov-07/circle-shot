@@ -122,25 +122,16 @@ func initialize() -> void:
 	spawnable_other_paths.clear()
 	
 	for skins_line: SkinsLineData in skins_lines:
-		skins_line.skins.sort_custom(_sort_rarity_skin)
 		skins.append_array(skins_line.skins)
-	skins.sort_custom(_sort_rarity_skin)
 	skins.append_array(other_skins)
 	
-	skills_normal.sort_custom(_sort_rarity_skill)
 	skills.append_array(skills_normal)
-	other_skills.sort_custom(_sort_rarity_skill)
 	skills.append_array(other_skills)
 	
-	weapons_light.sort_custom(_sort_rarity_weapon)
 	weapons.append_array(weapons_light)
-	weapons_heavy.sort_custom(_sort_rarity_weapon)
 	weapons.append_array(weapons_heavy)
-	weapons_support.sort_custom(_sort_rarity_weapon)
 	weapons.append_array(weapons_support)
-	weapons_melee.sort_custom(_sort_rarity_weapon)
 	weapons.append_array(weapons_melee)
-	other_weapons.sort_custom(_sort_rarity_weapon)
 	weapons.append_array(other_weapons)
 	
 	for skin: SkinData in skins:
@@ -155,6 +146,31 @@ func initialize() -> void:
 	for weapon: WeaponData in weapons:
 		spawnable_projectiles_paths.append_array(weapon.spawnable_scenes_paths)
 	
+	for i: int in skins.size():
+		skins[i].idx_in_db = i
+	for i: int in skills.size():
+		skills[i].idx_in_db = i
+	for i: int in weapons.size():
+		weapons[i].idx_in_db = i
+	
+	for skins_line: SkinsLineData in skins_lines:
+		skins_line.skins.sort_custom(_sort_rarity_skin)
+	other_skins.sort_custom(_sort_rarity_skin)
+	skins.sort_custom(_sort_rarity_skin)
+	
+	skills_normal.sort_custom(_sort_rarity_skill)
+	other_skills.sort_custom(_sort_rarity_skill)
+	skills.sort_custom(_sort_rarity_skill)
+	
+	weapons_light.sort_custom(_sort_rarity_weapon)
+	weapons_heavy.sort_custom(_sort_rarity_weapon)
+	weapons_support.sort_custom(_sort_rarity_weapon)
+	weapons_melee.sort_custom(_sort_rarity_weapon)
+	other_weapons.sort_custom(_sort_rarity_weapon)
+	weapons.sort_custom(_sort_rarity_weapon)
+	
+	# вновь задаём индексы для исправления рассинхрона после сортировки.
+	# почему не сортировать до назначения индексов? теряется порядок
 	for i: int in skins.size():
 		skins[i].idx_in_db = i
 	for i: int in skills.size():

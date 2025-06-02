@@ -15,10 +15,10 @@ stats = Dictionary[String, String]({
 })
 damage_text = "Ослепляет"
 ammo_text = "{ammo_total} шт."
-description = "Урон/снаряд: [color=red]{damage}[/color]
-Длительность оглушения: [color=red]{stun_duration} c[/color]
-[color=deep_sky_blue]Ослепляет при взрыве на экране[/color]
+description = "[color=deep_sky_blue]Ослепляет при взрыве на экране[/color]
 [color=deep_sky_blue]Оглушает при взрыве близко к игроку[/color]
+Урон: [color=red]{damage}[/color]
+Длительность оглушения: [color=red]{stun_duration} c[/color]
 
 Количество: [color=blue]{ammo_total} шт.[/color]
 Перезарядка: [color=blue]{reload_time} с[/color]

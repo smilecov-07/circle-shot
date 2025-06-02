@@ -14,7 +14,7 @@ stats = Dictionary[String, String]({
 })
 brief_description = "Исцеляет {heals} ОЗ"
 usage_text = "{count} исп./{cooldown} с"
-description = "[color=deep_blue_sky]Исцеляет[/color]
+description = "[color=deep_sky_blue]Исцеляет[/color]
 Количество исцеления: [color=red]{heals} ОЗ[/color]
 
 Количество использований: [color=blue]{count}[/color]

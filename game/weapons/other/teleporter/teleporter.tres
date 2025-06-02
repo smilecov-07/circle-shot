@@ -14,8 +14,8 @@ stats = Dictionary[String, String]({
 })
 damage_text = "Телепортирует"
 ammo_text = "{ammo_total} исп."
-description = "Дистанция телепортирования: [color=red]{distance} бл.[/color]
-[color=deep_sky_blue]Телепортирует[/color]
+description = "[color=deep_sky_blue]Телепортирует[/color]
+Дистанция телепортирования: [color=red]{distance} бл.[/color]
 
 Боеприпасы: [color=blue]{ammo_total} исп.[/color]
 Перезарядка: [color=blue]{reload_time} с[/color]

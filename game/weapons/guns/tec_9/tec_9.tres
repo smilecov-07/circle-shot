@@ -22,7 +22,7 @@ description = "Урон/с: [color=red]{dps}[/color]
 Боеприпасы: [color=blue]{ammo_per_load}/{ammo_total}[/color]
 Перезарядка: [color=blue]{reload_time} с[/color]
 
-Средний пистолет с хорошей скорострельностью и боезапасом, но средними отдачей и разбросом."
+Неплохой пистолет с хорошей скорострельностью и боезапасом, но средними по величине отдачей и разбросом."
 scene_path = "uid://bltslbj5qgpco"
 image_path = "uid://b5wqktd54bkd3"
 spawnable_scenes_paths = Array[String](["uid://dqb1dkircv0dw"])

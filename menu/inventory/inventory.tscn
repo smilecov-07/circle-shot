@@ -1,0 +1,205 @@
+[gd_scene load_steps=5 format=3 uid="uid://c2x58lim4381g"]
+
+[ext_resource type="Script" uid="uid://b4spqnwo4ppbw" path="res://menu/inventory/inventory.gd" id="1_swjl8"]
+[ext_resource type="Texture2D" uid="uid://hwc7je4q6twm" path="res://menu/inventory/background.png" id="2_1mk84"]
+[ext_resource type="Texture2D" uid="uid://durmmh0vjl0eg" path="res://menu/theme/icons/exit.png" id="3_76jyk"]
+[ext_resource type="Script" uid="uid://cq43botg0qg0m" path="res://menu/items_grid/items_grid.gd" id="4_76jyk"]
+
+[node name="Inventory" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_swjl8")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_1mk84")
+stretch_mode = 6
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -440.0
+offset_top = -320.0
+offset_right = 440.0
+offset_bottom = 320.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="Title" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Spacer" type="Control" parent="PanelContainer/VBoxContainer/Title"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title" type="Label" parent="PanelContainer/VBoxContainer/Title"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 44
+text = "Арсенал"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Quit" type="Button" parent="PanelContainer/VBoxContainer/Title"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+icon = ExtResource("3_76jyk")
+
+[node name="Main" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Selection" type="VBoxContainer" parent="PanelContainer/VBoxContainer/Main"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title" type="Label" parent="PanelContainer/VBoxContainer/Main/Selection"]
+layout_mode = 2
+theme_type_variation = &"HeaderMedium"
+text = "Выбери категорию"
+horizontal_alignment = 1
+
+[node name="Filters" type="HBoxContainer" parent="PanelContainer/VBoxContainer/Main/Selection"]
+unique_name_in_owner = true
+layout_mode = 2
+alignment = 1
+
+[node name="MainFilter" type="OptionButton" parent="PanelContainer/VBoxContainer/Main/Selection/Filters"]
+layout_mode = 2
+selected = 0
+allow_reselect = true
+item_count = 5
+popup/item_0/text = "События"
+popup/item_0/id = 0
+popup/item_1/text = "Скины"
+popup/item_1/id = 1
+popup/item_2/text = "Навыки"
+popup/item_2/id = 2
+popup/item_3/text = "Оружия"
+popup/item_3/id = 3
+popup/item_4/text = "Линейки скинов"
+popup/item_4/id = 4
+
+[node name="WeaponsFilter" type="OptionButton" parent="PanelContainer/VBoxContainer/Main/Selection/Filters"]
+visible = false
+layout_mode = 2
+selected = 0
+item_count = 5
+popup/item_0/text = "Все оружия"
+popup/item_0/id = 0
+popup/item_1/text = "Лёгкое"
+popup/item_1/id = 1
+popup/item_2/text = "Тяжёлое"
+popup/item_2/id = 2
+popup/item_3/text = "Поддержка"
+popup/item_3/id = 3
+popup/item_4/text = "Ближнее"
+popup/item_4/id = 4
+
+[node name="SkinsFilter" type="OptionButton" parent="PanelContainer/VBoxContainer/Main/Selection/Filters"]
+visible = false
+layout_mode = 2
+selected = 0
+item_count = 1
+popup/item_0/text = "Все скины"
+popup/item_0/id = 0
+
+[node name="OnlyUnlocked" type="CheckButton" parent="PanelContainer/VBoxContainer/Main/Selection"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 18
+text = "Только разблокированные"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/Main/Selection"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="ItemsGrid" type="GridContainer" parent="PanelContainer/VBoxContainer/Main/Selection/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+script = ExtResource("4_76jyk")
+metadata/_custom_type_script = "uid://cq43botg0qg0m"
+
+[node name="DescriptionPanel" type="PanelContainer" parent="PanelContainer/VBoxContainer/Main"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Description" type="VBoxContainer" parent="PanelContainer/VBoxContainer/Main/DescriptionPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Name" type="Label" parent="PanelContainer/VBoxContainer/Main/DescriptionPanel/Description"]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+theme_type_variation = &"HeaderLarge"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="SmallItem" type="ColorRect" parent="PanelContainer/VBoxContainer/Main/DescriptionPanel/Description"]
+custom_minimum_size = Vector2(0, 160)
+layout_mode = 2
+
+[node name="Texture" type="TextureRect" parent="PanelContainer/VBoxContainer/Main/DescriptionPanel/Description/SmallItem"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BigItem" type="TextureRect" parent="PanelContainer/VBoxContainer/Main/DescriptionPanel/Description"]
+custom_minimum_size = Vector2(384, 96)
+layout_mode = 2
+size_flags_horizontal = 4
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Text" type="RichTextLabel" parent="PanelContainer/VBoxContainer/Main/DescriptionPanel/Description"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+shortcut_keys_enabled = false
+
+[node name="ShowItems" type="Button" parent="PanelContainer/VBoxContainer/Main/DescriptionPanel/Description"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="NothingSelected" type="Label" parent="PanelContainer/VBoxContainer/Main/DescriptionPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.507812, 0.507812, 0.507812, 1)
+text = "Ничего не выбрано"
+
+[connection signal="pressed" from="PanelContainer/VBoxContainer/Title/Quit" to="." method="_on_quit_pressed"]
+[connection signal="item_selected" from="PanelContainer/VBoxContainer/Main/Selection/Filters/MainFilter" to="." method="_on_main_filter_item_selected"]
+[connection signal="item_selected" from="PanelContainer/VBoxContainer/Main/Selection/Filters/WeaponsFilter" to="." method="_on_weapons_filter_item_selected"]
+[connection signal="item_selected" from="PanelContainer/VBoxContainer/Main/Selection/Filters/SkinsFilter" to="." method="_on_skins_filter_item_selected"]
+[connection signal="toggled" from="PanelContainer/VBoxContainer/Main/Selection/OnlyUnlocked" to="." method="_on_only_unlocked_toggled"]
+[connection signal="item_selected" from="PanelContainer/VBoxContainer/Main/Selection/ScrollContainer/ItemsGrid" to="." method="_on_items_grid_item_selected"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/Main/DescriptionPanel/Description/ShowItems" to="." method="_on_show_items_pressed"]

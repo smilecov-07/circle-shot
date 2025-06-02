@@ -14,11 +14,11 @@ stats = Dictionary[String, String]({
 })
 damage_text = "Урон/с: {dps}"
 ammo_text = "{ammo_total}"
-description = "Урон/с: [color=red]{dps}[/color]
+description = "[color=deep_sky_blue]Атакуют комбо-ударами[/color]
+Урон/с: [color=red]{dps}[/color]
 Урон/атака: [color=red]{damage}[/color]
-[color=deep_sky_blue]Атакуют комбо-ударами[/color]
 
-Боеприпасы: [color=blue]{ammo_per_load}/{ammo_total}[/color]
+Боеприпасы: [color=blue]{ammo_total}[/color]
 
 Пара шампуров, на которые можно насаживать не только шашлык, но и противников."
 scene_path = "uid://s0jt56dbe0kn"

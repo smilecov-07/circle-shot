@@ -875,59 +875,59 @@ func _on_connected_to_ip_pressed() -> void:
 
 
 func _on_change_event_pressed() -> void:
-	_items_grid.list_items(ItemsDB.Item.EVENT, selected_event)
 	_item_selector.title = "Выбор события"
 	_item_selector.popup_centered()
+	_items_grid.list_items(ItemsDB.Item.EVENT, selected_event)
 
 
 func _on_change_map_pressed() -> void:
-	_items_grid.list_maps_of_event(selected_event, selected_map)
 	_item_selector.title = "Выбор карты"
 	_item_selector.popup_centered()
+	_items_grid.list_maps_of_event(selected_event, selected_map)
 
 
 func _on_change_skin_pressed() -> void:
+	_item_selector.title = "Выбор скина"
+	_item_selector.popup_centered()
 	_items_grid.list_items(ItemsDB.Item.SKINS_LINE, Globals.items_db.skins_lines.find_custom(
 			func(skins_line: SkinsLineData) -> bool:
 				return Globals.items_db.skins_by_id[selected_skin] in skins_line.skins
 	))
-	_item_selector.title = "Выбор скина"
-	_item_selector.popup_centered()
 
 
 func _on_change_skill_pressed() -> void:
-	_items_grid.list_items(ItemsDB.Item.SKILL,
-			Globals.items_db.skills_by_id[selected_skill].idx_in_db)
 	_item_selector.title = "Выбор навыка"
 	_item_selector.popup_centered()
+	_items_grid.list_items(ItemsDB.Item.SKILL,
+			Globals.items_db.skills_by_id[selected_skill].idx_in_db)
 
 
 func _on_change_light_weapon_pressed() -> void:
-	_items_grid.list_weapons_by_type(Weapon.Type.LIGHT,
-			Globals.items_db.weapons_by_id[selected_light_weapon].idx_in_db)
 	_item_selector.title = "Выбор лёгкого оружия"
 	_item_selector.popup_centered()
+	_items_grid.list_weapons_by_type(Weapon.Type.LIGHT,
+			Globals.items_db.weapons_by_id[selected_light_weapon].idx_in_db)
 
 
 func _on_change_heavy_weapon_pressed() -> void:
-	_items_grid.list_weapons_by_type(Weapon.Type.HEAVY,
-			Globals.items_db.weapons_by_id[selected_heavy_weapon].idx_in_db)
 	_item_selector.title = "Выбор тяжёлого оружия"
 	_item_selector.popup_centered()
+	_items_grid.list_weapons_by_type(Weapon.Type.HEAVY,
+			Globals.items_db.weapons_by_id[selected_heavy_weapon].idx_in_db)
 
 
 func _on_change_support_weapon_pressed() -> void:
-	_items_grid.list_weapons_by_type(Weapon.Type.SUPPORT,
-			Globals.items_db.weapons_by_id[selected_support_weapon].idx_in_db)
 	_item_selector.title = "Выбор оружия поддержки"
 	_item_selector.popup_centered()
+	_items_grid.list_weapons_by_type(Weapon.Type.SUPPORT,
+			Globals.items_db.weapons_by_id[selected_support_weapon].idx_in_db)
 
 
 func _on_change_melee_weapon_pressed() -> void:
-	_items_grid.list_weapons_by_type(Weapon.Type.MELEE,
-			Globals.items_db.weapons_by_id[selected_melee_weapon].idx_in_db)
 	_item_selector.title = "Выбор ближнего оружия"
 	_item_selector.popup_centered()
+	_items_grid.list_weapons_by_type(Weapon.Type.MELEE,
+			Globals.items_db.weapons_by_id[selected_melee_weapon].idx_in_db)
 
 
 func _on_item_selected(type: ItemsDB.Item, idx: int) -> void:

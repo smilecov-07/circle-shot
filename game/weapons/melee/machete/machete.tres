@@ -19,7 +19,7 @@ description = "Урон/с: [color=red]{dps}[/color]
 
 Боеприпасы: [color=blue]{ammo_total}[/color]
 
-Относительное лёгкое ближнее оружие, выполняющее два средних по силе удара за атаку."
+Относительно лёгкое ближнее оружие, выполняющее два средних по силе удара за атаку."
 scene_path = "uid://6vt2to0vrgsf"
 image_path = "uid://ci5wi73m62tte"
 spawnable_scenes_paths = Array[String]([])

@@ -14,8 +14,8 @@ stats = Dictionary[String, String]({
 })
 brief_description = "Делает невидимым"
 usage_text = "{count} исп./{cooldown} с"
-description = "[color=deep_blue_sky]Делает игрока невидимым на некоторое время[/color]
-Длительность: [color=red]{duration}[/color]
+description = "[color=deep_sky_blue]Делает игрока невидимым[/color]
+Длительность: [color=red]{duration} с[/color]
 
 Количество использований: [color=blue]{count}[/color]
 Перезарядка: [color=blue]{cooldown} с[/color]

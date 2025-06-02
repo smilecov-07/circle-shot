@@ -16,7 +16,7 @@ stats = Dictionary[String, String]({
 })
 brief_description = "Защищает и замедляет"
 usage_text = "{count} исп./{cooldown} с"
-description = "[color=deep_blue_sky]Защищает и замедляет[/color]
+description = "[color=deep_sky_blue]Защищает и замедляет[/color]
 Снижение урона: [color=red]{protection}%[/color]
 Замедление: [color=red]{slowdown}%[/color]
 Длительность: [color=red]{duration} с[/color]

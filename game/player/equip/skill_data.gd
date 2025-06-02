@@ -28,7 +28,7 @@ extends Resource
 @export var usage_text := "{count} исп./{cooldown} с"
 ## Полное описание навыка, включающее в себя почти всю информацию о нём. Для форматирования можно
 ## использовать BBCode.
-@export_multiline var description := """[color=deep_blue_sky]Что делает навык[/color]
+@export_multiline var description := """[color=deep_sky_blue]Что делает навык[/color]
 Характеристики
 
 Количество использований: [color=blue]{count}[/color]

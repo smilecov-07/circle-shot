@@ -8,12 +8,12 @@ name = "Нож"
 rarity = 0
 id = "knife"
 stats = Dictionary[String, String]({
-"ammo_total": "не ограничено",
+"ammo_total": "Не ограничено",
 "damage": "52",
 "dps": "74"
 })
 damage_text = "Урон: {damage}"
-ammo_text = "Не ограничено"
+ammo_text = "{ammo_total}"
 description = "Урон/с: [color=red]{dps}[/color]
 Урон/удар: [color=red]{damage}[/color]
 

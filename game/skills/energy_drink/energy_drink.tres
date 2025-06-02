@@ -17,8 +17,8 @@ stats = Dictionary[String, String]({
 })
 brief_description = "Усиливает на {duration} c"
 usage_text = "{count} исп./{cooldown} с"
-description = "[color=deep_blue_sky]Усиляет игрока[/color]
-Длительность:
+description = "[color=deep_sky_blue]Усиливает игрока[/color]
+Длительность: [color=red]{duration} с[/color]
 Усиление скорости: [color=red]+{speed_boost}%[/color]
 Усиление урона: [color=red]+{damage_boost}%[/color]
 Понижение входящего урона: [color=red]-{defense_boost}%[/color]

@@ -98,7 +98,6 @@ theme_override_constants/separation = 2
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 theme_override_constants/icon_max_width = 80
-disabled = true
 text = "Арсенал"
 icon = ExtResource("6_ts3g1")
 icon_alignment = 1
@@ -224,6 +223,7 @@ ok_button_text = "Скачать"
 cancel_button_text = "Позже"
 
 [connection signal="pressed" from="ButtonsContainer/PlayButtonsContainer/PlayNetwork" to="." method="_on_play_network_pressed"]
+[connection signal="pressed" from="ButtonsContainer/GameButtonsContainer/Inventory" to="." method="_on_inventory_pressed"]
 [connection signal="pressed" from="ButtonsContainer/MiscButtonsContainer/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="ButtonsContainer/MiscButtonsContainer/About" to="About" method="popup_centered"]
 [connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]

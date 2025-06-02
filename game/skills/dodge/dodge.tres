@@ -14,7 +14,7 @@ stats = Dictionary[String, String]({
 })
 brief_description = "Уклонение от снарядов"
 usage_text = "{count} исп./{cooldown} с"
-description = "[color=deep_blue_sky]Выполняет перекат, во время которого игрок неуязвим[/color]
+description = "[color=deep_sky_blue]Выполняет перекат, во время которого игрок неуязвим[/color]
 Длительность переката: [color=red]{duration} с[/color]
 
 Количество использований: [color=blue]{count}[/color]

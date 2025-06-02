@@ -96,3 +96,7 @@ func _on_quit_pressed() -> void:
 
 func _on_rich_text_label_meta_clicked(meta: Variant) -> void:
 	OS.shell_open(str(meta))
+
+
+func _on_inventory_pressed() -> void:
+	Globals.main.open_screen(load("uid://c2x58lim4381g") as PackedScene)

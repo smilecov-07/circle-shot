@@ -17,11 +17,11 @@ stats = Dictionary[String, String]({
 })
 damage_text = "Урон: {damage} x 1-3"
 ammo_text = "{ammo_total} шт."
-description = "Урон за отравление: [color=red]{damage}[/color]
-Длительность отравления: [color=red]{poison_duration}[/color]
-Длительность облака яда: [color=red]{duration}[/color]
+description = "[color=deep_sky_blue]Отравляет[/color]
+Урон за отравление: [color=red]{damage}[/color]
+Длительность отравления: [color=red]{poison_duration} с[/color]
+Длительность облака яда: [color=red]{duration} с[/color]
 Диаметр облака яда: [color=red]{diameter} бл.[/color]
-[color=deep_sky_blue]Отравляет[/color]
 
 Боеприпасы: [color=blue]{ammo_total} шт.[/color]
 Перезарядка: [color=blue]{reload_time} с[/color]

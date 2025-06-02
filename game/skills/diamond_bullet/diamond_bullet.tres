@@ -14,7 +14,7 @@ stats = Dictionary[String, String]({
 })
 brief_description = "Урон: {damage}, отбрасывает"
 usage_text = "{count} исп./{cooldown} с"
-description = "[color=deep_blue_sky]Следующий выстрел выпустит алмазную пулю, отбрасывающую противника[/color]
+description = "[color=deep_sky_blue]Следующий выстрел выпустит алмазную пулю, отбрасывающую противника[/color]
 Урон: [color=red]{damage}[/color]
 
 Количество использований: [color=blue]{count}[/color]
