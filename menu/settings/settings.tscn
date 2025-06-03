@@ -405,7 +405,6 @@ theme_type_variation = &"HeaderSmall"
 vertical_alignment = 1
 
 [node name="Game" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -542,6 +541,33 @@ popup/item_1/text = "Прицел"
 popup/item_1/id = 1
 
 [node name="Help" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/DodgeDirection/Setting"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+icon = ExtResource("1_xh6xh")
+expand_icon = true
+
+[node name="Advices" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/Advices"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_type_variation = &"HeaderSmall"
+text = "Отображать советы"
+vertical_alignment = 1
+
+[node name="Setting" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/Advices"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AdvicesCheck" type="CheckButton" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/Advices/Setting"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="Help" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/Advices/Setting"]
+visible = false
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 2
 icon = ExtResource("1_xh6xh")
@@ -878,6 +904,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Controls" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -1261,6 +1288,8 @@ visible = false
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/Vibration/Setting/Help" to="." method="show_help" binds= [2]]
 [connection signal="item_selected" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/DodgeDirection/Setting/DodgeOptions" to="." method="_on_dodge_options_item_selected"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/DodgeDirection/Setting/Help" to="." method="show_help" binds= [5]]
+[connection signal="toggled" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/Advices/Setting/AdvicesCheck" to="." method="_on_advices_check_toggled"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Game/Advices/Setting/Help" to="." method="show_help" binds= [2]]
 [connection signal="toggled" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Video/Fullscreen/Setting/FullscreenCheck" to="." method="_on_fullscreen_check_toggled"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Video/Fullscreen/Setting/Help" to="." method="show_help" binds= [1]]
 [connection signal="value_changed" from="PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/ScrollContainer/Sections/Video/MaxFPS/Setting/FPSSlider" to="." method="_on_fps_slider_value_changed"]

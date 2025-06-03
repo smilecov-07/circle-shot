@@ -70,6 +70,8 @@ expand_margin_bottom = 4.0
 region_rect = Rect2(0, 0, 64, 64)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_re1xs"]
+content_margin_top = 4.0
+content_margin_bottom = 4.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f1gs1"]
 texture = ExtResource("7_y4gxc")

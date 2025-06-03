@@ -27,6 +27,7 @@ func _ready() -> void:
 	(%ShowDebugCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("debug_info"))
 	(%DodgeOptions as OptionButton).selected = int(Globals.get_setting_bool("aim_dodge"))
 	(%VibrationCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("vibration"))
+	(%AdvicesCheck as BaseButton).set_pressed_no_signal(Globals.get_setting_bool("advices"))
 	# Графика
 	var shader_cache: bool = \
 			_override_file.get_value("rendering", "shader_compiler/shader_cache/enabled")
@@ -255,6 +256,10 @@ func _on_dodge_options_item_selected(index: int) -> void:
 
 func _on_vibration_check_toggled(toggled_on: bool) -> void:
 	Globals.set_setting_bool("vibration", toggled_on)
+
+
+func _on_advices_check_toggled(toggled_on: bool) -> void:
+	Globals.set_setting_bool("advices", toggled_on)
 #endregion
 
 

@@ -146,6 +146,7 @@ func setup_settings() -> void:
 	set_setting_bool("chat_in_game", get_setting_bool("chat_in_game", true))
 	set_setting_bool("vibration", get_setting_bool("vibration", false))
 	set_setting_bool("aim_dodge", get_setting_bool("aim_dodge", false))
+	set_setting_bool("advices", get_setting_bool("advices", true))
 	# Графика
 	set_setting_bool("fullscreen", get_setting_bool("fullscreen", not OS.has_feature("pc")))
 	set_setting_int("max_fps", get_setting_int("max_fps", 130))
