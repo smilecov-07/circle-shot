@@ -81,14 +81,15 @@ func _cleanup_address(address: String) -> String:
 	address = Utils.strip_string(address)
 	if address.contains(' '):
 		address = address.get_slice(' ', 0)
-	if address.contains('/'):
-		address = address.get_slice('/', 0)
-	address = Utils.strip_string(address)
 	
 	if address.begins_with("https://"):
 		address = address.right(-8) # Длина https://
 	if address.begins_with("http://"):
 		address = address.right(-7) # Аналогично
+	
+	if address.contains('/'):
+		address = address.get_slice('/', 0)
+	address = Utils.strip_string(address)
 	
 	# Проверка на указания порта
 	if ':' in address:

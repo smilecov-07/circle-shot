@@ -42,6 +42,9 @@ properties/5/replication_mode = 0
 properties/6/path = NodePath(".:skill_vars")
 properties/6/spawn = true
 properties/6/replication_mode = 0
+properties/7/path = NodePath(".:server_velocity")
+properties/7/spawn = false
+properties/7/replication_mode = 1
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_i6vnq"]
 radius = 76.0
@@ -54,7 +57,6 @@ metadata/_snap_count = 40
 
 [node name="Player" groups=["Player"] instance=ExtResource("1_r625f")]
 script = ExtResource("1_d5iul")
-magic = 200.0
 hurt_vfx_scene = ExtResource("3_tk865")
 death_vfx_scene = ExtResource("4_nsvnj")
 

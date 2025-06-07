@@ -37,15 +37,30 @@ const TEAM_COLORS: Array[Color] = [
 	Color(0.965, 0.426, 0.805), # Розовый
 ]
 
+## Множитель локальной скорости сущности при переводе в безопасную дистанцию.
+## Используется при корректировке движения сущности на клиентах.
+const VELOCITY_TO_DISTANCE_FACTOR := 0.38
+## Множитель скорости сущности на сервере при переводе в безопасную дистанцию.
+## Используется при корректировке движения сущности на клиентах.
+const SERVER_VELOCITY_TO_DISTANCE_FACTOR := 0.22
+## Минимальная безопасная дистанция. Используется при корректировке движения сущности на клиентах.
+const MIN_SAFE_DISTANCE := 80.0
+## На сколько секунд надо отбросить движение сущности при телепортации её на позицию на сервере.
+## Движением является [method CharacterBody2D.get_real_velocity].
+## Используется при корректировке движения сущности на клиентах.
+const WRONG_POSITION_ROLLBACK_TIME := 0.04
+## Это значение делится на безопасную дистанцию, и результат используется в интерполяции сущности
+## к положению на сервере. Используется при корректировке движения сущности на клиентах.
+const SAFE_DISTANCE_LERP := 7.0
+
 ## Базовая скорость сущности.
 @export var speed := 640.0
-## Ипользуется при интерполяции движения сущности на клиентах.
-## @deprecated: интерполяция движения будет переработана в будущем.
-@export var magic := 1600.0
 ## Максимальное здоровье сущности.
 @export var max_health: int = 100
 ## Команда сущности. Сущности из одной команды не могут наносить урон друг другу.
 @export var team: int = 0
+
+@export_group("Vfx")
 ## Визуальный эффект получения урона. Не прикрепляется к сущности и должен самоуничтожаться.
 @export var hurt_vfx_scene: PackedScene
 ## Визуальный эффект смерти. Не прикрепляется к сущности и должен самоуничтожаться.
@@ -64,9 +79,10 @@ var id: int = -1:
 		$Input.set_multiplayer_authority(value if id > 0 else MultiplayerPeer.TARGET_PEER_SERVER)
 ## Текущее здоровье сущности.
 var current_health: int
-## Позиция сущности на сервере. Ипользуется при интерполяции движения сущности на клиентах.
-## @deprecated: интерполяция движения будет переработана в будущем.
+## Позиция сущности на сервере. Используется при корректировке движения сущности на клиентах.
 var server_position: Vector2
+## Скорость сущности на сервере. Используется при корректировке движения сущности на клиентах.
+var server_velocity: Vector2
 
 ## Множитель скорости. НЕ устанавливайте на 0, используйте [method make_immobile] вместо этого.
 var speed_multiplier := 1.0
@@ -113,12 +129,21 @@ func _physics_process(delta: float) -> void:
 		self_velocity = entity_input.direction * speed * speed_multiplier
 	velocity += self_velocity
 	move_and_slide()
-	# TODO: сделать что нибудь с этим
+	
 	if multiplayer.is_server():
 		server_position = position
+		server_velocity = get_real_velocity()
 	else:
-		position = position.lerp(server_position,
-				clampf(position.distance_to(server_position) / magic * delta, 0.0, 1.0))
+		var safe_distance: float = maxf(
+				maxf(get_real_velocity().length() * VELOCITY_TO_DISTANCE_FACTOR,
+				server_velocity.length() * SERVER_VELOCITY_TO_DISTANCE_FACTOR),
+				MIN_SAFE_DISTANCE
+		)
+		if position.distance_to(server_position) > safe_distance:
+			position = server_position - get_real_velocity() * WRONG_POSITION_ROLLBACK_TIME
+		else:
+			position = position.lerp(server_position,
+					clampf(SAFE_DISTANCE_LERP / safe_distance, delta, 1.0))
 	
 	if not is_zero_approx(self_velocity.x) and can_turn():
 		visual.scale.x = -1.0 if self_velocity.x < 0.0 else 1.0
