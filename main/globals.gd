@@ -70,6 +70,9 @@ func initialize() -> void:
 	save_file = ConfigFile.new()
 	save_file.load_encrypted_pass(SAVE_FILE_PATH, SAVE_FILE_PASSWORD)
 	
+	if OS.is_debug_build():
+		version += "-debug"
+	
 	setup_settings()
 	apply_settings()
 	setup_controls_settings()

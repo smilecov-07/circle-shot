@@ -560,8 +560,8 @@ func _validate_selected_items() -> void:
 		selected_skin = Globals.items_db.default_skin
 	if not selected_skill in Globals.items_db.skills_by_id \
 			or Globals.items_db.skills_by_id[selected_skill] in Globals.items_db.other_skills:
-		push_warning("Incorrect selected skin: %s. Reverting to default." % selected_skin)
-		selected_skin = Globals.items_db.default_skill
+		push_warning("Incorrect selected skill: %s. Reverting to default." % selected_skill)
+		selected_skill = Globals.items_db.default_skill
 	
 	if not selected_light_weapon in Globals.items_db.weapons_by_id \
 			or not Globals.items_db.weapons_by_id[selected_light_weapon] \
