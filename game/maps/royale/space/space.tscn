@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://cbmb8arq01pl8"]
+[gd_scene load_steps=28 format=4 uid="uid://cbmb8arq01pl8"]
 
 [ext_resource type="PackedScene" uid="uid://c4157ddj75w7o" path="res://game/events/royale/base_map.tscn" id="1_5erqo"]
 [ext_resource type="AudioStream" uid="uid://dpdrqash4lyw2" path="res://game/locations/space/music.ogg" id="2_2n7ht"]
@@ -6,6 +6,7 @@
 [ext_resource type="TileSet" uid="uid://bbtp28pgym4wy" path="res://game/locations/space/tiles/tile_set.tres" id="3_x1q66"]
 [ext_resource type="Shader" uid="uid://cqxut0urqm01l" path="res://game/locations/space/change_color.gdshader" id="5_h260c"]
 [ext_resource type="Texture2D" uid="uid://dlkeg6y4i50fu" path="res://game/locations/space/core.png" id="6_h260c"]
+[ext_resource type="Texture2D" uid="uid://c1nnok5bw0gyg" path="res://game/locations/space/robot.png" id="7_kru3a"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kru3a"]
 shader = ExtResource("5_h260c")
@@ -68,6 +69,191 @@ _data = {
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kru3a"]
 size = Vector2(880, 880)
+
+[sub_resource type="Curve2D" id="Curve2D_fsg8k"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -2969, 98, -138.091, 426.826, 138.091, -426.826, -2768, -2322, -285.597, -12.5537, 285.597, 12.5537, 267, -2495, -351.504, -9.41529, 351.504, 9.41529, 2708, -2507, 0, 0, 0, 0, 2953, -2071, 0, 0, 0, 0, 2950, 741, 144.368, -194.583, -144.368, 194.583, 2884, 2361, 310.99, -68.4748, -310.99, 68.4748, 1823, 2589, 335.812, -21.969, -335.812, 21.969, 916, 2903, 458.211, 18.8306, -458.211, -18.8306, -1960, 2954, 28.2459, 323.258, -28.2459, -323.258, -2957, 2728, 0, 0, 0, 0, -2969, 98)
+}
+point_count = 12
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lxxie"]
+atlas = ExtResource("7_kru3a")
+region = Rect2(0, 0, 160, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qohxh"]
+atlas = ExtResource("7_kru3a")
+region = Rect2(160, 0, 160, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y61wy"]
+atlas = ExtResource("7_kru3a")
+region = Rect2(320, 0, 160, 160)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hqb03"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lxxie")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qohxh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y61wy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qohxh")
+}],
+"loop": true,
+"name": &"robot",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_sxi5h"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PathFollow2D/AnimatedSprite2D:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_fsg8k"]
+resource_name = "movement"
+length = 80.0
+loop_mode = 1
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 80),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PathFollow2D/AnimatedSprite2D:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 31, 70),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kru3a"]
+_data = {
+&"RESET": SubResource("Animation_sxi5h"),
+&"movement": SubResource("Animation_fsg8k")
+}
+
+[sub_resource type="Curve2D" id="Curve2D_oob4v"]
+_data = {
+"points": PackedVector2Array(-97.6239, 209.373, 97.6239, -209.373, -2942, 4878, 0, 186.326, 0, -186.326, -2957, 2800, 0, 319.59, 0, -319.59, -2956, -3114, 216.308, 15.5897, -216.308, -15.5897, -3043, -4897, 200.718, -270.872, -200.718, 270.872, -5000, -4547, -9.74359, -491.077, 9.74359, 491.077, -4973, -1663, -1.94872, -366.359, 1.94872, 366.359, -5263, 167, -54.2092, -547.799, 54.2092, 547.799, -4874, 2080, -239.662, -216.837, 239.662, 216.837, -4882, 4468, 0, 0, 0, 0, -3854, 4981, -116.978, 188.306, 116.978, -188.306, -2942, 4878)
+}
+point_count = 11
+
+[sub_resource type="Animation" id="Animation_4nihg"]
+resource_name = "movement"
+length = 70.0
+loop_mode = 1
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 70),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PathFollow2D/AnimatedSprite2D:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 30, 63),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dqvme"]
+_data = {
+&"RESET": SubResource("Animation_sxi5h"),
+&"movement": SubResource("Animation_4nihg")
+}
+
+[sub_resource type="Curve2D" id="Curve2D_lxxie"]
+_data = {
+"points": PackedVector2Array(160.812, -277.531, -160.812, 277.531, 4618, 4628, 300.874, 10.375, -300.874, -10.375, 3392, 5009, 425.374, 168.593, -425.374, -168.593, 569, 4860, 0, 0, 0, 0, 236, 3489, -54.4686, 223.062, 54.4686, -223.062, 229, 1054, -233.926, 112.786, 233.926, -112.786, 806, 730, -388.484, 37.5952, 388.484, -37.5952, 1363, 168, -421.902, -37.5952, 421.902, 37.5952, 4397, 220, -36.3124, -215.281, 36.3124, 215.281, 4936, 1223, 7.78123, -254.187, -7.78123, 254.187, 4986, 3975, 230.843, -236.031, -230.843, 236.031, 4618, 4628)
+}
+point_count = 11
+
+[sub_resource type="Animation" id="Animation_lxxie"]
+resource_name = "movement"
+length = 75.0
+loop_mode = 1
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 75),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PathFollow2D/AnimatedSprite2D:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 35, 71),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qohxh"]
+_data = {
+&"RESET": SubResource("Animation_sxi5h"),
+&"movement": SubResource("Animation_lxxie")
+}
 
 [node name="Map" instance=ExtResource("1_5erqo")]
 custom_tracks = Array[AudioStream]([ExtResource("2_2n7ht")])
@@ -262,3 +448,69 @@ shape = SubResource("RectangleShape2D_kru3a")
 [node name="Sprite2D" type="Sprite2D" parent="Core" index="1"]
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("6_h260c")
+
+[node name="Robots" type="Node2D" parent="." index="9"]
+z_index = -4
+
+[node name="RobotPath" type="Path2D" parent="Robots" index="0"]
+curve = SubResource("Curve2D_fsg8k")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Robots/RobotPath" index="0"]
+position = Vector2(-2969, 98)
+rotates = false
+cubic_interp = false
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Robots/RobotPath/PathFollow2D" index="0"]
+sprite_frames = SubResource("SpriteFrames_hqb03")
+animation = &"robot"
+autoplay = "robot"
+frame_progress = 0.266122
+offset = Vector2(12, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Robots/RobotPath" index="1"]
+libraries = {
+&"": SubResource("AnimationLibrary_kru3a")
+}
+autoplay = "movement"
+
+[node name="RobotPath2" type="Path2D" parent="Robots" index="1"]
+curve = SubResource("Curve2D_oob4v")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Robots/RobotPath2" index="0"]
+position = Vector2(-2942, 4878)
+rotates = false
+cubic_interp = false
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Robots/RobotPath2/PathFollow2D" index="0"]
+sprite_frames = SubResource("SpriteFrames_hqb03")
+animation = &"robot"
+autoplay = "robot"
+frame_progress = 0.143632
+offset = Vector2(12, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Robots/RobotPath2" index="1"]
+libraries = {
+&"": SubResource("AnimationLibrary_dqvme")
+}
+autoplay = "movement"
+
+[node name="RobotPath3" type="Path2D" parent="Robots" index="2"]
+curve = SubResource("Curve2D_lxxie")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Robots/RobotPath3" index="0"]
+position = Vector2(4618, 4628)
+rotates = false
+cubic_interp = false
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Robots/RobotPath3/PathFollow2D" index="0"]
+sprite_frames = SubResource("SpriteFrames_hqb03")
+animation = &"robot"
+autoplay = "robot"
+frame_progress = 0.803823
+offset = Vector2(12, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Robots/RobotPath3" index="1"]
+libraries = {
+&"": SubResource("AnimationLibrary_qohxh")
+}
+autoplay = "movement"
